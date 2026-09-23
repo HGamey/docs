@@ -1,0 +1,56 @@
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="02-repos" name="02-repos">
+    <mxGraphModel dx="1422" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;movable=0;resizable=0;deletable=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="900" as="geometry"/>
+        </mxCell>
+        <mxCell id="n2" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;三个仓库 · 谁调谁&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="40" y="18" width="1520" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="n3" value="&lt;div style=&quot;font-family:PingFang SC;font-size:44px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;game_opt_loop&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:26px;line-height:1.34;margin-top:8px;color:#D6E4F7&quot;&gt;optimize · serve 页面 · skill · 优胜档案&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#1F5FBF;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="340" y="110" width="920" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="n4" value="&lt;div style=&quot;font-family:PingFang SC;font-size:44px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;phonefarm&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:26px;line-height:1.34;margin-top:8px;color:#CFE6DC&quot;&gt;设备 adb / hdc · knobs 应用改动 · 测量 perf&lt;br&gt;判定 · 还原 · devlock 设备锁&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#1D6B57;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="340" y="380" width="920" height="170" as="geometry"/>
+        </mxCell>
+        <mxCell id="n5" value="&lt;div style=&quot;font-family:PingFang SC;font-size:40px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;手机与被测游戏&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:24px;line-height:1.34;margin-top:8px;color:#EBDCCD&quot;&gt;Megacity · Vulkan-Samples · 原神&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#8A5530;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="340" y="640" width="560" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="n6" value="&lt;div style=&quot;font-family:PingFang SC;font-size:40px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;refbench&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:24px;line-height:1.34;margin-top:8px;color:#EBDCCD&quot;&gt;白盒测试程序&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#6E4626;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="940" y="640" width="320" height="150" as="geometry"/>
+        </mxCell>
+        <mxCell id="n7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=5;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.435;exitY=1;exitDx=0;exitDy=0;entryX=0.435;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n3" target="n4">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=5;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.609;exitY=0;exitDx=0;exitDy=0;entryX=0.609;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="n4" target="n3">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n9" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;eval_request&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="420" y="286" width="290" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="n10" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;eval_report v2&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="900" y="286" width="290" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="n11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=5;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.304;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n4" target="n5">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=5;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.826;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n4" target="n6">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n13" value="&lt;div style=&quot;font-family:PingFang SC;font-size:24px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;adb / hdc&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=right;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="660" y="572" width="280" height="34" as="geometry"/>
+        </mxCell>
+        <mxCell id="n14" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;上下传的都是 JSON&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:26px;line-height:1.34;margin-top:6px;color:#B5771E&quot;&gt;kind = shader / sysparam / gray&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="340" y="812" width="920" height="76" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

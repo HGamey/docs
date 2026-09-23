@@ -1,0 +1,130 @@
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="07-architecture" name="07-architecture">
+    <mxGraphModel dx="1422" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;movable=0;resizable=0;deletable=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="1000" as="geometry"/>
+        </mxCell>
+        <mxCell id="n2" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;系统架构&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="40" y="18" width="1520" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="n3" value="&lt;div style=&quot;font-family:PingFang SC;font-size:24px;font-weight:700;line-height:1.18&quot;&gt;用户 / AI 助手&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:18px;line-height:1.34;margin-top:2px&quot;&gt;读 skill，说一句话&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EFF3F8;strokeColor=#9AA8BA;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="95" width="320" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="n4" value="&lt;div style=&quot;font-family:PingFang SC;font-size:24px;font-weight:700;line-height:1.18&quot;&gt;大模型 API&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:18px;line-height:1.34;margin-top:2px&quot;&gt;出方案&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="470" y="95" width="360" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="n5" value="&lt;div style=&quot;font-family:PingFang SC;font-size:24px;font-weight:700;line-height:1.18&quot;&gt;浏览器&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:18px;line-height:1.34;margin-top:2px&quot;&gt;看结果、看手机&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EFF3F8;strokeColor=#9AA8BA;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="95" width="330" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="n6" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#EAF1FC;strokeColor=#1F5FBF;strokeWidth=2.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="110" y="200" width="1380" height="290" as="geometry"/>
+        </mxCell>
+        <mxCell id="n7" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#1F5FBF&quot;&gt;game_opt_loop · 入口与决策&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="700" y="206" width="440" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="n8" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;optimize 总命令&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;摸底 → 开哪几路 → 出方案 → 总报告&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="255" width="320" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n9" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;进化引擎&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;大模型出方案 · 安全检查 · 优胜档案&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="470" y="255" width="360" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n10" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;算子赛道&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;超分 / 插帧 shader&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="850" y="255" width="270" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n11" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;serve 可视化页面&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;总览 · 每一轮 · 图 · 手机&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="255" width="330" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n12" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;skill&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;给 AI 助手的说明书&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="375" width="320" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="n13" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;契约 JSON v2&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;kind = shader / sysparam / gray&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="470" y="375" width="360" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="n14" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;runs / evidence&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;每一轮的条件、数据、结论&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="375" width="330" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="n15" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#E5F1EC;strokeColor=#1D6B57;strokeWidth=2.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="110" y="540" width="1380" height="300" as="geometry"/>
+        </mxCell>
+        <mxCell id="n16" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#1D6B57&quot;&gt;phonefarm · 底座：设备 · 改动 · 测量 · 判定 · 还原&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="130" y="545" width="720" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="n17" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;eval --request&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;系统参数 / 画面改写（进行中）&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1D6B57;strokeWidth=2;dashed=1;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="595" width="300" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n18" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;loop_v1 编排与判定&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;等冷 · 锁频 · A/B 交替 · 置换检验 · 还原&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="450" y="595" width="380" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n19" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;gpu-op&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;算子真机标尺 · 画质补测&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="850" y="595" width="270" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n20" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;loop_v1/auto&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;系统参数闭环 · 回滚&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="595" width="330" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="n21" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;knobs&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;系统参数 · Vulkan 层&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="720" width="300" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="n22" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;测量&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;perf（sysfs / HiSmartPerf · 停充）· ftrace 解析 · 归因&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="450" y="720" width="670" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="n23" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;设备&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;adb / hdc · fleet · keepalive&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C9D3E0;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="720" width="330" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="n24" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F6EDE4;strokeColor=#8A5530;strokeWidth=2.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="110" y="880" width="1030" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="n25" value="&lt;div style=&quot;font-family:PingFang SC;font-size:21px;font-weight:700;line-height:1.18;color:#8A5530&quot;&gt;手机：安卓旗舰 · 鸿蒙 · 海外版华为（EMUI）&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:6px&quot;&gt;设备上：Vulkan 层 .so · vkop runner · refbench · 被测游戏（原神 / Megacity / Vulkan-Samples）&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=left;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="130" y="884" width="990" height="92" as="geometry"/>
+        </mxCell>
+        <mxCell id="n26" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F6EDE4;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="600" y="880" width="20" height="4" as="geometry"/>
+        </mxCell>
+        <mxCell id="n27" value="&lt;div style=&quot;font-family:PingFang SC;font-size:22px;font-weight:700;line-height:1.18&quot;&gt;devlock&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:17px;line-height:1.34;margin-top:4px&quot;&gt;设备锁：心跳 + 排队&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F7EBEB;strokeColor=#9B3B3B;strokeWidth=1.5;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="880" width="290" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="n28" value="optimize" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=4;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n3" target="n8">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n29" value="方案" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#B5771E;strokeWidth=4;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="n9" target="n4">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n30" value="http" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=4;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n5" target="n11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#8FA3BA;strokeWidth=3;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="n14" target="n11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n32" value="进行中" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#1D6B57;strokeWidth=4;dashed=1;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="n8" target="n17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="70" y="307"/><mxPoint x="70" y="647"/></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n33" value="shader" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#2A8FD0;strokeWidth=4;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n10" target="n19">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n34" value="fleet" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#8FA3BA;strokeWidth=3;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="n23" target="n11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1530" y="770"/><mxPoint x="1530" y="307"/></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n35" value="adb / hdc" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#8A5530;strokeWidth=4;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.2;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n23" target="n26">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="1206" y="858"/><mxPoint x="610" y="858"/></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n36" value="排队" style="edgeStyle=orthogonalEdgeStyle;rounded=1;arcSize=14;html=1;jettySize=auto;orthogonalLoop=1;exitPerimeter=1;entryPerimeter=1;strokeColor=#9B3B3B;strokeWidth=3;dashed=0;endArrow=block;endFill=1;endSize=11;startArrow=none;fontFamily=PingFang SC;fontSize=22;fontColor=#0F2744;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=0.8;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="n23" target="n27">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

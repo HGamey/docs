@@ -1,0 +1,91 @@
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="04-layers-matrix" name="04-layers-matrix">
+    <mxGraphModel dx="1422" dy="800" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="n1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;movable=0;resizable=0;deletable=0;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="1600" height="900" as="geometry"/>
+        </mxCell>
+        <mxCell id="n2" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;三层优化 × 能不能做&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;" vertex="1" parent="1">
+          <mxGeometry x="40" y="18" width="1520" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="n3" value="&lt;div style=&quot;font-family:PingFang SC;font-size:28px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;优化层 ↓&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:24px;line-height:1.34;margin-top:4px;color:#4A6079&quot;&gt;对象 →&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EFF3F8;strokeColor=#C7D3E2;strokeWidth=2;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="360" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="n4" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;白盒游戏&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:22px;line-height:1.34;margin-top:6px;color:#DCE5F0&quot;&gt;有源码&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#3D5470;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="110" width="220" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="n5" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;黑盒游戏&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:22px;line-height:1.34;margin-top:6px;color:#DCE5F0&quot;&gt;没源码&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#3D5470;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="650" y="110" width="220" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="n6" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;安卓旗舰机&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:22px;line-height:1.34;margin-top:6px;color:#DCE5F0&quot;&gt;有 root&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#3D5470;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="880" y="110" width="220" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="n7" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;鸿蒙商用机&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:22px;line-height:1.34;margin-top:6px;color:#DCE5F0&quot;&gt;无 root&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#3D5470;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="110" width="220" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="n8" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#FFFFFF&quot;&gt;海外版华为&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:22px;line-height:1.34;margin-top:6px;color:#DCE5F0&quot;&gt;EMUI · 有 root&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#3D5470;strokeColor=none;strokeWidth=0;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="110" width="220" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="n9" value="&lt;div style=&quot;font-family:PingFang SC;font-size:30px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;① 游戏代码&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:24px;line-height:1.34;margin-top:8px;color:#4A6079&quot;&gt;要源码&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C7D3E2;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="234" width="360" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n10" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#1D6B57&quot;&gt;✓&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#E5F1EC;strokeColor=#1D6B57;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="234" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n11" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#9B3B3B&quot;&gt;✗&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F7EBEB;strokeColor=#9B3B3B;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="650" y="234" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n12" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看游戏&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="880" y="234" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n13" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看游戏&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="234" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n14" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看游戏&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="234" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n15" value="&lt;div style=&quot;font-family:PingFang SC;font-size:30px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;② Vulkan 层&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:24px;line-height:1.34;margin-top:8px;color:#4A6079&quot;&gt;不用源码 · 要 root&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C7D3E2;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="404" width="360" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n16" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看设备&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="404" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n17" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看设备&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="650" y="404" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n18" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#1D6B57&quot;&gt;✓&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#E5F1EC;strokeColor=#1D6B57;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="880" y="404" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n19" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#9B3B3B&quot;&gt;✗&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F7EBEB;strokeColor=#9B3B3B;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="404" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n20" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#1D6B57&quot;&gt;✓&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#E5F1EC;strokeColor=#1D6B57;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="404" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n21" value="&lt;div style=&quot;font-family:PingFang SC;font-size:30px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;③ 系统参数&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:24px;line-height:1.34;margin-top:8px;color:#4A6079&quot;&gt;要 root&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#C7D3E2;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="574" width="360" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n22" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看设备&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="574" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n23" value="&lt;div style=&quot;font-family:PingFang SC;font-size:26px;font-weight:700;line-height:1.18;color:#B5771E&quot;&gt;看设备&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#FFF4E2;strokeColor=#B5771E;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="650" y="574" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n24" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#1D6B57&quot;&gt;✓&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#E5F1EC;strokeColor=#1D6B57;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="880" y="574" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n25" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#9B3B3B&quot;&gt;✗&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#F7EBEB;strokeColor=#9B3B3B;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1110" y="574" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n26" value="&lt;div style=&quot;font-family:PingFang SC;font-size:46px;font-weight:700;line-height:1.18;color:#1D6B57&quot;&gt;✓&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#E5F1EC;strokeColor=#1D6B57;strokeWidth=3;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="574" width="220" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="n27" value="&lt;div style=&quot;font-family:PingFang SC;font-size:30px;font-weight:700;line-height:1.18;color:#0F2744&quot;&gt;① 看有没有游戏源码　·　② ③ 看手机能不能 root&lt;/div&gt;&lt;div style=&quot;font-family:PingFang SC;font-size:26px;line-height:1.34;margin-top:8px;color:#4A6079&quot;&gt;鸿蒙商用机没有 root，只跑测量、做对照&lt;/div&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#EFF3F8;strokeColor=#C7D3E2;strokeWidth=2;dashed=0;align=center;verticalAlign=middle;fontFamily=PingFang SC;fontSize=24;fontColor=#0F2744;shadow=0;spacingLeft=8;spacingRight=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="768" width="1520" height="96" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
