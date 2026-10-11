@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>画质差距</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 590px; padding: 28px 36px; }
+  .legend { display: flex; gap: 28px; font-size: 18px; color: var(--ink-2); margin-bottom: 8px; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
+  svg text { font-family: inherit; }
+</style></head>
+<body>
+<div class="legend">
+  <span><i style="background:var(--base)"></i>游戏自带放大</span>
+  <span><i style="background:var(--ours)"></i>我们的算子</span>
+  <span style="margin-left:auto" class="cap">和原生最高画质的平均像素差 · 越短越好</span>
+</div>
+<svg id="c" width="1128" height="510"></svg>
+<script>
+// 来源：phonefarm knobs/evidence/09_upop/quality_diff.json（MAD，第二个数）
+const rows = [
+  ["左侧建筑和楼梯", 26.87, 8.31],
+  ["地面石板",       42.79, 8.59],
+  ["中央远山和树",   41.10, 18.65],
+  ["全屏静态区域",   33.78, 10.31],
+];
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+const svg = document.getElementById("c"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+const L = 190, R = 1060, T0 = 40, band = 112, bar = 34, gap = 6, max = 50;
+const x = v => L + (R - L) * v / max;
+for (let t = 0; t <= max; t += 10) {
+  el("line", { x1: x(t), x2: x(t), y1: T0 - 6, y2: T0 + band * rows.length - 14, stroke: C("--grid"), "stroke-width": 1 });
+  el("text", { x: x(t), y: T0 + band * rows.length + 8, "text-anchor": "middle", "font-size": 15, fill: C("--ink-3") }, t);
+}
+rows.forEach(([name, game, ours], i) => {
+  const y0 = T0 + i * band;
+  el("text", { x: L - 20, y: y0 + bar + 4, "text-anchor": "end", "font-size": 19, fill: C("--ink"), "font-weight": 500 }, name);
+  [[game, C("--base")], [ours, C("--ours")]].forEach(([v, col], j) => {
+    const y = y0 + j * (bar + gap);
+    const w = x(v) - L;
+    el("path", { d: `M${L},${y} h${w - 4} a4,4 0 0 1 4,4 v${bar - 8} a4,4 0 0 1 -4,4 h${-(w - 4)} z`, fill: col });
+    el("text", { x: x(v) + 10, y: y + bar / 2 + 6, "font-size": 18, fill: C("--ink-2"), class: "num" }, v.toFixed(1));
+  });
+  const ratio = (game / ours).toFixed(1);
+  el("text", { x: R + 52, y: y0 + bar + 4, "text-anchor": "end", "font-size": 20, "font-weight": 600, fill: C("--ours") }, ratio + "×");
+});
+el("line", { x1: L, x2: L, y1: T0 - 6, y2: T0 + band * rows.length - 14, stroke: C("--ink-3"), "stroke-width": 1.5 });
+el("text", { x: R + 52, y: 22, "text-anchor": "end", "font-size": 15, fill: C("--ink-3") }, "接近原生的倍数");
+</script>
+</body></html>

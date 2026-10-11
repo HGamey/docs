@@ -1,0 +1,36 @@
+/* HGamey 图表与示意图的设计令牌 —— 延续 diagrams/*.drawio 的配色（墨蓝 / 蓝 / 绿 / 棕），
+   图表三色经 dataviz 校验（全两两组合 CVD ΔE ≥ 10，正常视觉 ≥ 18）。 */
+:root {
+  --ink: #0F2744;          /* 主文字 */
+  --ink-2: #4A5B73;        /* 次要文字 */
+  --ink-3: #8593A6;        /* 注释、轴 */
+  --grid: #E4E9F0;         /* 网格、分隔 */
+  --surface: #FFFFFF;
+  --panel: #F5F7FA;        /* 卡片底 */
+  --line: #D3DBE6;         /* 卡片描边 */
+
+  --ours: #1F5FBF;         /* 我们 / harness（系列 1） */
+  --ours-soft: #EAF1FC;
+  --base: #B5771E;         /* 对照 / 游戏自带（系列 2） */
+  --base-soft: #FFF4E2;
+  --third: #159A74;        /* 第三方 / 节点（系列 3） */
+  --third-soft: #E5F4EE;
+  --node: #1D6B57;         /* 旧图里的 phonefarm 绿，做区块色 */
+  --node-soft: #E5F1EC;
+  --device: #8A5530;       /* 旧图里的手机棕 */
+  --device-soft: #F6EDE4;
+
+  --good: #0CA30C;         /* 状态色：只配图标+文字用 */
+  --warn: #FAB219;
+  --bad: #D03B3B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--surface); }
+body {
+  font-family: "PingFang SC", "Helvetica Neue", sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum";
+}
+.cap { font-size: 15px; color: var(--ink-3); }
+.num { font-variant-numeric: tabular-nums; }
