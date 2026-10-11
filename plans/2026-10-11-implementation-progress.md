@@ -144,3 +144,31 @@ queued-origin 的原三项静态缺陷已修；旧 shell collector v3/v4 在终�
 | 档案 → 统一案例页面 | #32/#33 已展示完整评测、独立确认和模型阶段，浏览器与有界文件扫描机制已验证 | 仍需真实案例数据；保存声明、hash 匹配或页面可见不授予实验资格；原始来源/恢复/成本未知继续保留 |
 
 上述接口的验收证据齐备后，才安排冻结预算的整链路候选与国内模型比较。接回一加时先执行 [只读资格和基线](oneplus-acceptance.md)，不从 root 成功直接跳到收益声明。
+
+## 2026-10-12：现有基线流程、网站发布与研究报告
+
+本阶段继续按系统 epic #11 交付优化幅度、代价与适用边界；连接、权限、编译、配置读回或页面可见各自保留前置范围。以下新增终态不覆盖历史失败记录。
+
+| 工作 | 已取得的实际证据 | 尚未取得的证据 |
+|---|---|---|
+| 现有 phonefarm prepare | 绿色签名 source `19bfed5`，原30营地请求；7点/31.71s/25传感器最大跨度2.0°C/HAL全0，暖机通过；创建冻结配置快照、还原图和state并安装工具 | 172.47s后首次写前检查退出82；原raw只有header与UPTIME，具体数值/计数/范围拒绝原因UNKNOWN；候选档5未施加，基线0/3 |
+| 独立 reconcile | 84.82s/exit0，`RESTORED_REQUIRES_NEW_SESSION`；按冻结还原图的完整快照与initial逐字节相同，归属组消失、旧会话永久撤销；独立普通租约exit0 | 不能补成候选持有试验或性能基线；旧样本没有重验 |
+| 安装成本 | 14文件/39183B、43调用、94.490734s；命令区间26.945272s、调用间隔67.545462s，来自同一原始journal；暖机末点到失败snapshot为110.20s | 子项开销未分别计时；不能称纯USB传输，不能证明110.20s导致exit82 |
+| 公开结果展示 | [Phonefarm面板](https://phonefarm.osaka.ananthe.party)已部署；6终态记录、13有限输入、7发布文件；HTTPS逐文件200/bytes/SHA、HTTP301、实际Chrome约30秒刷新、390px模拟移动视口无横向溢出 | 静态快照，不是手机实时流、远程控制或真机浏览器验收；6记录尚无已验证优化收益 |
+| 发布来源 | 公网release-005/source `124b078`，manifest SHA `91eec379d19eb2c7a930615bae10997d4c5327f9448bc1d734452d9e6a0d96ce`；[GOL draft #48](https://github.com/HGamey/game_opt_loop/pull/48)为origin/main适配，head `df477ab` | PR适配与公网资产不逐字节相同；页面不授予实验或晋级资格 |
+| 实验与部署报告 | 18页PDF，SHA `b20d250e747a1c3b8641fc27db4a38ea38a4ea2a1cf292606886f999235bd597`，16068435B；18页最终渲染检查、原件与图像来源核对、真机图账号条带未嵌入；实验快照截止07:02JST | 报告明确A/B未执行、功耗未知；不同30/60负载诊断不能做收益对照，不覆盖之后源码状态 |
+| 新native整合源码 | source `8cb1c01`：591unit通过、driver36通过/1失败；37项driver阶段1153.05s后cargo101；Clippy未运行，原件保留 | 整合gate未接受，未签名部署；失败为旧loaded路径提前返回旧schema并丢诊断，正在保留拒绝规则地修复 |
+
+网站使用本机有限终态导出与SSH发布包；公网443 SNI分流到本机8461 nginx TLS静态server，`/var/www/phonefarm/current`原子指向独立release。证书有效期至2027-01-09 20:39:57UTC；certbot timer启用，续期deploy hook先校验nginx再reload。实际完成的是签发与当前访问检查，不宣称未来续期已经成功。原始命令、账号图、任意文件API均未公开。
+
+原件目录：`oneplus_live_20261012/livephase/endfield-phonefarm-existing-prepare-30fps/`、`maintenance_existing_prepare_20261012/`、`deployment_phonefarm_20261012/`、`reporting/live-dashboard-publication/`与`reporting/pdf-report-20261012/`。PDF和截图保留本地，不提交二进制。
+
+### 当前推进顺序
+
+1. [温度留证 #21](https://github.com/HGamey/.github/issues/21)：保存同一次采集的有界原值与具体失败键，成功parser与拒绝规则不变。
+2. [固定工具批量安装 #22](https://github.com/HGamey/.github/issues/22)：有限冻结载荷与完整实际校验，collect/reconcile仍重新验收；部分安装故障的UNKNOWN/屏障边界不能写成完整恢复。
+3. 修复legacy/loaded诊断顺序回归；queued路线仍先验证admission与冻结SPF，synthetic或不合格样本仍拒绝。新完整gate与签名之前不使用新工具。
+4. 使用新会话继续现有prepare，先取得三轮有效基线与重复性；之后按原预注册顺序进行单变量对照与独立确认。不改变温度参考、规则或主指标以求通过。
+5. 保留媒体算法主线：真实配对连续画面、Vulkan挂点与GPU等价、专家campaign、实际模型训练/量化/runtime仍按#13-#18独立验收，不能由系统旋钮或网站完成代替。
+
+当前模型API调用0；正式游戏优化幅度、能效收益与端到端自动候选案例仍未验证；epic完成标准与相关draft PR保持开放。
