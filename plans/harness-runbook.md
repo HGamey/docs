@@ -20,13 +20,39 @@ GOL compile/verify 和 PF adapt-storage/verify-adaptation，并保留原始输�
 | 结果 | 可以说明什么 | 下一步 |
 |---|---|---|
 | PREPARED_OFFLINE | 四个编译/适配阶段完成，冻结字节及本地重放一致 | 单独验收 native 构建、挂点、GPU 等价和真机实验 |
+| PREPARED_OFFLINE_NATIVE | #35 的六个 host 准备阶段与外层进程组停止、工件重读完成 | 验收真实 NDK/Android codegen、挂点与 GPU；仍 deployable=false |
 | BLOCKED / rejected / failed | 必需阶段未完成，原始拒绝或错误保留 | 依据具体 receipts 修正输入或补能力；不以摘要改成通过 |
 | UNKNOWN | 中断或进程/工件状态无法确认 | 保留会话与原始证据，先核对拥有的进程和副作用 |
 
 `offline_compilation_adapter_complete` 只描述四阶段；请求 native build 后若该
-阶段 BLOCKED/NOT_RUN，`preparation_chain_complete=false`。当前准备入口不接受
-已存在 SDK 的 native 构建。显式缺失 SDK 的检查使用会话内私有空 SDK，保留
-实际 PF 的 missing-tool 拒绝，不能称作 Android 构建成功。
+阶段 BLOCKED/NOT_RUN，`preparation_chain_complete=false`。#34 只提供四阶段及
+缺 SDK 的明确拒绝；[GOL #35](https://github.com/HGamey/game_opt_loop/pull/35)
+增加已有 SDK 的构建与独立验证。显式缺失 SDK 的检查使用会话内私有空 SDK，
+保留实际 PF 的 missing-tool 拒绝。
+
+在 #35 分支上，新增入口为：
+
+```sh
+game_opt_loop candidate-prepare run --candidate candidate.json --phonefarm-bin /absolute/path/to/phonefarm --out prepared-native-new --build --ndk /absolute/path/to/regular-sdk --native-layer-input-root /absolute/path/to/phonefarm/knobs/gray/layer --native-tool-timeout-seconds 30
+game_opt_loop candidate-prepare inspect --session prepared-native-new
+```
+
+`phonefarm` 必须含 #24 的监督接口。layer root 用于冻结期望字节；PF 仍读取其
+编译时绑定的源码根，版本/内容不匹配会拒绝。旧四文件为
+`vk_layer_refknobs.cpp`、`artifact_stats.h`、`copyprobe_copy.comp`、
+`VkLayer_refknobs.json`；五文件合同另含 `dispatch_ownership.h`，其存在性也冻结。
+已知未使用的 `upop.comp` 可以存在；未知输入集合不接受。
+
+SDK 整目录须只有普通文件/目录，最多 512MiB、4096 entries、16 层；链接、特殊
+文件、越限或读取失败明确 BLOCKED。普通真实 NDK 包的适用性仍未验收。
+受控假 SDK 必须显式加 `--synthetic`，其结果只说明执行机制，
+`android_codegen_validated=false`、真实 NDK/GPU 验证未运行。总预算包括 SDK
+复制、最终重哈希及发布；未知停止不能自动重试。@2 的六阶段会话与 #34 @1
+会话使用对应版本的 inspector，不能手改 schema 升级。
+
+该入口要求明确可信的本机工具遵守进程组合同，不主动脱组。SDK 快照冻结所给
+目录的字节；宿主解释器、系统库、网络和工具真实性不由此获得认证。普通文件
+系统调用与 fsync 也不构成硬实时沙箱，不能将预算机制解释为任意工具的隔离保证。
 
 候选准备与独立确认都是独立执行入口。campaign 将算法候选接入实际游戏评测、
 连续画质和恢复的自动路径仍需贯通；执行这些命令不能称为任意商业游戏的
@@ -119,7 +145,7 @@ game_opt_loop serve --root /absolute/path/to/game_opt_loop --phonefarm-root /abs
 
 | 阶段 | 离线已验证的机制 | 仍需实际证据 |
 |---|---|---|
-| 候选准备 | 实际编译重放、有限 SPIR-V 适配与接收者独立校验 | Android 构建、Vulkan 验证、GPU 输出等价 |
+| 候选准备 | 实际编译重放、有限 SPIR-V 适配、四/五输入 native host 机制与独立校验 | 真实 NDK 适用性、Android 构建、Vulkan 验证、GPU 输出等价 |
 | 灰层 | host 下录制代/逐 dispatch 资源保留与退役 | 一加目标/source/layout/compute 合同、命中与 GPU 完成 |
 | 采样与确认 | fake transport 驱动协议、原始重建、冻结与 judge | 真实温度/放电/控制/恢复、游戏场景重复性、完整轮数 |
 | 连续画质 | 配对账本、空间/色偏/相邻残差及坏帧门禁 | 真实同步 LR/HR/候选序列及来源，插帧中间真值 |
