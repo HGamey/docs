@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """刷新 content.json 里的 auto 段（PR 计数、同事的 PR/issue 清单），其余手写字段不动。
 
-用法: python3 -I collect.py [content.json]
+用法: python3 -I collect.py content-vNN.json [--day YYYY-MM-DD]   （--day 缺省今天，用来列「当天合并」）
 依赖: 已登录的 gh CLI。只读 GitHub，不改任何仓库。
 """
 import json, subprocess, sys, datetime, zoneinfo, os
@@ -9,7 +9,7 @@ import json, subprocess, sys, datetime, zoneinfo, os
 OURS = "BH3GEI"
 SINCE = "2026-09-11"
 REPOS = ["BH3GEI/phonefarm", "HGamey/game_opt_loop", "HGamey/refbench", "HGamey/sr_loop",
-         "HGamey/docs", "HGamey/.github", "HGamey/knobs", "HGamey/phonefarm"]
+         "HGamey/docs", "HGamey/.github", "HGamey/knobs", "HGamey/harness-ops", "HGamey/phonefarm"]
 SYNC_REPO = "HGamey/phonefarm"   # BH3GEI/phonefarm 的镜像, 我们在这里的 PR 是同步, 不算新工作
 ISSUE_REPOS = ["HGamey/.github", "HGamey/game_opt_loop", "HGamey/refbench", "HGamey/docs"]
 SJ = zoneinfo.ZoneInfo("America/Los_Angeles")
@@ -24,7 +24,15 @@ def sj(ts):
 
 
 def main():
-    path = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(os.path.abspath(__file__)), "content.json")
+    args = sys.argv[1:]
+    day = None
+    if "--day" in args:
+        i = args.index("--day"); day = args[i + 1]; del args[i:i + 2]
+    if not args:
+        sys.exit("用法: python3 -I collect.py content-vNN.json [--day YYYY-MM-DD]")
+    path = args[0]
+    day = day or datetime.datetime.now(SJ).strftime("%Y-%m-%d")
+    today = []
     content = json.load(open(path, encoding="utf-8"))
     since = datetime.datetime.fromisoformat(SINCE).replace(tzinfo=SJ)
     our_counts, colleague_prs, our_recent, sync_n, by_day = [], [], [], 0, {}
@@ -37,6 +45,7 @@ def main():
         else:
             our_counts.append({"repo": r, "merged": len(mine), "numbers": sorted(p["number"] for p in mine),
                                "docs": sum(1 for p in mine if p["title"].startswith("docs"))})
+            today += [{"repo": r, "number": p["number"], "title": p["title"]} for p in mine if sj(p["mergedAt"]).strftime("%Y-%m-%d") == day]
             for p in mine:
                 by_day[sj(p["mergedAt"]).strftime("%m-%d")] = by_day.get(sj(p["mergedAt"]).strftime("%m-%d"), 0) + 1
             our_recent += [{"repo": r, "number": p["number"], "title": p["title"], "merged": sj(p["mergedAt"]).strftime("%m-%d %H:%M")}
@@ -63,6 +72,9 @@ def main():
         "since": SINCE,
         "our_pr_counts": our_counts,
         "our_total": sum(c["merged"] for c in our_counts),
+        "day": day,
+        "our_today": sorted(today, key=lambda p: (p["repo"], p["number"])),
+        "our_today_n": len(today),
         "our_docs": sum(c["docs"] for c in our_counts),
         "our_by_day": dict(sorted(by_day.items())),
         "sync_prs": sync_n,

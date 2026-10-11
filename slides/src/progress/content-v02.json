@@ -1,0 +1,1317 @@
+{
+  "_readme": "v02 的全部文字和数字。auto 段由 collect.py 刷新（python3 -I collect.py content-v02.json --day 2026-10-11），别手改；文字里的 {our_today_n} 这类占位符在 build.js 里用 auto 段替换。生成：node build.js content-v02.json",
+  "meta": {
+    "title": "HGamey 进展 v02",
+    "author": "BH3GEI",
+    "footer": "HGamey 进展 v02 · 2026-10-11 · 手机节点上线与作战室",
+    "layout": "progress",
+    "out": "../../HGamey-进展-v02-2026-10-11-手机节点上线与作战室.pptx"
+  },
+  "slides": [
+    {
+      "type": "cover",
+      "section": "这一版",
+      "title": "HGamey 进展 v02",
+      "subtitle": "手机节点上线、作战室，以及今天合并的 {our_today_n} 个改动",
+      "line": "2026-10-11 · BH3GEI · 上一版 v01：同日「近一个月进展」",
+      "notes": "这一版的成果：手机节点（phone.liyao.space）上线、作战室实况看板、10-11 当天合并的一批 PR。数字来源写在每页备注里；PR 数由 collect.py 现查 GitHub。人名只写 GitHub 账号。"
+    },
+    {
+      "type": "cards",
+      "title": "这一版：手机能远程排队用了，提速和找多余步骤的工具也备好了",
+      "cards": [
+        {
+          "big": "上线",
+          "label": "手机节点",
+          "text": "开发机上的 agent 和云端出方案都经同一个加密入口用手机，碰手机的命令自己排队",
+          "tone": "accent2"
+        },
+        {
+          "big": "作战室",
+          "label": "实况看板",
+          "text": "手机温度、谁在用手机、排队、实时日志一页看完；只读，不打扰测量",
+          "tone": "accent1",
+          "bigSize": 34
+        },
+        {
+          "big": "{our_today_n}",
+          "label": "个改动今天合并",
+          "text": "设备锁、判官自检、提前停、新游戏接入、云端出方案、找多余步骤的工具",
+          "tone": "accent1"
+        },
+        {
+          "big": "省 30%",
+          "label": "测量次数（提前停）",
+          "text": "注定留不下的候选当场停，结论和跑满完全一致；目前是用历史数据重放验证的",
+          "tone": "accent3",
+          "bigSize": 34
+        }
+      ],
+      "bottom": "下一步：不改原神代码，让 AI 找出画面里多余的步骤并去掉，在真机上证明更省电",
+      "notes": "手机节点：HGamey/harness-ops #1–#6。作战室：harness-ops #2。今天合并数：collect.py，作者 BH3GEI、10-11（太平洋时间）合并。提前停：BH3GEI/phonefarm #78，11 组历史数据（每组 10 次测量）离线重放，110 次省 33 次；真机还没验证。"
+    },
+    {
+      "type": "figure",
+      "section": "全局",
+      "title": "总蓝图六步：地基和检查在做，后面几步的部件已经备好",
+      "img": "fig/out/blueprint.png",
+      "caption": "◐ 进行中　◔ 部件就位：代码已合并、还没在这一步真用　○ 未开始",
+      "notes": "来源：~/projects/_wt/ROADMAP.md「总蓝图」（10-11 14:00 owner 认可）。阶段 0：手机节点 harness-ops #1–#6；判官自检 BH3GEI/phonefarm #80 #84 #88、refbench #4，真机校准在跑。阶段 1：一帧步骤清单 PF #85。阶段 3：提前停 PF #78、出方案接口 GOL #39、云端出方案 GOL #47、上机前守门 GOL #46（缺省关，准不准还没数据）。阶段 4：零人工接入 PF #83（真机未验证）。阶段 5：作战室 harness-ops #2。"
+    },
+    {
+      "type": "figure",
+      "title": "harness 全貌：出方案的、被测的都能插拔，今天又补上五块",
+      "img": "fig/out/harness.png",
+      "caption": "黄色「新」= 这次新加的部分；好坏始终由 harness 判定，出方案的一方改不了规则",
+      "notes": "参照 diagrams/01-harness-overview。新加：外部进程/对比模式（GOL #39 #40 #44）、云端 pi + Kimi（GOL #47）、上机前守门（GOL #46，用 TypeSafe Jev 估「值不值得花一次真机评测」，缺省不开、可只记不挡）、设备锁（PF #77 #81 #87、GOL #41）、提前停与判官自检（PF #78 #80 #84 #88）、新游戏零人工接入（PF #83 #89、GOL #45）。"
+    },
+    {
+      "type": "figure",
+      "section": "手机节点与作战室",
+      "title": "手机节点：所有人经一个加密入口，排队用同一台手机",
+      "img": "fig/out/node.png",
+      "caption": "开发机和手机不必在一起；节点合并代码后自己编译更新，不再从开发机传文件",
+      "notes": "来源：HGamey/harness-ops node/node_service.py 与 pf-node。/jobs 给开发机 agent 发真机任务（pf-node 客户端）；/mcp 给云端出方案只读查询手机状态（白名单工具，GOL #47 的 pi + Kimi 用）；/dash 作战室（独立查看密码）。节点只听本机端口，经 Cloudflare Tunnel 出网，要令牌。自更新：harness-ops #3 #4 #5；任务重启修复 #1。"
+    },
+    {
+      "type": "shots",
+      "title": "作战室：谁在用手机、温度多少、在跑什么，一页看完",
+      "images": [
+        {
+          "src": "img/warroom-desk.png",
+          "label": "电脑上：手机状态、设备锁与排队、任务、实时日志、实验结果",
+          "weight": 3.2
+        },
+        {
+          "src": "img/warroom-mobile-top.png",
+          "label": "手机上看（上半屏）",
+          "weight": 1.25
+        }
+      ],
+      "notes": "截图：10-11 14:27 PDT 的作战室（https://phone.liyao.space/dash，只读）。当时设备锁在 open 手里，judge、speed 排队；judge 在跑判官校准。看板测量时不截图、不读前台应用，避免干扰测量。来源 harness-ops #2。"
+    },
+    {
+      "type": "table",
+      "section": "今天的改动",
+      "title": "今天合并 {our_today_n} 个改动：手机更好排队、判官能自检、测量更快",
+      "header": [
+        "方向",
+        "做了什么（大白话）",
+        "PR"
+      ],
+      "colW": [
+        2.2,
+        6.8,
+        3.13
+      ],
+      "rowH": 0.47,
+      "fontSize": 12.5,
+      "rows": [
+        [
+          "手机节点",
+          "远程用手机的入口、作战室、节点自己更新",
+          "harness-ops #1–#6"
+        ],
+        [
+          "设备锁",
+          "碰手机的命令自己拿锁、排队、放锁；修了两处漏拿和编译问题",
+          "PF #77 #81 #87 · GOL #41"
+        ],
+        [
+          "判官自检",
+          "用答案已知的考题考判官，看它判得准不准；开场先把手机归位",
+          "PF #80 #84 #88 · refbench #4"
+        ],
+        [
+          "测得更快",
+          "注定留不下的候选提前停；出方案和等手机降温同时进行",
+          "PF #78 #82"
+        ],
+        [
+          "测得更准",
+          "耗电和温度上限此前没算进判定，已补上；采集缓冲被挤爆的问题修好",
+          "PF #76 #86"
+        ],
+        [
+          "新游戏接入",
+          "没见过的游戏零人工接进来；收尾确认手机静音",
+          "PF #83 #89 · GOL #45"
+        ],
+        [
+          "出方案",
+          "统一出方案接口、多个方案对比、指定层数代数、云端出方案、上机前守门",
+          "GOL #39 #40 #42 – #44 #46 #47"
+        ],
+        [
+          "找多余步骤",
+          "读出游戏一帧里的全部步骤，离线找可能多余的",
+          "PF #85"
+        ],
+        [
+          "其他",
+          "新平台只需实现一个设备接口；v01 PPT 与图表系统",
+          "PF #79 · docs #6 #7"
+        ]
+      ],
+      "note": "PF = BH3GEI/phonefarm，GOL = HGamey/game_opt_loop。标「真机未验证」的见附录与备注",
+      "notes": "PR 清单由 collect.py 现查（auto.our_today）。真机未验证的：PF #78（提前停）、#80（判官自检）、#83（新游戏接入）、GOL #45、#46（守门准不准还没数据）。PF #76：修复前 Rust 路径上的判定没有把功耗比较和温度上限算进去。PF #86：ftrace 全局缓冲被常开事件冲满，10 秒采集只剩约 1 秒，改到私有实例里采。"
+    },
+    {
+      "type": "figure",
+      "title": "提前停：注定留不下的候选当场停，省下三成测量，结论不变",
+      "img": "fig/out/curtail.png",
+      "notes": "来源：BH3GEI/phonefarm #78 描述里的回放表（11 组完整 5v5，每组 10 臂；「次测量」= 臂）。规则：每跑完一臂，算剩下的轮次取任何值时各指标「显著改善」的置换检验 p 值下界；全部 ≥ α_win 就必然不保留，当场停。只截「必然不保留」一侧，保留的永远跑满，不是序贯检验，错误率不变。真机没验证。图里「留下」的两组是已知有效的旧开关（loop_v1 DDR boost、refbench 带宽开关）。"
+    },
+    {
+      "type": "figure",
+      "section": "已有的真机结果",
+      "title": "我们的放大算子比游戏自带的更接近原生画面，最多接近 5 倍",
+      "notes": "图：fig/quality.html，数据 phonefarm knobs/evidence/09_upop/quality_diff.json（逐像素平均绝对差 MAD）。裁图：knobs/evidence/09_upop/{tree,stairs,sign}_a_b_ref.png，每张从上到下：游戏自带放大、我们的算子、原生画面。我们的算子目前是 2×2 双线性，只是占位。来源 BH3GEI/phonefarm #64。",
+      "img": "fig/out/quality.png",
+      "caption": "原神大世界，同一位置、同一视角、同一时辰；渲染精度调低后，分别用游戏自带放大和我们的算子放大，再和原生最高画质比。条越短越接近原生。"
+    },
+    {
+      "type": "crops",
+      "title": "真机截图：我们的放大更清楚，接近原生画面",
+      "crops": [
+        "img/tree_a_b_ref.jpg",
+        "img/stairs_a_b_ref.jpg",
+        "img/sign_a_b_ref.jpg"
+      ],
+      "row_labels": [
+        "游戏自带",
+        "我们的",
+        "原生"
+      ],
+      "crop_caption": "原神真机截图局部：树、楼梯、招牌。每列从上到下：游戏自带放大、我们的算子、原生最高画质",
+      "notes": "裁图来源：phonefarm knobs/evidence/09_upop/{tree,stairs,sign}_a_b_ref.png（转成 JPEG 以减小体积）。同位置、同视角、同一时辰；渲染精度「低」。"
+    },
+    {
+      "type": "table",
+      "title": "换上我们的算子后，卡不卡、帧率、耗电都没测出变差",
+      "lead": "原神大世界，换前换后交替各测 5 次，测量时停止充电",
+      "header": [
+        "指标",
+        "游戏自带放大",
+        "我们的算子",
+        "变化",
+        "测出变差了吗"
+      ],
+      "colW": [
+        2.6,
+        2.4,
+        2.4,
+        1.8,
+        2.93
+      ],
+      "rowH": 0.85,
+      "fontSize": 16,
+      "align": [
+        "left",
+        "center",
+        "center",
+        "center",
+        "center"
+      ],
+      "rows": [
+        [
+          "卡顿（最慢那 5% 帧）",
+          "19.66 毫秒",
+          "19.62 毫秒",
+          "−0.2%",
+          "没有"
+        ],
+        [
+          "每秒帧数",
+          "59.18",
+          "59.27",
+          "+0.2%",
+          "没有"
+        ],
+        [
+          "整机耗电",
+          "2.79 瓦",
+          "2.90 瓦",
+          "+4.1%",
+          "没有（在波动范围内）"
+        ]
+      ],
+      "note": "「没测出变差」不等于「证明了不变差」：对外的案例要按更严的标准重测（见下一步）",
+      "notes": "来源：STATUS.md「灰档真超分算子 upop A/B」，BH3GEI/phonefarm #64。原始数：frame_p95 19.661 → 19.624 ms（p_lose 0.571）、fps_mean 59.178 → 59.269（0.881）、power 2.789 → 2.903 W（0.278）。5v5 精确置换检验，α_lose = 0.05。anantheparty 在 .github #11 指出：按预先冻结的非劣效界看属于证据不足；+3.3 dB / +0.22 ms 是 refbench 帧时 + 19 张静态帧画质。"
+    },
+    {
+      "type": "steps",
+      "section": "下一步",
+      "title": "下一步：不改原神代码，让 AI 去掉画面里多余的步骤",
+      "lead": "主线：在原神上做成，再换一个没见过的游戏全自动重做一遍",
+      "items": [
+        {
+          "head": "判官先过体检",
+          "body": "用答案已知的考题在真机上考判官，得出它判得准不准",
+          "status": "进行中"
+        },
+        {
+          "head": "拆开原神的一帧",
+          "body": "列出每一步做了什么、花多少，找出多余的步骤",
+          "status": "进行中"
+        },
+        {
+          "head": "做成开关",
+          "body": "挑最值的几种做成可跳过的开关，真机上画面不出错",
+          "status": "未开始"
+        },
+        {
+          "head": "AI 自动组合 3 代以上",
+          "body": "开关和系统参数一起试，判官定输赢；提前停、云端出方案用来提速",
+          "status": "部件就位"
+        },
+        {
+          "head": "换游戏重做",
+          "body": "新游戏零人工接入后，以上几步全自动再跑一遍",
+          "status": "部件就位"
+        }
+      ],
+      "notes": "来源：ROADMAP.md「总蓝图」与判断规则：原神查不出值得去的步骤就换游戏；开关 2 轮无收益就转系统参数/超分并写明「此路无收益」；手机使用顺序 判官 → onboard → core → 其他。阶段完成时出新一版 deck（v03：判官准确率；v04：原神多余步骤报告……）。"
+    },
+    {
+      "type": "split",
+      "section": "同事与协调",
+      "title": "同事那边和需要协调的事",
+      "left_head": "anantheparty：{colleague_open} 个草稿 PR，都还没合并、没上真机",
+      "left_summary": "方向是让结论更站得住：先定标准再测、探索和确认分开、每份证据都能追溯；在等一加 Ace5 到位后上真机。",
+      "left_rows": [
+        [
+          "模型/算子工件流水",
+          "GOL #30 #31 #34 #35 · PF #20 #21 #23 #24 #26 · refbench #2 #3"
+        ],
+        [
+          "独立确认",
+          "GOL #29 #37 #38 · PF #22 #25 #27"
+        ],
+        [
+          "实验资格与证据",
+          "PF #18 · GOL #27 #32"
+        ],
+        [
+          "专家筛选/连续画质/租约",
+          "GOL #28 · PF #17 #19"
+        ],
+        [
+          "交接文档与展示",
+          "docs #5 · GOL #26 #33"
+        ]
+      ],
+      "left_foot": "这里 PF/GOL 指 HGamey/phonefarm、HGamey/game_opt_loop。会议诉求（0917/0924 纪要，YanPENG-2026）见 v01 第 12 页",
+      "right_head": "需要 owner 定的",
+      "right": [
+        {
+          "head": "分工",
+          "body": "实验资格、设备租约、独立确认两边都在做，请定谁主谁辅"
+        },
+        {
+          "head": "提交路径",
+          "body": "我们走 BH3GEI/phonefarm 再同步，对方直接提 HGamey/phonefarm，建议约定唯一上游"
+        },
+        {
+          "head": "对外怎么说",
+          "body": "画质和「没测出变差」的结论，建议统一按更严的标准重测后再报"
+        },
+        {
+          "head": "设备",
+          "body": "只有 1 台手机，agent 排队；0924 待办①的采购进展待确认"
+        }
+      ],
+      "notes": "同事 PR 由 collect.py 现查（auto.colleague_prs）。分组是人工归类。草稿 PR 描述里写明没有动手机（No phone… 0 tokens）。"
+    },
+    {
+      "type": "appendix_today",
+      "section": "附录",
+      "title": "附录：今天合并的 PR",
+      "notes": "由 auto.our_today 生成（作者 BH3GEI、当天合并、太平洋时间）。标题过长时截断，全文见 GitHub。"
+    }
+  ],
+  "auto": {
+    "updated_at": "2026-10-11 15:11",
+    "since": "2026-09-11",
+    "our_pr_counts": [
+      {
+        "repo": "BH3GEI/phonefarm",
+        "merged": 77,
+        "numbers": [
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89
+        ],
+        "docs": 18
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "merged": 33,
+        "numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "docs": 14
+      },
+      {
+        "repo": "HGamey/.github",
+        "merged": 8,
+        "numbers": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "docs": 8
+      },
+      {
+        "repo": "HGamey/docs",
+        "merged": 6,
+        "numbers": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "docs": 0
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "merged": 6,
+        "numbers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "docs": 0
+      },
+      {
+        "repo": "HGamey/refbench",
+        "merged": 2,
+        "numbers": [
+          1,
+          4
+        ],
+        "docs": 1
+      },
+      {
+        "repo": "HGamey/sr_loop",
+        "merged": 1,
+        "numbers": [
+          1
+        ],
+        "docs": 1
+      },
+      {
+        "repo": "HGamey/knobs",
+        "merged": 1,
+        "numbers": [
+          1
+        ],
+        "docs": 0
+      }
+    ],
+    "our_total": 134,
+    "day": "2026-10-11",
+    "our_today": [
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 76,
+        "title": "fix(eval/autoloop): 判定视图并上 env —— 功耗比较与温度上限在 Rust 路上从未生效"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 77,
+        "title": "feat(devlock): 碰设备的子命令自己拿锁、心跳、释放；锁脚本收进 tools/devlock"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 78,
+        "title": "feat(eval/autoloop): 确定性截断 —— 跑满也必然不保留时当场停, 判定不变"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 79,
+        "title": "refactor(device): 设备接口 platform::Backend —— 新平台只需实现一个 trait"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 80,
+        "title": "feat(selftest): 判定链已知答案真机自检 phonefarm selftest（离线已测，真机未验证）"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 81,
+        "title": "fix(devlock): eval/gpu-op 裸调或没给请求文件时不拿锁"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 82,
+        "title": "feat(autoloop): 出方案与等冷重叠、--cool-every 批内连跑、墙钟记录; 灰档不重启切臂的设计"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 83,
+        "title": "feat(onboard): 新游戏零人工接入 —— 进门状态机、进游戏探针、只转视角负载、渲染线程、可重复判定、游戏档案（真机未验证）"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 84,
+        "title": "feat(selftest): --only 按考题编号分段跑"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 85,
+        "title": "feat(frame-audit): 灰档层只读一帧步骤清单 + 离线找多余步骤"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 86,
+        "title": "fix(ftrace_capture): 在私有 ftrace 实例里采 —— 全局 buffer 被常开事件冲满，10 s 采集只剩约 1 s"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 87,
+        "title": "fix(devlock): main 编译不过 —— LOCKED 数组长度 20→21"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 88,
+        "title": "fix(selftest): 开场把前台应用送回后台、GPU max_pwrlevel 遗留值归位到 0"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 89,
+        "title": "fix(onboard): 收尾核对媒体音量为 0（手机必须静音）"
+      },
+      {
+        "repo": "HGamey/docs",
+        "number": 6,
+        "title": "PPT：新增「HGamey 近一个月进展」（09-11 → 10-11）"
+      },
+      {
+        "repo": "HGamey/docs",
+        "number": 7,
+        "title": "slides：图表系统与画质差距图"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 39,
+        "title": "feat(optimize): 出方案接口 proposer@1 —— 内置 llm/local 与外部进程 cmd: 走同一接口"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 40,
+        "title": "feat(optimize): 对比模式最小版 —— 多个 --proposer 依次跑, 出 compare.json/md"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 41,
+        "title": "feat(optimize): 自己拿设备锁、心跳、释放"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 42,
+        "title": "feat(optimize): --layers/--generations/--children 指定计划形状"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 43,
+        "title": "fix(optimize): 指定形状时预算不再砍选中的层；大模型候选全被校验拒掉时写明原因"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 44,
+        "title": "feat(compare): game_opt_loop compare --arm ... 离线拼分段跑出的单臂结果"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 45,
+        "title": "feat(optimize): 读游戏档案 —— 内置表认不出的游戏按包名直接能跑（真机未验证）"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 46,
+        "title": "feat(optimize): 上机前守门 --gate jev（缺省不开，支持影子模式）+ 云端出方案设计"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 47,
+        "title": "feat(proposers): 云端出方案最小实现 —— pi + Kimi 出方案、Actions 适配器与 workflow"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 1,
+        "title": "fix(jobs): 重启节点服务后老任务不再永远 running"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 2,
+        "title": "feat(dash): 作战室 /dash 只读实况看板"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 3,
+        "title": "节点自更新：从 GitHub 拉代码自己编译，部署不再从开发机传文件"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 4,
+        "title": "节点更新程序改为原子替换，不影响正在跑的任务"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 5,
+        "title": "部署时重启节点服务改为显式 --restart"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 6,
+        "title": "节点更新 phonefarm 时顺带编译灰档层 .so"
+      },
+      {
+        "repo": "HGamey/refbench",
+        "number": 4,
+        "title": "feat(selftest): 已知答案负载算子（供 phonefarm selftest）"
+      }
+    ],
+    "our_today_n": 32,
+    "our_docs": 42,
+    "our_by_day": {
+      "09-14": 1,
+      "09-21": 1,
+      "09-23": 100,
+      "10-11": 32
+    },
+    "sync_prs": 17,
+    "our_recent": [
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 6,
+        "title": "节点更新 phonefarm 时顺带编译灰档层 .so",
+        "merged": "10-11 15:07"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 89,
+        "title": "fix(onboard): 收尾核对媒体音量为 0（手机必须静音）",
+        "merged": "10-11 15:05"
+      },
+      {
+        "repo": "HGamey/docs",
+        "number": 7,
+        "title": "slides：图表系统与画质差距图",
+        "merged": "10-11 15:05"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 88,
+        "title": "fix(selftest): 开场把前台应用送回后台、GPU max_pwrlevel 遗留值归位到 0",
+        "merged": "10-11 15:03"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 5,
+        "title": "部署时重启节点服务改为显式 --restart",
+        "merged": "10-11 15:03"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 4,
+        "title": "节点更新程序改为原子替换，不影响正在跑的任务",
+        "merged": "10-11 14:59"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 3,
+        "title": "节点自更新：从 GitHub 拉代码自己编译，部署不再从开发机传文件",
+        "merged": "10-11 14:54"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 87,
+        "title": "fix(devlock): main 编译不过 —— LOCKED 数组长度 20→21",
+        "merged": "10-11 14:52"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 86,
+        "title": "fix(ftrace_capture): 在私有 ftrace 实例里采 —— 全局 buffer 被常开事件冲满，10 s 采集只剩约 1 s",
+        "merged": "10-11 14:49"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 47,
+        "title": "feat(proposers): 云端出方案最小实现 —— pi + Kimi 出方案、Actions 适配器与 workflow",
+        "merged": "10-11 14:39"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 2,
+        "title": "feat(dash): 作战室 /dash 只读实况看板",
+        "merged": "10-11 14:31"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 46,
+        "title": "feat(optimize): 上机前守门 --gate jev（缺省不开，支持影子模式）+ 云端出方案设计",
+        "merged": "10-11 14:28"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 85,
+        "title": "feat(frame-audit): 灰档层只读一帧步骤清单 + 离线找多余步骤",
+        "merged": "10-11 14:24"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 83,
+        "title": "feat(onboard): 新游戏零人工接入 —— 进门状态机、进游戏探针、只转视角负载、渲染线程、可重复判定、游戏档案（真机未验证）",
+        "merged": "10-11 14:12"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 45,
+        "title": "feat(optimize): 读游戏档案 —— 内置表认不出的游戏按包名直接能跑（真机未验证）",
+        "merged": "10-11 14:12"
+      },
+      {
+        "repo": "HGamey/harness-ops",
+        "number": 1,
+        "title": "fix(jobs): 重启节点服务后老任务不再永远 running",
+        "merged": "10-11 14:12"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 84,
+        "title": "feat(selftest): --only 按考题编号分段跑",
+        "merged": "10-11 14:11"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 44,
+        "title": "feat(compare): game_opt_loop compare --arm ... 离线拼分段跑出的单臂结果",
+        "merged": "10-11 14:09"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 82,
+        "title": "feat(autoloop): 出方案与等冷重叠、--cool-every 批内连跑、墙钟记录; 灰档不重启切臂的设计",
+        "merged": "10-11 14:05"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 43,
+        "title": "fix(optimize): 指定形状时预算不再砍选中的层；大模型候选全被校验拒掉时写明原因",
+        "merged": "10-11 13:54"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 42,
+        "title": "feat(optimize): --layers/--generations/--children 指定计划形状",
+        "merged": "10-11 13:52"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 41,
+        "title": "feat(optimize): 自己拿设备锁、心跳、释放",
+        "merged": "10-11 13:49"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 81,
+        "title": "fix(devlock): eval/gpu-op 裸调或没给请求文件时不拿锁",
+        "merged": "10-11 13:44"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 40,
+        "title": "feat(optimize): 对比模式最小版 —— 多个 --proposer 依次跑, 出 compare.json/md",
+        "merged": "10-11 13:40"
+      },
+      {
+        "repo": "HGamey/docs",
+        "number": 6,
+        "title": "PPT：新增「HGamey 近一个月进展」（09-11 → 10-11）",
+        "merged": "10-11 13:36"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 80,
+        "title": "feat(selftest): 判定链已知答案真机自检 phonefarm selftest（离线已测，真机未验证）",
+        "merged": "10-11 13:34"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 39,
+        "title": "feat(optimize): 出方案接口 proposer@1 —— 内置 llm/local 与外部进程 cmd: 走同一接口",
+        "merged": "10-11 13:32"
+      },
+      {
+        "repo": "HGamey/refbench",
+        "number": 4,
+        "title": "feat(selftest): 已知答案负载算子（供 phonefarm selftest）",
+        "merged": "10-11 13:32"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 79,
+        "title": "refactor(device): 设备接口 platform::Backend —— 新平台只需实现一个 trait",
+        "merged": "10-11 13:31"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 78,
+        "title": "feat(eval/autoloop): 确定性截断 —— 跑满也必然不保留时当场停, 判定不变",
+        "merged": "10-11 13:26"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 77,
+        "title": "feat(devlock): 碰设备的子命令自己拿锁、心跳、释放；锁脚本收进 tools/devlock",
+        "merged": "10-11 09:02"
+      },
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 76,
+        "title": "fix(eval/autoloop): 判定视图并上 env —— 功耗比较与温度上限在 Rust 路上从未生效",
+        "merged": "10-11 08:56"
+      }
+    ],
+    "colleague_prs": [
+      {
+        "repo": "BH3GEI/phonefarm",
+        "number": 35,
+        "author": "anantheparty",
+        "title": "fix(telemetry): detect Harmony shell privilege and preserve non-root metrics",
+        "state": "MERGED",
+        "draft": false,
+        "base": "main",
+        "created": "09-23 10:35",
+        "merged": "09-23"
+      },
+      {
+        "repo": "HGamey/docs",
+        "number": 5,
+        "author": "anantheparty",
+        "title": "docs: 系统交接目标、跨仓路线与一加验收标准",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 01:08",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 26,
+        "author": "anantheparty",
+        "title": "docs: 系统交付差距与历史案例证据口径",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 01:10",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 27,
+        "author": "anantheparty",
+        "title": "feat: 评测证据贯穿归档并执行结论资格门禁",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 01:20",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 28,
+        "author": "anantheparty",
+        "title": "feat: add expert-reviewed resumable experiment campaigns",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 02:33",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 29,
+        "author": "anantheparty",
+        "title": "feat: independent confirmation with frozen noninferiority bounds",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 04:11",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 30,
+        "author": "anantheparty",
+        "title": "feat: add durable model artifact stage protocol",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 04:29",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 31,
+        "author": "anantheparty",
+        "title": "Freeze and replay actual candidate compilation evidence",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 06:38",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 32,
+        "author": "anantheparty",
+        "title": "Show qualification and complete receiver evidence in read-only views",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/evidence-archive",
+        "created": "10-11 06:48",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 33,
+        "author": "anantheparty",
+        "title": "feat(viz): bounded read-only confirmation and model case view",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/evidence-aware-viz",
+        "created": "10-11 07:25",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 34,
+        "author": "anantheparty",
+        "title": "feat: prepare candidates through bounded offline compiler and adapter",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/candidate-compilation-evidence",
+        "created": "10-11 07:55",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 35,
+        "author": "anantheparty",
+        "title": "Supervise native candidate preparation with frozen SDK and layer inputs",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/candidate-prepare-driver",
+        "created": "10-11 09:42",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 37,
+        "author": "anantheparty",
+        "title": "feat: one deterministic system case through phonefarm confirmation",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/independent-confirmation",
+        "created": "10-11 10:40",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 38,
+        "author": "anantheparty",
+        "title": "feat: frozen loaded-temperature confirmation consumer",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/single-system-case",
+        "created": "10-11 10:52",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 48,
+        "author": "anantheparty",
+        "title": "feat(viz): display finite live phonefarm experiment evidence",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 14:59",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 6,
+        "author": "anantheparty",
+        "title": "Document HarmonyOS multitouch game input fallback",
+        "state": "MERGED",
+        "draft": false,
+        "base": "main",
+        "created": "09-23 11:05",
+        "merged": "09-24"
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 17,
+        "author": "anantheparty",
+        "title": "feat(quality): add frozen paired-sequence quality evidence",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 01:22",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 18,
+        "author": "anantheparty",
+        "title": "Gate experiments and conclusions on frozen evidence qualification",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 02:42",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 19,
+        "author": "anantheparty",
+        "title": "fix: enforce shader v2 conditions and automatic experiment leases",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 04:21",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 20,
+        "author": "anantheparty",
+        "title": "Build frozen sampled-input upop artifacts offline",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 04:45",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 21,
+        "author": "anantheparty",
+        "title": "feat: finite storage SR SPIR-V adapter and frozen builder import",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/dynamic-upop-artifact",
+        "created": "10-11 05:12",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 22,
+        "author": "anantheparty",
+        "title": "Add raw single-run confirmation observation producer",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/experiment-qualification",
+        "created": "10-11 05:33",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 23,
+        "author": "anantheparty",
+        "title": "Own immutable Vulkan resources per recording generation and dispatch",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/dynamic-upop-artifact",
+        "created": "10-11 06:52",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 24,
+        "author": "anantheparty",
+        "title": "feat: add bounded inherited native build supervision",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/storage-sampled-adapter",
+        "created": "10-11 07:38",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 25,
+        "author": "anantheparty",
+        "title": "feat: execute receiver-owned independent confirmation sampling",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/confirmation-observation",
+        "created": "10-11 09:17",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 26,
+        "author": "anantheparty",
+        "title": "Export finite r28c arm64 API30 profile with real native build evidence",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/native-build-supervision",
+        "created": "10-11 10:48",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/phonefarm",
+        "number": 27,
+        "author": "anantheparty",
+        "title": "feat: freeze loaded thermal qualification and bounded control probes",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/loaded-thermal-integration-base",
+        "created": "10-11 11:54",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/refbench",
+        "number": 2,
+        "author": "anantheparty",
+        "title": "feat: controlled native LR/HR capture and strict PNG bridge",
+        "state": "OPEN",
+        "draft": true,
+        "base": "main",
+        "created": "10-11 04:58",
+        "merged": null
+      },
+      {
+        "repo": "HGamey/refbench",
+        "number": 3,
+        "author": "anantheparty",
+        "title": "fix: require durable run-scoped native capture completion",
+        "state": "OPEN",
+        "draft": true,
+        "base": "codex/native-paired-capture",
+        "created": "10-11 11:48",
+        "merged": null
+      }
+    ],
+    "colleague_open": 27,
+    "colleague_merged": 2,
+    "colleague_issues": [
+      {
+        "repo": "HGamey/.github",
+        "number": 20,
+        "author": "anantheparty",
+        "title": "[显示指标] 游戏 SurfaceView 的完整呈现窗口与来源合同",
+        "state": "OPEN",
+        "created": "10-11 14:28"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 19,
+        "author": "anantheparty",
+        "title": "[phonefarm 归因合同] 目标 package/TGID/TID/context 所有权与冻结 SPF 语义",
+        "state": "OPEN",
+        "created": "10-11 12:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 18,
+        "author": "anantheparty",
+        "title": "[统计交付] 探索与独立确认分离、预冻结非劣效与案例证据包",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 17,
+        "author": "anantheparty",
+        "title": "[执行合同] Shader v2实际条件转发及自动设备租约",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 16,
+        "author": "anantheparty",
+        "title": "[模型路线] 设计、训练、量化、部署、真机调优的工件状态机",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 15,
+        "author": "anantheparty",
+        "title": "[数据合同] 真实LR/HR及插帧连续输入的配对与来源",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 14,
+        "author": "anantheparty",
+        "title": "[主线闭合] 自主SR候选 → 黑盒Vulkan部署 → A/B质量性能 → 档案",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 13,
+        "author": "anantheparty",
+        "title": "[连续画质] 对齐序列的色偏与时序残差评测及证据合同",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 12,
+        "author": "anantheparty",
+        "title": "[实验资格] 统一可测、可改、可裁决合同并接入评测入口",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/.github",
+        "number": 11,
+        "author": "anantheparty",
+        "title": "[系统交接] 媒体算法寻优 harness 的目标、证据与交付闭环",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 36,
+        "author": "anantheparty",
+        "title": "单个确定性系统候选接通 phonefarm 独立确认与证据归档",
+        "state": "OPEN",
+        "created": "10-11 10:31"
+      },
+      {
+        "repo": "HGamey/game_opt_loop",
+        "number": 25,
+        "author": "anantheparty",
+        "title": "每代专家方向决策与可恢复实验 campaign，贯穿 Shader 与 optimize",
+        "state": "OPEN",
+        "created": "10-11 01:04"
+      }
+    ]
+  }
+}
