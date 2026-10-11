@@ -40,8 +40,13 @@ PF 必须是该新进程组的 leader，且显式提供 `--ndk`；在普通共�
 
 ## 2. 探索结束后的独立确认入口
 
-确认不复用探索结果来证明候选。PF 先冻结规则、候选、负载和至少三轮基线；GOL
-注册轮数与顺序；PF 才能收集每臂独立原始数据。接口顺序为：
+采集命令来自 [phonefarm #25](https://github.com/HGamey/phonefarm/pull/25)，
+原始观测重建来自 #22，消费与独立裁决来自 game_opt_loop #29。
+
+确认不复用探索结果来证明候选。PF 先冻结规则、候选、负载和请求中的角色顺序，
+再采集固定三轮独立基线。schedule 须有 5–32 对，从 `baseline_first=true`
+起交替 AB/BA，最小十臂。GOL 注册 PF 生成的完整计划；看到数据后不能改轮数、
+顺序或判据。接口顺序为：
 
 ```sh
 phonefarm confirmation-driver prepare --request request.json --out session-new
@@ -50,23 +55,39 @@ phonefarm confirmation-driver collect --session session-new --frozen frozen.json
 game_opt_loop confirm judge --frozen frozen.json --samples session-new/samples.json --out confirmation-report.json
 ```
 
-以上是接口形状。真实 transport 缺 `--execute` 时只校验，不产生设备操作，
+以上是接口形状。真实 transport 缺 `--execute` 时返回 `VALIDATED_ONLY`，不产生设备操作，
 prepare 也不会生成供下一条命令使用的 session/plan，因此这组命令不能作为
-可直接连续运行的真实设备示例。显式
+可直接连续运行的真实设备示例。真实 prepare/collect 分别须显式加 `--execute`；
+prepare 的 out 必须是新目录，collect 仍须有效 prepared 会话及 frozen 登记文件。显式
 fake transport 可以执行模拟整链路，但来源始终 synthetic，GOL 结论 BLOCKED。
 fake prepare/collect 顶层为 `SIMULATED_BLOCKED`；exit 0 只表示机械执行完成。
 单轮观测和 GOL judge 仍是 exit 1 / BLOCKED，不能据 shell 成功码宣布实验通过。
 不可将 fake request 改个标签用于真机。驱动范围是明确 serial 的 Android
 root/sysparam/KGSL/电池；HDC、未知 root 或能力明确拒绝。
 
-真实执行的 request 必须先绑定实际设备、前台游戏、确定性负载、时长、候选及
-统计假设。初次接回一加按 [真机验收顺序](oneplus-acceptance.md) 进行，只读资格
+request 使用 `phonefarm/confirmation_driver_request@1`；必需
+`transport{kind:"adb",program,target}`、`package`、`render_comm`、
+`capture_seconds`（2–600）、`lead_seconds`（1–30）、`workload`、非空 sysparam
+candidate、`schedule[{pair_id,a_run_id,b_run_id,baseline_first}]` 和
+`paired_t_assumptions_acknowledged:true`。路径宜绝对，ID 须唯一，不接受自填 gates
+或判据；游戏需已经在前台，驱动不安装或启动应用。完整字段与冻结合同见
+[driver SPEC](https://github.com/HGamey/phonefarm/blob/codex/confirmation-driver/docs/SPEC_CONFIRMATION_DRIVER.md#sessions-and-frozen-bytes)。
+
+初次接回一加按 [真机验收顺序](oneplus-acceptance.md) 进行，只读资格
 通过后再安排持租约的控制验证。prepare 与 collect 之间有注册间隙；驱动会
 复核 boot、原始快照和冻结字节，不能据此推断场景从未变化。
 
 失败或中断后不能重跑同一 heldout ID。恢复前须确认拥有的远端 worker、子组和
 未完成 launch intent；本机 ADB 被杀不代表远端空闲。显式 reconcile 只恢复
 原设置、核验停止与完整快照，并永久关闭旧会话；不会将旧样本改成有效观测。
+
+```sh
+phonefarm confirmation-driver reconcile --session session-new --execute
+```
+
+fake 恢复也必须显式 `--execute`。成功的真实状态为
+`RESTORED_REQUIRES_NEW_SESSION`，fake 为 `SIMULATED_RECONCILED`；两者均不授予
+样本资格或证明，失败继续保留 barrier，旧 ID 不可重跑。
 
 复现采集协议的离线机制，进入所选 PF 源码的 `src/` 目录运行：
 
