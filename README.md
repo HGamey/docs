@@ -8,6 +8,7 @@
 |---|---|
 | `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
 | `plans/2026-10-11-implementation-progress.md` | 本轮 draft PR、集成验证范围、剩余端到端接口与真机门槛 |
+| `plans/harness-runbook.md` | 候选准备、独立确认、只读页面的实际入口与结果含义 |
 | `plans/oneplus-acceptance.md` | 一加 Ace 5 接回后的资格检查、受控验证与整链路证据要求 |
 | `slides/2026-09-24-HGamey-Harness.pptx` | 2026-09-24 项目介绍（harness 视角，含鸿蒙 nova 16 实测） |
 | `diagrams/01-harness-overview` | harness 全貌 |
