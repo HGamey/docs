@@ -28,6 +28,9 @@
 | 自动候选准备 | [game_opt_loop #34](https://github.com/HGamey/game_opt_loop/pull/34)（依赖 #31） | 冻结两端私有工具和候选，实际 compile/verify/adapt/verify 四阶段、有界组监督、原子账本、只读 inspect；355 项测试、严格 clippy，独立工具/SDK竞争/后代/重哈希反例复核 | 此版本只接受 PREPARED_OFFLINE；缺失 SDK 通过私有空 SDK 留下实际拒绝，完整链 false；native host 桥接见 #35，真实 NDK/GPU、游戏 eval 和质量仍未验收 |
 | 自动原生准备 | [game_opt_loop #35](https://github.com/HGamey/game_opt_loop/pull/35)（依赖 #34，消费 PF #24） | 完整有界 SDK 快照、固定四/五源文件合同、实际六阶段与构建/验证两组停止证据；367 项及严格 clippy，通过独立 receipt 篡改与遗留子进程反例 | controlled synthetic SDK 只验证 host 机制；普通真实 NDK 包含链接或超 512MiB 时明确拒绝，真实兼容/Android codegen/GPU 未验收；所有部署/证明标记仍 false |
 | 原生白盒配对 | [refbench #2](https://github.com/HGamey/refbench/pull/2) | 独立 native LR/HR 与候选输出分离、固定同帧参数、raw 导出及严格 raw→PNG 质量消费桥；质量模式不能用于性能 | 11 项 host 测试；尚无 APK/GPU 采集；native 来源暂映射 unknown，指标可 PASS 而总体 UNKNOWN；不是实际游戏、没有 FrameGen 中间真值 |
+| 单个确定性系统案例 | [game_opt_loop #37](https://github.com/HGamey/game_opt_loop/pull/37)（基于 #29） | 一次 case plan/run 冻结工具、输入与预算，串接 prepare → freeze → collect → judge；持久 intent/UNKNOWN 停止；355 项及严格 clippy，九项实际案例 CLI，真实 PF + 明确 fake transport 拒绝复核 | 真机载体/温度/功耗/控制资格及真实采样尚待完成；probe 不替代 plan；host 退出不代表远端已停止；loaded preset 仅透传 ID，不放宽数值 |
+| 加载态确认消费 | [game_opt_loop #38](https://github.com/HGamey/game_opt_loop/pull/38)（基于 #37） | 旧冻结指纹保持不变；新温度合同、规则版本、profile/reference/hash 和八项门禁逐项绑定，独立温度窗口原始工件去重；原版本 360 项；`9c6b393` 明确 goal 透传和同字节条件绑定，362 项与严格 clippy | host 合同验收；PF producer/原始重建和真机整窗仍待完成，不按 true cold 标记升级旧观测；缺省目标仍是功耗效率 |
+| 有限真实 NDK 导出 | [phonefarm #26](https://github.com/HGamey/phonefarm/pull/26)（基于 #24） | 官方 r28c/darwin/arm64/API30 明确文件与别名映射、逐块/枚举预算、NOFOLLOW；3490 项/483,954,086 bytes；21 Python 与 535 Rust/default clippy；真实六阶段见下节 | 只支持注册的有限 profile；编译完成不授予 GPU、部署、图像等价或游戏资格 |
 
 单轮观测重建和消费端已通过实际 CLI 合同验证。早期夹具由假设性 driver 声明和转换过的历史 trace 片段构成；#25 新夹具实际执行 host 调度与明确的 fake transport，十份 raw 观测和最终裁决始终 BLOCKED。两者均没有真实设备采集认证。真实训练器、量化器和 Android runtime driver 尚未运行。
 
@@ -36,13 +39,15 @@
 这些功能分支共享文件，审阅和后续整合需遵循实际依赖：
 
 - game_opt_loop 的档案/页面链为 #27 → #32 → #33；候选准备链为 #31 → #34 → #35。#35 消费 PF #24，五输入版本另需 #23 所有权头文件；#26、#28、#29、#30 分别以 main 为基线。
+- 单系统案例 #37 以 #29 为基线，消费 PF #25 的版本化 prepare/collect 协议；更换温度 profile 还需要新的 PF producer/观测合同与消费者验收。
+- 加载态确认消费 #38 以 #37 为基线；有限 NDK 导出 PF #26 以 #24 为基线，原 SDK 快照规则保持严格。
 - phonefarm 的观测链为 #18 → #22 → #25；#25 在 #22 上另外引入 #19 的设备租约并扩展持久恢复状态，集成时保留 #19 完整入口与 #25 更新后的租约模块。
 - phonefarm 的工件/构建链为 #20 → #21 → #24；资源所有权 #23 以 #20 为基线。#17 和 #19 分别以 main 为基线。
 - 本地集成分支同时检查这些功能；各 PR 的独立测试数与集成测试数绑定各自提交。当前没有合并任何 PR。
 
 ## 集成验证如何解释
 
-本轮各功能从远端基线或明确依赖的 draft 分支建立独立分支，再 cherry-pick 到本地集成分支，检查功能同时存在时的实际 CLI 行为。当前共 21 个 draft PR；测试数是对应提交的回归总数，不能相加成更多独立实验证据，也不能换算为真实游戏效果。
+本轮各功能从远端基线或明确依赖的 draft 分支建立独立分支，再 cherry-pick 到本地集成分支，检查功能同时存在时的实际 CLI 行为。当前共 24 个 draft PR；新增 #37/#38/PF #26 独立分支通过。GOL 加载态整合 `d4e5208` 已通过 441 项及严格 clippy；明确 goal 最终整合 `291b0f1` 的默认 harness 443 项及严格 clippy 通过，本次八项可选 native 测试体未执行，实际 native 验证仍绑定此前 `d4e5208`。PF 新 producer 的完整 gate 继续执行。测试数是对应提交的回归总数，不能相加成更多独立实验证据，也不能换算为真实游戏效果。
 
 - game_opt_loop 集成分支 `codex/handoff-game-integration` 在 `d7e5960` 上共 **427 项测试通过**，`clippy --all-targets --all-features -- -D warnings` 通过。包含 #26–#35、实际候选准备及 campaign/证据兼容测试：资格不足不进入前沿、原始扩展与专家决定不丢失、恢复零重复评测。单轮独立确认仍由夹具供数，模型阶段由假驱动执行；八项 native CLI 测试显式启用并实际执行。日志在 `integration_game_native_bounded_workers/`，可执行文件 SHA 为 `dbcc34d5d4621998cdd2145eb1ba6956dd46f680eefcff17099af4f93dad4fe2`。旧 `5149a33` 的 415 项仍作为对应提交的历史记录。
 - phonefarm 集成分支 `codex/handoff-phonefarm-integration` 在生产源码 `f88188c` 上共 **634 项测试通过**，包含 #17–#25；default clippy exit 0，有 67 个告警标题，未宣称 strict clean。日志在 `integration_phone_schema_bounded_workers/`，PF 二进制 SHA 为 `5abd65372e3da6dae3a932d97617489b8f4f86cbe1d55a059d5785ff3cc5b397`；之后 `c27d1cc` / `6025119` 仅同步 #19/#25 证据文档。测试调用固定 `5149a33` / SHA `589667fa…` 的 GOL，完整 driver 夹具保留 synthetic/BLOCKED；ADB/HDC 真机调用 0。此前 `cd71c4e` 的 634 项、`8e819ff` 的 602 项及历史片段 freeze→10 观测→judge PASS 保留为对应旧提交的离线证据，不能用于证明真实采集或游戏收益。native host/hook 验证仍不证明 GPU 执行或完成。
@@ -54,7 +59,26 @@
 - #35 在 `70141d5` 上 367 项与严格 clippy 通过，发布 `afce270` 为证据归档。实际四/五输入正例均完成六阶段、八 helper 同属私有构建组；missing SDK 仍 BLOCKED。独立审查证实 rehashed nested receipt 必须与原 stdout 一致，遗留关闭管道子进程保持 UNKNOWN，验证阶段不执行。根集成首次已过八项 native 测试，但两项旧额外耗时断言失败；PF 新 schema 首轮也有三秒 stdin 测试限时失败，单独同预算复验通过。保留失败记录后，两仓以 **`RUST_TEST_THREADS=4`** 重新完整回归，分别通过 **427/634 项**；这次复验未改源码、生产预算或测试限时。
 - #23 的独立审查实际复现了失败 Vulkan create 返回未定义输出句柄时误销毁的反例；修复后同一反例 exit 0。生产 hook 拒绝没有 source/layout/target/compute 合同的旧启发式路线，离线 ownership 通过不能用来开启注入。
 - 测试日志与原始 JSON 保存在本机 `phonefarm/tasks/system_handoff_20261011/` 及各 worktree 的 `tasks/`。集成分支目前仅本地存在；这些记录不代表 GitHub CI 已通过。
-- 本轮无真机部署、真实训练或模型 API 调用；**0 模型 API 调用**。内部代码开发与评审不作为被测模型的实验成本。
+- 上述已完成的离线验收批次无真机部署、真实训练或模型 API 调用；**0 模型 API 调用**。随后的一加真机阶段独立记录在下节，不能将这条 0-device 声明扩大到新阶段。内部代码开发与评审不作为被测模型的实验成本。
+
+## 2026-10-12 一加与真实 Android 工具链阶段
+
+用户已接回一加并授权并行推进。设备操作只由 measurement owner 执行，其他 agent 并行进行载体构建、案例入口和接收端温度模块。新证据在本机 `phonefarm/tasks/oneplus_live_20261012/`；未合并 PR，未调用模型 API，未重新 root/刷机或删除用户应用。
+
+| 工作 | 实际已完成 | 尚待完成 |
+|---|---|---|
+| 设备身份 | PKG110，Android 16，Magisk uid0、SELinux Enforcing；实际 serial/boot 与 KGSL/控制节点只读记录 | 节点持续生效、完整恢复及真实采样资格 |
+| 游戏状态 | 终末地 1.5.3 / code 50，显式 activity 启动并点击继续后进入可玩的 3D 营地；采样窗外实际执行相机滑动与反向滑动，三张 2376×1080 原图及六条带起止时间的命令已存档 | 近似视角返回不能证明场景精确复位；尚无正式游戏性能采样或优化收益；后台原神下载状态仍需排除或明确记录 |
+| Mac Android 工具链 | 官方 command-line tools 校验 SHA 后安装 NDK 28.2.13676358、build-tools 35.0.0、android-35；原始 NDK 8897 项/约 2.96GB/23 个链接，确实超过原快照合同；[PF #26](https://github.com/HGamey/phonefarm/pull/26) 导出已审阅/发布/本地整合 | 新整体 gate；没有放宽原 regular-only 快照门禁 |
+| refbench APK | PR #2 的 `ad251d8` 实际构建成功，10.66s，源文件前后 hash 不变；arm64 APK 1,405,348 bytes，SHA `cb59df213d2e3ff9ea433702aba36e9c10d6ebb4078a9c994a4dcf3d62858db7`；签名和 ELF 检查完成；持设备租约安装 4.198s、exit 0 | 运行、Vulkan/GPU 完成、LR/HR 导出和实际来源核验；安装成功尚无运行证明 |
+| 六阶段真实 native 编译 | GOL `70141d5` + PF `f88188c` + 明确的有限真实 NDK profile，ownership5 六阶段完成并确认组停止；130.96s，arm64 层 3,085,992 bytes，SHA `b74ce25c577ae3ae0b363e54739f166ac13244cacaa2d4fdb8254626bdd9f21b`；三份 SPIR-V 实际 `spirv-val` exit 0 | GPU 执行、像素等价、布局/目标/计算状态、真实游戏挂点；全部 deployable/proof/promotion 仍 false |
+| 温度规则 | 只读取得实际 typed sensor/trip/HAL；HAL CPU/GPU severe 95°C、skin 60°C，当前 battery 约 41°C；新增模块按域上限和稳定窗口判读；PF `2a49bd2` 先冻结规则、无候选暖机，再冻结初始快照；针对性温度 11 项、qualification 14 项、观测 CLI 18 项通过，完整十臂 fake 链仍 BLOCKED | 新源码完整 gate、控制 probe 实测和真实 ENV/整窗消费者；详见 [一加验收顺序](oneplus-acceptance.md) |
+| 电池功耗 | 发现原 sampler 固定 µA 假设不适用于直接解释本机读数；同型号家族 Android 16 官方源和 charge_counter 变化支持 mA/充电负号方向的待验证解释 | 实际内核/驱动绑定、明确单位 adapter、停充与完整放电窗口；`power_now=0` 不当有效功耗 |
+| 单案例入口 | [GOL #37](https://github.com/HGamey/game_opt_loop/pull/37) `a06c751`，355 项与严格 clippy 通过；[GOL #38](https://github.com/HGamey/game_opt_loop/pull/38) `9c6b393` 加载态消费及明确 goal，362 项通过；最终整合 `291b0f1` 默认 harness 443 项/严格 clippy 通过，保留此前 `d4e5208` 的实际 native 八项记录；明确 fake transport 的实际 CLI 仍为 SIMULATED_BLOCKED | 真实 prepare/collect/judge、三基线和五对独立确认；首个真实目标明确选择 `render_cadence`，功耗数值不作为该目标的合格指标 |
+
+真实 native 编译证据保存在额外的 `real-host-build-summary.json`。历史 journal 的 `android_codegen_validated=false` / `real_ndk_validation=not_run` 未被改写；新增观察只证明工具确实生成 Android 工件，不把历史保守字段改成已部署。温度 preset 的提高也不能替代稳定性、放电、控制与恢复证据。
+
+实验过程按实际检查点追加到 `oneplus_live_20261012/reporting/`。保留原 PNG、命令、失败记录、工具及源文件 hash；有实际起止时钟的截图绑定命令，旧截图仅有文件修改时间时明确标记采集时间未认证。截图在性能窗口外获取，能力自检、离线机制、真实性能三类结果分别解释。后续 PPT 使用该索引，只有实际有效采样才能生成性能收益图表。
 
 ## 剩余系统接口与完成条件
 
