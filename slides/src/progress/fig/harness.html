@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>harness 全貌</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 600px; padding: 18px 20px; display: flex; gap: 0; align-items: stretch; }
+  .col { border-radius: 16px; border: 2.5px solid; padding: 14px; display: flex; flex-direction: column; gap: 9px; }
+  .t { font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 4px; }
+  .it { border-radius: 8px; color: #fff; font-size: 18px; font-weight: 600; text-align: center; padding: 10px 6px; position: relative; }
+  .new::after { content: "新"; position: absolute; right: -6px; top: -8px; background: #FAB219; color: var(--ink); font-size: 12px; font-weight: 700; border-radius: 99px; padding: 1px 6px; }
+  .left { width: 270px; border-color: var(--ours); background: var(--ours-soft); } .left .t { color: var(--ours); } .left .it { background: var(--ours); }
+  .mid { width: 470px; border-color: var(--node); background: var(--node-soft); } .mid .t { color: var(--node); } .mid .it { background: var(--node); }
+  .right { width: 270px; border-color: var(--device); background: var(--device-soft); } .right .t { color: var(--device); } .right .it { background: var(--device); }
+  .mid .it small { display: block; font-size: 13px; font-weight: 400; opacity: .9; margin-top: 2px; }
+  .gap { width: 75px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px; font-size: 15px; color: var(--ink-2); }
+  .ar { font-size: 26px; color: #2F86D6; line-height: 1; text-align: center; }
+  .gatebox { border: 1.5px dashed var(--ours); color: var(--ours); background: #fff; border-radius: 8px; font-size: 13px; padding: 6px 4px; text-align: center; width: 70px; line-height: 1.35; }
+  .plat { background: #fff; border: 1.5px solid var(--device); border-radius: 8px; padding: 8px; font-size: 15px; color: var(--device); text-align: center; line-height: 1.5; margin-top: auto; }
+  .note { font-size: 14px; color: var(--ink-2); text-align: center; margin-top: auto; }
+</style></head>
+<body>
+<div class="col left"><div class="t">插口 · 出方案的</div>
+  <div class="it">大模型写画面算子</div>
+  <div class="it">大模型挑系统参数</div>
+  <div class="it">本地变异器</div>
+  <div class="it new">外部进程 / 对比模式</div>
+  <div class="it new">云端 pi + Kimi</div>
+  <div class="it">人</div>
+  <div class="note">都走同一个出方案接口</div></div>
+<div class="gap"><div><div class="ar">→</div>方案</div><div class="gatebox">上机前<br>守门<br>（可选）</div><div><div class="ar">←</div>结论</div></div>
+<div class="col mid"><div class="t">harness</div>
+  <div class="it">任务入口 optimize<small>一句话 → 摸底 → 排计划；能指定层数、代数</small></div>
+  <div class="it">环境控制<small>等冷、停充、静音、还原现场</small></div>
+  <div class="it new">设备锁<small>碰手机的命令自己排队</small></div>
+  <div class="it">测量<small>帧时、帧率、功耗、温度、画面在不在动</small></div>
+  <div class="it new">判定 + 提前停 + 判官自检<small>统计检验；注定留不下的当场停；已知答案考判官</small></div>
+  <div class="it">证据、档案、总报告</div></div>
+<div class="gap"><div><div class="ar">→</div>操作</div><div><div class="ar">←</div>数据</div></div>
+<div class="col right"><div class="t">插口 · 被测的</div>
+  <div class="it">refbench</div>
+  <div class="it">Vulkan-Samples</div>
+  <div class="it">原神</div>
+  <div class="it new">新游戏（零人工接入）</div>
+  <div class="plat"><b>跑在手机节点上</b><br>phone.liyao.space<br>任务、查询、作战室</div></div>
+</body></html>

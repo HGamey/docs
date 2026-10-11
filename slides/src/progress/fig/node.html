@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>手机节点</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 550px; position: relative; }
+  .b { position: absolute; border-radius: 12px; border: 2px solid; padding: 12px 14px; }
+  .h { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .t { font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .ours { border-color: var(--ours); background: var(--ours-soft); } .ours .h { color: var(--ours); }
+  .node { border-color: var(--node); background: var(--node-soft); } .node .h { color: var(--node); }
+  .dev { border-color: var(--device); background: var(--device-soft); } .dev .h { color: var(--device); }
+  .ext { border-color: var(--line); background: var(--panel); } 
+  .pill { display: inline-block; background: #fff; border: 1px solid var(--node); color: var(--node); border-radius: 6px; padding: 2px 8px; margin: 3px 4px 0 0; font-size: 15px; font-weight: 600; }
+  svg { position: absolute; left: 0; top: 0; }
+  .lab { position: absolute; font-size: 14px; color: var(--ink-2); background: #fff; padding: 0 4px; }
+</style></head>
+<body>
+<svg width="1200" height="560">
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8593A6"/></marker></defs>
+  <g stroke="#8593A6" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <path d="M232,300 H292"/>
+    <path d="M492,300 H552"/>
+    <path d="M948,300 H1008"/>
+    <path d="M392,140 V240"/>
+    <path d="M392,470 V362"/>
+    <path d="M770,120 V178"/>
+  </g>
+</svg>
+<div class="b ours" style="left:20px; top:220px; width:212px; height:160px">
+  <div class="h">开发机</div><div class="t">各个 agent 在这里写代码；要上手机时用 <b>pf-node</b> 把命令发出去，日志实时回来</div></div>
+<div class="b ext" style="left:292px; top:240px; width:200px; height:120px">
+  <div class="h" style="color:var(--ink)">加密隧道</div><div class="t">Cloudflare Tunnel<br><b>phone.liyao.space</b></div></div>
+<div class="b ext" style="left:292px; top:40px; width:200px; height:100px">
+  <div class="h" style="color:var(--ink)">云端出方案</div><div class="t">GitHub Actions 里的 pi + Kimi，只读查手机状态</div></div>
+<div class="b ext" style="left:292px; top:470px; width:200px; height:72px">
+  <div class="h" style="color:var(--ink); font-size:18px">浏览器</div><div class="t">作战室，只读，单独密码</div></div>
+<div class="b node" style="left:552px; top:178px; width:396px; height:200px">
+  <div class="h">Mac mini 节点服务</div>
+  <div><span class="pill">/jobs 真机任务</span><span class="pill">/mcp 只读查询</span><span class="pill">/dash 作战室</span></div>
+  <div class="t" style="margin-top:10px">· 设备锁：碰手机的命令自己排队，一次只一个<br>· 自己从 GitHub 拉代码编译更新，不从开发机传文件<br>· 只听本机端口，经隧道出网，要令牌</div></div>
+<div class="b ext" style="left:640px; top:40px; width:260px; height:80px">
+  <div class="h" style="color:var(--ink); font-size:18px">GitHub</div><div class="t">合并后的代码</div></div>
+<div class="b dev" style="left:1008px; top:220px; width:172px; height:160px">
+  <div class="h">手机</div><div class="t">红魔 NX809J<br>Android 16，root<br>USB 连节点</div></div>
+<div class="lab" style="left:236px; top:270px">任务</div>
+<div class="lab" style="left:496px; top:270px">转发</div>
+<div class="lab" style="left:952px; top:270px">adb</div>
+<div class="lab" style="left:398px; top:180px">/mcp</div>
+<div class="lab" style="left:398px; top:405px">/dash</div>
+<div class="lab" style="left:776px; top:140px">自己编译更新</div>
+</body></html>

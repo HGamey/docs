@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>提前停省下的测量</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 600px; padding: 22px 30px; }
+  .legend { display: flex; gap: 26px; font-size: 17px; color: var(--ink-2); margin-bottom: 4px; align-items: center; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
+  svg text { font-family: inherit; }
+</style></head>
+<body>
+<div class="legend">
+  <span><i style="background:var(--ours)"></i>实际测了</span>
+  <span><i style="background:#fff; border:1.5px dashed var(--ink-3)"></i>提前停省下</span>
+  <span style="margin-left:auto" class="cap">每组计划 10 次测量 · 11 组历史数据离线重放</span>
+</div>
+<svg id="c" width="1140" height="540"></svg>
+<script>
+// 来源：BH3GEI/phonefarm #78 描述里的回放表（11 组完整 5v5，每组 10 臂）
+const rows = [
+  ["原神 系统参数 甲", 8, "留不下"],
+  ["原神 系统参数 乙", 6, "留不下"],
+  ["原神 系统参数 丙", 8, "留不下"],
+  ["原神 系统参数 丁", 6, "留不下"],
+  ["原神 系统参数（optimize）", 7, "留不下"],
+  ["原神 渲染流程改写", 6, "留不下"],
+  ["原神 超分算子", 7, "留不下"],
+  ["Vulkan 示例 · 读回", 4, "留不下"],
+  ["Vulkan 示例 · 拆步骤", 5, "留不下"],
+  ["原神 内存提频（旧）", 10, "留下"],
+  ["refbench 带宽", 10, "留下"],
+];
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+const svg = document.getElementById("c"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+const L = 270, R = 960, T0 = 14, band = 41, bar = 26;
+const x = v => L + (R - L) * v / 10;
+for (let t = 0; t <= 10; t += 2) {
+  el("line", { x1: x(t), x2: x(t), y1: T0 - 6, y2: T0 + band * rows.length, stroke: C("--grid") });
+  el("text", { x: x(t), y: T0 + band * rows.length + 20, "text-anchor": "middle", "font-size": 15, fill: C("--ink-3") }, t);
+}
+rows.forEach(([name, run, v], i) => {
+  const y = T0 + i * band;
+  el("text", { x: L - 16, y: y + bar / 2 + 6, "text-anchor": "end", "font-size": 17, fill: C("--ink") }, name);
+  el("rect", { x: L, y, width: x(run) - L, height: bar, rx: 3, fill: C("--ours") });
+  if (run < 10) {
+    el("rect", { x: x(run) + 2, y: y + 1, width: x(10) - x(run) - 3, height: bar - 2, rx: 3, fill: "#fff", stroke: C("--ink-3"), "stroke-dasharray": "5 4", "stroke-width": 1.5 });
+    el("text", { x: (x(run) + x(10)) / 2, y: y + bar / 2 + 6, "text-anchor": "middle", "font-size": 15, fill: C("--ink-2") }, "省 " + (10 - run));
+  }
+  el("text", { x: x(10) + 16, y: y + bar / 2 + 6, "font-size": 16, fill: v === "留下" ? C("--third") : C("--ink-2"), "font-weight": v === "留下" ? 700 : 400 }, v + (v === "留下" ? "（没提前停）" : ""));
+});
+el("text", { x: L, y: T0 + band * rows.length + 46, "font-size": 18, fill: C("--ink"), "font-weight": 600 }, "合计 110 次测量省 33 次（30%）；结论和跑满完全一致");
+</script>
+</body></html>

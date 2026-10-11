@@ -6,9 +6,12 @@ const pptxgen = require("pptxgenjs");
 const JSZip = require(require.resolve("jszip", { paths: [require.resolve("pptxgenjs")] }));
 
 const HERE = __dirname;
-const content = JSON.parse(fs.readFileSync(path.join(HERE, "content.json"), "utf8"));
+// 用法: node build.js content-vNN.json   （每个版本一份 content，输出路径在 meta.out）
+const CONTENT = path.resolve(process.argv[2] || "");
+if (!process.argv[2]) { console.error("用法: node build.js content-vNN.json"); process.exit(2); }
+const content = JSON.parse(fs.readFileSync(CONTENT, "utf8"));
 const auto = content.auto || {};
-const OUT = path.resolve(HERE, content.meta.out);
+const OUT = process.env.OUT ? path.resolve(process.env.OUT) : path.resolve(HERE, content.meta.out); // OUT=... 只用于试跑，别覆盖已发布的版本
 
 // ---------- 主题 ----------
 const FONT = "Microsoft YaHei";
@@ -109,6 +112,7 @@ function table(s, name, data, o, hdrFill, sizes = {}) {
   s.addTable(rows, t);
 }
 
+function deckV01() {
 // ---------- 1 封面 ----------
 section("开场");
 {
@@ -343,6 +347,167 @@ section("附录");
   txt(s, "sum", `合计 ${vars.our_total} 个（其中文档 ${vars.our_docs} 个）；HGamey/phonefarm 上另有 ${vars.sync_prs} 个镜像同步 PR 不计。按合并日期：${Object.entries(vars.our_by_day || {}).map(([d, n]) => `${d} ${n} 个`).join("、")}（太平洋时间；09-25 至 10-10 国庆无合并）。数据截至 ${vars.updated_at} PDT。`, { x: M, y: 5.9, w: CW, h: 0.8, fontSize: 12, color: C.text2 });
 }
 
+}
+
+// ---------- v02 起：按 content.slides 逐页生成（每页一个 type） ----------
+function imgSize(file) {
+  const b = fs.readFileSync(file);
+  if (b.readUInt32BE(0) === 0x89504e47) return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  let i = 2; // JPEG：找 SOF 段
+  while (i < b.length) {
+    const m = b[i + 1], len = b.readUInt16BE(i + 2);
+    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5) };
+    i += 2 + len;
+  }
+  throw new Error("读不出图片尺寸: " + file);
+}
+// 按比例放进 (x,y,w,h) 框里；align: "center" | "top" | "left"
+function fitImage(s, name, src, x, y, w, h, align = "center") {
+  const file = path.resolve(HERE, src), d = imgSize(file), r = d.w / d.h;
+  let iw = w, ih = w / r;
+  if (ih > h) { ih = h; iw = h * r; }
+  const ix = align === "left" ? x : x + (w - iw) / 2, iy = align === "top" ? y : y + (h - ih) / 2;
+  s.addImage({ path: file, x: ix, y: iy, w: iw, h: ih, objectName: name });
+  return { x: ix, y: iy, w: iw, h: ih };
+}
+function statusPill(s, name, st, x, y, w = 1.25) {
+  const col = { "完成": C.accent2, "已合并": C.accent2, "进行中": C.accent3, "部件就位": C.accent1, "计划": C.accent6, "未开始": C.accent6 }[st] || C.accent6;
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { objectName: name + "-bg", x, y, w, h: 0.4, rectRadius: 0.2, fill: { color: col }, line: { type: "none" } });
+  txt(s, name, st, { x, y, w, h: 0.4, fontSize: 12, bold: true, color: C.background1, align: "center", valign: "middle" });
+}
+
+const RENDER = {
+  cover(c) {
+    const s = slide("TITLE", null, c.notes);
+    s.addText(f(c.title), { placeholder: "title" });
+    s.addText(f(c.subtitle), { placeholder: "body" });
+    txt(s, "line", c.line, { x: 0.8, y: 5.6, w: 11.7, h: 0.4, fontSize: 14, color: C.accent6 });
+  },
+  cards(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const n = c.cards.length, gap = 0.3, cw = (CW - gap * (n - 1)) / n, y = 1.45, h = 3.95;
+    c.cards.forEach((k, i) => {
+      const x = M + i * (cw + gap);
+      box(s, `card${i}`, x, y, cw, h, C.background2);
+      txt(s, `card${i}-big`, k.big, { x: x + 0.25, y: y + 0.25, w: cw - 0.5, h: 0.95, fontSize: k.bigSize || 40, bold: true, color: C[k.tone || "accent1"], valign: "middle" });
+      txt(s, `card${i}-label`, k.label, { x: x + 0.25, y: y + 1.25, w: cw - 0.5, h: 0.75, fontSize: 15, bold: true });
+      txt(s, `card${i}-text`, k.text, { x: x + 0.25, y: y + 2.05, w: cw - 0.5, h: h - 2.25, fontSize: 13, color: C.text2, lineSpacingMultiple: 1.15 });
+    });
+    box(s, "bottom-bg", M, 5.75, CW, 0.95, C.accent1);
+    txt(s, "bottom", c.bottom, { x: M + 0.3, y: 5.75, w: CW - 0.6, h: 0.95, fontSize: 16, bold: true, color: C.background1, valign: "middle" });
+  },
+  figure(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const capH = c.caption ? 0.5 : 0;
+    fitImage(s, "fig", c.img, M, 1.3, CW, 5.5 - capH);
+    if (c.caption) txt(s, "cap", c.caption, { x: M, y: 6.85 - capH, w: CW, h: capH, fontSize: 13, color: C.text2, valign: "middle" });
+  },
+  figure_side(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const iw = c.img_w || 8.2;
+    fitImage(s, "fig", c.img, M, 1.3, iw, 5.45, "top");
+    const rx = M + iw + 0.35, rw = W - M - rx;
+    box(s, "side-bg", rx, 1.3, rw, 5.45, C.background2);
+    txt(s, "side-h", c.side_head, { x: rx + 0.25, y: 1.45, w: rw - 0.5, h: 0.5, fontSize: 16, bold: true, color: C.accent1 });
+    txt(s, "side-b", bullets(c.side, { fontSize: 13, paraSpaceAfter: 10 }), { x: rx + 0.25, y: 2.0, w: rw - 0.5, h: 4.6 });
+  },
+  shots(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const tot = c.images.reduce((a, im) => a + (im.weight || 1), 0), gap = 0.35;
+    let x = M;
+    c.images.forEach((im, i) => {
+      const w = (CW - gap * (c.images.length - 1)) * (im.weight || 1) / tot;
+      const r = fitImage(s, `shot${i}`, im.src, x, 1.3, w, 5.0, "top");
+      s.addShape(pres.shapes.RECTANGLE, { objectName: `shot${i}-frame`, x: r.x, y: r.y, w: r.w, h: r.h, fill: { type: "none" }, line: { color: HEX.accent5, width: 0.75 } });
+      txt(s, `shot${i}-l`, im.label, { x, y: 6.4, w, h: 0.4, fontSize: 13, color: C.text2, align: "center" });
+      x += w + gap;
+    });
+  },
+  quality(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const lw = 6.7;
+    fitImage(s, "chart", c.chart, M, 1.35, lw, 4.6, "top");
+    txt(s, "chart-cap", c.chart_caption, { x: M, y: 5.0, w: lw, h: 1.7, fontSize: 13, color: C.text2 });
+    const rx = M + lw + 0.3, rw = W - M - rx, lab = 0.85, n = c.crops.length, gap = 0.12;
+    const cw = (rw - lab - gap * (n - 1)) / n;
+    let r;
+    c.crops.forEach((src, i) => { r = fitImage(s, `crop${i}`, src, rx + lab + i * (cw + gap), 1.35, cw, 5.3, "top"); });
+    const third = r.h / 3;
+    c.row_labels.forEach((t, i) => {
+      txt(s, `rl${i}`, t, { x: rx, y: r.y + i * third, w: lab - 0.1, h: third, fontSize: 12.5, bold: true, color: [C.accent3, C.accent1, C.accent2][i], valign: "middle", align: "right" });
+    });
+    txt(s, "crop-cap", c.crop_caption, { x: rx, y: r.y + r.h + 0.08, w: rw, h: 0.4, fontSize: 11, color: C.text2, align: "right" });
+  },
+  crops(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const lab = 1.3, n = c.crops.length, gap = 0.3, cw = (CW - lab - gap * (n - 1)) / n;
+    let r;
+    c.crops.forEach((src, i) => { r = fitImage(s, `crop${i}`, src, M + lab + i * (cw + gap), 1.3, cw, 5.0, "top"); });
+    const third = r.h / 3;
+    c.row_labels.forEach((t, i) => {
+      txt(s, `rl${i}`, t, { x: M, y: r.y + i * third, w: lab - 0.15, h: third, fontSize: 15, bold: true, color: [C.accent3, C.accent1, C.accent2][i], valign: "middle", align: "right" });
+    });
+    txt(s, "crop-cap", c.crop_caption, { x: M, y: r.y + r.h + 0.12, w: CW, h: 0.4, fontSize: 12, color: C.text2, align: "center" });
+  },
+  table(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    if (c.lead) txt(s, "lead", c.lead, { x: M, y: 1.3, w: CW, h: 0.5, fontSize: 15, color: C.text2, valign: "middle" });
+    const y = c.lead ? 1.95 : 1.4;
+    table(s, "tbl", [c.header].concat(c.rows), { x: M, y, w: CW, colW: c.colW, rowH: c.rowH || 0.55, boldCols: c.boldCols || [0], align: c.align }, C.accent1, { head: 13, body: c.fontSize || 13 });
+    if (c.note) txt(s, "note", c.note, { x: M, y: 6.4, w: CW, h: 0.5, fontSize: 12, color: C.text2, valign: "middle" });
+  },
+  steps(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    if (c.lead) { box(s, "lead-bg", M, 1.3, CW, 0.65, C.text1); txt(s, "lead", c.lead, { x: M + 0.3, y: 1.3, w: CW - 0.6, h: 0.65, fontSize: 16, bold: true, color: C.background1, valign: "middle" }); }
+    const y0 = c.lead ? 2.15 : 1.4, n = c.items.length, gap = 0.15, h = (6.75 - y0 - gap * (n - 1)) / n;
+    c.items.forEach((it, i) => {
+      const y = y0 + i * (h + gap);
+      box(s, `st${i}-bg`, M, y, CW, h, i % 2 ? C.background1 : C.background2);
+      circleNum(s, `st${i}`, i + 1, M + 0.25, y + (h - 0.5) / 2, 0.5, C.accent1);
+      txt(s, `st${i}-h`, it.head, { x: M + 1.0, y, w: 3.4, h, fontSize: 17, bold: true, valign: "middle" });
+      txt(s, `st${i}-b`, it.body, { x: M + 4.5, y, w: CW - 6.25, h, fontSize: 13.5, valign: "middle" });
+      statusPill(s, `st${i}-s`, it.status, W - M - 1.5, y + (h - 0.4) / 2);
+    });
+  },
+  split(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const lw = 6.4;
+    txt(s, "l-h", c.left_head, { x: M, y: 1.3, w: lw, h: 0.45, fontSize: 16, bold: true, color: C.accent3 });
+    txt(s, "l-sum", c.left_summary, { x: M, y: 1.8, w: lw, h: 0.9, fontSize: 13, color: C.text1 });
+    table(s, "l-tbl", [["方向", "草稿 PR"]].concat(c.left_rows), { x: M, y: 2.8, w: lw, colW: [2.3, lw - 2.3], rowH: 0.5, boldCols: [0] }, C.accent3, { head: 12, body: 12 });
+    txt(s, "l-foot", c.left_foot, { x: M, y: 5.95, w: lw, h: 0.8, fontSize: 11.5, color: C.text2 });
+    const rx = M + lw + 0.4, rw = W - M - rx;
+    txt(s, "r-h", c.right_head, { x: rx, y: 1.3, w: rw, h: 0.45, fontSize: 16, bold: true, color: C.accent1 });
+    c.right.forEach((it, i) => {
+      const y = 1.85 + i * 1.22;
+      box(s, `r${i}-bg`, rx, y, rw, 1.1, C.background2);
+      txt(s, `r${i}-h`, it.head, { x: rx + 0.2, y: y + 0.08, w: rw - 0.4, h: 0.35, fontSize: 14, bold: true });
+      txt(s, `r${i}-b`, it.body, { x: rx + 0.2, y: y + 0.43, w: rw - 0.4, h: 0.62, fontSize: 12, color: C.text1 });
+    });
+  },
+  appendix_today(c) {
+    const s = slide("CONTENT", c.title, c.notes);
+    const list = auto.our_today || [];
+    const short = (r) => r.replace("BH3GEI/", "").replace("HGamey/", "");
+    const per = Math.ceil(list.length / 2), gap = 0.3, tw = (CW - gap) / 2;
+    [list.slice(0, per), list.slice(per)].forEach((part, k) => {
+      const rows = [["PR", "标题"]].concat(part.map((p) => ({ ...p, title: p.title.replace(/--gate jev/gi, "Jev 守门").replace(/\bgate\b/gi, "守门").replace(/门禁/g, "准入") })).map((p) => [`${short(p.repo)} #${p.number}`, p.title.length > 34 ? p.title.slice(0, 33) + "…" : p.title]));
+      table(s, `col${k}`, rows, { x: M + k * (tw + gap), y: 1.3, w: tw, colW: [1.7, tw - 1.7], rowH: 0.27, boldCols: [0] }, C.accent1, { head: 10.5, body: 10 });
+    });
+    txt(s, "foot", `${auto.day} 合并 ${list.length} 个（太平洋时间）；09-11 以来合计 ${vars.our_total} 个。数据截至 ${vars.updated_at} PDT。`, { x: M, y: 6.6, w: CW, h: 0.3, fontSize: 11, color: C.text2 });
+  },
+};
+
+function deckProgress() {
+  for (const sl of content.slides) {
+    if (sl.section) section(sl.section);
+    const r = RENDER[sl.type];
+    if (!r) throw new Error("未知页面类型: " + sl.type);
+    r(sl);
+  }
+}
+
+
 // ---------- 写文件 + 主题 ----------
 async function applyTheme(file) {
   const zip = await JSZip.loadAsync(fs.readFileSync(file));
@@ -364,6 +529,8 @@ async function applyTheme(file) {
   }
   fs.writeFileSync(file, await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" }));
 }
+
+if (content.meta.layout === "v01") deckV01(); else deckProgress();
 
 (async () => {
   await pres.writeFile({ fileName: OUT });
