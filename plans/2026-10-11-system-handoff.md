@@ -2,6 +2,8 @@
 
 核对日期：2026-10-11。此文记录交接审计与交付计划；日常能力现状仍以 [game_opt_loop/STATUS.md](https://github.com/HGamey/game_opt_loop/blob/main/STATUS.md) 为入口。PR 中的实现、离线通过和真机验收分别记录，不互相替代。
 
+代码交付、跨仓集成与剩余入口见 [本轮实现与验收进度](2026-10-11-implementation-progress.md)。下文的远端能力审计以本轮开始时的 main 为准，尚未合并的 draft PR 不倒写成主线已有能力。
+
 ## 1. 我们要交付什么
 
 依据 [0917 会议](https://github.com/orgs/HGamey/discussions/1) 与 [0924 会议](https://github.com/orgs/HGamey/discussions/10)，产品是可复用的**媒体算法寻优 harness**。用户给出设备、游戏、目标和预算，系统完成探索或专家引导、候选构建、部署、冻结实验、质量与性能裁决、恢复和证据报告。超分、插帧和神经网络媒体处理是算法路线。
