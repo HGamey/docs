@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>原神一帧</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 640px; padding: 16px 24px; }
+  .legend { display: flex; gap: 22px; font-size: 15px; color: var(--ink-2); align-items: center; margin-bottom: 2px; }
+  .legend i { display: inline-block; width: 13px; height: 13px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  svg text { font-family: inherit; }
+</style></head>
+<body>
+<div class="legend">
+  <span><i style="background:var(--ours)"></i>GPU 时间占比</span>
+  <span><i style="background:var(--ink-3)"></i>写回显存（MB）</span>
+  <span><i style="background:#fff;border:2px solid var(--bad)"></i>写了没人读（白写回）</span>
+  <span><i style="background:#fff;border:2px dashed var(--warn)"></i>什么都不写回，疑似遮挡检测</span>
+  <span style="margin-left:auto" class="cap">按提交顺序 · 第 1 次抓取第 0 帧</span>
+</div>
+<svg id="c" width="1152" height="600"></svg>
+<script>
+// 来源：phonefarm docs/GENSHIN_FRAME_AUDIT.md §2 表（= knobs/evidence/10_frameaudit/analysis.md）
+// [步骤, 尺寸, 角色, 写回KB, 占比%, 标记]  标记: A/B=白写回, C=rp112
+const rows = [
+  ["#17", "128²", "小图", 66, 0.1],
+  ["#18", "128²", "累加", 66, 0.1],
+  ["#19", "256²", "整个产出没人读", 393, 0.2, "B", 393],
+  ["#20", "半屏", "预渲染", 6215, 1.8],
+  ["#26", "全屏", "画场景（G-buffer）", 41430, 22.5],
+  ["#30", "半屏", "深度降采样", 5697, 1.8],
+  ["#36", "128²", "累加", 66, 0.3],
+  ["#37", "512²", "阴影", 524, 0.9],
+  ["#38", "1024²", "阴影（累加）", 2097, 1.4],
+  ["#39", "512²", "", 1049, 0.8],
+  ["#40", "半屏", "半分辨率效果", 2072, 4.9],
+  ["#44", "半屏", "其中第 3 张图没人读", 8804, 1.4, "A", 2070],
+  ["#45", "半屏", "", 4143, 1.3],
+  ["#47", "半屏", "", 4143, 1.3],
+  ["#48–49", "70×5", "小累加 ×2", 4, 0.3],
+  ["#50", "全屏", "打光", 16572, 33.8],
+  ["#51", "全屏", "不写回（疑似遮挡检测）", 0, 1.7, "C"],
+  ["#52", "全屏", "", 8286, 4.3],
+  ["#53", "全屏", "全屏后处理", 10358, 4.9],
+  ["#54–55", "半屏", "累加 ×2", 4144, 5.0],
+  ["#56", "半屏", "", 4143, 0.9],
+  ["#57", "半屏", "", 2589, 0.8],
+  ["#58–60", "1/4 屏", "泛光降采样 ×3", 1554, 1.6],
+  ["#61–63", "188×158", "×3", 357, 0.5],
+  ["#64", "1/4 屏", "", 518, 0.2],
+  ["#65", "全屏", "合成", 8286, 2.8],
+  ["#66", "屏幕", "放大 + 界面", 8299, 4.4],
+];
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+const svg = document.getElementById("c"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+const L1 = 300, R1 = 700, L2 = 760, R2 = 1080, T0 = 26, band = 20.6, bar = 14;
+const x1 = v => L1 + (R1 - L1) * v / 35, x2 = v => L2 + (R2 - L2) * v / 42000;
+el("text", { x: L1, y: 14, "font-size": 14, fill: C("--ink-2"), "font-weight": 600 }, "GPU 时间占比");
+el("text", { x: L2, y: 14, "font-size": 14, fill: C("--ink-2"), "font-weight": 600 }, "写回显存（MB / 帧）");
+rows.forEach(([n, sz, role, w, p, mark, white], i) => {
+  const y = T0 + i * band;
+  if (mark) el("rect", { x: 2, y: y - 3, width: 1146, height: band - 1, rx: 4, fill: mark === "C" ? "#FFF6E0" : "#FDECEC" });
+  el("text", { x: 8, y: y + 11, "font-size": 13, fill: C("--ink-3"), class: "num" }, n);
+  el("text", { x: 70, y: y + 11, "font-size": 13, fill: C("--ink-2") }, sz);
+  el("text", { x: 140, y: y + 11, "font-size": 13.5, fill: mark ? (mark === "C" ? "#8A5A00" : C("--bad")) : C("--ink"), "font-weight": mark ? 700 : 400 }, role);
+  el("rect", { x: L1, y, width: Math.max(1.5, x1(p) - L1), height: bar, rx: 2, fill: C("--ours") });
+  el("text", { x: x1(p) + 6, y: y + 11, "font-size": 12.5, fill: C("--ink-2"), class: "num" }, p + "%");
+  if (w > 0) el("rect", { x: L2, y, width: Math.max(1.5, x2(w) - L2), height: bar, rx: 2, fill: C("--ink-3") });
+  if (white) el("rect", { x: L2, y, width: Math.max(3, x2(white) - L2), height: bar, rx: 2, fill: C("--bad") });
+  el("text", { x: (w > 0 ? Math.max(x2(w), L2 + 3) : L2) + 6, y: y + 11, "font-size": 12.5, fill: C("--ink-2"), class: "num" }, (w >= 1000 ? (w / 1000).toFixed(1) : w === 0 ? "0" : (w / 1000).toFixed(2)) + (white ? `（白写回 ${(white / 1000).toFixed(2)}）` : ""));
+});
+[[L1, R1], [L2, R2]].forEach(([a]) => el("line", { x1: a, x2: a, y1: T0 - 4, y2: T0 + band * rows.length - 4, stroke: C("--ink-3"), "stroke-width": 1 }));
+el("text", { x: 8, y: T0 + band * rows.length + 14, "font-size": 13.5, fill: C("--ink-2") },
+  "共 33 个渲染步骤（合并行 ×2、×3）+ 20 次计算；白写回：#44 第 3 张图 2.07 MB，#19 两张图 0.39 MB，合计 2.46 MB，占全帧显存读写 183.5 MB 的 1.3%");
+</script>
+</body></html>
