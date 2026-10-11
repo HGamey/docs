@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """刷新 content.json 里的 auto 段（PR 计数、同事的 PR/issue 清单），其余手写字段不动。
 
-用法: python3 -I collect.py content-vNN.json [--day YYYY-MM-DD]   （--day 缺省今天，用来列「当天合并」）
+用法: python3 -I collect.py content-vNN.json [--day YYYY-MM-DD] [--since "YYYY-MM-DD HH:MM"]
+      --day 缺省今天，列「当天合并」；--since 给上一版的截止时刻（太平洋时间），列「上一版之后合并」
 依赖: 已登录的 gh CLI。只读 GitHub，不改任何仓库。
 """
 import json, subprocess, sys, datetime, zoneinfo, os
@@ -26,13 +27,16 @@ def sj(ts):
 def main():
     args = sys.argv[1:]
     day = None
+    since_ts = None
+    if "--since" in args:   # 上一版截止时刻（太平洋时间 "YYYY-MM-DD HH:MM"），列出之后合并的
+        i = args.index("--since"); since_ts = datetime.datetime.fromisoformat(args[i + 1]).replace(tzinfo=SJ); del args[i:i + 2]
     if "--day" in args:
         i = args.index("--day"); day = args[i + 1]; del args[i:i + 2]
     if not args:
         sys.exit("用法: python3 -I collect.py content-vNN.json [--day YYYY-MM-DD]")
     path = args[0]
     day = day or datetime.datetime.now(SJ).strftime("%Y-%m-%d")
-    today = []
+    today, after = [], []
     content = json.load(open(path, encoding="utf-8"))
     since = datetime.datetime.fromisoformat(SINCE).replace(tzinfo=SJ)
     our_counts, colleague_prs, our_recent, sync_n, by_day = [], [], [], 0, {}
@@ -45,6 +49,8 @@ def main():
         else:
             our_counts.append({"repo": r, "merged": len(mine), "numbers": sorted(p["number"] for p in mine),
                                "docs": sum(1 for p in mine if p["title"].startswith("docs"))})
+            if since_ts:
+                after += [{"repo": r, "number": p["number"], "title": p["title"]} for p in mine if sj(p["mergedAt"]) > since_ts]
             today += [{"repo": r, "number": p["number"], "title": p["title"]} for p in mine if sj(p["mergedAt"]).strftime("%Y-%m-%d") == day]
             for p in mine:
                 by_day[sj(p["mergedAt"]).strftime("%m-%d")] = by_day.get(sj(p["mergedAt"]).strftime("%m-%d"), 0) + 1
@@ -75,6 +81,9 @@ def main():
         "day": day,
         "our_today": sorted(today, key=lambda p: (p["repo"], p["number"])),
         "our_today_n": len(today),
+        "since_prev": since_ts.strftime("%Y-%m-%d %H:%M") if since_ts else None,
+        "our_since": sorted(after, key=lambda p: (p["repo"], p["number"])),
+        "our_since_n": len(after),
         "our_docs": sum(c["docs"] for c in our_counts),
         "our_by_day": dict(sorted(by_day.items())),
         "sync_prs": sync_n,

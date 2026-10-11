@@ -385,7 +385,13 @@ const RENDER = {
   },
   cards(c) {
     const s = slide("CONTENT", c.title, c.notes);
-    const n = c.cards.length, gap = 0.3, cw = (CW - gap * (n - 1)) / n, y = 1.45, h = 3.95;
+    const n = c.cards.length, gap = 0.3, cw = (CW - gap * (n - 1)) / n, y = 1.45, h = c.cardH || 3.95;
+    if (c.stats) {
+      box(s, "stats-bg", M, y + h + 0.2, CW, 0.7, C.background1);
+      s.addShape(pres.shapes.RECTANGLE, { objectName: "stats-frame", x: M, y: y + h + 0.2, w: CW, h: 0.7, fill: { type: "none" }, line: { color: HEX.accent5, width: 1 } });
+      const sw = CW / c.stats.length;
+      c.stats.forEach((st, i) => txt(s, `stat${i}`, [{ text: f(st.v) + " ", options: { bold: true, color: C.accent1, fontSize: 18 } }, { text: f(st.l), options: { color: C.text2, fontSize: 12 } }], { x: M + i * sw + 0.2, y: y + h + 0.2, w: sw - 0.3, h: 0.7, valign: "middle" }));
+    }
     c.cards.forEach((k, i) => {
       const x = M + i * (cw + gap);
       box(s, `card${i}`, x, y, cw, h, C.background2);
@@ -487,14 +493,14 @@ const RENDER = {
   },
   appendix_today(c) {
     const s = slide("CONTENT", c.title, c.notes);
-    const list = auto.our_today || [];
+    const list = (c.source === "since" ? auto.our_since : auto.our_today) || [];
     const short = (r) => r.replace("BH3GEI/", "").replace("HGamey/", "");
     const per = Math.ceil(list.length / 2), gap = 0.3, tw = (CW - gap) / 2;
     [list.slice(0, per), list.slice(per)].forEach((part, k) => {
       const rows = [["PR", "标题"]].concat(part.map((p) => ({ ...p, title: p.title.replace(/--gate jev/gi, "Jev 守门").replace(/\bgate\b/gi, "守门").replace(/门禁/g, "准入") })).map((p) => [`${short(p.repo)} #${p.number}`, p.title.length > 34 ? p.title.slice(0, 33) + "…" : p.title]));
       table(s, `col${k}`, rows, { x: M + k * (tw + gap), y: 1.3, w: tw, colW: [1.7, tw - 1.7], rowH: 0.27, boldCols: [0] }, C.accent1, { head: 10.5, body: 10 });
     });
-    txt(s, "foot", `${auto.day} 合并 ${list.length} 个（太平洋时间）；09-11 以来合计 ${vars.our_total} 个。数据截至 ${vars.updated_at} PDT。`, { x: M, y: 6.6, w: CW, h: 0.3, fontSize: 11, color: C.text2 });
+    txt(s, "foot", `${c.source === "since" ? auto.since_prev + " 之后" : auto.day} 合并 ${list.length} 个（太平洋时间）；09-11 以来合计 ${vars.our_total} 个。数据截至 ${vars.updated_at} PDT。`, { x: M, y: 6.6, w: CW, h: 0.3, fontSize: 11, color: C.text2 });
   },
 };
 
