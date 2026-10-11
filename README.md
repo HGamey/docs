@@ -7,6 +7,7 @@
 | 路径 | 内容 |
 |---|---|
 | `slides/2026-09-24-HGamey-Harness.pptx` | 2026-09-24 项目介绍（harness 视角，含鸿蒙 nova 16 实测） |
+| `slides/2026-10-11-HGamey-近一个月进展.pptx` | 2026-09-11 → 10-11 进展（以 BH3GEI 的工作为主线，含同事工作与待协调事项）；生成脚本在 `slides/src/2026-10-11-monthly/`，改 `content.json` 后 `python3 -I collect.py && node build.js` 重新生成 |
 | `diagrams/01-harness-overview` | harness 全貌 |
 | `diagrams/02-repos` | 三个仓库的调用关系 |
 | `diagrams/03-optimize-flow` | 一次优化任务的流程 |
