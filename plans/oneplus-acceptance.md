@@ -14,13 +14,13 @@
 ## 2. 受控能力验证（0 API Token）
 
 - 持有完整实验设备租约；冻结目标、预算、指标来源、冷热门槛、时长/轮数与停止规则。
-- 动态灰层先完成 Android/Vulkan 构建和 GPU 生命周期验收：当前 draft 工件 `deployable=false`。每次替换需保留不可改写的 descriptor 及依赖图像资源，直到关联录制不再使用且所有提交完成；只按 command buffer 分配后反复改写仍不足以通过。
+- 动态灰层先完成 Android/Vulkan 构建和 GPU 生命周期验收：当前 draft 工件 `deployable=false`。phonefarm #23 已交付录制代和逐 dispatch 不可改写资源组的 host 验证，但没有真实 GPU 证据；生产拒绝没有 source/layout/target/compute 合同的旧启发式路线。每次替换的 descriptor 与依赖图像资源须保留到合法录制退役且全部提交完成。
 - 先只读挂层验证目标 Vulkan 管线，再做 copy 等价验证；记录命中而非只看进程存活。
 - 系统控制先应用一个已资格化控制点、回读/持续观测、恢复核验；不能持续锁定就如实降级。
 - 停充只有实际电池放电与窗口证据成立才使功耗进入比较；失败保留功耗 null。
 - 获取符合 manifest 的真实配对连续帧；未知对齐不能获真游戏画质资格。
 - refbench 的 native LR/HR 采集单独运行；其额外 HR 绘制和读回改变负载，`quality_only` 结果不参与普通帧时或功耗比较。
-- 恢复核验失败时保留 state 和排查证据，阻止后续实验；不宣称 REVERTED。
+- 恢复前必须证明本次拥有的远端 worker 与子进程组已停止；本机 ADB 超时不证明远端停止。身份缺口、未完成 launch intent 或恢复核验失败时保留 state 和排查证据，阻止后续实验；不宣称 REVERTED。
 
 ## 3. 整链路候选与确认
 
