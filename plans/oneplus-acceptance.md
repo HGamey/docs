@@ -61,7 +61,7 @@
 
 验收从只读阶段开始；root、编译成功或历史案例都不足以越过部署与实测门槛。
 
-## 2026-10-12 当前会话终态与下一次入场
+## 2026-10-12 早期 E06 会话历史终态
 
 现有`confirmation-driver prepare`确实执行到写前资格：7点/31.71s/最大跨度2°C/HAL0暖机通过，随后完整工具安装和冻结快照建立；首次`thermal_snapshot`退出82。原始失败值缺失，原因UNKNOWN，候选档5与三基线均NOT_RUN。不能把此前绝对cap失败或旧boot跨度失败移作该次原因。
 
@@ -69,4 +69,32 @@
 
 安装阶段的43次调用/94.49s与写前温度留证缺口分别由[组织#22](https://github.com/HGamey/.github/issues/22)、[#21](https://github.com/HGamey/.github/issues/21)跟踪。新源码需完整回归与签名，保持原温度参考和全部资格门禁；再执行同一现有prepare、真实基线与冻结单参数对照。宿主加载或发布速度的改善不能直接称为游戏性能改善。
 
-当前[公开面板](https://phonefarm.osaka.ananthe.party)展示真实终态与限制；390px检查来自本机Chrome模拟移动视口。报告与面板均不授予root控制、提交代理或显示/功耗优化资格。
+当时发布的[公开面板](https://phonefarm.osaka.ananthe.party)展示真实终态与限制；390px检查来自本机Chrome模拟移动视口。报告与面板均不授予root控制、提交代理或显示/功耗优化资格。
+
+
+## 2026-10-12 入场限制记录：518 / f889
+
+上述 E06 恢复仅属于原会话，不能外推到新会话。整合 source `518f082` 已完成 722 项本地 gate；新 loaded/queued prepare 实际运行 121.491s，安装 5 件 helper 后 reader 路径 transport 超时，主工具包安装、候选控制、三基线与 A/B 均未到达。独立 reconcile 实际 15.328s / exit85，当前恢复状态仍 UNKNOWN，持久屏障保留。
+
+[f889 只读诊断 draft #36](https://github.com/HGamey/phonefarm/pull/36) 已完成 730 项本地 gate，使用已签名且绑定来源的工具实际诊断一次：23.969s / host exit0，远端 20s deadline / exit124，raw 1892B。reader.stderr 为 `render_reader: missing terminal request`，reader exit81；两个登记 PID 的端点未找到，但完整进程组扫描和结束标记缺失。不能据此宣布远端空闲、恢复完成或准入新实验。具体上游 producer 失败条件尚未确定。
+
+下一步先完善并验收针对原会话的拥有权恢复协议，核验原 helper 与全部相关进程组；只在持久屏障由真实恢复收据解除后创建新的普通实验租约。保留原阈值与时限，不盲重试 prepare、不手动删除 marker。当前三轮有效基线仍 0/3、优化收益未知。
+
+原件：`oneplus_live_20261012/livephase/endfield-phonefarm-loaded-queued-prepare-518f082/review.json` 与 `livephase/endfield-helper-readonly-diagnostic-f889981/review.json`；对应 SHA-256 `01553f4daeab0dc93568ebdbdaaa74e2439097adf8ffdb170add1c07abd623d2` 和 `df686b22da91805f8bf92b345d525ec4f6e240178307681b60a1f223afc01fdb`。
+
+### 最新检查点：3de 单次退役仍 UNKNOWN
+
+`3de3159` 经 738 项 gate、default Clippy exit0、独立审查和新签名工具
+`80657a…` 接受后，只在原会话执行了一次死进程限定退役。27.5469s 返回
+UNKNOWN：receiver code0，但 stdout/stderr 均为0B，缺 native 终态及完整表。
+不能由包装进程 exit0 推断关闭、删除或组消失。持久屏障保留，未重试，
+新普通租约、商业终末地 API 检查和 GPU buffer 捕获均 NOT_RUN。
+
+原件 `livephase/endfield-native-helper-retirement-3de3159/review.json`，SHA-256
+`6b4a965f6d59d8f1aab4f275a75094bf54cf143c51cb36c001d113b0e4e7ef2f`。
+网站 v6 将此负结果与原记录一同导入，56 个现场阶段并非56个合格实验。
+
+媒体实验的入口是商业游戏实际渲染 API、layer 加载、现有资源读回与参考资格。
+截图不能充当低清算法输入，原厂放大输出不能充当独立高清真值；自有游戏的
+采集成功不授予终末地能力。质量采集与性能对照各自保存范围，先取得可用的
+同帧资源后才开始模型迭代和 PSNR/运行成本验证。

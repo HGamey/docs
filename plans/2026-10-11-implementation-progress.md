@@ -163,7 +163,7 @@ queued-origin 的原三项静态缺陷已修；旧 shell collector v3/v4 在终�
 
 原件目录：`oneplus_live_20261012/livephase/endfield-phonefarm-existing-prepare-30fps/`、`maintenance_existing_prepare_20261012/`、`deployment_phonefarm_20261012/`、`reporting/live-dashboard-publication/`与`reporting/pdf-report-20261012/`。PDF和截图保留本地，不提交二进制。
 
-### 当前推进顺序
+### 当时的推进顺序（系统基线阶段）
 
 1. [温度留证 #21](https://github.com/HGamey/.github/issues/21)：保存同一次采集的有界原值与具体失败键，成功parser与拒绝规则不变。
 2. [固定工具批量安装 #22](https://github.com/HGamey/.github/issues/22)：有限冻结载荷与完整实际校验，collect/reconcile仍重新验收；部分安装故障的UNKNOWN/屏障边界不能写成完整恢复。
@@ -172,3 +172,55 @@ queued-origin 的原三项静态缺陷已修；旧 shell collector v3/v4 在终�
 5. 保留媒体算法主线：真实配对连续画面、Vulkan挂点与GPU等价、专家campaign、实际模型训练/量化/runtime仍按#13-#18独立验收，不能由系统旋钮或网站完成代替。
 
 当前模型API调用0；正式游戏优化幅度、能效收益与端到端自动候选案例仍未验证；epic完成标准与相关draft PR保持开放。
+
+
+## 2026-10-12：真实模型机制与 Web 交付范围修正
+
+- PF 整合 `518f082`：722 项 gate 通过，默认 Clippy exit0 / 54 warnings；实际 loaded/queued prepare 在 helper 阶段失败，主工具包和三基线未到达，独立 reconcile exit85。新的 f889 只读诊断工具经 730 项 gate 后实际执行，远端 exit124 / reader exit81，缺完整组扫描与结束标记，恢复仍 UNKNOWN。旧 E06 的恢复不能用于最新会话。
+- [GOL draft #63](https://github.com/HGamey/game_opt_loop/pull/63)，head `17b7fb8`：真实 TF2.20 固定 443 参数网络、8 梯度/Adam 步、H5 保存重载、FP32 3788B / FP16 权重 3412B TFLite 与 host CPU 调用。实际 heldout 帧 2 的输入来自原始 LR，SHA-256 `9223057a65c4bd8f78324bf44f1652277e96291fda22ef79ff543f374ac97df6`；修正了此前记录使用“声明数组首项”而非实际输入身份的缺陷。10 合同 + 10 实际 CPU 测试通过。Deploy 失败、Evaluate pending，0 Android/GPU/API，不是神经网络自主寻优案例或游戏增益。
+- PDF 修订为 20 页，证据截止 09:18JST，SHA-256 `7474a0e6f455bf9f8a079a7842fbc0f4973befc344402f09465edeba5bb93706`。不覆盖后续 f889 / 17 的检查点；原 18 页保留。
+- 用户指出此前网站像定制展示页。此意见成立：release-005 是六项手选终态报告，没有接通通用 phonefarm 任务与工作流，不能作为完整前端交付。停止向该包添加手选卡片；保留为历史报告。
+- phonefarm 本仓提供真实 CLI / stdio MCP，并无原生 Web GUI；现有 GUI 在 GOL `src/viz`。旧 CLI 只索引 `runs/log.jsonl`，看不到新 confirmation 会话，不能靠手造对局日志补齐。
+- 新通用只读 task/run/step/artifact API 已实际部署到 osaka：按 schema 发现 UI 对局、系统确认、模型流水线与现场实验阶段，使用原 GOL 优化面板产物，独立展示来源/哈希/同步时间。v5 索引为 49 任务、153 UI 对局、2 确认会话、18 模型流水线及 55 现场阶段，其中 39 条以 endfield 命名。55/55 原 review SHA 对账，17 项 Python 测试、实际 HTTP 与本地/公网 Chrome 验收通过；这些数不是成功采样或优化收益次数。缺旧轮次来源的三层统计显示未接入/读取不全，而非零；原格式未伪造。源码 `1046419` + UI/部署 `e44d8c2`，快照 `snapshot_6a622cb6a4bda7e66b3c16cc`。同步时间是 Mac 导出时间，公开服务不连接手机；自动调度未启用，当前按现场终态显式同步。旧静态 release 保留为历史。
+
+上述进展不关闭 epic #11 的任何验收项。设备恢复、真实三基线、原生连续画面、Android 模型推理与独立游戏收益仍需实际证据。
+
+## 2026-10-12：以商业终末地的真实缓冲采集为主线
+
+用户明确纠正：有源码、自有 renderer 能采集，不能回答商业终末地是否可采。
+后续停止用 refbench 或 Godot 采集成功替代终末地证据。已有自有 renderer
+结果只归档其有限机制范围，不能授予商业游戏或鸿蒙能力。
+
+| 目标数据 | 终末地目前状态 | 所需实际证明 |
+|---|---|---|
+| 同帧低清输入与原厂放大输出 | 未取得 | 已存在 GPU 资源可捕获，确定前后事件、资源版本、格式/色彩、完成同步和原始像素 |
+| 独立高清真值 | 未取得 | 完整场景在更高原生分辨率重新渲染，冻结相同相机/时间/随机状态；原厂放大输出不可改名真值 |
+| depth/motion/normal 等辅助数据 | 未取得 | 实际管线生成且可读，识别阶段、编码与关联帧；不能仅由 Vulkan 或 Unity 推断完整 GBuffer |
+| 训练与画质/功耗验证 | 没有商业游戏闭环 | 数据资格和算法插入点成立后才训练；以独立参考计算 PSNR，单独运行性能/放电窗口 |
+
+现有 phonefarm 灰层记录 pass/descriptor 形状，但没有 GPU image 到 host 的
+原始 texture 读回导出。生产替换合同仍拒绝
+`missing_source_layout_target_compute_contract`。现有截图、SF、ftrace 与
+HiSmartPerf 数据不能替代这些算法输入/输出。下一步优先准备成熟 RenderDoc
+捕获工具并核实际 loader/API 条件；Magisk root 不能直接证明商业 APK 已可挂层。
+独立高清需要重渲染或参考构建，单纯拦截已执行指令不会生成它。
+
+新死进程限定退役源码 `3de3159` 通过 738 项全 gate/default Clippy exit0，
+新签名工具 `80657a…` 经独立审查及 root 接受后只执行一次。实机 27.5469s
+返回 UNKNOWN，退役未完成、屏障保留，因此没有新普通租约或商业 API 探测。
+本负结果单独留档并纳入后续平台快照，不重试同条件、不清 marker、不把旧
+E06 恢复成功用于此会话。宿主准备和网站交付不改变采集资格。
+
+本次负结果随后同步为 v6：`snapshot_7db3c3aeb4a2541fe5583ac8`，49 任务、
+229 条记录，其中56个现场阶段、40个 endfield 命名阶段；新报告16/16引用
+hash对账，公网继续使用已验证源码，旧数据快照留存。
+
+官方 RenderDoc v1.46 Android arm64 APK 已取得：官方包 GPG、APK v1/v2
+签名、manifest与AArch64捕获库已实检，约505s/122MB，0设备调用。
+APK SHA-256 `b5bcccd91058093d0b4339e99845c786cdf844f080040c9f6a8ae959f776a3d6`。
+工具自身可调试不代表商业目标可调试；实际安装、layer ingress和资源捕获未
+执行。Mac主控未获官方支持，受支持Linux/Windows主控需另行接通。
+
+研究顺序是：商业游戏现有资源可读性 → 同帧数据身份与参考资格 → 可替换的
+后处理节点 → 模型迭代 → 独立画质、运行成本和能耗对照。系统调频与温度
+只作为执行条件，不再占据算法优化主线。
