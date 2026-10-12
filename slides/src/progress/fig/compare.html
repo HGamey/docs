@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>两个游戏一帧流量对比</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 470px; padding: 22px 30px; }
+  .legend { display: flex; gap: 24px; font-size: 16px; color: var(--ink-2); align-items: center; margin-bottom: 6px; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+  svg text { font-family: inherit; }
+</style></head>
+<body>
+<div class="legend">
+  <span><i style="background:#C9D2DE"></i>有用的读写</span>
+  <span><i style="background:var(--base)"></i>本可留在芯片上的来回搬运</span>
+  <span><i style="background:var(--bad)"></i>写了没人读（白写回）</span>
+  <span><i style="background:#fff;border:2px dashed var(--base)"></i>疑似多余，待画面比对</span>
+  <span style="margin-left:auto" class="cap">每帧显存读写（MB，模型上限）</span>
+</div>
+<svg id="c" width="1140" height="400"></svg>
+<script>
+// 来源：phonefarm docs/MEGACITY_FRAME_AUDIT.md §3（原神列取自 GENSHIN_FRAME_AUDIT.md）
+const games = [
+  { name: "原神", sub: "33 步 · 商业游戏", total: 183.5, white: 2.46, move: 33, suspect: 0,
+    moveLabel: "主深度被 4 步各读一次 ≈33", whiteLabel: "白写回 2.46" },
+  { name: "Megacity", sub: "8 步 · Unity 白盒", total: 282.5, white: 7.73, move: 186, suspect: 23,
+    moveLabel: "4 倍抗锯齿缓冲写出去再读回 ≈186（66%）", whiteLabel: "白写回 7.73", suspectLabel: "疑似 ≈23" },
+];
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+const svg = document.getElementById("c"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+const L = 170, R = 1080, max = 300, x = v => (R - L) * v / max;
+for (let t = 0; t <= max; t += 50) {
+  el("line", { x1: L + x(t), x2: L + x(t), y1: 30, y2: 330, stroke: C("--grid") });
+  el("text", { x: L + x(t), y: 352, "text-anchor": "middle", "font-size": 15, fill: C("--ink-3") }, t);
+}
+games.forEach((g, i) => {
+  const y = 50 + i * 150, h = 64;
+  el("text", { x: L - 18, y: y + 28, "text-anchor": "end", "font-size": 22, "font-weight": 700, fill: C("--ink") }, g.name);
+  el("text", { x: L - 18, y: y + 52, "text-anchor": "end", "font-size": 14.5, fill: C("--ink-2") }, g.sub);
+  const useful = g.total - g.white - g.move - g.suspect;
+  let cx = L;
+  const seg = (v, fill, extra = {}) => { const r = el("rect", Object.assign({ x: cx, y, width: Math.max(3, x(v)), height: h, fill }, extra)); cx += x(v); return r; };
+  const x0 = cx; seg(useful, "#C9D2DE");
+  el("text", { x: x0 + 10, y: y + h / 2 + 6, "font-size": 15, fill: C("--ink") }, "有用 " + useful.toFixed(0));
+  const xm = cx; seg(g.move, C("--base"));
+  el("text", { x: xm + x(g.move) / 2, y: y + h / 2 + 6, "text-anchor": "middle", "font-size": 15, "font-weight": 600, fill: "#fff" }, g.move > 100 ? g.moveLabel : "≈33");
+  const xs = cx;
+  if (g.suspect) { seg(g.suspect, "#fff", { stroke: C("--base"), "stroke-width": 2, "stroke-dasharray": "6 4" }); }
+  const xw = cx; seg(g.white, C("--bad"));
+  el("text", { x: cx + 10, y: y + h / 2 + 6, "font-size": 16, "font-weight": 700, fill: C("--ink") }, g.total + " MB");
+  // 下方注记
+  const notes = [[xw + x(g.white) / 2, C("--bad"), g.whiteLabel]];
+  if (g.suspect) notes.push([xs + x(g.suspect) / 2, C("--base"), g.suspectLabel]);
+  if (g.move < 100) notes.push([xm + x(g.move) / 2, C("--base"), g.moveLabel]);
+  notes.forEach(([nx, col, t], k) => {
+    el("line", { x1: nx, x2: nx, y1: y + h, y2: y + h + 14 + k * 20, stroke: col, "stroke-width": 1.5 });
+    el("text", { x: k === 0 ? nx - 6 : nx, y: y + h + 28 + k * 20, "text-anchor": k === 0 ? "start" : "end", "font-size": 14.5, "font-weight": 600, fill: col }, t);
+  });
+});
+el("text", { x: L, y: 385, "font-size": 16, "font-weight": 600, fill: C("--ink") }, "确定白写回：Megacity 7.73 MB，是原神 2.46 MB 的 3 倍；最大一块是抗锯齿缓冲来回搬运，有人读，要改结构或改 Unity 设置才能省");
+</script>
+</body></html>
