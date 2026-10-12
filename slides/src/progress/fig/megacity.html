@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>Megacity 一帧</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 470px; padding: 16px 24px; }
+  .legend { display: flex; gap: 20px; font-size: 15px; color: var(--ink-2); align-items: center; margin-bottom: 2px; }
+  .legend i { display: inline-block; width: 13px; height: 13px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  svg text { font-family: inherit; }
+</style></head>
+<body>
+<div class="legend">
+  <span><i style="background:var(--ours)"></i>GPU 时间占比</span>
+  <span><i style="background:#C9D2DE"></i>读入（MB）</span>
+  <span><i style="background:var(--ink-3)"></i>写回（MB）</span>
+  <span><i style="background:var(--bad)"></i>白写回</span>
+  <span><i style="background:#FFF4E2;border:1px solid var(--base)"></i>抗锯齿缓冲来回搬运</span>
+  <span><i style="background:#fff;border:2px dashed var(--base)"></i>疑似多余</span>
+  <span style="margin-left:auto" class="cap">city_static · 按提交顺序</span>
+</div>
+<svg id="c" width="1152" height="430"></svg>
+<script>
+// 来源：phonefarm docs/MEGACITY_FRAME_AUDIT.md §1 表（knobs/evidence/12_megacity/analysis.md）
+// [步骤, 尺寸, 角色, 读KB, 写KB, 占比%, 标记, 白写回KB]
+const rows = [
+  ["#3", "4096²", "阴影图", 0, 33554, 41.4],
+  ["#4", "全屏", "深度 + 法线预渲染", 0, 15469, 13.0],
+  ["#5", "全屏 ×4", "主场景，4 倍抗锯齿", 0, 61875, 32.1, "M"],
+  ["#6", "半屏", "环境光遮蔽", 0, 483, 2.7],
+  ["#7", "半屏", "环境光遮蔽模糊", 483, 483, 0.3],
+  ["#8", "全屏 ×4", "读回颜色 + 合成（结果没人用）", 30937, 38672, 5.1, "MW", 7734],
+  ["#9", "全屏 ×4", "再读回深度和颜色，画透明物", 61875, 7734, 4.4, "M"],
+  ["#10", "屏幕", "拷到屏幕（疑似可省读入）", 15469, 15469, 1.1, "S"],
+];
+const css = getComputedStyle(document.documentElement);
+const C = n => css.getPropertyValue(n).trim();
+const svg = document.getElementById("c"), NS = "http://www.w3.org/2000/svg";
+const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+const L1 = 380, R1 = 660, L2 = 720, R2 = 1080, T0 = 34, band = 44, bar = 15;
+const x1 = v => L1 + (R1 - L1) * v / 45, x2 = v => L2 + (R2 - L2) * v / 65000;
+el("text", { x: L1, y: 18, "font-size": 14, fill: C("--ink-2"), "font-weight": 600 }, "GPU 时间占比");
+el("text", { x: L2, y: 18, "font-size": 14, fill: C("--ink-2"), "font-weight": 600 }, "读入 / 写回（MB / 帧）");
+rows.forEach(([n, sz, role, r, w, p, mark, white], i) => {
+  const y = T0 + i * band;
+  if (mark && mark.includes("M")) el("rect", { x: 2, y: y - 5, width: 1146, height: band - 4, rx: 5, fill: "#FFF4E2" });
+  if (mark === "S") el("rect", { x: 2, y: y - 5, width: 1146, height: band - 4, rx: 5, fill: "#fff", stroke: C("--base"), "stroke-dasharray": "6 4", "stroke-width": 1.5 });
+  el("text", { x: 10, y: y + 20, "font-size": 14, fill: C("--ink-3") }, n);
+  el("text", { x: 56, y: y + 20, "font-size": 14, fill: C("--ink-2") }, sz);
+  el("text", { x: 140, y: y + 20, "font-size": 15, fill: C("--ink"), "font-weight": mark ? 700 : 400 }, role);
+  el("rect", { x: L1, y: y + 8, width: Math.max(2, x1(p) - L1), height: bar, rx: 2, fill: C("--ours") });
+  el("text", { x: x1(p) + 6, y: y + 20, "font-size": 13.5, fill: C("--ink-2") }, p + "%");
+  if (r > 0) el("rect", { x: L2, y: y, width: Math.max(2, x2(r) - L2), height: bar, rx: 2, fill: "#C9D2DE" });
+  el("text", { x: (r > 0 ? x2(r) : L2) + 6, y: y + 12, "font-size": 12.5, fill: C("--ink-3") }, r > 0 ? (r / 1000).toFixed(1) : "");
+  el("rect", { x: L2, y: y + bar + 2, width: Math.max(2, x2(w) - L2), height: bar, rx: 2, fill: C("--ink-3") });
+  if (white) el("rect", { x: L2, y: y + bar + 2, width: x2(white) - L2, height: bar, rx: 2, fill: C("--bad") });
+  el("text", { x: x2(w) + 6, y: y + bar + 14, "font-size": 12.5, fill: C("--ink-2") }, (w / 1000).toFixed(1) + (white ? `（白写回 ${(white / 1000).toFixed(2)}）` : ""));
+});
+el("text", { x: 10, y: T0 + band * rows.length + 12, "font-size": 14, fill: C("--ink-2") },
+  "共 8 个渲染步骤 + 1 次计算，读入 108.8 MB + 写回 173.7 MB = 282.5 MB/帧；#5 → #8 → #9 之间抗锯齿缓冲写出去又读回，约 186 MB");
+</script>
+</body></html>
