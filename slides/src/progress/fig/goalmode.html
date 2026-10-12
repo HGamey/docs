@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>目标模式</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 560px; position: relative; }
+  .c { position: absolute; top: 40px; height: 360px; border-radius: 14px; border: 2px solid; padding: 16px 16px; }
+  .n { font-size: 14px; font-weight: 700; opacity: .8; }
+  .h { font-size: 24px; font-weight: 700; margin: 2px 0 10px; }
+  .t { font-size: 15.5px; line-height: 1.6; color: var(--ink-2); }
+  .t b { color: var(--ink); }
+  .human { border-color: var(--base); background: var(--base-soft); } .human .h, .human .n { color: var(--base); }
+  .auto { border-color: var(--ours); background: var(--ours-soft); } .auto .h, .auto .n { color: var(--ours); }
+  .stop { border-color: var(--node); background: var(--node-soft); } .stop .h, .stop .n { color: var(--node); }
+  .step { background: #fff; border: 1.5px solid var(--ours); color: var(--ours); border-radius: 8px; padding: 6px 8px; font-size: 15px; font-weight: 600; text-align: center; margin-bottom: 7px; }
+  .loop { position: absolute; font-size: 14px; color: var(--ours); font-weight: 600; }
+  svg { position: absolute; left: 0; top: 0; }
+  .web { position: absolute; left: 20px; top: 440px; width: 1160px; height: 96px; border-radius: 12px; background: var(--panel); border: 1.5px dashed var(--line); padding: 12px 18px; }
+  .web .h { font-size: 18px; margin: 0 0 6px; color: var(--ink); }
+  .pill { display: inline-block; border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 3px 12px; font-size: 15px; color: var(--ink-2); margin-right: 8px; }
+</style></head>
+<body>
+<svg width="1200" height="560">
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8593A6"/></marker>
+  <marker id="b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B5771E"/></marker></defs>
+  <g stroke="#8593A6" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <path d="M262,220 H300"/>
+    <path d="M862,220 H900"/>
+  </g>
+  
+  <g stroke="#B5771E" stroke-width="2.5" fill="none" marker-end="url(#b)" stroke-dasharray="6 4">
+    <path d="M262,330 H300"/>
+  </g>
+</svg>
+<div class="c human" style="left:20px; width:242px">
+  <div class="n">① 人</div><div class="h">定目标</div>
+  <div class="t">人说一句话，例如<br><b>「原神太费电，想省点电但别卡」</b><br>harness 起草目标书：要改善什么、什么不能变差、能动哪几层、预算多少、何时停<br>人改好、点确认 → <b>冻结</b><br>运行中随时改「掌舵」指令</div></div>
+<div class="c auto" style="left:300px; width:562px">
+  <div class="n">② harness 自己跑，一代接一代 ↻</div><div class="h">自主执行</div>
+  <div style="display:flex; gap:10px">
+    <div style="flex:1">
+      <div class="step">出方案（大模型 / 本地 / 云端）</div>
+      <div class="step">上机前守门（可选）</div>
+      <div class="step">真机换前换后交替测</div>
+      <div class="step">判官定输赢，画面比对</div>
+      <div class="step">留下 / 淘汰，喂给下一代</div>
+    </div>
+    <div style="flex:1; border-left:2px dashed var(--base); padding-left:12px">
+      <div class="n" style="color:var(--base)">每代开始前读「掌舵」</div>
+      <div class="t"><b>停止 · 暂停 · 预算 +N 分钟<br>不要动 X · 只试某一层</b><br>→ 直接照办<br>其他话原文交给出方案的大模型，<b>优先级最高</b>，但白名单仍是硬规定</div>
+    </div>
+  </div>
+</div>
+<div class="loop" style="left:228px; top:342px; width:106px; font-size:13px; text-align:center; color:var(--base)">随时掌舵</div>
+<div class="c stop" style="left:900px; width:280px">
+  <div class="n">③ 自己判断停</div><div class="h">停止和报告</div>
+  <div class="t">任一满足就停：<br>· 达到目标幅度<br>· 时间或代数用完<br>· 跑满最少代数后，连续 2 代没收益 → 写明<b>「这条路没收益」</b><br>· 人叫停<br>→ 交出报告：每代结果、人的掌舵记录、冻结的目标原文</div></div>
+<div class="web"><div class="h">网页（作战室）按这个流程改版</div>
+  <span class="pill">手机槽位</span><span class="pill">目标进度条</span><span class="pill">时间线（大白话）</span><span class="pill">掌舵区：随时改指令 / 停止</span><span class="pill">开发用的任务与日志挪到「维护」页</span></div>
+</body></html>

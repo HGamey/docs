@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><title>总蓝图</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { width: 1200px; height: 490px; padding: 24px 28px; }
+  .goal { font-size: 20px; color: var(--ink-2); margin-bottom: 18px; }
+  .goal b { color: var(--ink); }
+  .row { display: flex; gap: 12px; position: relative; }
+  .st { flex: 1; background: var(--panel); border: 1.5px solid var(--line); border-radius: 12px; padding: 16px 14px; height: 380px; display: flex; flex-direction: column; }
+  .st.cur { border-color: var(--ours); background: var(--ours-soft); }
+  .no { font-size: 15px; color: var(--ink-3); font-weight: 600; }
+  .nm { font-size: 24px; font-weight: 700; margin: 4px 0 10px; }
+  .what { font-size: 16px; line-height: 1.5; color: var(--ink-2); min-height: 96px; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 600; padding: 4px 10px; border-radius: 99px; margin: 10px 0 10px; align-self: flex-start; }
+  .done { background: #E3F4E3; color: #137A13; }
+  .doing { background: #FFF1D1; color: #8A5A00; }
+  .ready { background: var(--ours-soft); color: var(--ours); border: 1px solid #C9DAF5; }
+  .todo { background: #EEF1F5; color: var(--ink-3); }
+  .ev { font-size: 14px; line-height: 1.55; color: var(--ink-2); border-top: 1px solid var(--line); padding-top: 10px; }
+  .ev span { display: block; }
+  .arrow { position: absolute; top: 170px; width: 12px; text-align: center; color: var(--ink-3); font-size: 14px; }
+</style></head>
+<body>
+<div class="goal"><b>目标：</b>AI 自动给真实手游做优化，每个结论都有真机证据</div>
+<div class="row">
+  <div class="st cur"><div class="no">阶段 0</div><div class="nm">地基</div>
+    <div class="what">手机节点上线；判官在真机上校准出准确率</div>
+    <div class="chip doing">◐ 进行中</div>
+    <div class="ev"><span>✓ 手机节点、作战室上线</span><span>✓ 判官真机标定完成</span><span>◐ 四类考题排队中</span></div></div>
+  <div class="st"><div class="no">阶段 1</div><div class="nm">检查</div>
+    <div class="what">拆开原神的一帧，列出多余的步骤和各自开销</div>
+    <div class="chip done">✓ 完成</div>
+    <div class="ev"><span>✓ 原神一帧报告：已经很干净</span><span>✓ 白写回只有 1.3%，省电测不出来</span></div></div>
+  <div class="st"><div class="no">阶段 2</div><div class="nm">做开关</div>
+    <div class="what">挑最值的几种多余步骤，做成可跳过的开关，真机不出错</div>
+    <div class="chip done">✓ 完成</div>
+    <div class="ev"><span>✓ 3 个开关真机命中</span><span>✓ 白写回 3 处 → 0，不崩</span><span>✓ 画面差在噪声内</span></div></div>
+  <div class="st cur"><div class="no">阶段 3</div><div class="nm">AI 自动优化</div>
+    <div class="what">开关 + 系统参数组合，跑 3 代以上，判官定输赢</div>
+    <div class="chip ready">◔ 部件就位</div>
+    <div class="ev"><span>✓ 目标模式</span><span>✓ 开关进自动优化，带画面比对</span><span>✓ 旁路供电测功耗</span></div></div>
+  <div class="st"><div class="no">阶段 4</div><div class="nm">换游戏</div>
+    <div class="what">接入一个没见过的游戏，阶段 1–3 全自动重做</div>
+    <div class="chip ready">◔ 部件就位</div>
+    <div class="ev"><span>✓ PUBG 已装</span><span>◐ Megacity 接入中</span></div></div>
+  <div class="st"><div class="no">阶段 5</div><div class="nm">展示</div>
+    <div class="what">作战室网页、前后对比视频、判官体检报告</div>
+    <div class="chip doing">◐ 部分</div>
+    <div class="ev"><span>✓ 作战室按目标模式改版</span><span>◐ 判官体检报告初版</span><span>○ 对比视频</span></div></div>
+</div>
+</body></html>
