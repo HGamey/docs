@@ -1,6 +1,27 @@
 # HGamey 文档资料
 
-演示文稿、架构图等不属于代码的文档，统一放在这里。项目现状以 [game_opt_loop/STATUS.md](https://github.com/HGamey/game_opt_loop/blob/main/STATUS.md) 为准。
+演示文稿、架构图等不属于代码的文档，统一放在这里。项目现状以 [repos/game_opt_loop/STATUS.md](repos/game_opt_loop/STATUS.md) 为准。
+
+## 规则：代码仓库只放代码
+
+HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）只放代码。说明按下表写到对应位置：
+
+| 内容 | 写在哪 |
+|---|---|
+| 这次改了什么、为什么改 | commit message 正文 |
+| 一个功能或修复的完整说明、验证方法、实验数字、截图 | PR 描述（图片直接拖进 PR） |
+| 长期有效的文档：设计、规格、架构图、进展汇报、实验报告 | 本仓库 |
+
+代码仓库里允许保留的非代码文件：
+
+- 根目录 `README.md`，不超过 40 行：是什么、怎么构建、文档在哪
+- 给 AI 编程助手读的配置：`AGENTS.md`、`CLAUDE.md`、`skills/`、`.cursor/`
+- 许可证：`LICENSE`、`THIRD_PARTY_NOTICES.md`
+- 程序或测试要读取的数据：`tests/`、`fixtures/`、`testdata/`、`evidence/`，以及 phonefarm 的 `tasks/`、`loop_v1/runs*/`
+
+每个代码仓库都有 CI 检查 `code-only`，PR 里新增或修改了其他 `.md`、图片、PPT、PDF、drawio 文件时检查失败。
+
+各代码仓库原有的文档已连同修改历史迁到 `repos/<仓库名>/`，路径与原仓库一致。
 
 ## 目录
 
@@ -21,6 +42,10 @@
 | `diagrams/07-architecture` | 系统架构 |
 
 每张图都有 `.drawio`（可编辑）、`.png`、`.svg` 三个文件。
+
+| `repos/game_opt_loop/` | 从 game_opt_loop 迁来的文档：完整 README、STATUS、DESIGN、GOAL、接入说明 |
+| `repos/phonefarm/` | 从 phonefarm 迁来的文档：完整 README、设计与各 SPEC、拆帧报告、各子目录说明 |
+| `repos/refbench/` | 从 refbench 迁来的文档：完整 README、DESIGN |
 
 ## 约定
 
