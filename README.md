@@ -1,6 +1,6 @@
 # HGamey 文档资料
 
-演示文稿、架构图等不属于代码的文档，统一放在这里。项目现状以 [repos/game_opt_loop/STATUS.md](repos/game_opt_loop/STATUS.md) 为准。
+演示文稿、架构图等不属于代码的文档，统一放在这里。项目现状以 [STATUS.md](STATUS.md) 为准（每周更新）。实验的请求和报告放在 `experiments/`。
 
 ## 规则：代码仓库只放代码
 

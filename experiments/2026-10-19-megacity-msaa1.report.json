@@ -1,0 +1,346 @@
+{
+  "candidate_id": "wb_msaa1",
+  "conditions_observed": {
+    "cool_c_target": 45.0,
+    "cool_per_arm": [
+      {
+        "arm": "knob1",
+        "c": 39.1,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.5,
+        "zone": "cpu-0-1-1"
+      },
+      {
+        "arm": "ctrl1",
+        "c": 39.3,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.9,
+        "zone": "cpullc-0-0"
+      },
+      {
+        "arm": "ctrl2",
+        "c": 40.7,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.8,
+        "zone": "cpu-0-5-1"
+      },
+      {
+        "arm": "knob2",
+        "c": 41.3,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.6,
+        "zone": "cpu-1-0-1"
+      },
+      {
+        "arm": "knob3",
+        "c": 41.5,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.8,
+        "zone": "cpu-0-0-1"
+      },
+      {
+        "arm": "ctrl3",
+        "c": 42.6,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 13.0,
+        "zone": "cpu-0-0-1"
+      },
+      {
+        "arm": "ctrl4",
+        "c": 42.2,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.7,
+        "zone": "cpu-0-4-1"
+      },
+      {
+        "arm": "knob4",
+        "c": 42.6,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.9,
+        "zone": "cpu-0-0-1"
+      },
+      {
+        "arm": "knob5",
+        "c": 43.4,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.4,
+        "zone": "cpu-0-1-1"
+      },
+      {
+        "arm": "ctrl5",
+        "c": 43.4,
+        "fan": {
+          "after": "0",
+          "before": "0",
+          "forced": false
+        },
+        "timeout": false,
+        "waited_s": 12.9,
+        "zone": "cpu-0-0-1"
+      }
+    ],
+    "cool_reached_c": 43.4,
+    "cool_timeout": false,
+    "knob_checks": [
+      {
+        "arm": "knob1",
+        "knobs": [
+          {
+            "actual": "1",
+            "how": "prop",
+            "knob": "msaa",
+            "want": "1"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "arm": "ctrl1",
+        "knobs": [],
+        "ok": true
+      },
+      {
+        "arm": "ctrl2",
+        "knobs": [],
+        "ok": true
+      },
+      {
+        "arm": "knob2",
+        "knobs": [
+          {
+            "actual": "1",
+            "how": "prop",
+            "knob": "msaa",
+            "want": "1"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "arm": "knob3",
+        "knobs": [
+          {
+            "actual": "1",
+            "how": "prop",
+            "knob": "msaa",
+            "want": "1"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "arm": "ctrl3",
+        "knobs": [],
+        "ok": true
+      },
+      {
+        "arm": "ctrl4",
+        "knobs": [],
+        "ok": true
+      },
+      {
+        "arm": "knob4",
+        "knobs": [
+          {
+            "actual": "1",
+            "how": "prop",
+            "knob": "msaa",
+            "want": "1"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "arm": "knob5",
+        "knobs": [
+          {
+            "actual": "1",
+            "how": "prop",
+            "knob": "msaa",
+            "want": "1"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "arm": "ctrl5",
+        "knobs": [],
+        "ok": true
+      }
+    ],
+    "knob_extras": "--es msaa 1",
+    "temp_cap_c": 70.0
+  },
+  "evidence_dir": "/Users/yao/Desktop/code/agent/hgamey-runs/2026-10-19-megacity-msaa1/evidence",
+  "image_check": {
+    "min_psnr_db": 30.0,
+    "psnr_ctrl_vs_ctrl": 28.06,
+    "psnr_knob_vs_ctrl": [
+      30.56,
+      29.71
+    ],
+    "psnr_within_1s": [
+      26.41,
+      27.9
+    ],
+    "static_extras": "--es scene city_static --es run_id hgamey_static --es frames 100000 --es route route_a --es warmup 600 --es settle 7200 --es resscale 1.0 --es vsync off"
+  },
+  "kind": "whitebox",
+  "metrics": {
+    "fps_mean": 29.609199999999998,
+    "fps_p95_ms": 38.97946,
+    "frame_p95_ms": 38.97946,
+    "operator_latency_ms": null,
+    "power_watt": 4.017799999999999,
+    "psnr_db": 29.71,
+    "soc_temp_max_c": 60.6,
+    "unavailable": []
+  },
+  "power_source": {
+    "battery_capacity_pct": "100",
+    "battery_current_now_ua": -1470.5882,
+    "battery_status": "Charging",
+    "bypass": true,
+    "charging_suspended_via": "charge_suspend.sh",
+    "fan_state": "fan_enable=1,fan_speed_level=4,fan_speed_pwm=",
+    "on_battery": false,
+    "power_usable_reason": "旁路供电 (已停充, 整机由 USB 直供, 电池电流 ≈ 0): 用 USB 轨 |V x I|, 含充电器转换损耗; 不能和放电态 (电池轨) 的数混在同一组比",
+    "rail": "battery",
+    "source": "usb_bypass",
+    "usb_input_w_mean": 3.8847
+  },
+  "source": "phonefarm",
+  "status": "REJECT",
+  "verdict": {
+    "alpha_regression": 0.05,
+    "alpha_win": 0.016666666666666666,
+    "aux": {
+      "metrics": {
+        "bw_median": {
+          "a_mean": 5025.0,
+          "b_mean": 4210.0,
+          "ci95": [
+            -1045.0,
+            -608.0
+          ],
+          "diff_pct": -16.219,
+          "p": 0.007937
+        },
+        "gpu_active_mean": {
+          "a_mean": 10.8309,
+          "b_mean": 10.3969,
+          "ci95": [
+            -0.6063,
+            -0.246
+          ],
+          "diff_pct": -4.007,
+          "p": 0.007937
+        },
+        "gpu_clk_mhz_mean": {
+          "a_mean": 655.06,
+          "b_mean": 555.46,
+          "ci95": [
+            -125.268,
+            -73.932
+          ],
+          "diff_pct": -15.205,
+          "p": 0.007937
+        }
+      },
+      "note": "辅助证据, 只报不判: 不进 wins/regressions, 不替代功耗"
+    },
+    "is_pareto_improvement": false,
+    "measure_only": true,
+    "p_value": 0.047619,
+    "per_metric": {
+      "fps_mean": {
+        "a_mean": 29.5716,
+        "b_mean": 29.6092,
+        "ci95": [
+          -0.0274,
+          0.0886
+        ],
+        "diff_mean": 0.0376,
+        "diff_pct": 0.127,
+        "p": 0.15873,
+        "status": "无显著变化"
+      },
+      "frame_p95": {
+        "a_mean": 40.4066,
+        "b_mean": 38.9795,
+        "ci95": [
+          -2.7093,
+          -0.0838
+        ],
+        "diff_mean": -1.4271,
+        "diff_pct": -3.532,
+        "p": 0.047619,
+        "status": "无显著变化"
+      },
+      "power_w_mean": {
+        "a_mean": 3.8366,
+        "b_mean": 4.0178,
+        "ci95": [
+          -0.4214,
+          0.7596
+        ],
+        "diff_mean": 0.1812,
+        "diff_pct": 4.722,
+        "p": 0.452381,
+        "status": "无显著变化"
+      }
+    },
+    "reachable": true,
+    "reason": "仅量上限: 旋钮 msaa 改了画面必然变化, 不作为可采纳优化 (统计结果: 没有任何指标显著改善)",
+    "regressions": [],
+    "stat": "exact_permutation",
+    "wins": [],
+    "would_keep": false
+  },
+  "version": 2
+}
