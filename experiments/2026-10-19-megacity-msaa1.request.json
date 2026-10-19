@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "kind": "whitebox",
+  "candidate_id": "wb_msaa1",
+  "serial": "91253241019A",
+  "package": "com.unity.megacity.metro",
+  "workload": {
+    "carrier": "game_replay",
+    "seconds": 30,
+    "launch": {
+      "extras": "--es scene city_flythrough --es run_id hgamey --es frames 3600 --es route route_a --es warmup 600 --es settle 7200 --es resscale 1.0 --es vsync off",
+      "marker": "megacity_started",
+      "static_extras": "--es scene city_static --es run_id hgamey_static --es frames 100000 --es route route_a --es warmup 600 --es settle 7200 --es resscale 1.0 --es vsync off"
+    }
+  },
+  "conditions": { "cool_c": 45.0, "temp_cap_c": 70.0, "charging_suspend": { "enabled": true } },
+  "protocol": { "rounds": 5, "alternating": true, "p_threshold": 0.05 },
+  "payload": { "knobs": { "msaa": "1" }, "why": "W1: 4x MSAA 每帧约 186 MB 搬运值多少功耗和帧时（上限对照）" }
+}
