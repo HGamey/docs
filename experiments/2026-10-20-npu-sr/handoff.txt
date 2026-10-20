@@ -1,0 +1,72 @@
+mode none frames 300 hz 30
+gpu_read   mean   1.628  p50   1.606  p95   2.006 ms
+cpu_pack   mean   0.603  p50   0.513  p95   0.873 ms
+npu        mean   0.000  p50   0.000  p95   0.000 ms
+cpu_unpack mean   2.821  p50   2.738  p95   3.682 ms
+gpu_write  mean   1.955  p50   1.953  p95   2.346 ms
+total      mean   7.007  p50   6.972  p95   8.062 ms
+
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu frames 300 hz 30
+gpu_read   mean   1.120  p50   1.098  p95   1.416 ms
+cpu_pack   mean   0.623  p50   0.512  p95   0.884 ms
+npu        mean   2.809  p50   2.764  p95   3.095 ms
+cpu_unpack mean   2.873  p50   2.854  p95   3.538 ms
+gpu_write  mean   1.191  p50   1.146  p95   1.538 ms
+total      mean   8.616  p50   8.506  p95   9.673 ms
+
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu zc frames 300 hz 30
+gpu_read   mean   1.122  p50   1.104  p95   1.415 ms
+cpu_pack   mean   0.793  p50   0.810  p95   0.929 ms
+npu        mean   2.849  p50   2.775  p95   3.153 ms
+cpu_unpack mean   2.806  p50   2.734  p95   3.509 ms
+gpu_write  mean   1.206  p50   1.155  p95   1.543 ms
+total      mean   8.776  p50   8.620  p95   9.871 ms
+
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu frames 300 hz 30
+gpu_read   mean   1.142  p50   1.116  p95   1.424 ms
+cpu_pack   mean   0.568  p50   0.512  p95   0.810 ms
+npu        mean   2.997  p50   2.938  p95   3.329 ms
+cpu_unpack mean   2.857  p50   2.833  p95   3.516 ms
+gpu_write  mean   1.193  p50   1.153  p95   1.542 ms
+total      mean   8.757  p50   8.666  p95   9.706 ms
+
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu zc frames 300 hz 30
+gpu_read   mean   1.123  p50   1.105  p95   1.414 ms
+cpu_pack   mean   0.785  p50   0.810  p95   0.862 ms
+npu        mean   2.999  p50   2.956  p95   3.282 ms
+cpu_unpack mean   2.870  p50   2.840  p95   3.565 ms
+gpu_write  mean   1.184  p50   1.149  p95   1.531 ms
+total      mean   8.961  p50   8.903  p95   9.909 ms
+
