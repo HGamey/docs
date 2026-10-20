@@ -1,0 +1,7 @@
+2026-10-20 红魔 NX809J (SM8850, HTP V81), QAIRT 2.42.0.251225 TFLite QNN delegate, benchmark_model nightly
+输入 1x488x1072x3 -> 输出 976x2144 (2 倍超分), 随机权重, 50 次平均, 含输入输出拷贝
+model  backend    nodes        avg_us
+s(2.7GMAC)  npu_int8 6/6  1969 | npu_fp16 4/4  7884 | gpu_fp16 4/4 17995 | cpu4_int8 4/6  77336
+m(7.9GMAC)  npu_int8 6/6  2409 | npu_fp16 4/4  8113 | gpu_fp16 4/4 37957 | cpu4_int8 4/6 205841
+l(14.0GMAC) npu_int8 6/6  2559 | npu_fp16 4/4  9003 | gpu_fp16 4/4 55403 | cpu4_int8 4/6 367306
+单独一次 m npu_int8: 1535 us (第一次跑, 机器更凉)
