@@ -1,0 +1,177 @@
+CHARGE_SUSPENDED /sys/class/qcom-battery/charging_enabled: 1 -> 0
+CHARGE_STATE status=Discharging current_now=-304000 capacity=98 on_battery=yes
+BEGIN idle 1792518209165
+END idle 1792518269219
+BEGIN npu_s_30hz 1792518273273
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7233 p5=7233 median=7233 p95=7233
+INFO: count=1800 first=2794 curr=2754 min=2239 max=7392 avg=2854.19 std=264 p5=2615 median=2816 p95=3211
+INFO: Inference timings in us: Init: 1833603, First inference: 7233, Warmup (avg): 7233, Inference (avg): 2854.19
+END npu_s_30hz 1792518335600
+BEGIN idle 1792518339660
+END idle 1792518399714
+BEGIN gpu_s_30hz 1792518403773
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=78751 p5=78751 median=78751 p95=78751
+INFO: count=1800 first=20687 curr=17557 min=13478 max=26081 avg=18827.5 std=1855 p5=16412 median=18348 p95=21900
+INFO: Inference timings in us: Init: 2586549, First inference: 78751, Warmup (avg): 78751, Inference (avg): 18827.5
+END gpu_s_30hz 1792518466697
+BEGIN idle 1792518470752
+END idle 1792518530806
+BEGIN npu_l_30hz 1792518534860
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7117 p5=7117 median=7117 p95=7117
+INFO: count=1800 first=3324 curr=2721 min=2367 max=9960 avg=3051.26 std=356 p5=2774 median=3020 p95=3386
+INFO: Inference timings in us: Init: 1896237, First inference: 7117, Warmup (avg): 7117, Inference (avg): 3051.26
+END npu_l_30hz 1792518597261
+BEGIN idle 1792518601322
+END idle 1792518661374
+BEGIN handoff_s_30hz 1792518665429
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu frames 1740 hz 30
+gpu_read   mean   1.078  p50   1.036  p95   1.410 ms
+cpu_pack   mean   0.571  p50   0.513  p95   0.810 ms
+npu        mean   2.834  p50   2.765  p95   3.137 ms
+cpu_unpack mean   2.867  p50   2.810  p95   3.554 ms
+gpu_write  mean   1.188  p50   1.116  p95   1.501 ms
+total      mean   8.539  p50   8.373  p95   9.689 ms
+END handoff_s_30hz 1792518725920
+BEGIN idle 1792518729980
+END idle 1792518790035
+BEGIN gpu_s_30hz 1792518794088
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=87214 p5=87214 median=87214 p95=87214
+INFO: count=1800 first=19975 curr=17770 min=12177 max=30522 avg=19105.7 std=2108 p5=16487 median=18559 p95=23142
+INFO: Inference timings in us: Init: 2980968, First inference: 87214, Warmup (avg): 87214, Inference (avg): 19105.7
+END gpu_s_30hz 1792518857463
+BEGIN idle 1792518861517
+END idle 1792518921574
+BEGIN npu_s_30hz 1792518925628
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7299 p5=7299 median=7299 p95=7299
+INFO: count=1800 first=2670 curr=2661 min=2500 max=9017 avg=2830.16 std=367 p5=2604 median=2774 p95=3126
+INFO: Inference timings in us: Init: 1803161, First inference: 7299, Warmup (avg): 7299, Inference (avg): 2830.16
+END npu_s_30hz 1792518987934
+BEGIN idle 1792518991990
+END idle 1792519052044
+BEGIN npu_l_30hz 1792519056100
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7396 p5=7396 median=7396 p95=7396
+INFO: count=1800 first=2922 curr=3421 min=2256 max=7595 avg=3051.19 std=362 p5=2768 median=3001 p95=3405
+INFO: Inference timings in us: Init: 1904219, First inference: 7396, Warmup (avg): 7396, Inference (avg): 3051.19
+END npu_l_30hz 1792519118517
+BEGIN idle 1792519122570
+END idle 1792519182626
+BEGIN handoff_s_30hz 1792519186680
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu frames 1740 hz 30
+gpu_read   mean   1.079  p50   1.014  p95   1.410 ms
+cpu_pack   mean   0.572  p50   0.512  p95   0.810 ms
+npu        mean   2.837  p50   2.774  p95   3.121 ms
+cpu_unpack mean   2.925  p50   2.879  p95   3.626 ms
+gpu_write  mean   1.189  p50   1.122  p95   1.514 ms
+total      mean   8.601  p50   8.493  p95   9.825 ms
+END handoff_s_30hz 1792519246664
+BEGIN idle 1792519250719
+END idle 1792519310773
+BEGIN npu_s_30hz 1792519314827
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7506 p5=7506 median=7506 p95=7506
+INFO: count=1800 first=2689 curr=3135 min=2277 max=7398 avg=2842.75 std=308 p5=2619 median=2787 p95=3150
+INFO: Inference timings in us: Init: 1812239, First inference: 7506, Warmup (avg): 7506, Inference (avg): 2842.75
+END npu_s_30hz 1792519377141
+BEGIN idle 1792519381196
+END idle 1792519441250
+BEGIN gpu_s_30hz 1792519445305
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=82775 p5=82775 median=82775 p95=82775
+INFO: count=1800 first=20762 curr=19491 min=14987 max=33391 avg=18767.6 std=1923 p5=16450 median=18304 p95=22079
+INFO: Inference timings in us: Init: 2981362, First inference: 82775, Warmup (avg): 82775, Inference (avg): 18767.6
+END gpu_s_30hz 1792519508687
+BEGIN idle 1792519512742
+END idle 1792519572796
+BEGIN npu_l_30hz 1792519576851
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7248 p5=7248 median=7248 p95=7248
+INFO: count=1800 first=2893 curr=3004 min=1832 max=9401 avg=3048.72 std=474 p5=2761 median=2997 p95=3351
+INFO: Inference timings in us: Init: 1909456, First inference: 7248, Warmup (avg): 7248, Inference (avg): 3048.72
+END npu_l_30hz 1792519639232
+BEGIN idle 1792519643279
+END idle 1792519703333
+BEGIN handoff_s_30hz 1792519707388
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu frames 1740 hz 30
+gpu_read   mean   1.123  p50   1.036  p95   1.561 ms
+cpu_pack   mean   0.590  p50   0.512  p95   0.810 ms
+npu        mean   2.829  p50   2.758  p95   3.086 ms
+cpu_unpack mean   2.971  p50   2.971  p95   3.637 ms
+gpu_write  mean   1.188  p50   1.134  p95   1.532 ms
+total      mean   8.702  p50   8.563  p95   9.891 ms
+END handoff_s_30hz 1792519767874
+BEGIN idle 1792519771927
+END idle 1792519831985
+BEGIN gpu_s_30hz 1792519836043
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=82299 p5=82299 median=82299 p95=82299
+INFO: count=1800 first=18554 curr=23077 min=14304 max=28816 avg=18940.6 std=2054 p5=16408 median=18327 p95=22867
+INFO: Inference timings in us: Init: 3000099, First inference: 82299, Warmup (avg): 82299, Inference (avg): 18940.6
+END gpu_s_30hz 1792519899440
+BEGIN idle 1792519903496
+END idle 1792519963548
+BEGIN npu_s_30hz 1792519967602
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=4282 p5=4282 median=4282 p95=4282
+INFO: count=1800 first=2704 curr=2965 min=2509 max=7216 avg=2854.93 std=261 p5=2611 median=2812 p95=3223
+INFO: Inference timings in us: Init: 1895759, First inference: 4282, Warmup (avg): 4282, Inference (avg): 2854.93
+END npu_s_30hz 1792520029941
+BEGIN idle 1792520033996
+END idle 1792520094049
+BEGIN npu_l_30hz 1792520098110
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=7501 p5=7501 median=7501 p95=7501
+INFO: count=1800 first=3245 curr=3454 min=2670 max=9991 avg=3041.64 std=327 p5=2760 median=3004 p95=3386
+INFO: Inference timings in us: Init: 1900452, First inference: 7501, Warmup (avg): 7501, Inference (avg): 3041.64
+END npu_l_30hz 1792520160505
+BEGIN idle 1792520164559
+END idle 1792520224619
+BEGIN handoff_s_30hz 1792520228679
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer.im2col.input
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::NullRequant
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::ConvLayer
+[2] tiling.h:242:WARNING:Tried to assign requirement of chunk=0 to dim=3, but 10470000002f (q::DepthToSpace_early) does not have a valid splitting rule. Defaulting to original dim size (3).
+[2] simple_tiler.cc:668:WARNING:SEAN, beginning for q::DepthToSpace_early
+mode npu frames 1740 hz 30
+gpu_read   mean   1.088  p50   1.033  p95   1.413 ms
+cpu_pack   mean   0.573  p50   0.513  p95   0.810 ms
+npu        mean   2.820  p50   2.773  p95   3.138 ms
+cpu_unpack mean   2.865  p50   2.831  p95   3.559 ms
+gpu_write  mean   1.208  p50   1.124  p95   1.528 ms
+total      mean   8.554  p50   8.406  p95   9.776 ms
+END handoff_s_30hz 1792520289257
+DONE
+CHARGE_RESTORED /sys/class/qcom-battery/charging_enabled: -> 1
+CHARGE_STATE status=Charging current_now=-480000 capacity=95 on_battery=no

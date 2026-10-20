@@ -1,0 +1,101 @@
+CHARGE_SUSPENDED /sys/class/qcom-battery/charging_enabled: 1 -> 0
+CHARGE_STATE status=Discharging current_now=-280000 capacity=96 on_battery=yes
+BEGIN idle 1792520462518
+END idle 1792520522571
+BEGIN npu_s_m8_30hz 1792520526628
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=8568 p5=8568 median=8568 p95=8568
+INFO: count=1800 first=3721 curr=4338 min=2839 max=7282 avg=3666.53 std=379 p5=3261 median=3640 p95=4106
+INFO: Inference timings in us: Init: 1871915, First inference: 8568, Warmup (avg): 8568, Inference (avg): 3666.53
+END npu_s_m8_30hz 1792520589002
+BEGIN idle 1792520593058
+END idle 1792520653115
+BEGIN npu_s_m4_30hz 1792520657173
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=10706 p5=10706 median=10706 p95=10706
+INFO: count=1800 first=4905 curr=4358 min=3591 max=9458 avg=4648.55 std=382 p5=4287 median=4610 p95=5052
+INFO: Inference timings in us: Init: 1761854, First inference: 10706, Warmup (avg): 10706, Inference (avg): 4648.55
+END npu_s_m4_30hz 1792520719446
+BEGIN idle 1792520723501
+END idle 1792520783560
+BEGIN npu_s_m9_30hz 1792520787617
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=10066 p5=10066 median=10066 p95=10066
+INFO: count=1800 first=4652 curr=4592 min=3590 max=13420 avg=4786.14 std=617 p5=4328 median=4705 p95=5295
+INFO: Inference timings in us: Init: 1493288, First inference: 10066, Warmup (avg): 10066, Inference (avg): 4786.14
+END npu_s_m9_30hz 1792520849608
+BEGIN idle 1792520853663
+END idle 1792520913716
+BEGIN gpu_s_30hz 1792520917771
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=84783 p5=84783 median=84783 p95=84783
+INFO: count=1800 first=21877 curr=21837 min=15246 max=36023 avg=19039.3 std=2353 p5=16425 median=18242 p95=23598
+INFO: Inference timings in us: Init: 2981545, First inference: 84783, Warmup (avg): 84783, Inference (avg): 19039.3
+END gpu_s_30hz 1792520981145
+BEGIN idle 1792520985207
+END idle 1792521045261
+BEGIN npu_s_m8_30hz 1792521049317
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=8715 p5=8715 median=8715 p95=8715
+INFO: count=1800 first=3663 curr=3511 min=2327 max=14783 avg=3703.63 std=840 p5=3258 median=3589 p95=4100
+INFO: Inference timings in us: Init: 1889747, First inference: 8715, Warmup (avg): 8715, Inference (avg): 3703.63
+END npu_s_m8_30hz 1792521111698
+BEGIN idle 1792521115751
+END idle 1792521175811
+BEGIN npu_s_m4_30hz 1792521179873
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=9636 p5=9636 median=9636 p95=9636
+INFO: count=1800 first=4471 curr=5012 min=3887 max=12871 avg=4721.18 std=653 p5=4293 median=4635 p95=5171
+INFO: Inference timings in us: Init: 1886190, First inference: 9636, Warmup (avg): 9636, Inference (avg): 4721.18
+END npu_s_m4_30hz 1792521242271
+BEGIN idle 1792521246325
+END idle 1792521306382
+BEGIN npu_s_m9_30hz 1792521310447
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=9685 p5=9685 median=9685 p95=9685
+INFO: count=1800 first=4397 curr=4540 min=4232 max=8979 avg=4727.09 std=390 p5=4342 median=4684 p95=5225
+INFO: Inference timings in us: Init: 1896852, First inference: 9685, Warmup (avg): 9685, Inference (avg): 4727.09
+END npu_s_m9_30hz 1792521372840
+BEGIN idle 1792521376900
+END idle 1792521436961
+BEGIN gpu_s_30hz 1792521441023
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=80326 p5=80326 median=80326 p95=80326
+INFO: count=1800 first=19310 curr=19863 min=12408 max=34498 avg=19261.5 std=2506 p5=16459 median=18447 p95=23994
+INFO: Inference timings in us: Init: 2756199, First inference: 80326, Warmup (avg): 80326, Inference (avg): 19261.5
+END gpu_s_30hz 1792521504143
+BEGIN idle 1792521508197
+END idle 1792521568250
+BEGIN npu_s_m8_30hz 1792521572309
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=8438 p5=8438 median=8438 p95=8438
+INFO: count=1800 first=3677 curr=3276 min=3169 max=11524 avg=3672.91 std=620 p5=3267 median=3603 p95=4102
+INFO: Inference timings in us: Init: 1935859, First inference: 8438, Warmup (avg): 8438, Inference (avg): 3672.91
+END npu_s_m8_30hz 1792521634746
+BEGIN idle 1792521638804
+END idle 1792521698862
+BEGIN npu_s_m4_30hz 1792521702926
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=10127 p5=10127 median=10127 p95=10127
+INFO: count=1800 first=4373 curr=4449 min=3854 max=11850 avg=4671.54 std=611 p5=4289 median=4605 p95=5043
+INFO: Inference timings in us: Init: 1860207, First inference: 10127, Warmup (avg): 10127, Inference (avg): 4671.54
+END npu_s_m4_30hz 1792521765288
+BEGIN idle 1792521769342
+END idle 1792521829402
+BEGIN npu_s_m9_30hz 1792521833465
+VERBOSE: Replacing 6 out of 6 node(s) with delegate (TfLiteQnnDelegate) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=9733 p5=9733 median=9733 p95=9733
+INFO: count=1800 first=4857 curr=4799 min=3782 max=15031 avg=4771.37 std=666 p5=4342 median=4686 p95=5215
+INFO: Inference timings in us: Init: 1880223, First inference: 9733, Warmup (avg): 9733, Inference (avg): 4771.37
+END npu_s_m9_30hz 1792521895858
+BEGIN idle 1792521899913
+END idle 1792521959971
+BEGIN gpu_s_30hz 1792521964032
+VERBOSE: Replacing 4 out of 4 node(s) with delegate (TfLiteGpuDelegateV2) node, yielding 1 partitions for subgraph 0.
+INFO: count=1 curr=72847 p5=72847 median=72847 p95=72847
+INFO: count=1800 first=19018 curr=17033 min=12183 max=34851 avg=19091.5 std=2487 p5=16276 median=18422 p95=23647
+INFO: Inference timings in us: Init: 2993117, First inference: 72847, Warmup (avg): 72847, Inference (avg): 19091.5
+END gpu_s_30hz 1792522027406
+DONE
+CHARGE_RESTORED /sys/class/qcom-battery/charging_enabled: -> 1
+CHARGE_STATE status=Charging current_now=-421000 capacity=94 on_battery=no
