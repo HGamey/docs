@@ -1,6 +1,7 @@
 # 用原神真机截帧训练 2 倍超分 (ESPCN 型), 导出给 NPU 的 int8 TFLite
 # 低分辨率输入 = 原帧 2x2 平均下采样 (模拟半分辨率渲染), 目标 = 原帧
-# 用法: python -I train_sr.py <帧目录> <输出目录> [c1 c2 步数]
+# 用法: python -I train_sr.py <帧目录> <输出目录> [c1 c2 步数] [部署输入 宽x高, 缺省 1072x488]
+#   原神渲染精度「低」的渲染分辨率是 1134x514
 import glob, os, sys, json
 import numpy as np
 import tensorflow as tf
@@ -9,7 +10,7 @@ from PIL import Image
 src, out = sys.argv[1], sys.argv[2]
 c1, c2, steps = (int(x) for x in (sys.argv[3:6] if len(sys.argv) > 5 else (32, 32, 4000)))
 os.makedirs(out, exist_ok=True)
-H, W = 488, 1072                      # 部署输入
+W, H = (int(x) for x in (sys.argv[6].split("x") if len(sys.argv) > 6 else (1072, 488)))   # 部署输入
 frames = sorted(glob.glob(f"{src}/ref_*.png"))
 test_names = frames[-4:]              # 最后 4 张留作测试
 train_names = frames[:-4]
@@ -37,6 +38,7 @@ def model(h, w):
     return tf.keras.Model(inp, x)
 
 rng = np.random.default_rng(0)
+tf.keras.utils.set_random_seed(0)
 P = 48                                 # 低分辨率块大小
 def batch(n=32):
     xs, ys = [], []
@@ -86,8 +88,9 @@ conv.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
 conv.inference_input_type = tf.uint8
 conv.inference_output_type = tf.uint8
 tfl = conv.convert()
-name = f"genshin_sr_{c1}_{c2}"
+name = f"genshin_sr_{c1}_{c2}_{W}x{H}"
 open(f"{out}/{name}_int8.tflite", "wb").write(tfl)
+m.save_weights(f"{out}/{name}.weights.h5")
 
 # int8 模型在主机上的画质 (CPU 参考实现), 并导出测试输入给真机
 it = tf.lite.Interpreter(model_content=tfl, experimental_op_resolver_type=tf.lite.experimental.OpResolverType.BUILTIN_WITHOUT_DEFAULT_DELEGATES); it.allocate_tensors()

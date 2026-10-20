@@ -1,0 +1,67 @@
+{
+ "bilinear": 36.52,
+ "bicubic": 39.29,
+ "model_fp32": 43.5,
+ "model_int8_host": 42.94,
+ "per_frame": {
+  "bilinear": [
+   36.75,
+   36.45,
+   36.47,
+   36.41
+  ],
+  "bicubic": [
+   39.56,
+   39.2,
+   39.23,
+   39.17
+  ],
+  "model_fp32": [
+   43.86,
+   43.4,
+   43.41,
+   43.33
+  ],
+  "model_int8_host": [
+   43.26,
+   42.85,
+   42.86,
+   42.79
+  ]
+ },
+ "train_frames": [
+  "ref_00.png",
+  "ref_01.png",
+  "ref_02.png",
+  "ref_03.png",
+  "ref_04.png",
+  "ref_05.png",
+  "ref_06.png",
+  "ref_07.png",
+  "ref_08.png",
+  "ref_09.png",
+  "ref_10.png",
+  "ref_11.png",
+  "ref_12.png",
+  "ref_13.png",
+  "ref_14.png"
+ ],
+ "test_frames": [
+  "ref_15.png",
+  "ref_16.png",
+  "ref_17.png",
+  "ref_18.png"
+ ],
+ "in_quant": [
+  0.003921568859368563,
+  0.0
+ ],
+ "out_quant": [
+  0.004844724666327238,
+  21.0
+ ],
+ "c1": 32,
+ "c2": 32,
+ "steps": 15000,
+ "model": "genshin_sr_32_32_1134x514_int8.tflite"
+}
