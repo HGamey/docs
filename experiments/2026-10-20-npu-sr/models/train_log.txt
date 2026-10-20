@@ -1,0 +1,7 @@
+16 16 15000: {"bilinear": 36.52, "bicubic": 39.29, "model_fp32": 42.64, "model_int8_host": 42.24}
+32 32 15000: {"bilinear": 36.52, "bicubic": 39.29, "model_fp32": 43.5, "model_int8_host": 42.94}
+/Users/yao/Desktop/code/agent/hgamey-runs/2026-10-20-npu-ingame/model/genshin_sr_16_16_1134x514_int8.tflite
+/Users/yao/Desktop/code/agent/hgamey-runs/2026-10-20-npu-ingame/model/genshin_sr_32_32_1072x488_int8.tflite
+/Users/yao/Desktop/code/agent/hgamey-runs/2026-10-20-npu-ingame/model/genshin_sr_32_32_1134x514_int8.tflite
+
+[exited with code 0]
