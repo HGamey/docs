@@ -27,6 +27,10 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 
 | 路径 | 内容 |
 |---|---|
+| `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
+| `plans/2026-10-11-implementation-progress.md` | 本轮 draft PR、集成验证范围、剩余端到端接口与真机门槛 |
+| `plans/harness-runbook.md` | 候选准备、独立确认、只读页面的实际入口与结果含义 |
+| `plans/oneplus-acceptance.md` | 一加 Ace 5 接回后的资格检查、受控验证与整链路证据要求 |
 | `slides/2026-09-24-HGamey-Harness.pptx` | 2026-09-24 项目介绍（harness 视角，含鸿蒙 nova 16 实测） |
 | `slides/2026-10-11-HGamey-近一个月进展.pptx` | **进展 v01**（2026-10-11）：09-11 → 10-11 近一个月进展，以 BH3GEI 的工作为主线 |
 | `slides/HGamey-进展-v02-2026-10-11-手机节点上线与作战室.pptx` | **进展 v02**（2026-10-11）：手机节点上线、作战室、当天合并的 32 个改动；总蓝图、节点架构、harness 全貌、提前停、画质对比图与真机截图 |
