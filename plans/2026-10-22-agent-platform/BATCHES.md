@@ -176,3 +176,10 @@ fleet 明确 sampled/deferred/error；成功零设备仍为 exit 1。Node 与 GO
 
 
 观察批发布进度：harness-ops `f5e101a7e8ffb424a93c4a3901e90f9a94c3cab3`、game_opt_loop `d2d18401bc55a6c249a5e0289447d6aa99371e6e` 已通过必需检查直推 main，并以 ls-remote 核对。phonefarm `da3d2f58c89a5268ce77cc66838452e77d45f1ba` 仍在 verify 分支，main 未更新。其重跑 code-only 的所有步骤 success，但 check-run119904493688 仍 in_progress，正常 push 被 GH013 拒绝。未关闭检查或强推。等待实际终态后仅需同SHA推送，不重做整批验证。GitHub workflow/check状态不一致和一次短重跑记录在 qa/observation-ci-state-mismatch.json。
+
+
+### 观察批最终发布回执（覆盖上段待发布状态）
+
+phonefarm `da3d2f5`、harness-ops `f5e101a`、game_opt_loop `d2d1840` 已全部直接推 main，并用 ls-remote 核对同一SHA。phonefarm check-run119904493688最终completed/success后推送通过；此前GH013拒绝与延迟终态记录保留。harness最终提交的code-only119903474376、Python3.11 119903474296、Python3.14 119903474637均success；GOL重跑check119904487547成功。CI工作流：[PF](https://github.com/HGamey/phonefarm/actions/runs/39801013347)、[harness code-only](https://github.com/HGamey/harness-ops/actions/runs/39801599790)、[node协议](https://github.com/HGamey/harness-ops/actions/runs/39801599650)、[GOL](https://github.com/HGamey/game_opt_loop/actions/runs/39801162942)。
+
+LEASE-OBSERVE-01已勾选；共享合同、本机交接/对话记录/原始回执已更新。最终模拟截图与服务清理回执见qa/fleet-observe-browser-validation.json；GOL最终二进制已构建并签名（首次签名命令误用连字符文件名，纠正为实际game_opt_loop，无未签名执行）。无生产部署、手机操作、真实锁域迁移或原始数据移动。下一批先读PLAN/todo，聚焦LEASE-STORAGE-02中hwcond持久恢复状态与失败处理，随后逐项producer恢复证据。不要重做本批测试，也不切回Doom。
