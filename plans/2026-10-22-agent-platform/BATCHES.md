@@ -360,3 +360,20 @@ normal核339个已知PID全部退出且无lease；negative核160个已知PID全�
 PF [65de801](https://github.com/HGamey/phonefarm/commit/65de801d25a1c1bb083a0d13dcf1c901db0bc290)经actual code-only120113860496（run39861735718）成功；harness [e0818b4](https://github.com/HGamey/harness-ops/commit/e0818b41bb3fb7a9d9d203d58c349348e14b2ec0)经code-only120113919879（run39861754546）及protocol3.11/3.14 120113920234/120113920426（run39861754523）全部completed/success后同SHA直推main并核远端。无PR。
 
 只勾C2B1，下一C2B2显式供电条件与同期指标资格。C2B/C2/03B4/03/JOB-EXEC-03/M3及整体goal保持active，未调用update_goal。
+
+
+## 2026-10-23 持续会话的固定供电与同期能量（PRODUCER-RECOVERY-03B4C2B2）
+
+按 [GRAY-CONTROL-POWER](GRAY-CONTROL-POWER.md) 实现创建时observe/battery固定政策，默认只观察。battery首次采样准备一次、跨轮保持，复用已有ChargeSuspend的原记录/serial/token/context绑定与回读恢复；已放电走observed_no_mutation零控制写。新父@3兼容旧@1/@2恢复，sample能力仍2且接受@2/@3绑定。状态查询只投影宿主持久白名单，不为读状态调用ADB。
+
+每轮power.json与回执保留前后观测。采后供电失败保留原性能数据，只剥离功耗资格；末次证据保存失败由返回快照传入解析，不能被较早成功文件掩盖。全sampler功率沿原口径，新增trace_energy_j/trace_power_w_mean采用同uptime边界的电池V×I线性插值/梯形积分，声明estimated；缺放电或窗口夹持返回null。energy_per_frame仍null，完整分组窗/目标身份另列todo。
+
+Web模板只填现有argv，默认observe、显式battery，不自动POST或覆盖未决请求。固定policy、充电控制修改、前后实际放电、恢复与功率资格分开显示；CLI/API同合同。6个相关Rust各一次通过；node ownership/CLI既有用例各一次、定向JS和390浅/1440深单浏览器流程通过。后续flat initial显示修复仅增量跑相关JS。worker没改不重跑。一次错误Rust selector跑0，纠正模块名后只实际跑1次；原日志保留。
+
+实际PF+nodeHTTP+fakeADB三条会话及foreign短CLI共830次门控传输：跨finite3秒/idle5秒一次停充，恢复读回失败后同context成功382；初始放电零控制写260；缺natural在recover中先核组、归还charge，再严格拒绝完整恢复188；foreign记录在lease/transport前拒绝0。固定4W合成数据得到12J/20J仅证计算链，不是手机能耗。841个已知PID全部退出；缺natural保留1个新的QA隔离required租约及原件，旧B1负例未动。
+
+第三链最后夹具直接索引省略child_pid造成KeyError，原失败result/run-1保留，语义动作已经执行；只对已保存原件补离线断言，再跑未执行foreign短CLI，无重跑会话。qa/gray-control-power-host-summary.json、negative-offline-check、unit-results、ui-validation、source-review、publish索引留本机。无部署/真机/数据迁移或性能收益结论。
+
+PF [86edb56](https://github.com/HGamey/phonefarm/commit/86edb56f2e9e445f16b574a0e00988078793de4c)经actual code-only120122515647（run39864307969）成功；harness [d4d8428](https://github.com/HGamey/harness-ops/commit/d4d8428422cf9273e51c084fd47a0d90fcfef8f5)经code-only120122573729（run39864325073）与protocol3.11/3.14 120122572790/120122573023（run39864324691）全部completed/success后同SHA直推main并ls-remote核对，无PR。
+
+勾B2与限定B，继续C2C画质跨人工等待同owner，后续C2D旧reference/refbench/挂层迁移。C2/03B4/03/JOB-EXEC-03/M3及整体goal仍active，未调用update_goal。

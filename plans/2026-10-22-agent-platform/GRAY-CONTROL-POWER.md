@@ -1,6 +1,6 @@
 # 持续会话的显式供电条件
 
-状态：2026-10-23，03B4C2B2实施合同，尚未实现/验收。承接 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md)。本批只源码和宿主替身，不部署、不操作手机。
+状态：2026-10-23，03B4C2B2已实现并通过相关源码/宿主替身与网页验收，发布记录见 [BATCHES](BATCHES.md)。承接 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md)。本批只源码和宿主替身，不部署、不操作手机。
 
 ## 固定政策与原值所有权
 
@@ -31,3 +31,11 @@ observe沿现有只采集行为，不取得/修改充电控制。battery在首�
 ## 验证范围
 
 相关既有owner/parser/充电绑定回归及一个有裁剪边界的积分数值案例；不重跑未改worker。实际PF+fakeADB/HTTP验证跨round一次停充/恢复、已放电无写、失败同context恢复，以及缺natural时可独立归还charge但整个会话仍required。可以沿前批runner分少量有区别的会话，不重跑旧游戏实验。所有失败报告、隔离屏障和原件保留，不能为测试通过清掉恢复义务。
+
+## 本批验收边界
+
+6个相关Rust用例各实际执行一次通过，另一个初次错误selector跑0个后以正确名称执行；原日志保留。node ownership与CLI既有用例各一次、定向JS及390浅/1440深网页单流程通过。最后flat initial形状修复只增量重跑相应JS，旧截图标明在此前。worker未改未重跑。
+
+实际PF+node HTTP+fakeADB运行三条隔离会话与一条foreign record短CLI，共830次门控传输。跨轮一次停充和已知恢复读回失败续接、已放电零控制写、缺natural时归还充电仍保持整个会话required均验证。841个已知PID全部退出；缺natural案例保留1个新的QA隔离租约及原件，旧B1负例不动。首次第三链最终夹具断言对可省略child_pid直接索引失败，原失败日志保留，仅基于已保存原件补离线断言，再执行此前未运行的foreign CLI；没有重跑会话。
+
+固定4W的合成输入积分得到3秒12J、5秒20J，仅验证计算与传递合同，不代表手机测量或性能收益。qa/gray-control-power-host-summary.json及source-review、unit-results、ui-validation索引留在本机证据目录。

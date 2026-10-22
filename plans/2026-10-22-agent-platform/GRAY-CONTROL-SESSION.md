@@ -1,6 +1,6 @@
 # 可持续操作的灰层会话
 
-状态：2026-10-23，03B4C1 已实现并通过源码、真实宿主 PF + fake ADB + node HTTP 和网页验收；03B4C2A [当前场景采样](GRAY-CONTROL-SAMPLING.md)也完成上述层级验收。尚未部署或在手机验证。有限输入采样、显式停充和旧入口迁移仍待。本文记录已交付边界和后续范围，提交与验证索引见 [BATCHES](BATCHES.md)。
+状态：2026-10-23，03B4C1 已实现并通过源码、真实宿主 PF + fake ADB + node HTTP 和网页验收；03B4C2A [当前场景采样](GRAY-CONTROL-SAMPLING.md)也完成上述层级验收。尚未部署或在手机验证。有限输入采样与显式供电政策已接入，见 [供电合同](GRAY-CONTROL-POWER.md)；旧入口迁移仍待。本文记录已交付边界和后续范围，提交与验证索引见 [BATCHES](BATCHES.md)。
 
 ## 使用结果与现有缺口
 
@@ -18,7 +18,7 @@ Agent 启动一次挂层会话，拿到 job/session ID。断开客户端后，�
 
 ## 第一批 CLI 与节点入口
 
-第一批服务入口：`gray-layer session --mode MODE --package PKG --serial S --out DIR [--max-seconds N] [--actor-id ID] [--so PATH] [--keep-prop] [--evidence-origin device|synthetic]`。package显式给出，不自动进入原神或任何游戏场景。max-seconds必须为正且有上界；默认900秒、最大3600秒，作为资源预算记录；初始actor_id默认为agent。keep-prop只在活owner内保留，并允许narrow，最后恢复原值。
+第一批服务入口：`gray-layer session --mode MODE --package PKG --serial S --out DIR [--max-seconds N] [--power-policy observe|battery] [--actor-id ID] [--so PATH] [--keep-prop] [--evidence-origin device|synthetic]`。package显式给出，不自动进入原神或任何游戏场景。max-seconds必须为正且有上界；默认900秒、最大3600秒，作为资源预算记录；初始actor_id默认为agent。keep-prop只在活owner内保留，并允许narrow，最后恢复原值。
 
 本机客户端入口：`gray-layer session-status --out DIR [--request-id ID] --json`只读宿主事实或指定动作回执；`gray-layer session-action --out DIR --request REQUEST.json|- --json`只投递并立即回执，`-`从stdin读有界JSON，不碰设备、不排队拿另一把锁；`gray-layer session-recover --session DIR --serial S --json`只恢复原owner范围，不重新挂层或执行动作。
 
@@ -64,7 +64,7 @@ node job 的终态与 PF session 恢复必须区分。现有通用 worker exit0�
 
 03B4C2：把性能采样作为 manual owner 的子范围，复用 owned sampler/trace/有限输入，不重新拿锁、不重启未知场景、不提前 complete 父会话；观察/输入在采样窗内明确暂停。然后迁移仍可执行的旧 gray-layer 命令及 reference/quality 脚本，保留原实验行为和证据，完成后才能关闭03B4。第一批不把未接的采样动作列为可用，也不把仍存在的旧执行入口称为已完成 ownership 迁移。
 
-其中C2A已经交付纯sleep的当前场景sample，不产生触控/硬件条件改动；新base @3绑定采样资源父，旧C1 @2仍按旧范围恢复。C2B有限输入/停充和C2C/D旧客户端迁移继续未完成，不能把C2A勾选当整个C2完成。
+其中C2A已经交付纯sleep的当前场景sample，不产生触控/硬件条件改动；新base @3绑定采样资源父，旧C1 @2仍按旧范围恢复。C2B有限输入/供电已完成源码与宿主验收；C2C/D旧客户端迁移继续未完成，不能把子批勾选当整个C2完成。
 
 本设计以可操作闭环为验收，不以单纯挂层成功、保持锁或提前拒绝旧命令代替。03B4C1 两条实际宿主链通过，覆盖重连/超时找回/同 ID 幂等、只读授权、接管旧 epoch 拒绝、有限输入/灰层采集、停止及已知恢复失败后续接。未产生新性能或 Android 恢复证据。
 
