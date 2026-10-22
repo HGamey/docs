@@ -300,3 +300,12 @@ phonefarm 2fb0b164f431b7ea37339896a768360f0fab6f63 经实际code-only check12005
 phonefarm155506f3407bfbe7a78bece9bdbbd88fe7f9d3f6经actual code-only check120077413135 completed/success（[run39851167210](https://github.com/HGamey/phonefarm/actions/runs/39851167210)）后同SHA直推main并核远端。构建签名、6相关unit一次通过；3实际CLI一次通过且零设备/锁调用/实验输出/恢复记录；7shell fixture一次通过（5拒绝零命令，2reference/passdump仅在首条假ADB截停），4shell语法检查。全部原件与回执在本机qa/gray-mode-admission-*；未重跑已过loadop/eval链，未部署/手机操作/数据迁移，无真实性能结论。
 
 03B4A与限定MERGE-03勾选，03B4/03/JOB-EXEC-03/M3仍未完成，整体goal active。下一具体03B4B先清理已经无调用的旧storeop/reach_scene/launch链，保留whitebox仍用raw截图；随后完善可执行gray-layer与旧参考脚本的持久会话和恢复。用户质疑关goal，本轮get_goal核实active，未调用update_goal；单批完成不代表总目标完成。
+
+
+## 2026-10-23 灰层无调用旧链清理与持续控制合同（PRODUCER-RECOVERY-03B4B）
+
+删除已被 owned collectors 替代的 storeop_check_legacy 及其私有场景/原始 ADB/抓帧链，共移除217行旧代码；保留实际 loadop 场景、whitebox raw 截图和独立 PNG/像素分析。可达命令与恢复协议未改变，不重跑已验 CLI。构建并签名，既有 raw header、pixel diff、storeop comparison 三项各执行一次通过，无新增测试。
+
+源码557158acfa4350a70a3442c95ef5517b8bc2062e经实际code-only check120080767875 completed/success（[run39852120062](https://github.com/HGamey/phonefarm/actions/runs/39852120062)）后同SHA直推main并核远端。本机qa/gray-legacy-cleanup-*保留构建、测试、调用审查与发布记录。无部署、设备操作、锁根/原始数据迁移。
+
+[GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md) 冻结下一批：一个持久作业持有真实lease，网页与Agent通过同一有序mailbox连接其owner；接管转移会话输入权，不转移lease。首批交付看屏/有限输入/灰层采集和停止恢复；性能采样与旧脚本迁移另列03B4C2。现阶段该能力尚未实现。03B4B勾选，03B4/03/JOB-EXEC-03/M3及整体goal继续active。

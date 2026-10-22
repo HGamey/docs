@@ -178,7 +178,9 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
       - [x] PRODUCER-RECOVERY-03B3 按 [GRAY-AB-LOADOP-SESSION](GRAY-AB-LOADOP-SESSION.md) 完成loadop完整会话：一次停充跨两臂、充电原值/记录绑定、3child采样、同context恢复；保留ctrl/knob顺序和passdump=0。73c0a8d检查成功直推main；8unit、1worker、3CLI/512门控fake传输通过，仅宿主验证。power协议明确40秒sampler，不能混旧t10短点列。
       - [ ] PRODUCER-RECOVERY-03B4 按实际native可达分支收齐灰层入口：未支持的none/copyprobe编排提前拒绝并保留历史disabled证据；继续清理无调用旧链，以及可执行gray-layer/旧脚本的实际ownership，不随生命周期迁移扩大注入功能。
         - [x] PRODUCER-RECOVERY-03B4A 按 [GRAY-MODE-ADMISSION](GRAY-MODE-ADMISSION.md) 提前拒绝未支持copyprobe/upop，覆盖gray-ab/gray-layer公共mount与3个旧shell入口；155506f检查成功直推main。6unit、3实际CLI零transport/锁调用、7shell fixture通过；没有部署/真机。保留历史/离线工具，loadop主体不变。
-        - [ ] PRODUCER-RECOVERY-03B4B 清理已经无调用的 storeop_check_legacy→reach_scene/launch_to_world_layered 及其私有 raw 抓帧/摘层脚手架；保留 whitebox 仍用的 screencap_raw_bin 和独立像素分析。随后明确 gray-layer 可执行挂层命令与旧参考脚本的持久会话/停止恢复合同，不能把命令进程退出当环境恢复。
+        - [x] PRODUCER-RECOVERY-03B4B 清理无调用的 storeop_check_legacy→reach_scene/launch_to_world_layered 及私有 raw 抓帧/摘层链；保留 whitebox 的 screencap_raw_bin 和像素分析。557158a 检查成功直推 main，3项既有相关测试通过。后续持久会话合同见 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md)，仅设计已完成。
+        - [ ] PRODUCER-RECOVERY-03B4C1 按 GRAY-CONTROL-SESSION 实现持续 owner、断线接回、串行动作/控制 epoch、看屏和有限输入、灰层证据、停止与同 context 恢复。真实 PF producer、node API/pf-node 和 Web 任务详情同批交付；宿主替身验收，不部署/真机。
+        - [ ] PRODUCER-RECOVERY-03B4C2 在同一 manual owner 内接入性能采样并暂停观察干扰，迁移仍可执行的旧 gray-layer/reference/quality 路径。保留旧实验语义和原件；完成前不关闭03B4，不将局部恢复收据自动当整个 job 完成。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
