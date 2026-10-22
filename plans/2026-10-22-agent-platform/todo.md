@@ -170,6 +170,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
   - [ ] PRODUCER-RECOVERY-03 下一批gray-ab/eval：先冻结挂层、全局属性、文件、采集/输入、应用进程的恢复范围，移除字符串冒充完成及忽略off错误；复用已有lease/worker/收据，分清共享摘层合同与整job恢复。
     - [x] PRODUCER-RECOVERY-03A 按 [GRAY-RETIREMENT](GRAY-RETIREMENT.md) 修shared off typed限定目标停用及gray-ab/eval/frameaudit错误传播，a38afa9实际code-only成功；24相关unit、3条适用CLI/fakeADB证据通过。未部署，不声明整job恢复。
     - [ ] PRODUCER-RECOVERY-03B 完整gray producer session：首次写入hold、属性/安装范围、受控采样/输入进程、ftrace实例及停充回读，全部义务完成后才complete_recovery。
+      - [ ] PRODUCER-RECOVERY-03B1 按 [GRAY-CAPTURE-SESSION](GRAY-CAPTURE-SESSION.md) 先接frame-audit capture的强lease、原属性/安装/历史文件恢复及recover；随后处理storeop-check借用会话和gray-ab完整采样。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
