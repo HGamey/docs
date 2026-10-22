@@ -1,6 +1,6 @@
 # 开发待办
 
-更新：2026-10-22。**勾选仅表示已完成，不表示计划已经实现。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
+更新：2026-10-23。**勾选仅表示已完成，不表示计划已经实现。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
 ## 已完成的准备
 
@@ -27,7 +27,7 @@
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
-  - 已发布订阅生命周期修复 `phonefarm 591889e`；测量互斥、远程认证与真机开销仍未完成。
+  - 已发布订阅生命周期修复 `phonefarm 591889e`；本批 LEASE-OBSERVE-01 增加每帧互斥与异常屏障。远程认证接入与真机开销仍未完成，完整条目不提前勾选。
 - [x] BUG-02 修复服务重启后job取消失效（225cb5c）；独立worker持有命令进程组和实际子进程对象，flock确认所有权，不凭保存PID发信号。旧任务继续可读，无法确认所有权时明确不支持取消。
 - [x] BUG-03 只读状态查询不再创建job；超时节点不能静默消失，返回完整列表和分项错误（harness-ops `947a4b9`，模拟协议与浏览器验收；未部署运行节点）。
 - [x] BUG-04 修复原件只读授权缺口，覆盖元数据/日志/单文件/Range；验证访客不能开任务或访问配置凭据。
@@ -82,7 +82,7 @@
 - [ ] JOB-EXEC-03 lease/恢复屏障与执行收据：worker丢失或恢复未知时限制后续设备写入，明确脱离进程组后代与主机重启的处理边界。
   - 第一批[宿主屏障/恢复通道](JOB-RECOVERY.md)已实现：phonefarm cafdbba、harness-ops 2b4747e。47项协议、跨仓真实宿主锁/无害进程和浏览器验收通过；恢复worker丢失也保留资源，祖先链恢复不放行同级任务。未部署/未真机，完整条目继续保持未勾选。
   - 第二批job身份与scoped收据已实现：phonefarm dc35335、harness-ops 11b50d9。节点启动时传入显式身份，强lease与恢复接管输出有来源/范围的收据，CLI/网页按需读取；不自动解除整个job屏障。验证和发布进度见BATCHES。
-  - 下一批系统重点：将默认临时lease根改为所有参与者共用的可持久位置及迁移方案；补主机重启/脱离进程组后代边界。不能只移动node路径或把手动放行说明当设备还原证据。
+  - LEASE-STORAGE-01 已统一持久lease域并提供显式迁移合同；LEASE-OBSERVE-01 补采样窗口所有权。下一批系统重点是 hwcond 恢复状态的持久路径与明确失败，再逐条补 producer typed 恢复证据；真实主机重启/脱离进程组后代仍待验收，不能把手动放行当还原证据。
   - producer覆盖后续：bench锁频回读尚无完整hold，capture shutdown没有恢复回读，gray-ab若干off结果未检查，eval摘层仍用字符串检查；逐条按已知范围保存typed证据和恢复屏障，再调用complete_recovery。当前均不得从released/not_reported推断恢复，不让node猜实验产物格式。
   - 旧devlock心跳遗留管道问题已修复b986fcf：zsh内建等待，明确停止并回收自建心跳；5项隔离回归通过，取消保留锁，不把信号退出当还原。
 
@@ -162,7 +162,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 ## 每批完成时追加
 
 - [x] LEASE-STORAGE-01 按 LEASE-STORAGE 统一 Rust、devlock、node/fleet、GOL 路径，显式 init 与旧域退休屏障；网页和 CLI 同状态。PF588b1c1、harness336eaaf、GOL29514d8已检查通过直推main；仅宿主验证，未部署。
-- [ ] LEASE-OBSERVE-01 下一系统批：让fleet/观察订阅的设备采样取得覆盖采样窗口的ownership，解决clear快照之后与测量并发的窗口；网页保留快照/新鲜度与暂缓原因。
+- [ ] LEASE-OBSERVE-01 当前系统批：按 OBSERVATION-OWNERSHIP.md，让fleet/只读preflight/每帧screen采样持有同域强lease，受控worker覆盖transport生命周期；网页保留快照/成功时间和暂缓原因。2026-10-23宿主/API/网页验收完成，harness f5e101a/GOL d2d1840已直推main；PF da3d2f5等待实际code-only终态后发布，完整条目暂不勾选。
 - [ ] LEASE-STORAGE-02 后续：统一 hwcond 恢复状态目录，取消失败时临时回退；清点 raw adb/旧 carrier 脚本是否经过同一 ownership，普通旧 owner 超时接管与完整恢复义务分别处理。
 
 记录变更/提交、网页与API验收、离线测试、实际设备验证、未覆盖边界、迁移/恢复结果，以及下一批具体问题。实现条目只有达到相应验收才勾选；原实验失败记录保持不变。

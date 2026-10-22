@@ -161,3 +161,18 @@ GOL `29514d89b3ca3bce72055b7c73797ee8c86e5141` 仍在 `verify/lease-storage-2026
 LEASE-STORAGE-01已勾选。49node、6devlock、9Rust、5GOL及4项实际跨仓宿主检查、网页六布局通过，详见本批原始记录。源码树干净，临时fixture/浏览器关闭。未部署、初始化真实旧锁域、操作手机或迁移原数据。完整JOB-EXEC-03和广义开发goal仍active。
 
 下一批先读PLAN/todo，按LEASE-OBSERVE-01解决采样窗口ownership；不要把clear观察当租约。producer恢复证据、hwcond临时回退、旧owner超时、逃离进程组后代/真正宿主重启/双节点真机仍未完成。暂停中的Doom和后台迁移按原交接保留。
+
+## 2026-10-23：观察采样持有实际租约（本机验收完成，发布检查中）
+
+合同为 [OBSERVATION-OWNERSHIP](OBSERVATION-OWNERSHIP.md)。fleet、只读 preflight 与 screen 每帧共用已有强 lease/bridge/devlock.d，不能借 label；等待队列优先。内部 worker 从枚举、尺寸查询到 shell/截图都在所有权窗口内，父进程先持久记 child 身份才放行。worker 的独立截止与父存活管道确保父进程退出或停顿不会留下无限采样；超时、异常退出、未知后代保持恢复屏障，不自动确认远端空闲。旧 devlock 不再接管 owner 尚未发布的目录。
+
+fleet 明确 sampled/deferred/error；成功零设备仍为 exit 1。Node 与 GOL 保留最后成功设备及其时间，尝试时间独立；网页展示旧数据年龄、暂缓和失败原因。screen 无观看者不采集，每帧释放后才休眠；HDC 使用唯一截图文件并检查 snapshot/recv 状态，失败不下载上次旧图。
+
+宿主验证：50项 node 协议（13.783秒）、7项 devlock、4项实际所有权/异常 CLI、5项已有 lease/recovery CLI、29项 fleet 单测、14项 screen 单测、2项实际 HTTP→worker→fake HDC、10项 GOL consumer。实际已签名 phonefarm→Node 三步验证成功设备→queue暂缓保留原时间→exit1空设备更新。所有 transport 均为 fixture，无真机采样。网页通过 Node 浅深/GOL暗、390/768/1440相关组合与错误/暂缓/无成功/空设备状态。
+
+负结果与修正：短审发现最初仅父进程有 deadline，父被杀后 worker 可能卡住；已加 EOF/独立截止，并将测试改为不解除 fake transport 的 hold，确认整组退出且恢复记录保留。浏览器发现 GOL 390px 锁持有者行撑到518px，局部换行后回到390px；Node 页脚原“占用间隔60秒”的旧说明已改为占用/排队/恢复时暂缓，并复验最终截图。原始证据在本机 qa/observation-*、fleet-observe-*，失败记录不覆盖。
+
+本批没有生产部署、真实锁域初始化、手机操作或原始数据迁移。没有 PR 或强推；候选先推 verify/lease-observe-20261023，实际检查通过后才能将同一SHA直推main。最终发布回执待补。完整 JOB-EXEC-03/M3 保持未完成，下一具体系统批为 hwcond 恢复状态路径及错误处理，再逐条补 producer typed 恢复证据。
+
+
+观察批发布进度：harness-ops `f5e101a7e8ffb424a93c4a3901e90f9a94c3cab3`、game_opt_loop `d2d18401bc55a6c249a5e0289447d6aa99371e6e` 已通过必需检查直推 main，并以 ls-remote 核对。phonefarm `da3d2f58c89a5268ce77cc66838452e77d45f1ba` 仍在 verify 分支，main 未更新。其重跑 code-only 的所有步骤 success，但 check-run119904493688 仍 in_progress，正常 push 被 GH013 拒绝。未关闭检查或强推。等待实际终态后仅需同SHA推送，不重做整批验证。GitHub workflow/check状态不一致和一次短重跑记录在 qa/observation-ci-state-mismatch.json。
