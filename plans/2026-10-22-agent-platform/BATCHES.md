@@ -421,3 +421,23 @@ PF [bf56025](https://github.com/HGamey/phonefarm/commit/bf560254e1fcc9e0b46f7aa0
 定向JS一次通过；单次390浅/1440深浏览器流程无溢出/console错误，最终3POST完整采集，closed重复与partial零POST。首次旧UI fixture capture回执缺result.image，被正确阻断，保留1capture校准日志，仅修新fixture再继续，产品源码未改、JS未重跑。qa/gray-reference-ui-{validation,source-review,publish}.json、http-log、校准日志和3截图留本机；两个fixture服务及tab已清理。没有PF/ADB/设备/部署或真实指标验证。
 
 harness [114d867](https://github.com/HGamey/harness-ops/commit/114d867b708f920b234dc8e6500fa9355d0d3cd9)经actual code-only120149890095(run39872448995)、protocol3.11/3.14 120149889819/120149889370(run39872449017)全部completed/success后同SHA直推main并ls-remote核对。只勾CTRL-06；D2四臂宿主验证仍在进行，D3待，整体goal active未update_goal。
+
+
+## 2026-10-23 四臂 refbench 与网页任务模板（PRODUCER-RECOVERY-03B4C2D2）
+
+四臂改为单 Lease + 既有 Session：A/B 核验未安装层，C/D 才安装并在首次启动传完整字符串 extras。原件、自报完成、自然退出、改写预期、恢复分别记录；D 的创建期 effective 可非空，但实际 begins 应为零。超时后的已知清理不冒充自然退出，恢复命令只接续原 context、不重跑。网页模板只填现有任务参数，经原队列提交；未确认请求不能被模板覆盖。没有新增 owner/worker 或指标推断。
+
+签名构建与6相关单测通过；唯一 actualPF + fakeADB 三链/四调用通过：正常四臂446传输，首臂超时193，恢复读回失败434，同context恢复71，共1144；1151已知PID退出，未留本批lease。B1/B2有意缺natural的隔离负租约保持。模板仅一次定向DOM/fetch验证范围、参数边界、只填不提交、未决请求保护，不重复控制会话整链。无失败/重跑。原件见本机qa/gray-refbench-{host-summary,unit-results,source-review,publish}.json、host-cli-20261023T083058472862/result.json及gray-refbench-ui-{validation,publish}.json。
+
+refbench稀疏checkout另用git show/git grep HEAD核对当前producer/contract：新增可选sr_pipeline画质采集默认off，不改变bw_pingpong合同；不等于安装APK已核验。详见GRAY-REFBENCH-SESSION。无部署、真机、迁移或FPS/功耗收益结论。
+
+PF [4282d09](https://github.com/HGamey/phonefarm/commit/4282d09637ecacec8a89f5faed4563a891991257)经code-only120151184048（run39872841344）；harness [53bb414](https://github.com/HGamey/harness-ops/commit/53bb414ac6cf0824bcc84f21145156121d717c4c)经code-only120153821146（run39873642064）、protocol3.11/3.14 120153821323/120153821157（run39873642041）全部completed/success后，同SHA直推main并核对远端。仅勾D2，D3待发布，整体goal继续active。
+
+
+## 2026-10-23 旧裸挂层入口退役（PRODUCER-RECOVERY-03B4C2D3）
+
+旧 probe/loadop/passdump/frameaudit/frameaudit-ts/target 在 gate/lease/ADB 前返回结构化 retired（exit2），指向显式持续会话。移除无调用 mount_mode、安装/启动/setprops 私链；共享 control/refbench 准入、adb_stdout、层路径与规则不变，typed status/off 和历史原件保留。shell不再raw ADB或全盘删SO/settings，只拒绝或带显式serial转typed CLI。旧keep-prop仅安装不启动语义不能静默变为新session启动。
+
+签名main/unit构建、4相关单测与唯一11项host拦截一次通过：8 actualPF（6 retired/2 unsupported）、3 shell（1 retired/2 fakePF透传）；真实gate/ADB=0、无lease，11已知PID均退出。没有失败或重跑D2/旧控制链。qa/gray-legacy-mount-{host-summary,unit-results,source-review,publish}.json及host-cli-20261023T084417524768原始结果留本机。源码删除并非真机能力退役验收，未部署。
+
+PF [f7b4012](https://github.com/HGamey/phonefarm/commit/f7b40122e7f5a67507e4cb84355c70128da1e24b)经actual code-only120154703260（run39873906724）completed/success后同SHA直推main并ls-remote核对，无PR。下一项LEASE-IDENTITY-01：普通外层label仍被当身份，需实例绑定并与nested强lease关联；不能只修unknown显示。整体goal保持active。

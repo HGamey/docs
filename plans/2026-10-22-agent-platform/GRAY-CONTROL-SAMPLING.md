@@ -4,7 +4,7 @@
 
 ## 首批结果与范围
 
-Agent 或人连接已有会话后，可采一次当前场景的有限 trace 与环境数据；采完继续看屏、操作或再次采样。采样不重新启动/停止目标，不导航，不发送触控，不隐式调整充电、风扇或频率。03B4C2B1增加显式有限输入，详见末节；03B4C2B2增加创建时固定的 [供电政策与同期能量估计](GRAY-CONTROL-POWER.md)；旧 reference/quality/refbench 客户端继续待办。
+Agent 或人连接已有会话后，可采一次当前场景的有限 trace 与环境数据；采完继续看屏、操作或再次采样。采样不重新启动/停止目标，不导航，不发送触控，不隐式调整充电、风扇或频率。03B4C2B1增加显式有限输入，详见末节；03B4C2B2增加创建时固定的 [供电政策与同期能量估计](GRAY-CONTROL-POWER.md)；reference/quality/refbench客户端已分别迁到持续owner或专属四臂Session。
 
 新增 `sample` 动作，params 为 `{"seconds":30}`，整数1至120秒，可选 render_comm 为1至64字节、不含控制字符的显式线程筛选。网页默认30秒，不默认选择线程，API和CLI同范围。动作必须匹配当前 controller/epoch。提交仍立即返回 accepted，结果用原 request_id 查询；同 ID 不重新采样。开始前检查剩余会话预算至少覆盖 seconds+10；生命周期截止后不强杀正在执行的有界采集，命令退出/恢复可能延后，记录实际时间。
 
@@ -44,7 +44,7 @@ Web 提供秒数、开始采样、measuring/回执/失败、结果和原件入�
 
 上述两条链已通过，319+287=606次门控fake传输；四项相关Rust回归和一个受影响worker用例通过。旧C1仅做了新版状态读取（零ADB）及恢复合同单测，未重跑旧C1整条恢复链。Web新增缓存接续：GET读取latest_sample，不触发采集；用户已选旧回执不被后续状态刷新覆盖。
 
-03B4C2B1已增加显式有限输入；03B4C2B2继续充电绑定，03B4C2C 迁移 quality，03B4C2D 迁移 reference/refbench/旧挂层入口。旧 keep-prop 的“不启动”与 C1 的“保留属性但已启动”不同，不能直接别名。reference 旧延后功耗窗与新 owned 窗口必须分协议；refbench 保留四臂无层/改写、字符串 extras 和自然退出。上述各项未完成前，03B4及整体目标继续 active。
+03B4C2B1已增加显式有限输入；03B4C2B2继续充电绑定，03B4C2C 迁移 quality，03B4C2D 迁移 reference/refbench/旧挂层入口。旧 keep-prop 的“不启动”与 C1 的“保留属性但已启动”不同，不能直接别名。reference 旧延后功耗窗与新 owned 窗口必须分协议；refbench 保留四臂无层/改写、字符串 extras 和自然退出。上述子项已完成既定源码/宿主验收，03B4收口；整体目标仍active，部署/真机旅程、指标归属和同窗分母继续开放。
 
 
 ## 03B4C2B1：显式有限输入（已实现，宿主替身验收通过）

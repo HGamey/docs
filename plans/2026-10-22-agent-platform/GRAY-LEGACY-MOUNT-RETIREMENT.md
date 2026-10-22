@@ -1,10 +1,10 @@
 # 旧挂层执行入口退役
 
-2026-10-23，PRODUCER-RECOVERY-03B4C2D3实施合同，尚未实现。只源码与无设备拦截验证；不部署/操作手机。此前reference/quality已迁到持续会话客户端，test_loadop已迁一个专属Session（PF4282d09，网页模板补齐中）。
+2026-10-23，PRODUCER-RECOVERY-03B4C2D3实施合同，PF f7b4012已检查成功直推main。只源码与无设备拦截验证；不部署/操作手机。此前reference/quality已迁到持续会话客户端，test_loadop已迁一个专属Session（PF4282d09，网页模板harness53bb414已发布）。
 
 ## 问题与决定
 
-旧gray-layer的probe/loadop/passdump/frameaudit/frameaudit-ts/target在命令期间持锁，安装/修改全局属性后退出，没有完整持久owner与恢复义务。旧keep-prop在安装、force-stop和清旧输出后不启动；新gray-layer session始终安装并启动，keep-prop只是跳过marker等待/自动narrow。两者不能直接alias。当前PF/GOL/harness/refbench源码无剩余旧mount可执行caller；历史证据中的命令保留。
+旧gray-layer的probe/loadop/passdump/frameaudit/frameaudit-ts/target在命令期间持锁，安装/修改全局属性后退出，没有完整持久owner与恢复义务。旧keep-prop在安装、force-stop和清旧输出后不启动；新gray-layer session始终安装并启动，keep-prop只是跳过marker等待/自动narrow。两者不能直接alias。当前PF/GOL/harness可执行源码没有剩余旧mount caller；refbench稀疏checkout另用git grep HEAD核对tracked app/tools/tests/selftest/contract，同样没有旧入口caller，不能以工作树目录枚举替代。历史证据中的命令保留。
 
 本批直接退役旧六模式，在解析后、gate/Lease/ADB前结构化status=retired、exit2，明确replacement为显式serial/package/out/mode/max-seconds的已有session。绝不自动启动替代会话。copyprobe/upop继续原unsupported合同，不扩注入能力。新增专门legacy_mount_rejection供旧cli_admission和run_gray_layer共用；不能污染新control/install_control使用的mode_admission_rejection。
 

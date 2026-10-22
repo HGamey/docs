@@ -1,6 +1,6 @@
 # 四臂 refbench 的统一会话
 
-2026-10-23，PRODUCER-RECOVERY-03B4C2D2实施合同。仅源码/宿主替身，尚未实现/部署/真机验收。依据旧test_loadop.sh、当前gray_session/native layer，以及原研究checkout refbench/app/src/main.cpp与contract（不视为当前安装APK证明）。
+2026-10-23，PRODUCER-RECOVERY-03B4C2D2实施合同。PF4282d09与harness53bb414已检查通过直推main，源码/宿主替身与网页模板定向检查已验；尚未部署/真机验收。依据旧test_loadop.sh、当前gray_session/native layer及refbench producer/contract。
 
 ## 实验与接口
 
@@ -29,3 +29,7 @@ platform独占gray_session.rs的专属owner/固定inventory/小型私有抽取/A
 ## 网页任务模板（同批补齐）
 
 任务提交区增加四臂refbench模板：serial必填，frames/intensity/timeout沿CLI范围和默认值，可选SO路径。填写模板只生成bin=phonefarm、argv=gray-layer refbench-loadop ... --out @out --json，仍由现有提交按钮/请求幂等/任务队列执行，失败原件沿任务out页；不直接触发本地设备、不提供浏览器恢复捷径。未确认任务提交时模板不得覆盖。显示A/B真无层、C/D改写，采集自报而非性能，避免误当游戏采样模板。小型HTML/JS改动和定向交互检查，不重跑CTRL-06整链或node协议本地全套；root拥有AGENTS/docs，frontend独占jobs.*与CLI帮助示例。
+
+## 当前 producer 核对
+
+refbench-main 是稀疏 checkout，不能用工作树中没有 app/tools 推断源码缺席。已用 git show 核对 HEAD da7e30cdbead37d285eeeadf51a0034757cb17e9 的 app/src/main.cpp、contract/launch.json、contract/output.schema.json；相对原研究 checkout 的新增项为默认 off、限 sr_pipeline 的原生配对画质采集，bw_pingpong 参数、自报字段、正常输出路径及字符串 extras 合同不变。用 git grep HEAD 检查上述 producer/工具/测试目录未发现旧挂层 caller。此为源码核对，不是当前安装 APK 或真机资格证明；本机原始复核记录为 qa/gray-refbench-current-producer-review.json。
