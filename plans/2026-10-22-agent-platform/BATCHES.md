@@ -54,6 +54,20 @@ CI回执：[code-only](https://github.com/HGamey/harness-ops/actions/runs/397754
 
 边界：网页只展示本节点；跨节点网页注册表、强lease/恢复屏障、持久排队和游戏分发尚未完成。完整的观察与测量协调仍在CTRL待办，不能将旧空闲检查当作原子互斥。
 
+## 2026-10-22：独立作业进程与重启后取消
+
+已发布 harness-ops main [225cb5c](https://github.com/HGamey/harness-ops/commit/225cb5c)，包含 CLI [03f31be](https://github.com/HGamey/harness-ops/commit/03f31be)、worker [1888c00](https://github.com/HGamey/harness-ops/commit/1888c00)、网页 [7619354](https://github.com/HGamey/harness-ops/commit/7619354)。合同见 [JOB-EXECUTION](JOB-EXECUTION.md)。
+
+HTTP服务先发布作业记录，再启动独立worker；flock随描述符交接，实际命令由worker持有。服务重启后不向保存的PID发信号，取消通过持久请求文件送到worker。默认SIGINT不自动升级；显式force和旧kill接口保留15秒TERM、再15秒KILL。阶段、请求时间、已发信号、真实退出码和恢复证据分别可读；丢失worker为interrupted/恢复待核，不自动重放。旧任务继续可读，不提供无法确认所有权的信号控制。
+
+网页查看权限与掌舵操作分开；API、CLI取消和旧目标页停止共用同一合同。Ctrl-C退出本地跟随且不下载未完成输出，后续status/wait可接续。整合审查发现旧目标确认入口强制读异步PID可能使“任务已提交却页面500”，已改为先保存job ID，并显示真实job锁名；不把提交说成已取得手机。
+
+验证：本机35项节点测试通过，最终目标入口修复后2项受影响整合测试复验通过；真实HTTP服务进程被杀死、重启同一数据根后，可确认原worker仍活并停止无害子进程，得到SIGINT/exit0且recovery仍not_reported。Linux Python3.11/3.14节点CI和JS语法检查通过。网页实走只读/解锁、柔性停止、信号下钻、勾选升级、exit0仍需核查恢复；390/768/1440浅深色布局检查与迟到回执脚本通过。所有设备与任务数据均为本机模拟，未替换运行节点或操作手机。
+
+提交前回执：[code-only](https://github.com/HGamey/harness-ops/actions/runs/39780607910)、[node-tests](https://github.com/HGamey/harness-ops/actions/runs/39780607535)。本机证据：qa/job-supervision-tests.log、job-restart-final.log、job-runtime-tests.log、jobs-cancel-ui-script-result.json、jobs-cancel-browser-validation.json、jobs-cancel-*.png。
+
+边界：这批没有持久排队/提交去重/每设备原子资源领取/恢复屏障，未保证主机断电或脱离进程组后代退出。下一批按todo继续提交幂等和持久队列，不把宿主进程退出包装为设备恢复成功。
+
 ## GitHub流程与协作记录
 
 用户明确授权管理员取消强制PR。phonefarm、harness-ops、game_opt_loop、refbench规则保留禁止强推、禁止删除及code-only必需检查；本机保存修改前规则到transition/qa。开发提交先进入verify分支，通过后直接推main；不创建PR、不绕过失败检查。
