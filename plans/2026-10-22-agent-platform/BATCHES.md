@@ -309,3 +309,19 @@ phonefarm155506f3407bfbe7a78bece9bdbbd88fe7f9d3f6经actual code-only check120077
 源码557158acfa4350a70a3442c95ef5517b8bc2062e经实际code-only check120080767875 completed/success（[run39852120062](https://github.com/HGamey/phonefarm/actions/runs/39852120062)）后同SHA直推main并核远端。本机qa/gray-legacy-cleanup-*保留构建、测试、调用审查与发布记录。无部署、设备操作、锁根/原始数据迁移。
 
 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md) 冻结下一批：一个持久作业持有真实lease，网页与Agent通过同一有序mailbox连接其owner；接管转移会话输入权，不转移lease。首批交付看屏/有限输入/灰层采集和停止恢复；性能采样与旧脚本迁移另列03B4C2。现阶段该能力尚未实现。03B4B勾选，03B4/03/JOB-EXEC-03/M3及整体goal继续active。
+
+## 2026-10-23 可持续远程灰层会话（PRODUCER-RECOVERY-03B4C1）
+
+按 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md) 交付实际 PF producer、node API、pf-node 和任务页。单一存活 owner 保持强 lease，宿主 publisher 分配有序请求，started/result 各自持久化；HTTP 超时后按原 ID 找回，同 ID 幂等，不自动重放输入。控制 epoch/人工 TTL 与 lease 分开，stop 在动作边界优先处理并保留未执行回执。全尺寸有界 PNG 解码、最新图片/年龄/实际方向核对后才输入；copyprobe/upop 仍提前拒绝。
+
+复用 GraySession 的12属性、安装/历史文件及目标停止恢复；公开 session ID 独立于内部 token。devlock 父进程在 SIGINT 后等待子进程恢复，避免外层锁提前遗留。已知读回失败保留原恢复报告，同 context recover 可续接；通用 node job exit0 仍为 not_reported，局部恢复成功不能自动释放任意 job。只读 lease 汇总先呈现已知恢复 blocked，再保留普通外层未知诊断；外层实例关联另列 LEASE-IDENTITY-01，准入/clear 未放宽。
+
+21项相关 Rust 测试各一次通过。harness 10项唯一 Python 用例共12次执行（ID约束变化、并发 rebase 后各只重跑受影响CLI一项），JS状态检查和浏览器390/768/1440浅深色验收通过。网页 actor 重载丢失已修复；原始图、accepted/完成、未决ID、接管/续期/交回、有限输入、关闭后资源保留均核验。fixture已停、tab已关闭。
+
+两条实际签名 PF + node HTTP + fake ADB 链通过435次门控传输：正常链198次，包含一次真实HTTP响应超时、原ID找回/幂等、只读401零发布、重连零设备动作、旧epoch拒绝、输入/trigger/audit/stop；另一资源名的作业仍被device lease挡住并取消未执行。取消链237次，node SIGINT→已知属性读回失败exit2→原context恢复成功，旧失败原字节保留。各核查201/241个已知PID均退出、无lease遗留。normal使用最终build-3；cancel使用build-2，最后增量只改只读汇总，未重复已过取消链。
+
+首次normal fixture把全局状态错误断言为held，在unknown外层诊断处停止；该次182次传输及正常恢复原件保留，不计通过链。全部尝试617次。初次构建引用未引入的ctrlc依赖也保留日志，改用已有libc sigaction后成功。qa/gray-control-host-summary.json、harness-validation、ui-browser-validation、unit-results、source-review、publish及逐次目录均留本机；没有真实性能或Android恢复结论。
+
+PF [4ca316d](https://github.com/HGamey/phonefarm/commit/4ca316d27cc6a4965453e7d778257505ba33bb59) 经实际code-only120098287846成功；harness [2b8066d](https://github.com/HGamey/harness-ops/commit/2b8066df295d91b5b40ae641951bfb9ca0760dc2) 经code-only120098396581及protocol 3.11/3.14的120098396412/120098396849全部completed/success后，同SHA直推main并核远端。吸收同事27923bd的默认mbp1地址修改，无生产连接/部署/数据迁移。
+
+03B4C1完成，03B4C2继续：在同一owner内复用采样worker及父恢复合同，避免调用会自动停止目标的旧eval整轮入口；之后迁移旧gray-layer/reference/quality可执行入口。03B4/03/JOB-EXEC-03/M3和整体goal仍active，没有调用update_goal。

@@ -1,12 +1,12 @@
 # 可持续操作的灰层会话
 
-状态：2026-10-23，03B4B 调用清理后的设计决定；03B4C 尚未实现。本文冻结系统边界与第一批入口，不能当现有能力说明。依据当前 phonefarm 557158a 与 harness-ops 的持久 job/lease 合同；本阶段只做源码与宿主替身验收，不部署或操作手机。
+状态：2026-10-23，03B4C1 已实现并通过源码、真实宿主 PF + fake ADB + node HTTP 和网页验收；尚未部署或在手机验证。03B4C2 性能采样和旧入口迁移仍待。本文记录已交付边界和后续范围，提交与验证索引见 [BATCHES](BATCHES.md)。
 
 ## 使用结果与现有缺口
 
 Agent 启动一次挂层会话，拿到 job/session ID。断开客户端后，手机仍由同一存活 owner 管理。人可打开该任务看屏、接管有限输入、抓取灰层证据；Agent 可在控制权交回后继续。关闭会话先停止接收新动作、完成当前有界操作，再验证资源恢复。owner 崩溃则保留原上下文，显式恢复，不重复输入。
 
-当前 gray-layer 的 Lease 随一次命令退出而释放，但目标进程内的层仍存活；narrow 只清全局加载属性，不能卸掉已加载层。旧 off 只证明限定停用，并没有原属性值。当前 node 已有独立 supervised job，HTTP 服务重启不会结束 owner；stdin=DEVNULL，无会话控制通道。另起 screenshot/input job 会被正确挡住，recovery_for 也不能用于连接正在运行的 owner。现有 screen/fleet 是独立观察者，不可直接嵌入后声称能观看活动实验。
+旧 gray-layer 的 Lease 随一次命令退出而释放，但目标进程内的层仍存活；narrow 只清全局加载属性，不能卸掉已加载层。旧 off 只证明限定停用，并没有原属性值。这些旧入口仍待迁移。node 现有独立 supervised job 的 HTTP 服务重启不会结束 owner；新增的会话通道连接该 owner。另起 screenshot/input job 会被正确挡住，recovery_for 也不能用于连接正在运行的 owner。现有 screen/fleet 是独立观察者，活动会话的截图须经过本会话的动作序列。
 
 ## 一个 owner，一条执行通道
 
@@ -46,6 +46,8 @@ node POST调用受限的本机 `phonefarm gray-layer session-action` helper，ou
 
 首批动作：capture（有损/无损不得混称，默认原始PNG）、tap、有限 swipe、marker、audit、frameaudit trigger、narrow、take_control、release_control、stop。坐标以该会话最近实际图片尺寸/方向核验；拒绝过期图片或越界坐标，不根据固定机型猜。tap/swipe 都有明确结束，不提供持久按下或任意 exec。FA trigger/audit 只在相应模式支持，回执记录真实 go 和证据，不把旧文件当新采集。
 
+已实现的输入范围：坐标引用最新 capture，最多30秒；执行前再核实际图片尺寸与方向，无法读取方向时不可输入。API swipe 为1至10000毫秒，网页输入表单为1至2000毫秒。普通请求最多1023个，另保留1个 stop 名额；停止在每个动作边界优先处理，未开始的其余请求保留 not_executed 回执。
+
 状态分开 starting/ready/executing/measuring/restoring/closed/recovery_required，公开允许动作与阻断原因。截图、输入和采样共用同一执行序列。测量时暂缓观战采集和输入，保留缓存图的采集时间/年龄。首批提供显式刷新与抓图，不默认持续保存大量视频/PNG；将来的观看流使用有界缓存，正式证据抓取仍另有不可变引用。
 
 ## 停止、取消和恢复
@@ -62,4 +64,6 @@ node job 的终态与 PF session 恢复必须区分。现有通用 worker exit0�
 
 03B4C2：把性能采样作为 manual owner 的子范围，复用 owned sampler/trace/有限输入，不重新拿锁、不重启未知场景、不提前 complete 父会话；观察/输入在采样窗内明确暂停。然后迁移仍可执行的旧 gray-layer 命令及 reference/quality 脚本，保留原实验行为和证据，完成后才能关闭03B4。第一批不把未接的采样动作列为可用，也不把仍存在的旧执行入口称为已完成 ownership 迁移。
 
-本设计以可操作闭环为验收，不以单纯挂层成功、保持锁或提前拒绝旧命令代替。当前只是已确定架构与实施范围，未产生新性能/Android恢复证据。
+本设计以可操作闭环为验收，不以单纯挂层成功、保持锁或提前拒绝旧命令代替。03B4C1 两条实际宿主链通过，覆盖重连/超时找回/同 ID 幂等、只读授权、接管旧 epoch 拒绝、有限输入/灰层采集、停止及已知恢复失败后续接。未产生新性能或 Android 恢复证据。
+
+当前全局 lease 汇总保留普通外层 devlock 缺实例身份的 unknown 诊断；已知 nested 恢复义务优先显示 blocked，bridge 与内部 job/serial/context 身份独立呈现。该问题另列 LEASE-IDENTITY-01，不能借相同 label 或本次控制会话成功放宽 clear/准入。
