@@ -6,7 +6,7 @@
 
 Agent 或人连接已有会话后，可采一次当前场景的有限 trace 与环境数据；采完继续看屏、操作或再次采样。采样不重新启动/停止目标，不导航，不发送触控，不隐式调整充电、风扇或频率。有限输入、显式停充与旧 reference/quality/refbench 客户端在后续子批迁移。
 
-新增 `sample` 动作，params 仅为 `{"seconds":30}`，整数1至120秒。网页默认30秒，API和CLI同范围。动作必须匹配当前 controller/epoch。提交仍立即返回 accepted，结果用原 request_id 查询；同 ID 不重新采样。开始前检查剩余会话预算至少覆盖 seconds+10；生命周期截止后不强杀正在执行的有界采集，命令退出/恢复可能延后，记录实际时间。
+新增 `sample` 动作，params 为 `{"seconds":30}`，整数1至120秒，可选 render_comm 为1至64字节、不含控制字符的显式线程筛选。网页默认30秒，不默认选择线程，API和CLI同范围。动作必须匹配当前 controller/epoch。提交仍立即返回 accepted，结果用原 request_id 查询；同 ID 不重新采样。开始前检查剩余会话预算至少覆盖 seconds+10；生命周期截止后不强杀正在执行的有界采集，命令退出/恢复可能延后，记录实际时间。
 
 进入 measuring 后，同一串行通道不执行截图、触控、trigger 或其他设备动作；网页保留旧图和年龄，提示测量中。stop 可投递，在当前采样安全边界优先恢复；未开始动作保持 not_executed。采集成功、采集失败和资源恢复状态分别记录。
 
@@ -22,7 +22,7 @@ Agent 或人连接已有会话后，可采一次当前场景的有限 trace 与�
 
 ## 父恢复义务
 
-开始控制会话时创建资源父记录，并在任何资源部署写入之前绑定到 base manifest。缺失或损坏父记录不能回落为 C1 的局部恢复。旧 C1 manifest 没有该绑定且未部署采样资源时，仍按原限定合同恢复。
+开始控制会话时创建资源父记录，并在任何资源部署写入之前绑定到 base manifest。新资源会话使用旧 C1 会拒绝的 base schema，防止旧程序忽略新增字段后提前完成。缺失或损坏父记录不能回落为 C1 的局部恢复。旧 C1 manifest 没有该绑定且未部署采样资源时，仍按原限定合同恢复。
 
 整个会话停止/恢复的顺序为：核验 owner/boot → 全部登记进程组静止及各轮自然完成 → 停止并读回 tracing_on → 删除本会话 trace instance → base 恢复层/历史文件/12属性/目标停止 → 持久化完整父恢复报告 → complete_recovery。远端关闭账本和原件沿现有政策保留。普通 finish_control 必须拒绝跳过已绑定的资源父义务。
 
@@ -32,7 +32,9 @@ Agent 或人连接已有会话后，可采一次当前场景的有限 trace 与�
 
 每次 sample 返回不可变结果及原件的相对 out 引用。结果至少记录 collection 状态/错误、requested seconds、actual child/trace/sampler 窗口、source/evidence_origin、目标存活观察、trace parser summary、环境统计和限制。未启动或失败的采集同样留下记录；恢复完成不改写成采集成功。
 
-复用 looptrace/env_stats 和已有证据绑定/窗口校验的纯计算部分，不引入另一套统计。帧率名称明确为 GPU submit proxy，不能显示成显示 FPS；模块/队列耗时保留原有定义。功率仍取真实电池采样及供电状态，充电、缺字段或窗口不可核时为未知/null，不填0。首批不发布每帧能耗：不把全窗平均功率与另一 trace 窗口帧率直接相除冒充同期能耗。不做跨运行收益裁决或自动质量判断。
+复用 looptrace/env_stats 和已有证据绑定/窗口校验的纯计算部分，不引入另一套统计。不能隐式套旧 UnityGfxDeviceW 默认：没有 render_comm 时仍保存完整 raw/env，帧相关指标为null并提示未选线程；有显式筛选时记录筛选值和原parser摘要，但目标归属仍未验证。帧率名称明确为 GPU submit proxy，不能显示成显示 FPS；模块/队列耗时保留原有定义。功率仍取真实电池采样及供电状态，充电、缺字段或窗口不可核时为未知/null，不填0；旧旁路记录不能代替当前采样的供电资格。首批不发布每帧能耗：不把全窗平均功率与另一 trace 窗口帧率直接相除冒充同期能耗。不做跨运行收益裁决或自动质量判断。
+
+公开 sample result 使用 path、collection(status/error)、requested_seconds、metrics、metric_provenance、limitations、artifacts(name/path)。所有公开路径相对 job out；run.json 内原件路径相对该 run 目录，并标 artifact_path_base。metrics 提供 gpu_submit_fps、frame_p95_ms、gpu_active_mean_ms、queue_p95_ms、power_w_mean，以及明确null的energy_per_frame_mj。没有采集到的值不用0补齐。
 
 Web 提供秒数、开始采样、measuring/回执/失败、结果和原件入口；API/CLI沿已发布 action 协议，不新增第二个 job/设备 owner。旧节点按 allowed_actions 明确不可用。只读账户可看缓存和已产生结果，不能启动采样。
 
