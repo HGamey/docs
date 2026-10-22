@@ -36,7 +36,7 @@
 - [ ] TEST-03 将长集成中的真实等待与快速回归分开；调查并行 confirmation_driver 的 deadline/heartbeat 偶发失败，不靠反复全套重跑掩盖。
 - [x] MERGE-01 修复旧 PR 带入的 gray eval 循环资格阻断；未知 control 可采证但不能形成结论（`8dba439`）。
 - [x] MERGE-02 同步普通/动态灰层构建输入与 GOL 消费端，补 npuprobe.cpp；NDK实编、旧工件与跨仓合同验证通过，已发布 phonefarm `6cd1ac5`、GOL `1a8601e`。
-- [ ] MERGE-03 当前生产 copyprobe/upop 未接入，应在能力/命令入口明确 unsupported；自定义工件的能力声明另定，不能把挂层成功当算子执行。
+- [x] MERGE-03 按 [GRAY-MODE-ADMISSION](GRAY-MODE-ADMISSION.md) 完成已知copyprobe/upop CLI/公共mount/旧shell入口准入，155506f检查通过直推main。默认unsupported、自定义SO capability_unverified；构建/离线分析保留，未开放注入。自定义工件未来执行能力合同另定。
 - [ ] DOC-01 同步各仓AGENTS/README/组织入口的外部Agent定位与直接commit/push规则，保留代码仓文档边界。
   - phonefarm、harness-ops、game_opt_loop、refbench 的 AGENTS/直接提交流程已同步；组织总入口与全部旧说明仍待梳理。
 
@@ -176,8 +176,9 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
         - [x] PRODUCER-RECOVERY-03B2B 按 [GRAY-EVAL-LAUNCH-SESSION](GRAY-EVAL-LAUNCH-SESSION.md) 合并完整gray_eval父会话的workload.launch路线（资格/3基线/ABBA/recover）；实际父lease/context、子范围只写verified，全部真实资源恢复后才父complete。9e1bb0a经实际code-only成功直推main，13唯一unit/3唯一worker/5有效CLI通过。gray路径不隐式新增停充/锁频；script任意exec/gamepad另批。
       - [x] PRODUCER-RECOVERY-03B2C 按 [GRAY-EVAL-SCRIPT-SESSION](GRAY-EVAL-SCRIPT-SESSION.md) 完成有限输入、3-child所有权、资格/3baseline/ABBA及同context恢复。默认12秒拖动保留，非法脚本提前拒绝，无自然输入收据不清屏障。2fb0b16实际code-only成功后直推main；10相关unit、3唯一worker和4有效CLI/1868门控fake传输通过，仅宿主验证。
       - [x] PRODUCER-RECOVERY-03B3 按 [GRAY-AB-LOADOP-SESSION](GRAY-AB-LOADOP-SESSION.md) 完成loadop完整会话：一次停充跨两臂、充电原值/记录绑定、3child采样、同context恢复；保留ctrl/knob顺序和passdump=0。73c0a8d检查成功直推main；8unit、1worker、3CLI/512门控fake传输通过，仅宿主验证。power协议明确40秒sampler，不能混旧t10短点列。
-      - [ ] PRODUCER-RECOVERY-03B4 gray-ab none/probe等路径按实际native可达分支接会话；copyprobe/dynamic_upop各自保留命中/disabled证据，不随生命周期迁移恢复或扩大注入功能。
-        - [ ] PRODUCER-RECOVERY-03B4A 先完成未支持模式准入：默认native copyprobe/upop生产分支不可执行，应在gray-ab的none基线和gray-layer公共mount入口任何设备写前拒绝；自定义SO只能标能力未核验，不能凭ABI/manifest当执行许可。审阅enable_layer及会先off/基线的旧shell入口，同批覆盖或明确MERGE-03剩余范围；保留离线工件/分析和旧disabled证据，不重新开放注入。
+      - [ ] PRODUCER-RECOVERY-03B4 按实际native可达分支收齐灰层入口：未支持的none/copyprobe编排提前拒绝并保留历史disabled证据；继续清理无调用旧链，以及可执行gray-layer/旧脚本的实际ownership，不随生命周期迁移扩大注入功能。
+        - [x] PRODUCER-RECOVERY-03B4A 按 [GRAY-MODE-ADMISSION](GRAY-MODE-ADMISSION.md) 提前拒绝未支持copyprobe/upop，覆盖gray-ab/gray-layer公共mount与3个旧shell入口；155506f检查成功直推main。6unit、3实际CLI零transport/锁调用、7shell fixture通过；没有部署/真机。保留历史/离线工具，loadop主体不变。
+        - [ ] PRODUCER-RECOVERY-03B4B 清理已经无调用的 storeop_check_legacy→reach_scene/launch_to_world_layered 及其私有 raw 抓帧/摘层脚手架；保留 whitebox 仍用的 screencap_raw_bin 和独立像素分析。随后明确 gray-layer 可执行挂层命令与旧参考脚本的持久会话/停止恢复合同，不能把命令进程退出当环境恢复。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 

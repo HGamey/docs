@@ -291,3 +291,12 @@ phonefarm 2fb0b164f431b7ea37339896a768360f0fab6f63 经实际code-only check12005
 回执qa/gray-ab-loadop-host-validation.json、052339/result.json、unit/worker/source-review均在本机。已放电observed_no_mutation仅源码审读；输入缺natural但先恢复charge以worker核验+源码顺序审读覆盖，未宣称这两个分支已做完整CLI。无生产部署、手机操作、锁根/数据迁移或真实性能结论；网页沿现有job产物/恢复收据，无新UI合同，不重复布局测试。
 
 03B3勾选，03B/03/JOB-EXEC-03/M3与整体goal仍active。下一03B4A先把默认native不可执行的copyprobe/upop从宿主和已知shell入口提前拒绝，避免先运行none基线、摘层和触控；自定义SO能力未核验，不凭ABI/manifest直接放行。保留工件构建/离线分析与旧disabled证据，不恢复注入功能。
+
+
+## 2026-10-23 未支持灰层模式提前准入（PRODUCER-RECOVERY-03B4A / MERGE-03）
+
+按 [GRAY-MODE-ADMISSION](GRAY-MODE-ADMISSION.md)，copyprobe/upop 在排队、选择设备、摘层或基线之前返回结构化unsupported；默认缺执行合同，自定义SO能力未核验。公共mount同样保护，删除gray-ab不能执行的none/copyprobe私有采集链；enable_layer/upop_ab/quality的已知旧入口同批覆盖。离线工件/历史证据与reference-only路径保留。两个灰命令的参数消费与gate一致，控制字作为serial/path值不会误触help/免锁，真正help与recover保持原路线。
+
+phonefarm155506f3407bfbe7a78bece9bdbbd88fe7f9d3f6经actual code-only check120077413135 completed/success（[run39851167210](https://github.com/HGamey/phonefarm/actions/runs/39851167210)）后同SHA直推main并核远端。构建签名、6相关unit一次通过；3实际CLI一次通过且零设备/锁调用/实验输出/恢复记录；7shell fixture一次通过（5拒绝零命令，2reference/passdump仅在首条假ADB截停），4shell语法检查。全部原件与回执在本机qa/gray-mode-admission-*；未重跑已过loadop/eval链，未部署/手机操作/数据迁移，无真实性能结论。
+
+03B4A与限定MERGE-03勾选，03B4/03/JOB-EXEC-03/M3仍未完成，整体goal active。下一具体03B4B先清理已经无调用的旧storeop/reach_scene/launch链，保留whitebox仍用raw截图；随后完善可执行gray-layer与旧参考脚本的持久会话和恢复。用户质疑关goal，本轮get_goal核实active，未调用update_goal；单批完成不代表总目标完成。
