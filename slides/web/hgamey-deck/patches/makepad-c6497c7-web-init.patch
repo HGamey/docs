@@ -1,0 +1,87 @@
+diff --git a/platform/src/os/web/web.rs b/platform/src/os/web/web.rs
+index 8870760..09d9f30 100644
+--- a/platform/src/os/web/web.rs
++++ b/platform/src/os/web/web.rs
+@@ -124,13 +124,17 @@ pub fn process_to_wasm(&mut self, msg_ptr: u32) -> u32 {
+                     self.xr_capabilities = tw.xr_capabilities.into();
+                     let id_zero = CxWindowPool::id_zero();
+                     let mut new_geom: WindowGeom = tw.window_info.into();
+-                    {
++                    // The app's Window widget is created during Event::Startup (below),
++                    // so window 0 may not exist yet here.
++                    if self.windows.is_valid(id_zero) {
+                         let window = &mut self.windows[id_zero];
+                         window.os_dpi_factor = Some(new_geom.dpi_factor);
+                         new_geom = window.native_window_geom_to_layout(new_geom);
+                     }
+                     self.os.window_geom = new_geom.clone();
+-                    self.windows[id_zero].window_geom = new_geom;
++                    if self.windows.is_valid(id_zero) {
++                        self.windows[id_zero].window_geom = new_geom;
++                    }
+                     //self.default_inner_window_size = self.os.window_geom.inner_size;
+ 
+                     self.set_physical_keyboard_state(true);
+@@ -144,12 +148,14 @@ pub fn process_to_wasm(&mut self, msg_ptr: u32) -> u32 {
+                     let old_geom = self.os.window_geom.clone();
+                     let mut new_geom: WindowGeom = tw.window_info.into();
+                     let id_zero = CxWindowPool::id_zero();
+-                    {
++                    if !self.windows.is_valid(id_zero) {
++                        self.os.window_geom = new_geom.clone();
++                    } else {
+                         let window = &mut self.windows[id_zero];
+                         window.os_dpi_factor = Some(new_geom.dpi_factor);
+                         new_geom = window.native_window_geom_to_layout(new_geom);
+                     }
+-                    if old_geom != new_geom {
++                    if self.windows.is_valid(id_zero) && old_geom != new_geom {
+                         self.os.window_geom = new_geom.clone();
+                         self.windows[id_zero].window_geom = new_geom.clone();
+                         self.call_event_handler(&Event::WindowGeomChange(WindowGeomChangeEvent {
+@@ -638,7 +644,9 @@ fn handle_platform_ops(&mut self) {
+                     // ToWasmGetInfo / ToWasmResizeWindow on id_zero so the
+                     // freshly-created window's `dpi_override` machinery has
+                     // a baseline.
+-                    let id_zero_os_dpi = self.windows[CxWindowPool::id_zero()].os_dpi_factor;
++                    let id_zero_os_dpi = self.windows[CxWindowPool::id_zero()]
++                        .os_dpi_factor
++                        .or(Some(self.os.window_geom.dpi_factor));
+                     {
+                         let window = &mut self.windows[window_id];
+                         window.os_dpi_factor = id_zero_os_dpi;
+diff --git a/widgets/src/widget_async.rs b/widgets/src/widget_async.rs
+index 10e64cf..fcfaf11 100644
+--- a/widgets/src/widget_async.rs
++++ b/widgets/src/widget_async.rs
+@@ -303,14 +303,22 @@ fn with_isolate_installed<R>(cx: &mut Cx, vm_id: SplashVmId, f: impl FnOnce(&mut
+ /// A Splash isolate runs untrusted-ish user script on the UI thread; cap how long any
+ /// single entry into it may run.
+ fn with_splash_budget<R>(vm: &mut ScriptVm, f: impl FnOnce(&mut ScriptVm) -> R) -> R {
+-    let old_budget = vm.bx.run_budget.replace(ScriptRunBudget::from_durations(
+-        std::time::Duration::from_millis(64),
+-        std::time::Duration::from_millis(64),
+-        512,
+-    ));
+-    let out = f(vm);
+-    vm.bx.run_budget = old_budget;
+-    out
++    // std::time::Instant panics on wasm32-unknown-unknown; run without a time budget there.
++    #[cfg(target_arch = "wasm32")]
++    {
++        f(vm)
++    }
++    #[cfg(not(target_arch = "wasm32"))]
++    {
++        let old_budget = vm.bx.run_budget.replace(ScriptRunBudget::from_durations(
++            std::time::Duration::from_millis(64),
++            std::time::Duration::from_millis(64),
++            512,
++        ));
++        let out = f(vm);
++        vm.bx.run_budget = old_budget;
++        out
++    }
+ }
+ 
+ pub trait CxSplashVmExt {
