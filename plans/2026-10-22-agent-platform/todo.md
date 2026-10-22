@@ -161,7 +161,8 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 
 ## 每批完成时追加
 
-- [ ] LEASE-STORAGE-01 当前批：按 LEASE-STORAGE 统一 Rust、devlock、node/fleet、GOL 路径，显式 init 与旧域退休屏障；网页和 CLI 显示相同状态。仅宿主验证，不部署。
+- [x] LEASE-STORAGE-01 按 LEASE-STORAGE 统一 Rust、devlock、node/fleet、GOL 路径，显式 init 与旧域退休屏障；网页和 CLI 同状态。PF588b1c1、harness336eaaf、GOL29514d8已检查通过直推main；仅宿主验证，未部署。
+- [ ] LEASE-OBSERVE-01 下一系统批：让fleet/观察订阅的设备采样取得覆盖采样窗口的ownership，解决clear快照之后与测量并发的窗口；网页保留快照/新鲜度与暂缓原因。
 - [ ] LEASE-STORAGE-02 后续：统一 hwcond 恢复状态目录，取消失败时临时回退；清点 raw adb/旧 carrier 脚本是否经过同一 ownership，普通旧 owner 超时接管与完整恢复义务分别处理。
 
 记录变更/提交、网页与API验收、离线测试、实际设备验证、未覆盖边界、迁移/恢复结果，以及下一批具体问题。实现条目只有达到相应验收才勾选；原实验失败记录保持不变。

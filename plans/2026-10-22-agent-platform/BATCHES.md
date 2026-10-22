@@ -152,3 +152,12 @@ phonefarm `588b1c197827a56d97004673cf2ae462c1802ec3` 与 harness-ops `336eaaf9bc
 GOL `29514d89b3ca3bce72055b7c73797ee8c86e5141` 仍在 `verify/lease-storage-20261022`，main尚未更新。check-run/job `119884317536`（run39796330509）的所有步骤均success，但check-run整体仍in_progress且conclusion=null；workflow摘要提前success不足为发布依据。早先一次main推送被GH013拒绝，未重复绕过。下一步只需等待实际check-run终态，成功后fetch检查并发、同SHA直推main并核实远端；失败则按日志修复，不重做整批测试。不因等待CI切换新开发批次。
 
 本批本机验收与恢复边界见上一节及LEASE-STORAGE。临时测试服务/浏览器均已关闭，源码工作树干净；无部署、手机、真实锁域初始化或数据迁移。qa/lease-storage-publish.json记录两个已发布SHA与GOL待发布。广义开发目标保持active，完整JOB-EXEC-03仍未完成。
+
+
+## 持久 lease 存储最终发布回执（最新）
+
+三仓同一候选已在实际检查通过后直接推main并核对远端：phonefarm588b1c1、harness-ops336eaaf、game_opt_loop29514d8。GOL最终通过单项check-run119884317536确认completed/success，重试main推送成功；先前workflow摘要与check-runs列表状态不同步的观察/拒绝记录保留，不抹去。没有PR、强推或关闭必需检查。
+
+LEASE-STORAGE-01已勾选。49node、6devlock、9Rust、5GOL及4项实际跨仓宿主检查、网页六布局通过，详见本批原始记录。源码树干净，临时fixture/浏览器关闭。未部署、初始化真实旧锁域、操作手机或迁移原数据。完整JOB-EXEC-03和广义开发goal仍active。
+
+下一批先读PLAN/todo，按LEASE-OBSERVE-01解决采样窗口ownership；不要把clear观察当租约。producer恢复证据、hwcond临时回退、旧owner超时、逃离进程组后代/真正宿主重启/双节点真机仍未完成。暂停中的Doom和后台迁移按原交接保留。
