@@ -1,0 +1,35 @@
+diff --git a/src/splash/host.rs b/src/splash/host.rs
+index 672a97e..b9f2f61 100644
+--- a/src/splash/host.rs
++++ b/src/splash/host.rs
+@@ -39,6 +39,18 @@ script_mod! {
+     }
+ }
+ 
++/// 宿主应用可在这里登记额外的脚本模块（例如自定义 widget），d3.Splash 创建沙箱 VM 时依次注册。
++pub static SPLASH_EXTRA_MODS: std::sync::Mutex<Vec<fn(&mut ScriptVm)>> = std::sync::Mutex::new(Vec::new());
++
++/// 登记一个在每个 d3.Splash 沙箱 VM 里执行的脚本模块注册函数。
++pub fn register_splash_mod(f: fn(&mut ScriptVm)) {
++    if let Ok(mut g) = SPLASH_EXTRA_MODS.lock() {
++        if !g.iter().any(|x| *x as usize == f as usize) {
++            g.push(f);
++        }
++    }
++}
++
+ const SPLASH_PREFIX: &str = "use mod.prelude.widgets.*\nView{height:Fit, ";
+ const SPLASH_EVAL_INSTRUCTION_LIMIT: usize = 200_000;
+ 
+@@ -73,6 +85,11 @@ impl D3Splash {
+             self.vm_id = cx.alloc_splash_vm_with_network(false);
+             // The whole point of this host: the d3 module joins the sandbox.
+             cx.with_script_vm_id(self.vm_id, crate::script_mod);
++            // 宿主应用登记的额外脚本模块（自定义 widget / shader）也注册进沙箱 VM
++            let extra: Vec<fn(&mut ScriptVm)> = SPLASH_EXTRA_MODS.lock().map(|g| g.clone()).unwrap_or_default();
++            for f in extra {
++                cx.with_script_vm_id(self.vm_id, |vm| f(vm));
++            }
+         }
+ 
+         let self_id = self.self_id();

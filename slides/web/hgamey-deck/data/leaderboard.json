@@ -1,0 +1,8532 @@
+{
+ "generated": "2026-10-21T15:11:06-07:00",
+ "source": "hgamey/_tmp/models/registry.jsonl",
+ "sections": {
+  "sr": {
+   "task": "sr",
+   "protocol": "sr-genshin-ref15-18-4deg-v1",
+   "budget_npu_balanced_ms": 6.0,
+   "champion": "sr-0004-genshin_sr_16_16_1134x514_int8",
+   "champion_chosen_by": "gate.py --seed",
+   "champion_why": "种子: 10-20 训练、部署尺寸 1134x514、原神进程内跑过的那一版 (现役)",
+   "models": [
+    {
+     "id": "sr-0001-baseline-bilinear",
+     "name": "baseline-bilinear",
+     "source": "固定算法",
+     "status": "baseline",
+     "arch": "bilinear",
+     "data": null,
+     "params": null,
+     "gmac": 0,
+     "npu_balanced_ms": null,
+     "latency_kind": null,
+     "in_budget": null,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 38.18835,
+      "dssim_med": 0.018299999999999997,
+      "detail_med": -1.58365,
+      "m_psnr_med": -10.81165,
+      "m_dssim_med": -0.0178,
+      "m_detail_med": -1.43365,
+      "m_psnr_min": -13.5129
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 37.45375,
+      "dssim_med": 0.01925,
+      "detail_med": -1.7439,
+      "m_psnr_med": -11.125250000000001,
+      "m_dssim_med": -0.01645,
+      "m_detail_med": -1.4992,
+      "m_psnr_min": -13.7289
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 34.54125,
+       "se": 0.29376,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.0166,
+       "se": 0.0013,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -2.03686,
+       "se": 0.10021,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.86542,
+       "se": 0.00682,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 53.24175,
+       "se": 0.13609,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00205,
+       "se": 8e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.96719,
+       "se": 0.03767,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00034,
+       "se": 0.00023,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 36.74506,
+       "se": 0.31884,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01498,
+       "se": 0.00115,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -1.82047,
+       "se": 0.08953,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.84156,
+       "se": 0.0137,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.20938,
+       "se": 0.32698,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01584,
+       "se": 0.00141,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -1.52412,
+       "se": 0.07341,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 36.524,
+       "se": 0.33277,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.0091,
+       "se": 0.00076,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -1.60313,
+       "se": 0.07984,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.86524,
+       "se": 0.01323,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 36.23244,
+       "se": 0.32344,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.01165,
+       "se": 0.00097,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -1.71868,
+       "se": 0.08558,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.91705,
+       "se": 0.0094,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 27.02475,
+       "se": 0.37096,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.02518,
+       "se": 0.00234,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -1.92891,
+       "se": 0.09513,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 36.79056,
+       "se": 0.31351,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01096,
+       "se": 0.00085,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -1.81109,
+       "se": 0.08894,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.71157,
+       "se": 0.00879,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 36.776,
+       "se": 0.31419,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01092,
+       "se": 0.00085,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -1.81183,
+       "se": 0.08882,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.71319,
+       "se": 0.00873,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.71319,
+       "se": 0.00873,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.71319,
+       "se": 0.00873,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -11.35819,
+       "se": 0.32808,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.02051,
+       "se": 0.00153,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -1.54946,
+       "se": 0.0843,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0001-baseline-bilinear/20261021-144322",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0002-baseline-bicubic",
+     "name": "baseline-bicubic",
+     "source": "固定算法",
+     "status": "baseline",
+     "arch": "bicubic",
+     "data": null,
+     "params": null,
+     "gmac": 0,
+     "npu_balanced_ms": null,
+     "latency_kind": null,
+     "in_budget": null,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 41.0393,
+      "dssim_med": 0.0116,
+      "detail_med": -0.9483999999999999,
+      "m_psnr_med": -7.960699999999999,
+      "m_dssim_med": -0.0111,
+      "m_detail_med": -0.7984,
+      "m_psnr_min": -11.326
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.87095,
+      "dssim_med": 0.01125,
+      "detail_med": -1.0844999999999998,
+      "m_psnr_med": -8.2631,
+      "m_dssim_med": -0.0081,
+      "m_detail_med": -0.8345499999999999,
+      "m_psnr_min": -12.0596
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.94738,
+       "se": 0.35925,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00958,
+       "se": 0.00091,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -1.32948,
+       "se": 0.11217,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.73797,
+       "se": 0.01946,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 53.9955,
+       "se": 0.09933,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00176,
+       "se": 5e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.50672,
+       "se": 0.04834,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.37663,
+       "se": 0.39061,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00873,
+       "se": 0.00082,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -1.1568,
+       "se": 0.10246,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.69178,
+       "se": 0.02232,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 34.74019,
+       "se": 0.3724,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.0084,
+       "se": 0.00089,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.99491,
+       "se": 0.07971,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.24388,
+       "se": 0.3989,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.0051,
+       "se": 0.00051,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -1.01406,
+       "se": 0.09098,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.69776,
+       "se": 0.02576,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 38.87219,
+       "se": 0.39139,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00646,
+       "se": 0.00067,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -1.08859,
+       "se": 0.0975,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.75782,
+       "se": 0.02576,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 30.02488,
+       "se": 0.46641,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.01242,
+       "se": 0.00157,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -1.22515,
+       "se": 0.11054,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 39.34613,
+       "se": 0.37872,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00637,
+       "se": 0.00059,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -1.16214,
+       "se": 0.10111,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.59009,
+       "se": 0.01871,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 39.3465,
+       "se": 0.38018,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00633,
+       "se": 0.00059,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -1.16232,
+       "se": 0.10108,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.58962,
+       "se": 0.01898,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.58962,
+       "se": 0.01898,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.58912,
+       "se": 0.01907,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.0005,
+       "se": 0.00011,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -8.64847,
+       "se": 0.40027,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01281,
+       "se": 0.00107,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.92502,
+       "se": 0.09637,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0002-baseline-bicubic/20261021-144348",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0003-genshin_sr_16_16_int8_1072x488",
+     "name": "genshin_sr_16_16_int8_1072x488",
+     "source": "10-20 train_sr.py",
+     "status": "trained",
+     "arch": "espcn:16:16 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 2.737,
+     "npu_balanced_ms": 5.6,
+     "latency_kind": "measured",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.0018,
+      "dssim_med": 0.00955,
+      "detail_med": -0.41764999999999997,
+      "m_psnr_med": -5.9982,
+      "m_dssim_med": -0.009049999999999999,
+      "m_detail_med": -0.26765,
+      "m_psnr_min": -8.6418
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.8273,
+      "dssim_med": 0.01055,
+      "detail_med": -0.54765,
+      "m_psnr_med": -7.223599999999999,
+      "m_dssim_med": -0.0072499999999999995,
+      "m_detail_med": -0.28915,
+      "m_psnr_min": -10.4582
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 38.38519,
+       "se": 0.28163,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00619,
+       "se": 0.00043,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.7793,
+       "se": 0.11995,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.69906,
+       "se": 0.01708,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 51.13406,
+       "se": 0.02683,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00329,
+       "se": 4e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 0.67442,
+       "se": 0.04007,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00017,
+       "se": 0.00018,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 40.91694,
+       "se": 0.30727,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00578,
+       "se": 0.00044,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.63097,
+       "se": 0.11155,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.66218,
+       "se": 0.02055,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 35.89431,
+       "se": 0.29175,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00529,
+       "se": 0.00043,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.63746,
+       "se": 0.08576,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 41.25106,
+       "se": 0.31624,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00321,
+       "se": 0.00024,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.50464,
+       "se": 0.09806,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.62213,
+       "se": 0.01808,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 40.36212,
+       "se": 0.28977,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00404,
+       "se": 0.0003,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.56522,
+       "se": 0.1058,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.67441,
+       "se": 0.02383,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.7125,
+       "se": 0.33214,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00714,
+       "se": 0.0007,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.66471,
+       "se": 0.12559,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 40.89881,
+       "se": 0.29018,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00448,
+       "se": 0.00028,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.63054,
+       "se": 0.10884,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.54145,
+       "se": 0.016,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 40.88744,
+       "se": 0.29048,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00447,
+       "se": 0.00028,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.6296,
+       "se": 0.10892,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.54213,
+       "se": 0.01613,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.54213,
+       "se": 0.01613,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.45376,
+       "se": 0.03628,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.00547,
+       "se": 0.00167,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.08291,
+       "se": 0.02469,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -6.398,
+       "se": 0.32256,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00971,
+       "se": 0.00045,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.39982,
+       "se": 0.10414,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0003-genshin_sr_16_16_int8_1072x488/20261021-144415",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "name": "genshin_sr_16_16_1134x514_int8",
+     "source": "10-20 train_sr.py (docs/experiments)",
+     "status": "trained",
+     "arch": "espcn:16:16 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 3.05,
+     "npu_balanced_ms": 3.79,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.5137,
+      "dssim_med": 0.0085,
+      "detail_med": -0.2663,
+      "m_psnr_med": -5.4863,
+      "m_dssim_med": -0.008,
+      "m_detail_med": -0.11629999999999999,
+      "m_psnr_min": -7.9709
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 41.190250000000006,
+      "dssim_med": 0.009899999999999999,
+      "detail_med": -0.39139999999999997,
+      "m_psnr_med": -7.1906,
+      "m_dssim_med": -0.00645,
+      "m_detail_med": -0.1303,
+      "m_psnr_min": -9.9609
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 39.09188,
+       "se": 0.28314,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00543,
+       "se": 0.0004,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.61567,
+       "se": 0.12204,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.68116,
+       "se": 0.01748,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 51.07556,
+       "se": 0.03425,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00318,
+       "se": 3e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 0.91725,
+       "se": 0.03001,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 41.72075,
+       "se": 0.30646,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00502,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.46761,
+       "se": 0.11429,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.60102,
+       "se": 0.02233,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 36.35388,
+       "se": 0.24266,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00491,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.45924,
+       "se": 0.08288,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 42.07906,
+       "se": 0.32065,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.0028,
+       "se": 0.00021,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.35155,
+       "se": 0.10168,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.59552,
+       "se": 0.01927,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 41.0155,
+       "se": 0.29199,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.0036,
+       "se": 0.00028,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.42925,
+       "se": 0.10796,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.65215,
+       "se": 0.02663,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 32.19656,
+       "se": 0.33462,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00659,
+       "se": 0.00059,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.54081,
+       "se": 0.12639,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 41.62094,
+       "se": 0.29051,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00399,
+       "se": 0.00026,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.47579,
+       "se": 0.11124,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.51526,
+       "se": 0.01727,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 41.60525,
+       "se": 0.29052,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00397,
+       "se": 0.00026,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.47471,
+       "se": 0.11137,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.51655,
+       "se": 0.01738,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.51655,
+       "se": 0.01738,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.36581,
+       "se": 0.04608,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.0338,
+       "se": 0.01247,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.11691,
+       "se": 0.02613,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -5.75022,
+       "se": 0.33341,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00863,
+       "se": 0.00045,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.2626,
+       "se": 0.10346,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": true,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0004-genshin_sr_16_16_1134x514_int8/20261021-144448",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0005-genshin_sr_32_32_1072x488_int8",
+     "name": "genshin_sr_32_32_1072x488_int8",
+     "source": "10-20 train_sr.py (docs/experiments)",
+     "status": "trained",
+     "arch": "espcn:32:32 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 7.885,
+     "npu_balanced_ms": 4.26,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.46655,
+      "dssim_med": 0.00835,
+      "detail_med": -0.31915000000000004,
+      "m_psnr_med": -5.53345,
+      "m_dssim_med": -0.00785,
+      "m_detail_med": -0.16915,
+      "m_psnr_min": -8.0913
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.87355,
+      "dssim_med": 0.0097,
+      "detail_med": -0.4489,
+      "m_psnr_med": -7.30995,
+      "m_dssim_med": -0.0063,
+      "m_detail_med": -0.19324999999999998,
+      "m_psnr_min": -10.0513
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 38.78094,
+       "se": 0.27634,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00558,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.68177,
+       "se": 0.11957,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.688,
+       "se": 0.01669,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 51.31062,
+       "se": 0.02803,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00291,
+       "se": 3e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 0.47736,
+       "se": 0.04172,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00017,
+       "se": 0.00018,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 41.41262,
+       "se": 0.31227,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00521,
+       "se": 0.00042,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.54637,
+       "se": 0.11104,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.63069,
+       "se": 0.02176,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 36.09863,
+       "se": 0.27778,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00484,
+       "se": 0.00036,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.50701,
+       "se": 0.08376,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 41.90419,
+       "se": 0.32856,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00273,
+       "se": 0.00022,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.39357,
+       "se": 0.0978,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.59609,
+       "se": 0.01802,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 40.74613,
+       "se": 0.28495,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.0037,
+       "se": 0.00027,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.46425,
+       "se": 0.10533,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.66349,
+       "se": 0.02367,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.859,
+       "se": 0.3219,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.007,
+       "se": 0.00063,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.58957,
+       "se": 0.12149,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 41.36062,
+       "se": 0.28999,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.004,
+       "se": 0.00026,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.5335,
+       "se": 0.10848,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.52464,
+       "se": 0.01614,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 41.3425,
+       "se": 0.28981,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00399,
+       "se": 0.00026,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.53275,
+       "se": 0.10858,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.52604,
+       "se": 0.01622,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.52604,
+       "se": 0.01622,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.39508,
+       "se": 0.04221,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.01939,
+       "se": 0.00675,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.11157,
+       "se": 0.02696,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -5.81811,
+       "se": 0.33401,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00855,
+       "se": 0.00047,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.30269,
+       "se": 0.10383,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0005-genshin_sr_32_32_1072x488_int8/20261021-144516",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0006-genshin_sr_32_32_1134x514_int8",
+     "name": "genshin_sr_32_32_1134x514_int8",
+     "source": "10-20 train_sr.py (docs/experiments)",
+     "status": "trained",
+     "arch": "espcn:32:32 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 8.785,
+     "npu_balanced_ms": 4.34,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.748000000000005,
+      "dssim_med": 0.0077,
+      "detail_med": -0.22515,
+      "m_psnr_med": -5.252000000000001,
+      "m_dssim_med": -0.0072,
+      "m_detail_med": -0.07515000000000001,
+      "m_psnr_min": -7.8038
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 41.25735,
+      "dssim_med": 0.00915,
+      "detail_med": -0.33840000000000003,
+      "m_psnr_med": -6.82655,
+      "m_dssim_med": -0.0057,
+      "m_detail_med": -0.07919999999999999,
+      "m_psnr_min": -9.8729
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 39.58119,
+       "se": 0.30557,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00501,
+       "se": 0.00038,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.54746,
+       "se": 0.12736,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.66928,
+       "se": 0.01832,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 50.01288,
+       "se": 0.02893,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00321,
+       "se": 4e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 0.62423,
+       "se": 0.03946,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 42.13006,
+       "se": 0.33119,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00456,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.43299,
+       "se": 0.11986,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.57551,
+       "se": 0.02501,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 37.5055,
+       "se": 0.27127,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00389,
+       "se": 0.00026,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.29171,
+       "se": 0.09249,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 42.43731,
+       "se": 0.34251,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.0026,
+       "se": 0.00021,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.31493,
+       "se": 0.10841,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.57227,
+       "se": 0.02292,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 41.41194,
+       "se": 0.30642,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.0033,
+       "se": 0.00027,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.38549,
+       "se": 0.11344,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.64148,
+       "se": 0.02688,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 32.56831,
+       "se": 0.37799,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00615,
+       "se": 0.00062,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.48786,
+       "se": 0.13321,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 42.00981,
+       "se": 0.30853,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00371,
+       "se": 0.00025,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.42858,
+       "se": 0.11729,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.50123,
+       "se": 0.01863,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 41.9945,
+       "se": 0.30871,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.0037,
+       "se": 0.00025,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.42857,
+       "se": 0.11737,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.50211,
+       "se": 0.01881,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.50211,
+       "se": 0.01881,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.33775,
+       "se": 0.0482,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.04636,
+       "se": 0.01704,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.11801,
+       "se": 0.02505,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -5.48604,
+       "se": 0.3551,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00786,
+       "se": 0.00046,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.25774,
+       "se": 0.10267,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0006-genshin_sr_32_32_1134x514_int8/20261021-144541",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0007-espcn_s_int8_random",
+     "name": "espcn_s_int8_random",
+     "source": "10-20 make_sr.py",
+     "status": "random_weights",
+     "arch": "espcn 16/16, 无残差, 随机权重",
+     "data": "无 (随机权重)",
+     "params": null,
+     "gmac": 2.737,
+     "npu_balanced_ms": 3.7,
+     "latency_kind": "measured",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [
+      {
+       "NPU 平衡档": "211±23 mW",
+       "NPU 省电档": "159±13 mW",
+       "NPU 突发档": "1030±67 mW",
+       "GPU fp16": "≈790 mW",
+       "完整交接 平衡档": "284±13 mW (9.5 mJ/帧, 单帧 8.6 ms)"
+      }
+     ],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0008-espcn_m_int8_random",
+     "name": "espcn_m_int8_random",
+     "source": "10-20 make_sr.py",
+     "status": "random_weights",
+     "arch": "espcn 32/32, 无残差, 随机权重",
+     "data": "无 (随机权重)",
+     "params": null,
+     "gmac": 7.885,
+     "npu_balanced_ms": 4.26,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0009-espcn_l_int8_random",
+     "name": "espcn_l_int8_random",
+     "source": "10-20 make_sr.py",
+     "status": "random_weights",
+     "arch": "espcn 64/32, 无残差, 随机权重",
+     "data": "无 (随机权重)",
+     "params": null,
+     "gmac": 13.961,
+     "npu_balanced_ms": 4.84,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [
+      {
+       "NPU 突发档": "1184±6 mW"
+      }
+     ],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0010-genshin_sr_v2_qat_smoke",
+     "name": "genshin_sr_v2_qat_smoke",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:32:32 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 16752,
+     "gmac": 9.708,
+     "npu_balanced_ms": 4.43,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.508399999999995,
+      "dssim_med": 0.0067,
+      "detail_med": -0.26775,
+      "m_psnr_med": -5.4916,
+      "m_dssim_med": -0.0062,
+      "m_detail_med": -0.11775000000000001,
+      "m_psnr_min": -8.2553
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.7235,
+      "dssim_med": 0.00805,
+      "detail_med": -0.3782,
+      "m_psnr_med": -7.4459,
+      "m_dssim_med": -0.00455,
+      "m_detail_med": -0.119,
+      "m_psnr_min": -10.0214
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 39.22025,
+       "se": 0.29253,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00506,
+       "se": 0.00044,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.57741,
+       "se": 0.12833,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.74122,
+       "se": 0.01604,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 48.96056,
+       "se": 0.02979,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00186,
+       "se": 4e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.41586,
+       "se": 0.05296,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 41.95819,
+       "se": 0.34318,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00463,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.47782,
+       "se": 0.11967,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.60975,
+       "se": 0.02775,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 37.66287,
+       "se": 0.29911,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00377,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.38481,
+       "se": 0.08406,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 42.37006,
+       "se": 0.3642,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00255,
+       "se": 0.00025,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.35359,
+       "se": 0.10749,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.59547,
+       "se": 0.02788,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 41.17862,
+       "se": 0.31917,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00334,
+       "se": 0.00032,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.42107,
+       "se": 0.11306,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.73263,
+       "se": 0.02669,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 32.57819,
+       "se": 0.37224,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00611,
+       "se": 0.00061,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.48326,
+       "se": 0.13017,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 41.75206,
+       "se": 0.31228,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00349,
+       "se": 0.0003,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.46963,
+       "se": 0.11757,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.54586,
+       "se": 0.01987,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 41.73631,
+       "se": 0.31235,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00347,
+       "se": 0.0003,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.4696,
+       "se": 0.11763,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.54712,
+       "se": 0.01996,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.54712,
+       "se": 0.01996,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.38028,
+       "se": 0.05231,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.03983,
+       "se": 0.01516,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.12699,
+       "se": 0.02804,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -5.86698,
+       "se": 0.35173,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00718,
+       "se": 0.00056,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.27789,
+       "se": 0.10813,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0010-genshin_sr_v2_qat_smoke/20261021-144603",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0011-genshin_sr_v2_smoke",
+     "name": "genshin_sr_v2_smoke",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "res:16:5 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 10176,
+     "gmac": 5.875,
+     "npu_balanced_ms": 4.06,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 38.018,
+      "dssim_med": 0.018299999999999997,
+      "detail_med": -1.58115,
+      "m_psnr_med": -10.982,
+      "m_dssim_med": -0.0178,
+      "m_detail_med": -1.4311500000000001,
+      "m_psnr_min": -13.628
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 37.2381,
+      "dssim_med": 0.019299999999999998,
+      "detail_med": -1.7415500000000002,
+      "m_psnr_med": -11.29825,
+      "m_dssim_med": -0.0165,
+      "m_detail_med": -1.49665,
+      "m_psnr_min": -13.7734
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 34.456,
+       "se": 0.29024,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01676,
+       "se": 0.00131,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -2.03406,
+       "se": 0.10025,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.87388,
+       "se": 0.00585,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.09206,
+       "se": 0.06423,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00213,
+       "se": 8e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.97934,
+       "se": 0.03022,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00204,
+       "se": 0.00067,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 36.62125,
+       "se": 0.31356,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01512,
+       "se": 0.00116,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -1.81858,
+       "se": 0.08954,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.86006,
+       "se": 0.01234,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.08306,
+       "se": 0.32028,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.0163,
+       "se": 0.00142,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -1.50499,
+       "se": 0.07339,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 36.41775,
+       "se": 0.32931,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00919,
+       "se": 0.00076,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -1.60002,
+       "se": 0.07972,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.87009,
+       "se": 0.01254,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 36.11156,
+       "se": 0.31912,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.01177,
+       "se": 0.00097,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -1.71593,
+       "se": 0.08555,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.93354,
+       "se": 0.00863,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 26.9855,
+       "se": 0.36989,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.02549,
+       "se": 0.00236,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -1.92466,
+       "se": 0.09523,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 36.65631,
+       "se": 0.30783,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01108,
+       "se": 0.00086,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -1.80842,
+       "se": 0.08888,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.72148,
+       "se": 0.00812,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 36.64137,
+       "se": 0.30842,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01104,
+       "se": 0.00086,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -1.80909,
+       "se": 0.08875,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.72326,
+       "se": 0.00801,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.72326,
+       "se": 0.00801,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.72326,
+       "se": 0.00801,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -11.51647,
+       "se": 0.32112,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.02049,
+       "se": 0.00153,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -1.54687,
+       "se": 0.08423,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0011-genshin_sr_v2_smoke/20261021-144624",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0012-genshin_sr_v2_smoke2",
+     "name": "genshin_sr_v2_smoke2",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:16:16 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 6304,
+     "gmac": 3.637,
+     "npu_balanced_ms": 3.85,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.23055,
+      "dssim_med": 0.0077,
+      "detail_med": -0.37185,
+      "m_psnr_med": -5.76945,
+      "m_dssim_med": -0.0072,
+      "m_detail_med": -0.22185,
+      "m_psnr_min": -8.5098
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.60835,
+      "dssim_med": 0.009000000000000001,
+      "detail_med": -0.49045,
+      "m_psnr_med": -7.44255,
+      "m_dssim_med": -0.0056,
+      "m_detail_med": -0.229,
+      "m_psnr_min": -10.2387
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 38.56319,
+       "se": 0.27632,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00596,
+       "se": 0.00048,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.70384,
+       "se": 0.12254,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.73194,
+       "se": 0.01787,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.27913,
+       "se": 0.05105,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00185,
+       "se": 5e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.66639,
+       "se": 0.04581,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00035,
+       "se": 0.00024,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 41.20844,
+       "se": 0.30808,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00544,
+       "se": 0.00049,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.58617,
+       "se": 0.11295,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.65898,
+       "se": 0.02467,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 36.43044,
+       "se": 0.27616,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00455,
+       "se": 0.00036,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.50061,
+       "se": 0.08677,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 41.82519,
+       "se": 0.33947,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.0029,
+       "se": 0.00028,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.43738,
+       "se": 0.10001,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.62124,
+       "se": 0.02399,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 40.65,
+       "se": 0.30791,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00384,
+       "se": 0.00036,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.51577,
+       "se": 0.10779,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.71303,
+       "se": 0.02861,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.88975,
+       "se": 0.3366,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00698,
+       "se": 0.00068,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.66931,
+       "se": 0.1197,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 41.16131,
+       "se": 0.29463,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.004,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.57531,
+       "se": 0.11137,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.55425,
+       "se": 0.01943,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 41.14494,
+       "se": 0.29503,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00398,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.57569,
+       "se": 0.11132,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.55605,
+       "se": 0.01941,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.55605,
+       "se": 0.01941,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.43809,
+       "se": 0.04455,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.01186,
+       "se": 0.00447,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.10609,
+       "se": 0.02745,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -6.20398,
+       "se": 0.33464,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00826,
+       "se": 0.00058,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.35531,
+       "se": 0.10628,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0012-genshin_sr_v2_smoke2/20261021-144640",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0013-genshin_sr_v2_smoke3",
+     "name": "genshin_sr_v2_smoke3",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:16:16 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 6304,
+     "gmac": 3.637,
+     "npu_balanced_ms": 3.85,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 42.8831,
+      "dssim_med": 0.0085,
+      "detail_med": -0.55515,
+      "m_psnr_med": -6.1169,
+      "m_dssim_med": -0.008,
+      "m_detail_med": -0.40515,
+      "m_psnr_min": -9.2393
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.55315,
+      "dssim_med": 0.009649999999999999,
+      "detail_med": -0.6709,
+      "m_psnr_med": -7.49775,
+      "m_dssim_med": -0.00615,
+      "m_detail_med": -0.40615,
+      "m_psnr_min": -10.7125
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 38.16644,
+       "se": 0.30464,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00633,
+       "se": 0.00055,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.87314,
+       "se": 0.11574,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.73389,
+       "se": 0.01948,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.30356,
+       "se": 0.05278,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00188,
+       "se": 6e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.65446,
+       "se": 0.04472,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00052,
+       "se": 0.00028,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 40.52925,
+       "se": 0.3349,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.0062,
+       "se": 0.00059,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.79005,
+       "se": 0.10571,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.69573,
+       "se": 0.02364,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 35.61706,
+       "se": 0.29554,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00536,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.62597,
+       "se": 0.08715,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 40.91881,
+       "se": 0.35726,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00338,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.61872,
+       "se": 0.09474,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.65386,
+       "se": 0.02477,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 40.04606,
+       "se": 0.32456,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00426,
+       "se": 0.0004,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.66958,
+       "se": 0.10251,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.71589,
+       "se": 0.02976,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.42356,
+       "se": 0.3804,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00796,
+       "se": 0.0009,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.89661,
+       "se": 0.11111,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 40.5695,
+       "se": 0.31885,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00441,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.74842,
+       "se": 0.10531,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.56952,
+       "se": 0.01992,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 40.55531,
+       "se": 0.31978,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.0044,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.75018,
+       "se": 0.10519,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.57109,
+       "se": 0.01993,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.57109,
+       "se": 0.01993,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.52058,
+       "se": 0.03175,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.00163,
+       "se": 0.00052,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.04888,
+       "se": 0.01634,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -6.74428,
+       "se": 0.35682,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00929,
+       "se": 0.00064,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.53259,
+       "se": 0.10048,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0013-genshin_sr_v2_smoke3/20261021-144656",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0014-genshin_sr_v2_smoke4",
+     "name": "genshin_sr_v2_smoke4",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "res:16:5 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 10176,
+     "gmac": 5.875,
+     "npu_balanced_ms": 4.06,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 38.25655,
+      "dssim_med": 0.01765,
+      "detail_med": -1.5230000000000001,
+      "m_psnr_med": -10.74345,
+      "m_dssim_med": -0.01715,
+      "m_detail_med": -1.373,
+      "m_psnr_min": -13.4441
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 37.376000000000005,
+      "dssim_med": 0.01885,
+      "detail_med": -1.68455,
+      "m_psnr_med": -11.1658,
+      "m_dssim_med": -0.016,
+      "m_detail_med": -1.43885,
+      "m_psnr_min": -13.6217
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 34.63912,
+       "se": 0.29701,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01612,
+       "se": 0.00129,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -1.97774,
+       "se": 0.10092,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.87192,
+       "se": 0.00615,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.09675,
+       "se": 0.06362,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00212,
+       "se": 8e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.96036,
+       "se": 0.03017,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0017,
+       "se": 0.00065,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 36.78594,
+       "se": 0.3181,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01468,
+       "se": 0.00114,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -1.77192,
+       "se": 0.08972,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.85892,
+       "se": 0.01234,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.12806,
+       "se": 0.32321,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01608,
+       "se": 0.00142,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -1.50308,
+       "se": 0.0735,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 36.68106,
+       "se": 0.33493,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00873,
+       "se": 0.00074,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -1.53343,
+       "se": 0.07984,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.85934,
+       "se": 0.01343,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 36.33056,
+       "se": 0.32538,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.01129,
+       "se": 0.00096,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -1.65662,
+       "se": 0.08588,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.93051,
+       "se": 0.00908,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 27.22913,
+       "se": 0.37624,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.02422,
+       "se": 0.0023,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -1.86908,
+       "se": 0.0958,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 36.86113,
+       "se": 0.31347,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01066,
+       "se": 0.00085,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -1.75095,
+       "se": 0.08922,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.71777,
+       "se": 0.00851,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 36.84531,
+       "se": 0.3141,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01063,
+       "se": 0.00085,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -1.75191,
+       "se": 0.08909,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.71961,
+       "se": 0.00839,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.71961,
+       "se": 0.00839,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.71961,
+       "se": 0.00839,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -11.28766,
+       "se": 0.32769,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.0198,
+       "se": 0.0015,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -1.4891,
+       "se": 0.08443,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0014-genshin_sr_v2_smoke4/20261021-144724",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0015-genshin_sr_v2_smoke5",
+     "name": "genshin_sr_v2_smoke5",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "res:16:5 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 10176,
+     "gmac": 5.875,
+     "npu_balanced_ms": 4.06,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 42.8073,
+      "dssim_med": 0.009049999999999999,
+      "detail_med": -0.5034,
+      "m_psnr_med": -6.1927,
+      "m_dssim_med": -0.00855,
+      "m_detail_med": -0.3534,
+      "m_psnr_min": -9.1539
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.55245,
+      "dssim_med": 0.01,
+      "detail_med": -0.6205,
+      "m_psnr_med": -7.49845,
+      "m_dssim_med": -0.00675,
+      "m_detail_med": -0.36555000000000004,
+      "m_psnr_min": -10.5541
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 38.057,
+       "se": 0.28352,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00638,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.82516,
+       "se": 0.1159,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.74266,
+       "se": 0.0175,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.26106,
+       "se": 0.05107,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00201,
+       "se": 4e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.40024,
+       "se": 0.04565,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.00087,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 40.26219,
+       "se": 0.31677,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00597,
+       "se": 0.00051,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.72408,
+       "se": 0.10755,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.73014,
+       "se": 0.01907,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 35.65694,
+       "se": 0.28392,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00543,
+       "se": 0.00041,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.60577,
+       "se": 0.0817,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 40.35244,
+       "se": 0.3366,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00331,
+       "se": 0.00029,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.58307,
+       "se": 0.09597,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.67464,
+       "se": 0.02038,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.84838,
+       "se": 0.30678,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.0042,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.62729,
+       "se": 0.10134,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.73899,
+       "se": 0.02301,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.34944,
+       "se": 0.35794,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00769,
+       "se": 0.00084,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.83254,
+       "se": 0.11468,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 40.31188,
+       "se": 0.30155,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00438,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.70306,
+       "se": 0.10561,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.58699,
+       "se": 0.01622,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 40.30281,
+       "se": 0.30155,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00436,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.70226,
+       "se": 0.10557,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.58883,
+       "se": 0.01627,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.58883,
+       "se": 0.01627,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.51369,
+       "se": 0.03361,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.00376,
+       "se": 0.00113,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.0714,
+       "se": 0.02097,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -6.75831,
+       "se": 0.34087,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00948,
+       "se": 0.00053,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.48569,
+       "se": 0.10104,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0015-genshin_sr_v2_smoke5/20261021-144750",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0016-genshin_sr_v2_smoke6",
+     "name": "genshin_sr_v2_smoke6",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:16:16 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 6304,
+     "gmac": 3.637,
+     "npu_balanced_ms": 3.85,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 41.546099999999996,
+      "dssim_med": 0.0109,
+      "detail_med": -0.8516,
+      "m_psnr_med": -7.4539,
+      "m_dssim_med": -0.0104,
+      "m_detail_med": -0.7016,
+      "m_psnr_min": -10.3407
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.665949999999995,
+      "dssim_med": 0.011699999999999999,
+      "detail_med": -0.9877499999999999,
+      "m_psnr_med": -8.38495,
+      "m_dssim_med": -0.008199999999999999,
+      "m_detail_med": -0.7347999999999999,
+      "m_psnr_min": -11.3944
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 37.21819,
+       "se": 0.30703,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00762,
+       "se": 0.00063,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -1.23326,
+       "se": 0.10552,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.77978,
+       "se": 0.01387,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.07762,
+       "se": 0.04786,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00195,
+       "se": 5e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.64748,
+       "se": 0.03965,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0007,
+       "se": 0.00031,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.28256,
+       "se": 0.31456,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00778,
+       "se": 0.00064,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -1.10184,
+       "se": 0.09506,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.77889,
+       "se": 0.01593,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 35.08169,
+       "se": 0.31162,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00639,
+       "se": 0.00063,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.84202,
+       "se": 0.08172,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.50425,
+       "se": 0.32624,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00423,
+       "se": 0.00036,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.8807,
+       "se": 0.08798,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.70414,
+       "se": 0.01875,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.06944,
+       "se": 0.31787,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00517,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.96781,
+       "se": 0.09257,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.77672,
+       "se": 0.02263,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 30.06737,
+       "se": 0.38043,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.01123,
+       "se": 0.0012,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -1.28955,
+       "se": 0.09753,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 39.47825,
+       "se": 0.30916,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00536,
+       "se": 0.00043,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -1.05825,
+       "se": 0.09572,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.61746,
+       "se": 0.01455,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 39.4635,
+       "se": 0.30997,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00534,
+       "se": 0.00043,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -1.0611,
+       "se": 0.09552,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.61967,
+       "se": 0.01451,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.61967,
+       "se": 0.01451,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.61468,
+       "se": 0.01541,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.00081,
+       "se": 0.0002,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.00421,
+       "se": 0.001,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -7.99242,
+       "se": 0.33856,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01164,
+       "se": 0.0007,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.82279,
+       "se": 0.09133,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0016-genshin_sr_v2_smoke6/20261021-144808",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0017-genshin_sr_v2_e32_box",
+     "name": "genshin_sr_v2_e32_box",
+     "source": "N2 train_sr_v2.py",
+     "status": "trained",
+     "arch": "espcn:32:32 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 16752,
+     "gmac": 9.708,
+     "npu_balanced_ms": 4.43,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 43.82225,
+      "dssim_med": 0.0066,
+      "detail_med": -0.2657,
+      "m_psnr_med": -5.17775,
+      "m_dssim_med": -0.0061,
+      "m_detail_med": -0.1157,
+      "m_psnr_min": -8.1146
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.97345,
+      "dssim_med": 0.00795,
+      "detail_med": -0.37625,
+      "m_psnr_med": -7.1129,
+      "m_dssim_med": -0.00445,
+      "m_detail_med": -0.11674999999999999,
+      "m_psnr_min": -9.9477
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 39.38719,
+       "se": 0.30217,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.00508,
+       "se": 0.00044,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.5748,
+       "se": 0.1283,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.68439,
+       "se": 0.02296,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 49.37562,
+       "se": 0.04831,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.00179,
+       "se": 5e-05,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": -0.60814,
+       "se": 0.04712,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 42.176,
+       "se": 0.35791,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00461,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.47353,
+       "se": 0.11997,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.57959,
+       "se": 0.02852,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 37.65731,
+       "se": 0.29677,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.00382,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.38311,
+       "se": 0.08394,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 42.60831,
+       "se": 0.38294,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00254,
+       "se": 0.00026,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.35163,
+       "se": 0.10779,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.56379,
+       "se": 0.02901,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 41.43831,
+       "se": 0.33604,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00334,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.41888,
+       "se": 0.11302,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.64834,
+       "se": 0.0324,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 32.64238,
+       "se": 0.37537,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00605,
+       "se": 0.00061,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.47624,
+       "se": 0.13023,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 41.97062,
+       "se": 0.3268,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.00347,
+       "se": 0.00031,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.46773,
+       "se": 0.11769,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.50429,
+       "se": 0.0227,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 41.95544,
+       "se": 0.32678,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.00346,
+       "se": 0.00031,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.46748,
+       "se": 0.11775,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.50541,
+       "se": 0.02288,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.50541,
+       "se": 0.02288,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.35676,
+       "se": 0.0508,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.03722,
+       "se": 0.01442,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.11141,
+       "se": 0.02536,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -5.58643,
+       "se": 0.37324,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.00715,
+       "se": 0.00057,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.27745,
+       "se": 0.10796,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0017-genshin_sr_v2_e32_box/20261021-144826",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0018-srloop_gen1-1_rgba_int8_1134x514",
+     "name": "srloop_gen1-1_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x8+dwsep5x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1848,
+     "gmac": 1.557,
+     "npu_balanced_ms": 3.65,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.34965,
+      "dssim_med": 0.0155,
+      "detail_med": -0.13765,
+      "m_psnr_med": -8.65035,
+      "m_dssim_med": -0.015,
+      "m_detail_med": -0.0329,
+      "m_psnr_min": -10.419
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.544650000000004,
+      "dssim_med": 0.0256,
+      "detail_med": -0.2383,
+      "m_psnr_med": -12.2652,
+      "m_dssim_med": -0.0229,
+      "m_detail_med": 0.03615,
+      "m_psnr_min": -13.2174
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 37.06356,
+       "se": 0.19967,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01118,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.41861,
+       "se": 0.11996,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.78777,
+       "se": 0.01163,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 39.14744,
+       "se": 0.1236,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04447,
+       "se": 0.00105,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.31264,
+       "se": 0.0499,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.12021,
+       "se": 0.00071,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.00256,
+       "se": 0.22264,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00964,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.33902,
+       "se": 0.10936,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.77526,
+       "se": 0.01442,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 33.18631,
+       "se": 0.16894,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01049,
+       "se": 0.00043,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.17368,
+       "se": 0.07706,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.93919,
+       "se": 0.27187,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00452,
+       "se": 0.00025,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.21976,
+       "se": 0.10098,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.68995,
+       "se": 0.01736,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.20562,
+       "se": 0.2472,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00567,
+       "se": 0.0003,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.29246,
+       "se": 0.10687,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.777,
+       "se": 0.01769,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.14206,
+       "se": 0.3539,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00839,
+       "se": 0.00087,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.54992,
+       "se": 0.13333,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.86231,
+       "se": 0.2,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01391,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.28424,
+       "se": 0.10673,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.63567,
+       "se": 0.01261,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.74325,
+       "se": 0.19643,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01437,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.27634,
+       "se": 0.10591,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.63949,
+       "se": 0.01248,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.63949,
+       "se": 0.01248,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.32962,
+       "se": 0.05477,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.14311,
+       "se": 0.0318,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.16676,
+       "se": 0.02195,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -8.87244,
+       "se": 0.20526,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.0154,
+       "se": 0.00035,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.1919,
+       "se": 0.08564,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0018-srloop_gen1-1_rgba_int8_1134x514/20261021-144851",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0019-srloop_gen10-4_rgba_int8_1134x514",
+     "name": "srloop_gen10-4_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x7+res3x7 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1860,
+     "gmac": 1.464,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.87595,
+      "dssim_med": 0.01795,
+      "detail_med": -0.22805,
+      "m_psnr_med": -9.12405,
+      "m_dssim_med": -0.01745,
+      "m_detail_med": -0.07805,
+      "m_psnr_min": -10.7251
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.41955,
+      "dssim_med": 0.0268,
+      "detail_med": -0.32794999999999996,
+      "m_psnr_med": -12.432400000000001,
+      "m_dssim_med": -0.024050000000000002,
+      "m_detail_med": -0.0535,
+      "m_psnr_min": -13.396
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.86506,
+       "se": 0.19643,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01176,
+       "se": 0.0004,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.52444,
+       "se": 0.11805,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.82666,
+       "se": 0.00848,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.99256,
+       "se": 0.12407,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04627,
+       "se": 0.00105,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.49885,
+       "se": 0.04521,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.12105,
+       "se": 0.00068,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 38.85887,
+       "se": 0.20007,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01014,
+       "se": 0.0004,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.41841,
+       "se": 0.10453,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.81771,
+       "se": 0.00917,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 33.41,
+       "se": 0.17818,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01021,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.30699,
+       "se": 0.07492,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.68581,
+       "se": 0.2406,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00503,
+       "se": 0.00022,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.31634,
+       "se": 0.10008,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.72623,
+       "se": 0.01478,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 38.97856,
+       "se": 0.2318,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00603,
+       "se": 0.0003,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.38886,
+       "se": 0.10536,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.82499,
+       "se": 0.01556,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 30.94644,
+       "se": 0.33258,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00874,
+       "se": 0.00085,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.69112,
+       "se": 0.12543,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.668,
+       "se": 0.18584,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01462,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.36869,
+       "se": 0.10378,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.67001,
+       "se": 0.00983,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.55188,
+       "se": 0.18294,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.0151,
+       "se": 0.00032,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.36103,
+       "se": 0.10292,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.67334,
+       "se": 0.00972,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.67334,
+       "se": 0.00972,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.39863,
+       "se": 0.05073,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.11524,
+       "se": 0.02424,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.15949,
+       "se": 0.02357,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -9.3097,
+       "se": 0.18752,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01738,
+       "se": 0.00029,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.22839,
+       "se": 0.09077,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0019-srloop_gen10-4_rgba_int8_1134x514/20261021-144917",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0020-srloop_gen10-6_rgba_int8_1134x514",
+     "name": "srloop_gen10-6_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep5x8+dwsep3x10+dwsep3x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1820,
+     "gmac": 1.528,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.23735,
+      "dssim_med": 0.01405,
+      "detail_med": -0.0996,
+      "m_psnr_med": -8.76265,
+      "m_dssim_med": -0.01355,
+      "m_detail_med": -0.0434,
+      "m_psnr_min": -10.481
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.464650000000006,
+      "dssim_med": 0.02465,
+      "detail_med": -0.23270000000000002,
+      "m_psnr_med": -12.352,
+      "m_dssim_med": -0.022,
+      "m_detail_med": 0.04175,
+      "m_psnr_min": -13.4296
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 37.062,
+       "se": 0.21357,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.0111,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.47512,
+       "se": 0.11979,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.80143,
+       "se": 0.01187,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.956,
+       "se": 0.11935,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04478,
+       "se": 0.00106,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.22209,
+       "se": 0.05085,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.1197,
+       "se": 0.00058,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.15706,
+       "se": 0.21804,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00937,
+       "se": 0.00049,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.30002,
+       "se": 0.11508,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.7728,
+       "se": 0.01701,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.615,
+       "se": 0.13698,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01236,
+       "se": 0.00039,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.15792,
+       "se": 0.07968,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 40.23738,
+       "se": 0.25737,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00443,
+       "se": 0.00027,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.17558,
+       "se": 0.10627,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.69023,
+       "se": 0.01925,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.17744,
+       "se": 0.23895,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00569,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.26824,
+       "se": 0.11159,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.79666,
+       "se": 0.01935,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.43356,
+       "se": 0.3455,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00794,
+       "se": 0.00078,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.5014,
+       "se": 0.13195,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.90387,
+       "se": 0.19606,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01388,
+       "se": 0.00038,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.28106,
+       "se": 0.11,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.64238,
+       "se": 0.01394,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.77656,
+       "se": 0.19282,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01435,
+       "se": 0.00037,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.27384,
+       "se": 0.10917,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.64587,
+       "se": 0.01379,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.64587,
+       "se": 0.01379,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.33209,
+       "se": 0.05856,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.14615,
+       "se": 0.03449,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.16764,
+       "se": 0.02441,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -8.98799,
+       "se": 0.2,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01432,
+       "se": 0.00044,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.18572,
+       "se": 0.0878,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0020-srloop_gen10-6_rgba_int8_1134x514/20261021-144935",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0021-srloop_gen4-5_rgba_int8_1134x514",
+     "name": "srloop_gen4-5_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x10 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1372,
+     "gmac": 1.249,
+     "npu_balanced_ms": 3.62,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.692350000000005,
+      "dssim_med": 0.0154,
+      "detail_med": -0.34085,
+      "m_psnr_med": -9.30765,
+      "m_dssim_med": -0.0149,
+      "m_detail_med": -0.19085,
+      "m_psnr_min": -11.3952
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.55645,
+      "dssim_med": 0.0245,
+      "detail_med": -0.4598,
+      "m_psnr_med": -12.41215,
+      "m_dssim_med": -0.02185,
+      "m_detail_med": -0.1861,
+      "m_psnr_min": -13.3552
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.707,
+       "se": 0.2319,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01174,
+       "se": 0.00053,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.643,
+       "se": 0.11619,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.79573,
+       "se": 0.01279,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.54988,
+       "se": 0.12156,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04775,
+       "se": 0.00109,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.326,
+       "se": 0.05304,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.1197,
+       "se": 0.00058,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 38.49363,
+       "se": 0.242,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01035,
+       "se": 0.00059,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.56338,
+       "se": 0.10518,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.75914,
+       "se": 0.01774,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 33.1005,
+       "se": 0.24694,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01158,
+       "se": 0.0008,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.51174,
+       "se": 0.07485,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.30294,
+       "se": 0.28806,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00501,
+       "se": 0.00035,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.47074,
+       "se": 0.09951,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.70889,
+       "se": 0.02229,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 38.85169,
+       "se": 0.26475,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00607,
+       "se": 0.00041,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.44418,
+       "se": 0.10762,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.79932,
+       "se": 0.01957,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 30.42425,
+       "se": 0.40218,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.01071,
+       "se": 0.00123,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.84918,
+       "se": 0.12011,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.36725,
+       "se": 0.21973,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01498,
+       "se": 0.00044,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.49129,
+       "se": 0.10374,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.64358,
+       "se": 0.01483,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.27019,
+       "se": 0.21626,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01541,
+       "se": 0.00044,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.47968,
+       "se": 0.10282,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.64679,
+       "se": 0.01474,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.64679,
+       "se": 0.01474,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.4596,
+       "se": 0.04818,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.06617,
+       "se": 0.00954,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.12103,
+       "se": 0.02878,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -9.71301,
+       "se": 0.21717,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01557,
+       "se": 0.0005,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.31244,
+       "se": 0.10198,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0021-srloop_gen4-5_rgba_int8_1134x514/20261021-144952",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0022-srloop_gen5-6_rgba_int8_1134x514",
+     "name": "srloop_gen5-6_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep3x8+dwsep5x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1686,
+     "gmac": 1.461,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.07995,
+      "dssim_med": 0.0161,
+      "detail_med": -0.10795,
+      "m_psnr_med": -8.92005,
+      "m_dssim_med": -0.0156,
+      "m_detail_med": -0.04255,
+      "m_psnr_min": -10.5006
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.6031,
+      "dssim_med": 0.025599999999999998,
+      "detail_med": -0.23775000000000002,
+      "m_psnr_med": -12.224599999999999,
+      "m_dssim_med": -0.022699999999999998,
+      "m_detail_med": 0.036699999999999997,
+      "m_psnr_min": -13.1744
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.98181,
+       "se": 0.20811,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01094,
+       "se": 0.00041,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.48896,
+       "se": 0.11911,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.79963,
+       "se": 0.01169,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 39.05456,
+       "se": 0.12538,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04531,
+       "se": 0.00106,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.3289,
+       "se": 0.04952,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.12004,
+       "se": 0.00069,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.08187,
+       "se": 0.20601,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00948,
+       "se": 0.0004,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.29265,
+       "se": 0.11237,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.78333,
+       "se": 0.01384,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 33.34087,
+       "se": 0.20562,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01034,
+       "se": 0.00057,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.31653,
+       "se": 0.08087,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.837,
+       "se": 0.24317,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.0048,
+       "se": 0.00024,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.21449,
+       "se": 0.10525,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.71264,
+       "se": 0.01604,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.05475,
+       "se": 0.22611,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00578,
+       "se": 0.00029,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.25444,
+       "se": 0.11144,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.80341,
+       "se": 0.0173,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.203,
+       "se": 0.35534,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00844,
+       "se": 0.00085,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.53109,
+       "se": 0.12881,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.79063,
+       "se": 0.18999,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01408,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.28618,
+       "se": 0.10882,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.65034,
+       "se": 0.01214,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.67463,
+       "se": 0.18696,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01454,
+       "se": 0.00034,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.27873,
+       "se": 0.10799,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.65389,
+       "se": 0.012,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.65389,
+       "se": 0.012,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.32133,
+       "se": 0.05647,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.16213,
+       "se": 0.03675,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.17044,
+       "se": 0.02308,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -9.11464,
+       "se": 0.18609,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01574,
+       "se": 0.00033,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.18647,
+       "se": 0.08638,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0022-srloop_gen5-6_rgba_int8_1134x514/20261021-145023",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0023-srloop_gen6-1_rgba_int8_1134x514",
+     "name": "srloop_gen6-1_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep3x8 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 938,
+     "gmac": 0.953,
+     "npu_balanced_ms": 3.59,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.33855,
+      "dssim_med": 0.0165,
+      "detail_med": -0.3906,
+      "m_psnr_med": -9.66145,
+      "m_dssim_med": -0.016,
+      "m_detail_med": -0.24059999999999998,
+      "m_psnr_min": -11.6643
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.1068,
+      "dssim_med": 0.026250000000000002,
+      "detail_med": -0.5223,
+      "m_psnr_med": -12.756699999999999,
+      "m_dssim_med": -0.023600000000000003,
+      "m_detail_med": -0.2482,
+      "m_psnr_min": -13.8862
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.16381,
+       "se": 0.23453,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01298,
+       "se": 0.00059,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.72864,
+       "se": 0.10857,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.82194,
+       "se": 0.01027,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.5755,
+       "se": 0.12082,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04816,
+       "se": 0.0011,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.38092,
+       "se": 0.04988,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.12004,
+       "se": 0.0007,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 38.04194,
+       "se": 0.24089,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01133,
+       "se": 0.00061,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.624,
+       "se": 0.09912,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.79618,
+       "se": 0.01511,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.51031,
+       "se": 0.24674,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01311,
+       "se": 0.0009,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.44142,
+       "se": 0.0721,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 38.76675,
+       "se": 0.28522,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00548,
+       "se": 0.00037,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.49616,
+       "se": 0.09518,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.72554,
+       "se": 0.01979,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 38.27988,
+       "se": 0.26228,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00694,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.49191,
+       "se": 0.10091,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.82123,
+       "se": 0.01835,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 29.78225,
+       "se": 0.36045,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.0117,
+       "se": 0.00118,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.90348,
+       "se": 0.11266,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 37.93331,
+       "se": 0.22219,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01574,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.54171,
+       "se": 0.09754,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.66385,
+       "se": 0.01306,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 37.83387,
+       "se": 0.21942,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.0162,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.53191,
+       "se": 0.09641,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.66721,
+       "se": 0.01293,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.66721,
+       "se": 0.01293,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.49299,
+       "se": 0.04009,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.06645,
+       "se": 0.00903,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.10781,
+       "se": 0.02126,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -10.01894,
+       "se": 0.21555,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01707,
+       "se": 0.00056,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.35359,
+       "se": 0.0963,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0023-srloop_gen6-1_rgba_int8_1134x514/20261021-145045",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0024-srloop_gen8-2_rgba_int8_1134x514",
+     "name": "srloop_gen8-2_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep5x12+dwsep3x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1710,
+     "gmac": 1.471,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.3274,
+      "dssim_med": 0.0133,
+      "detail_med": -0.22175,
+      "m_psnr_med": -8.6726,
+      "m_dssim_med": -0.012799999999999999,
+      "m_detail_med": -0.07175000000000001,
+      "m_psnr_min": -10.7585
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.46535,
+      "dssim_med": 0.023899999999999998,
+      "detail_med": -0.36435,
+      "m_psnr_med": -12.4009,
+      "m_dssim_med": -0.0213,
+      "m_detail_med": -0.0899,
+      "m_psnr_min": -13.5162
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 37.12125,
+       "se": 0.24908,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01132,
+       "se": 0.00062,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.60692,
+       "se": 0.117,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.77978,
+       "se": 0.01722,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.85637,
+       "se": 0.12242,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04615,
+       "se": 0.00107,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.22865,
+       "se": 0.05071,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.1197,
+       "se": 0.00058,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.25962,
+       "se": 0.25499,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.0094,
+       "se": 0.00061,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.43316,
+       "se": 0.11199,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.73093,
+       "se": 0.02376,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.95406,
+       "se": 0.16928,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01182,
+       "se": 0.00056,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.18719,
+       "se": 0.07771,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 40.364,
+       "se": 0.30874,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00444,
+       "se": 0.00036,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.29064,
+       "se": 0.10236,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.67921,
+       "se": 0.02689,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.35519,
+       "se": 0.29285,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00573,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.39333,
+       "se": 0.11054,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.76743,
+       "se": 0.0273,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.2065,
+       "se": 0.36004,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00852,
+       "se": 0.00088,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.61636,
+       "se": 0.12649,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.97438,
+       "se": 0.23265,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01419,
+       "se": 0.00047,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.40389,
+       "se": 0.10705,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.62172,
+       "se": 0.01955,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.84338,
+       "se": 0.22832,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01466,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.39479,
+       "se": 0.10613,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.62508,
+       "se": 0.01942,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.62508,
+       "se": 0.01942,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.41295,
+       "se": 0.05269,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.08995,
+       "se": 0.0167,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.12221,
+       "se": 0.02224,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -8.99045,
+       "se": 0.23526,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01404,
+       "se": 0.00063,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.2382,
+       "se": 0.09565,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0024-srloop_gen8-2_rgba_int8_1134x514/20261021-145106",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0025-srloop_gen9-1_rgba_int8_1134x514",
+     "name": "srloop_gen9-1_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x10+dwsep3x10 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1582,
+     "gmac": 1.359,
+     "npu_balanced_ms": 3.63,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.9446,
+      "dssim_med": 0.01425,
+      "detail_med": -0.22915000000000002,
+      "m_psnr_med": -9.055399999999999,
+      "m_dssim_med": -0.01375,
+      "m_detail_med": -0.07915,
+      "m_psnr_min": -11.0419
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.383449999999996,
+      "dssim_med": 0.02485,
+      "detail_med": -0.33995,
+      "m_psnr_med": -12.491900000000001,
+      "m_dssim_med": -0.02215,
+      "m_detail_med": -0.0655,
+      "m_psnr_min": -13.5385
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.85944,
+       "se": 0.22592,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01153,
+       "se": 0.00056,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.55913,
+       "se": 0.11985,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.78807,
+       "se": 0.01479,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.90762,
+       "se": 0.11973,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04551,
+       "se": 0.00105,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.35456,
+       "se": 0.04932,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.1197,
+       "se": 0.00058,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 38.89012,
+       "se": 0.24483,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01012,
+       "se": 0.00062,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.42973,
+       "se": 0.1137,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.76209,
+       "se": 0.01983,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 32.73837,
+       "se": 0.21051,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01217,
+       "se": 0.00069,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.33672,
+       "se": 0.07331,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.78463,
+       "se": 0.28084,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00486,
+       "se": 0.00035,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.31444,
+       "se": 0.10655,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.69869,
+       "se": 0.02388,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 38.94219,
+       "se": 0.2761,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00601,
+       "se": 0.00044,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.38299,
+       "se": 0.11365,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.78072,
+       "se": 0.02423,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 30.99475,
+       "se": 0.38337,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00902,
+       "se": 0.00102,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.62766,
+       "se": 0.13004,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.65881,
+       "se": 0.21941,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.0144,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.38793,
+       "se": 0.1095,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.63606,
+       "se": 0.01707,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.54263,
+       "se": 0.21569,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01487,
+       "se": 0.00045,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.37786,
+       "se": 0.1087,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.63968,
+       "se": 0.01692,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.63968,
+       "se": 0.01692,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.41124,
+       "se": 0.05402,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.09757,
+       "se": 0.0209,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.13088,
+       "se": 0.02292,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -9.36468,
+       "se": 0.22392,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01492,
+       "se": 0.00056,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.24991,
+       "se": 0.09586,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0025-srloop_gen9-1_rgba_int8_1134x514/20261021-145123",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0026-srloop_gen9-5_rgba_int8_1134x514",
+     "name": "srloop_gen9-5_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep3x6+dwsep5x8+dwsep3x10 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1528,
+     "gmac": 1.321,
+     "npu_balanced_ms": 3.62,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 40.2856,
+      "dssim_med": 0.0146,
+      "detail_med": -0.07250000000000001,
+      "m_psnr_med": -8.7144,
+      "m_dssim_med": -0.014100000000000001,
+      "m_detail_med": -0.05285,
+      "m_psnr_min": -10.425
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.481449999999995,
+      "dssim_med": 0.025500000000000002,
+      "detail_med": -0.18009999999999998,
+      "m_psnr_med": -12.32075,
+      "m_dssim_med": -0.022699999999999998,
+      "m_detail_med": 0.05835,
+      "m_psnr_min": -13.209
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.99969,
+       "se": 0.1894,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01101,
+       "se": 0.00037,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.39576,
+       "se": 0.12085,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.80664,
+       "se": 0.0111,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 39.12419,
+       "se": 0.12855,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04349,
+       "se": 0.00106,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.25214,
+       "se": 0.05434,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.11987,
+       "se": 0.00062,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 39.06606,
+       "se": 0.2144,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.00927,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.25602,
+       "se": 0.11915,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.78158,
+       "se": 0.01511,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 33.37319,
+       "se": 0.18103,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01019,
+       "se": 0.00046,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.19162,
+       "se": 0.08167,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.97787,
+       "se": 0.27636,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00453,
+       "se": 0.00028,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.16571,
+       "se": 0.11096,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.70768,
+       "se": 0.01787,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 39.11487,
+       "se": 0.2419,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00563,
+       "se": 0.00032,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.23469,
+       "se": 0.1144,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.80773,
+       "se": 0.01739,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 31.34019,
+       "se": 0.34194,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00795,
+       "se": 0.00075,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.38487,
+       "se": 0.14154,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.84613,
+       "se": 0.19589,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.0136,
+       "se": 0.00036,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.23809,
+       "se": 0.11304,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.65102,
+       "se": 0.01271,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.72275,
+       "se": 0.19173,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01408,
+       "se": 0.00035,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.22937,
+       "se": 0.11222,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.65472,
+       "se": 0.01255,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.65472,
+       "se": 0.01255,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.30152,
+       "se": 0.06032,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.17973,
+       "se": 0.04306,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.17348,
+       "se": 0.02657,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -8.92539,
+       "se": 0.20685,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01471,
+       "se": 0.00042,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.18331,
+       "se": 0.08863,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0026-srloop_gen9-5_rgba_int8_1134x514/20261021-145138",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    },
+    {
+     "id": "sr-0027-srloop_gen9-6_rgba_int8_1134x514",
+     "name": "srloop_gen9-6_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x4+res3x4 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 852,
+     "gmac": 0.818,
+     "npu_balanced_ms": 3.58,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 39.696200000000005,
+      "dssim_med": 0.0186,
+      "detail_med": -0.25279999999999997,
+      "m_psnr_med": -9.303799999999999,
+      "m_dssim_med": -0.0181,
+      "m_detail_med": -0.1028,
+      "m_psnr_min": -11.0563
+     },
+     "judge_moving": {
+      "n": 16,
+      "pass": 0,
+      "fail": 16,
+      "inconclusive": 0,
+      "psnr_med": 36.3748,
+      "dssim_med": 0.02745,
+      "detail_med": -0.3524,
+      "m_psnr_med": -12.499099999999999,
+      "m_dssim_med": -0.02445,
+      "m_detail_med": -0.07794999999999999,
+      "m_psnr_min": -13.3746
+     },
+     "categories": {
+      "region.ui.psnr_db": {
+       "mean": 36.78906,
+       "se": 0.20456,
+       "n": 16
+      },
+      "region.ui.dssim": {
+       "mean": 0.01175,
+       "se": 0.00038,
+       "n": 16
+      },
+      "region.ui.detail_log2": {
+       "mean": -0.54061,
+       "se": 0.11701,
+       "n": 16
+      },
+      "region.ui.degraded_frac": {
+       "mean": 0.84082,
+       "se": 0.00688,
+       "n": 16
+      },
+      "region.ui.tiles": {
+       "mean": 384.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.flat.psnr_db": {
+       "mean": 38.85456,
+       "se": 0.11656,
+       "n": 16
+      },
+      "region.flat.dssim": {
+       "mean": 0.04674,
+       "se": 0.00106,
+       "n": 16
+      },
+      "region.flat.detail_log2": {
+       "mean": 3.50561,
+       "se": 0.0468,
+       "n": 16
+      },
+      "region.flat.degraded_frac": {
+       "mean": 0.12208,
+       "se": 0.00096,
+       "n": 16
+      },
+      "region.flat.tiles": {
+       "mean": 369.75,
+       "se": 1.80162,
+       "n": 16
+      },
+      "region.sky.psnr_db": {
+       "mean": 38.50131,
+       "se": 0.21365,
+       "n": 16
+      },
+      "region.sky.dssim": {
+       "mean": 0.01047,
+       "se": 0.0004,
+       "n": 16
+      },
+      "region.sky.detail_log2": {
+       "mean": -0.43316,
+       "se": 0.10533,
+       "n": 16
+      },
+      "region.sky.degraded_frac": {
+       "mean": 0.82524,
+       "se": 0.0078,
+       "n": 16
+      },
+      "region.sky.tiles": {
+       "mean": 379.25,
+       "se": 1.81085,
+       "n": 16
+      },
+      "region.foliage.psnr_db": {
+       "mean": 33.35513,
+       "se": 0.22025,
+       "n": 16
+      },
+      "region.foliage.dssim": {
+       "mean": 0.01048,
+       "se": 0.00062,
+       "n": 16
+      },
+      "region.foliage.detail_log2": {
+       "mean": -0.44003,
+       "se": 0.07025,
+       "n": 16
+      },
+      "region.foliage.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.foliage.tiles": {
+       "mean": 3.75,
+       "se": 0.1118,
+       "n": 16
+      },
+      "region.water.psnr_db": {
+       "mean": 39.13569,
+       "se": 0.26289,
+       "n": 16
+      },
+      "region.water.dssim": {
+       "mean": 0.00523,
+       "se": 0.00025,
+       "n": 16
+      },
+      "region.water.detail_log2": {
+       "mean": -0.37971,
+       "se": 0.09944,
+       "n": 16
+      },
+      "region.water.degraded_frac": {
+       "mean": 0.74181,
+       "se": 0.01361,
+       "n": 16
+      },
+      "region.water.tiles": {
+       "mean": 436.5,
+       "se": 2.284,
+       "n": 16
+      },
+      "region.edge.psnr_db": {
+       "mean": 38.73406,
+       "se": 0.24114,
+       "n": 16
+      },
+      "region.edge.dssim": {
+       "mean": 0.00619,
+       "se": 0.00029,
+       "n": 16
+      },
+      "region.edge.detail_log2": {
+       "mean": -0.39141,
+       "se": 0.10506,
+       "n": 16
+      },
+      "region.edge.degraded_frac": {
+       "mean": 0.84921,
+       "se": 0.01244,
+       "n": 16
+      },
+      "region.edge.tiles": {
+       "mean": 435.75,
+       "se": 2.90043,
+       "n": 16
+      },
+      "region.texture.psnr_db": {
+       "mean": 30.71688,
+       "se": 0.34322,
+       "n": 16
+      },
+      "region.texture.dssim": {
+       "mean": 0.00948,
+       "se": 0.00091,
+       "n": 16
+      },
+      "region.texture.detail_log2": {
+       "mean": -0.70379,
+       "se": 0.12513,
+       "n": 16
+      },
+      "region.texture.degraded_frac": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.texture.tiles": {
+       "mean": 1.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "region.motion.psnr_db": {
+       "mean": 38.40412,
+       "se": 0.19859,
+       "n": 16
+      },
+      "region.motion.dssim": {
+       "mean": 0.01486,
+       "se": 0.00033,
+       "n": 16
+      },
+      "region.motion.detail_log2": {
+       "mean": -0.39248,
+       "se": 0.10349,
+       "n": 16
+      },
+      "region.motion.degraded_frac": {
+       "mean": 0.68311,
+       "se": 0.00834,
+       "n": 16
+      },
+      "region.motion.tiles": {
+       "mean": 1967.75,
+       "se": 1.61632,
+       "n": 16
+      },
+      "region.all.psnr_db": {
+       "mean": 38.29875,
+       "se": 0.19543,
+       "n": 16
+      },
+      "region.all.dssim": {
+       "mean": 0.01532,
+       "se": 0.00032,
+       "n": 16
+      },
+      "region.all.detail_log2": {
+       "mean": -0.38316,
+       "se": 0.10259,
+       "n": 16
+      },
+      "region.all.degraded_frac": {
+       "mean": 0.68633,
+       "se": 0.00825,
+       "n": 16
+      },
+      "region.all.tiles": {
+       "mean": 2010.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.degraded.frac": {
+       "mean": 0.68633,
+       "se": 0.00825,
+       "n": 16
+      },
+      "type.blur.frac": {
+       "mean": 0.39633,
+       "se": 0.05062,
+       "n": 16
+      },
+      "type.alias_or_sharpen.frac": {
+       "mean": 0.12999,
+       "se": 0.02514,
+       "n": 16
+      },
+      "type.color_shift.frac": {
+       "mean": 0.0,
+       "se": 0.0,
+       "n": 16
+      },
+      "type.structure.frac": {
+       "mean": 0.16002,
+       "se": 0.02285,
+       "n": 16
+      },
+      "judge.same_ui.m_psnr": {
+       "mean": -9.54304,
+       "se": 0.19773,
+       "n": 16
+      },
+      "judge.same_ui.m_dssim": {
+       "mean": -0.01809,
+       "se": 0.00029,
+       "n": 16
+      },
+      "judge.same_ui.m_detail": {
+       "mean": -0.24148,
+       "se": 0.09336,
+       "n": 16
+      }
+     },
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/sr-0027-srloop_gen9-6_rgba_int8_1134x514/20261021-145156",
+     "diag_source": [
+      "q2-proxy"
+     ],
+     "n_samples": null
+    }
+   ]
+  },
+  "sr_real": {
+   "task": "sr",
+   "protocol": "sr-real-lowrender-honor-huawei-v0",
+   "budget_npu_balanced_ms": 6.0,
+   "champion": null,
+   "champion_chosen_by": null,
+   "champion_why": null,
+   "models": [
+    {
+     "id": "sr-0001-baseline-bilinear",
+     "name": "baseline-bilinear",
+     "source": "固定算法",
+     "status": "baseline",
+     "arch": "bilinear",
+     "data": null,
+     "params": null,
+     "gmac": 0,
+     "npu_balanced_ms": null,
+     "latency_kind": null,
+     "in_budget": null,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0002-baseline-bicubic",
+     "name": "baseline-bicubic",
+     "source": "固定算法",
+     "status": "baseline",
+     "arch": "bicubic",
+     "data": null,
+     "params": null,
+     "gmac": 0,
+     "npu_balanced_ms": null,
+     "latency_kind": null,
+     "in_budget": null,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0003-genshin_sr_16_16_int8_1072x488",
+     "name": "genshin_sr_16_16_int8_1072x488",
+     "source": "10-20 train_sr.py",
+     "status": "trained",
+     "arch": "espcn:16:16 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 2.737,
+     "npu_balanced_ms": 5.6,
+     "latency_kind": "measured",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "name": "genshin_sr_16_16_1134x514_int8",
+     "source": "10-20 train_sr.py (docs/experiments)",
+     "status": "trained",
+     "arch": "espcn:16:16 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 3.05,
+     "npu_balanced_ms": 3.79,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0005-genshin_sr_32_32_1072x488_int8",
+     "name": "genshin_sr_32_32_1072x488_int8",
+     "source": "10-20 train_sr.py (docs/experiments)",
+     "status": "trained",
+     "arch": "espcn:32:32 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 7.885,
+     "npu_balanced_ms": 4.26,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0006-genshin_sr_32_32_1134x514_int8",
+     "name": "genshin_sr_32_32_1134x514_int8",
+     "source": "10-20 train_sr.py (docs/experiments)",
+     "status": "trained",
+     "arch": "espcn:32:32 + 双线性残差, RGB 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": null,
+     "gmac": 8.785,
+     "npu_balanced_ms": 4.34,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0007-espcn_s_int8_random",
+     "name": "espcn_s_int8_random",
+     "source": "10-20 make_sr.py",
+     "status": "random_weights",
+     "arch": "espcn 16/16, 无残差, 随机权重",
+     "data": "无 (随机权重)",
+     "params": null,
+     "gmac": 2.737,
+     "npu_balanced_ms": 3.7,
+     "latency_kind": "measured",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [
+      {
+       "NPU 平衡档": "211±23 mW",
+       "NPU 省电档": "159±13 mW",
+       "NPU 突发档": "1030±67 mW",
+       "GPU fp16": "≈790 mW",
+       "完整交接 平衡档": "284±13 mW (9.5 mJ/帧, 单帧 8.6 ms)"
+      }
+     ],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0008-espcn_m_int8_random",
+     "name": "espcn_m_int8_random",
+     "source": "10-20 make_sr.py",
+     "status": "random_weights",
+     "arch": "espcn 32/32, 无残差, 随机权重",
+     "data": "无 (随机权重)",
+     "params": null,
+     "gmac": 7.885,
+     "npu_balanced_ms": 4.26,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0009-espcn_l_int8_random",
+     "name": "espcn_l_int8_random",
+     "source": "10-20 make_sr.py",
+     "status": "random_weights",
+     "arch": "espcn 64/32, 无残差, 随机权重",
+     "data": "无 (随机权重)",
+     "params": null,
+     "gmac": 13.961,
+     "npu_balanced_ms": 4.84,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": null,
+     "champion": false,
+     "device": [
+      {
+       "NPU 突发档": "1184±6 mW"
+      }
+     ],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0010-genshin_sr_v2_qat_smoke",
+     "name": "genshin_sr_v2_qat_smoke",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:32:32 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 16752,
+     "gmac": 9.708,
+     "npu_balanced_ms": 4.43,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0011-genshin_sr_v2_smoke",
+     "name": "genshin_sr_v2_smoke",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "res:16:5 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 10176,
+     "gmac": 5.875,
+     "npu_balanced_ms": 4.06,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0012-genshin_sr_v2_smoke2",
+     "name": "genshin_sr_v2_smoke2",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:16:16 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 6304,
+     "gmac": 3.637,
+     "npu_balanced_ms": 3.85,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0013-genshin_sr_v2_smoke3",
+     "name": "genshin_sr_v2_smoke3",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:16:16 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 6304,
+     "gmac": 3.637,
+     "npu_balanced_ms": 3.85,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0014-genshin_sr_v2_smoke4",
+     "name": "genshin_sr_v2_smoke4",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "res:16:5 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 10176,
+     "gmac": 5.875,
+     "npu_balanced_ms": 4.06,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0015-genshin_sr_v2_smoke5",
+     "name": "genshin_sr_v2_smoke5",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "res:16:5 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 10176,
+     "gmac": 5.875,
+     "npu_balanced_ms": 4.06,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0016-genshin_sr_v2_smoke6",
+     "name": "genshin_sr_v2_smoke6",
+     "source": "N2 train_sr_v2.py (冒烟)",
+     "status": "smoke",
+     "arch": "espcn:16:16 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 6304,
+     "gmac": 3.637,
+     "npu_balanced_ms": 3.85,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0017-genshin_sr_v2_e32_box",
+     "name": "genshin_sr_v2_e32_box",
+     "source": "N2 train_sr_v2.py",
+     "status": "trained",
+     "arch": "espcn:32:32 + 固定双线性卷积残差, RGBA 输出",
+     "data": "genshin_ref[0-14]@ce376e7b19",
+     "params": 16752,
+     "gmac": 9.708,
+     "npu_balanced_ms": 4.43,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0018-srloop_gen1-1_rgba_int8_1134x514",
+     "name": "srloop_gen1-1_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x8+dwsep5x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1848,
+     "gmac": 1.557,
+     "npu_balanced_ms": 3.65,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0019-srloop_gen10-4_rgba_int8_1134x514",
+     "name": "srloop_gen10-4_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x7+res3x7 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1860,
+     "gmac": 1.464,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0020-srloop_gen10-6_rgba_int8_1134x514",
+     "name": "srloop_gen10-6_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep5x8+dwsep3x10+dwsep3x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1820,
+     "gmac": 1.528,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0021-srloop_gen4-5_rgba_int8_1134x514",
+     "name": "srloop_gen4-5_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x10 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1372,
+     "gmac": 1.249,
+     "npu_balanced_ms": 3.62,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0022-srloop_gen5-6_rgba_int8_1134x514",
+     "name": "srloop_gen5-6_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep3x8+dwsep5x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1686,
+     "gmac": 1.461,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0023-srloop_gen6-1_rgba_int8_1134x514",
+     "name": "srloop_gen6-1_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep3x8 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 938,
+     "gmac": 0.953,
+     "npu_balanced_ms": 3.59,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0024-srloop_gen8-2_rgba_int8_1134x514",
+     "name": "srloop_gen8-2_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep5x12+dwsep3x12 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1710,
+     "gmac": 1.471,
+     "npu_balanced_ms": 3.64,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0025-srloop_gen9-1_rgba_int8_1134x514",
+     "name": "srloop_gen9-1_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x10+dwsep3x10 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1582,
+     "gmac": 1.359,
+     "npu_balanced_ms": 3.63,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0026-srloop_gen9-5_rgba_int8_1134x514",
+     "name": "srloop_gen9-5_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop dwsep3x6+dwsep5x8+dwsep3x10 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 1528,
+     "gmac": 1.321,
+     "npu_balanced_ms": 3.62,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "sr-0027-srloop_gen9-6_rgba_int8_1134x514",
+     "name": "srloop_gen9-6_rgba_int8_1134x514",
+     "source": "N5 convert_srloop.py (9 月 sr_loop 存档)",
+     "status": "trained",
+     "arch": "sr_loop conv3x4+res3x4 + 双线性残差, RGBA 输出",
+     "data": "sr_loop capture_A@bb137848de064d81 (9 月, 960x540 块)",
+     "params": 852,
+     "gmac": 0.818,
+     "npu_balanced_ms": 3.58,
+     "latency_kind": "estimated",
+     "in_budget": true,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {},
+     "primary": null,
+     "summary": null,
+     "flags": null,
+     "flags_against": "sr-0004-genshin_sr_16_16_1134x514_int8",
+     "champion": false,
+     "device": [],
+     "eval_dir": null,
+     "diag_source": null,
+     "n_samples": null
+    }
+   ]
+  },
+  "interp": {
+   "task": "interp",
+   "protocol": "interp-i2-surveyfilm-abcd-v0",
+   "budget_npu_balanced_ms": 12.0,
+   "champion": "interp-0002-baseline-blend",
+   "champion_chosen_by": "gate.py --seed",
+   "champion_why": "种子: I1 还没有模型; 先把「前后平均」当及格线, I1 的模型任何类别都不许比它差",
+   "models": [
+    {
+     "id": "interp-0001-baseline-repeat",
+     "name": "baseline-repeat",
+     "source": "固定算法",
+     "status": "baseline",
+     "arch": "repeat",
+     "data": null,
+     "params": null,
+     "gmac": 0,
+     "npu_balanced_ms": null,
+     "latency_kind": null,
+     "in_budget": null,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {
+      "interp.static.psnr_db": {
+       "mean": 53.6187,
+       "se": 0.17114,
+       "n": 239
+      },
+      "interp.moving.psnr_db": {
+       "mean": 31.58025,
+       "se": 0.69437,
+       "n": 240
+      },
+      "interp.moving.gain_db": {
+       "mean": -1.73435,
+       "se": 0.17022,
+       "n": 240
+      },
+      "interp.detail_log2": {
+       "mean": 0.00659,
+       "se": 0.00248,
+       "n": 240
+      },
+      "interp.worst_moving.ratio": {
+       "mean": 12.93266,
+       "se": 2.01035,
+       "n": 159
+      }
+     },
+     "primary": null,
+     "summary": {
+      "judge_verdict": "fail,fail,fail,fail",
+      "static_psnr_db": 53.6187,
+      "moving_psnr_db": 31.58025,
+      "moving_gain_db": -1.73435,
+      "detail_log2": 0.00659
+     },
+     "flags": null,
+     "flags_against": "interp-0002-baseline-blend",
+     "champion": false,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/interp-0001-baseline-repeat/20261021-142045",
+     "diag_source": null,
+     "n_samples": null
+    },
+    {
+     "id": "interp-0002-baseline-blend",
+     "name": "baseline-blend",
+     "source": "固定算法",
+     "status": "baseline",
+     "arch": "blend",
+     "data": null,
+     "params": null,
+     "gmac": 0,
+     "npu_balanced_ms": null,
+     "latency_kind": null,
+     "in_budget": null,
+     "judge_same_ui": null,
+     "judge_moving": null,
+     "categories": {
+      "interp.static.psnr_db": {
+       "mean": 56.38613,
+       "se": 0.19809,
+       "n": 239
+      },
+      "interp.moving.psnr_db": {
+       "mean": 35.84719,
+       "se": 0.82192,
+       "n": 240
+      },
+      "interp.moving.gain_db": {
+       "mean": 2.53258,
+       "se": 0.27221,
+       "n": 240
+      },
+      "interp.detail_log2": {
+       "mean": -0.21733,
+       "se": 0.01675,
+       "n": 240
+      },
+      "interp.worst_moving.ratio": {
+       "mean": 6.59148,
+       "se": 1.24777,
+       "n": 159
+      }
+     },
+     "primary": null,
+     "summary": {
+      "judge_verdict": "pass,fail,fail,fail",
+      "static_psnr_db": 56.38613,
+      "moving_psnr_db": 35.84719,
+      "moving_gain_db": 2.53258,
+      "detail_log2": -0.21733
+     },
+     "flags": null,
+     "flags_against": null,
+     "champion": true,
+     "device": [],
+     "eval_dir": "hgamey/_tmp/models/evals/interp-0002-baseline-blend/20261021-142207",
+     "diag_source": null,
+     "n_samples": null
+    }
+   ]
+  }
+ }
+}

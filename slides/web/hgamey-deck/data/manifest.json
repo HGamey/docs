@@ -1,0 +1,31 @@
+{
+ "generated": "2026-10-21T15:21:51-07:00",
+ "sources": [
+  {
+   "what": "leaderboard",
+   "path": "hgamey/_tmp/models/leaderboard.json",
+   "sha256": "737932301c525bf23fde9dc7c2f2c564b971738476c8c69995680572657884c1",
+   "generated": "2026-10-21T15:11:06-07:00"
+  },
+  {
+   "what": "verdict",
+   "path": "hgamey/_tmp/ruler/device-runner/raw/ft2/aa_1/verdict.json",
+   "sha256": "615e6f5e89d0ac3df3993fdb834e7d7c9fb789223252a378b78673739381b45d"
+  },
+  {
+   "what": "verdict",
+   "path": "hgamey/_tmp/ruler/device-runner/raw/ft2/betterwg300_1/verdict.json",
+   "sha256": "095a9918b9e5aa22c98e0f33e565ed26659a25bc0f75e3cbf5b59a5758a02df5"
+  },
+  {
+   "what": "power_mde",
+   "path": "hgamey/_tmp/ruler/device-runner/raw/power_ft2.json",
+   "sha256": "510e83cd842d3cf06874698b869ace1a2a7108209d81713eb461896b63c39be6"
+  },
+  {
+   "what": "q1_diagnose",
+   "path": "hgamey/_tmp/quality/Q1/out/main/diagnose.json",
+   "sha256": "b3afcd3a0cf382266bed5735ddd9651ed8b979d1e2a743d547399fa24a4ab03d"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+[package]
+name = "hgamey-deck"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "HGamey 进展网页幻灯片（Makepad 2.0 / Splash + makepad-d3，编译为 WASM）"
+
+# 独立 workspace：不并入上级目录的任何 workspace。
+[workspace]
+
+[dependencies]
+# Makepad 与 makepad-d3 以同级检出的方式引用（makepad 仓库内有 old/ 旧版副本，git 依赖会冲突）。
+# 目录布局见 README.md「构建」。路径相对本 Cargo.toml。
+makepad-widgets = { path = "../../../../../tools/makepad/widgets", version = "2.0.0" }
+makepad-d3 = { path = "../../../../../tools/makepad-d3" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+lto = true
+codegen-units = 1

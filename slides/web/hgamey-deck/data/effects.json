@@ -1,0 +1,136 @@
+{
+ "results": [
+  {
+   "source": "测量链考题（红魔）",
+   "run": "ft2",
+   "case": "aa_1",
+   "file": "hgamey/_tmp/ruler/device-runner/raw/ft2/aa_1/verdict.json",
+   "compare": "改写臂 对 对照臂",
+   "alpha_win": 0.016667,
+   "n_pairs": 8,
+   "metrics": [
+    {
+     "metric": "fps_mean",
+     "metric_zh": "平均帧率 (fps)",
+     "a_mean": 288.6045,
+     "b_mean": 300.091,
+     "diff": 11.4865,
+     "diff_pct": 3.98,
+     "ci_lo": -25.5453,
+     "ci_hi": 50.4673,
+     "p": 0.57467,
+     "n": 8
+    },
+    {
+     "metric": "frame_p95",
+     "metric_zh": "帧时 p95 (ms)",
+     "a_mean": 4.2029,
+     "b_mean": 4.1126,
+     "diff": -0.0902,
+     "diff_pct": -2.147,
+     "ci_lo": -0.4961,
+     "ci_hi": 0.3156,
+     "p": 0.662471,
+     "n": 8
+    },
+    {
+     "metric": "power_w_mean",
+     "metric_zh": "整机功耗 (W)",
+     "a_mean": 4.3162,
+     "b_mean": 4.3159,
+     "diff": -0.0004,
+     "diff_pct": -0.009,
+     "ci_lo": -0.4563,
+     "ci_hi": 0.4556,
+     "p": 0.998291,
+     "n": 8
+    }
+   ]
+  },
+  {
+   "source": "测量链考题（红魔）",
+   "run": "ft2",
+   "case": "betterwg300_1",
+   "file": "hgamey/_tmp/ruler/device-runner/raw/ft2/betterwg300_1/verdict.json",
+   "compare": "改写臂 对 对照臂",
+   "alpha_win": 0.016667,
+   "n_pairs": 8,
+   "metrics": [
+    {
+     "metric": "fps_mean",
+     "metric_zh": "平均帧率 (fps)",
+     "a_mean": 257.5019,
+     "b_mean": 266.7401,
+     "diff": 9.2382,
+     "diff_pct": 3.588,
+     "ci_lo": 8.5311,
+     "ci_hi": 9.9454,
+     "p": 0.000155,
+     "n": 8
+    },
+    {
+     "metric": "frame_p95",
+     "metric_zh": "帧时 p95 (ms)",
+     "a_mean": 4.368,
+     "b_mean": 4.2206,
+     "diff": -0.1474,
+     "diff_pct": -3.375,
+     "ci_lo": -0.2111,
+     "ci_hi": -0.0916,
+     "p": 0.000155,
+     "n": 8
+    },
+    {
+     "metric": "power_w_mean",
+     "metric_zh": "整机功耗 (W)",
+     "a_mean": 3.9783,
+     "b_mean": 4.0089,
+     "diff": 0.0306,
+     "diff_pct": 0.77,
+     "ci_lo": -0.1397,
+     "ci_hi": 0.235,
+     "p": 0.841803,
+     "n": 8
+    }
+   ]
+  }
+ ],
+ "mde_power": [
+  {
+   "file": "hgamey/_tmp/ruler/device-runner/raw/power_ft2.json",
+   "pairs": 5,
+   "windows": 4,
+   "mde80_pct": null,
+   "mde80_w": null,
+   "base_w": 4.285,
+   "false_pos_rate_at_0": 0.0,
+   "pair_diff_sd_w": 0.7185,
+   "sampler": {
+    "hz_min": 4.19,
+    "hz_median": 4.19,
+    "n_used_min": 42,
+    "n_used_median": 42.0
+   }
+  },
+  {
+   "file": "hgamey/_tmp/ruler/device-runner/raw/power_ft2.json",
+   "pairs": 8,
+   "windows": 1,
+   "mde80_pct": 16.0,
+   "mde80_w": 0.691,
+   "base_w": 4.316,
+   "false_pos_rate_at_0": 0.0,
+   "pair_diff_sd_w": 0.7185,
+   "sampler": {
+    "hz_min": 4.19,
+    "hz_median": 4.19,
+    "n_used_min": 42,
+    "n_used_median": 42.0
+   }
+  }
+ ],
+ "skipped_dry_runs": [
+  "_tmp/npu/N3/runs/dry_perf-first_20261021_150723/verdict.json",
+  "_tmp/npu/N3/runs/dry_r2f_perffirst/verdict.json"
+ ]
+}
