@@ -325,3 +325,21 @@ phonefarm155506f3407bfbe7a78bece9bdbbd88fe7f9d3f6经actual code-only check120077
 PF [4ca316d](https://github.com/HGamey/phonefarm/commit/4ca316d27cc6a4965453e7d778257505ba33bb59) 经实际code-only120098287846成功；harness [2b8066d](https://github.com/HGamey/harness-ops/commit/2b8066df295d91b5b40ae641951bfb9ca0760dc2) 经code-only120098396581及protocol 3.11/3.14的120098396412/120098396849全部completed/success后，同SHA直推main并核远端。吸收同事27923bd的默认mbp1地址修改，无生产连接/部署/数据迁移。
 
 03B4C1完成，03B4C2继续：在同一owner内复用采样worker及父恢复合同，避免调用会自动停止目标的旧eval整轮入口；之后迁移旧gray-layer/reference/quality可执行入口。03B4/03/JOB-EXEC-03/M3和整体goal仍active，没有调用update_goal。
+
+## 2026-10-23 持续会话的当前场景采样（PRODUCER-RECOVERY-03B4C2A）
+
+按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 新增sample动作，1至120秒，沿原controller/epoch与有序mailbox。每轮sleep plan、独立派生脚本和现有三child guard/ready/uptime收据共用同一owner；保持运行场景，不自动重启/停止、触控或调整充电/风扇/频率。measuring期间观察和输入排队，stop在有界采样安全边界收尾；健康的采集失败允许继续，未知资源状态保屏障。
+
+control-only base @3明确绑定资源父，旧binary拒绝，缺父记录不回落成旧局部完成。恢复先核worker、trace与自然完成，再恢复base，最后用完整父报告complete；原C1 @2恢复合同保留。每round使用自身plan，父manifest读取上限8MiB，动作/descriptor仍64KiB。远端关闭账本/脚本/原件按现有政策保留，不声称设备无任何文件残留。
+
+纯解析复用looptrace/env_stats和原窗口绑定，无eval编排或目标停止。render_comm可选且显式，未选线程只保存raw/env、帧指标null；已选也只称GPU submit proxy，目标进程/ctx与显示帧语义未验证。功率要求真实battery全窗放电及trace覆盖，不接受旧bypass文件为证明；每帧能耗明确null。collection失败与恢复状态独立，原始错误、计划、脚本和采样证据可追。目标线程归属另列METRIC-OWNERSHIP-01，不混用旧Unity假设。
+
+Web/API/CLI沿同一action合同；网页新增秒数/可选线程、measuring反馈、失败及原件，重连读取latest_sample缓存，已选旧回执不被状态刷新覆盖。4项相关Rust回归各一次、1项既有三child worker扩展一次（8.665秒）、1项CLI及定向JS通过。浏览器390浅/1440深/768浅验证新增状态和布局；仅文案与缓存接续增量重跑对应JS，未重复浏览器/CLI。fixture已停止、tab关闭。
+
+最终签名build-2用于两条实际PF+nodeHTTP+fakeADB链，共606次门控传输：normal319次，同owner两轮3/5秒、无comm/null与显式comm/proxy、Charging功率null/能耗null、采样内capture排队、同ID不重采、原件下载和完整stop；parent-recovery287次，已知trace恢复读回失败时base尚未开始、exit2保留hold，随后同context恢复成功，旧报告原字节与引用保留。各核322/291个已知PID无存活、无lease marker。旧C1 closed状态读取一次零ADB；恢复兼容为单测覆盖，不宣称旧C1完整链重跑。
+
+首次fixture未解析fake-bin/adb软链接，首条只读命令退出，0条logged fake transport且未挂层/采样；no-device-mutations恢复原件保留。仅修fixture路径与启动失败等待，之后未完成的两链各执行一次。首次源码构建成功，去掉重复原件链接后重建签名，未重复已过实验。qa/gray-control-sampling-host-summary.json、unit-results、worker原件目录、source-review、publish与gray-control-sample-ui-validation.json留本机。无部署/真机/锁根或原数据迁移，无真实性能结论。
+
+PF [618e456](https://github.com/HGamey/phonefarm/commit/618e456b910e3513d431ad237b204b60b5f72a8b) 经实际code-only120107718390成功；harness [cd62842](https://github.com/HGamey/harness-ops/commit/cd62842ec307163fe70a34e6bf1f5956f09d5a0d) 经code-only120107749700、protocol3.11/3.14的120107749875/120107749897全部completed/success。同SHA直推main并核远端，没有PR。
+
+只勾C2A。下一C2B1先接显式有限输入及动作版本能力，防新helper将输入计划投给旧idle owner后被忽略；C2B2再接显式充电绑定与同期能耗。quality、reference、四臂refbench和旧挂层入口迁移继续待办。C2/03B4/03/JOB-EXEC-03/M3及整个goal保持active，未调用update_goal。

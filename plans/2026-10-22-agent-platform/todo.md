@@ -96,6 +96,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
 - [ ] RESULT-05 旧Doom自定义结果和GOL报告的兼容读取适配，原文件不可变；不靠重新运行实验补索引。
 - [ ] RESULT-06 指标schema明确模块/窗口/单位/电源轨/分母/ROI/全帧/实测或估算；缺失不填0。
+- [ ] METRIC-OWNERSHIP-01 将当前场景trace的渲染线程/ctx与目标进程身份绑定，独立验证帧语义；不能从Unity默认comm或字符串筛选推断游戏FPS。03B4C2A先支持显式render_comm并保留未验证标记，没有筛选时帧指标为null、raw trace仍保留。复用已有render ownership能力，不为每个游戏另造过滤器。
 - [ ] RESULT-07 source/runtime/game/device/scene/method/reader身份贯通；一个数字能定位原始证据和计算方法。
 - [ ] RESULT-08 失败、无收益、未执行、未知和恢复异常一等展示；不能只展正结果。
 - [ ] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。
@@ -182,8 +183,10 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
         - [x] PRODUCER-RECOVERY-03B4B 清理无调用的 storeop_check_legacy→reach_scene/launch_to_world_layered 及私有 raw 抓帧/摘层链；保留 whitebox 的 screencap_raw_bin 和像素分析。557158a 检查成功直推 main，3项既有相关测试通过。后续持久会话合同见 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md)，仅设计已完成。
         - [x] PRODUCER-RECOVERY-03B4C1 按 GRAY-CONTROL-SESSION 实现持续 owner、断线接回、有序请求/控制 epoch、看屏和有限输入、灰层证据、停止与同 context 恢复。PF 4ca316d、harness 2b8066d 检查成功直推 main；21 Rust/10 Python 相关用例、JS及网页通过，两条实际 PF + fake ADB + HTTP 链435次门控传输。保留初次失败原件，无部署/真机；整体 job 仍沿 fresh clear + 核查说明释放。
         - [ ] PRODUCER-RECOVERY-03B4C2 在同一 manual owner 内接入性能采样并暂停观察干扰，迁移仍可执行的旧 gray-layer/reference/quality 路径。保留旧实验语义和原件；完成前不关闭03B4，不将局部恢复收据自动当整个 job 完成。
-          - [ ] PRODUCER-RECOVERY-03B4C2A 按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 接入当前场景 sample：1–120秒、复用三child和纯sleep plan、每轮原件、完整资源父恢复、Web/API/CLI同批。不自动重启/触控/停充/改风扇频率，尚无真实设备性能结论。
+          - [x] PRODUCER-RECOVERY-03B4C2A 按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 接入当前场景sample，1–120秒、每轮sleep plan/三child、完整父恢复、Web/API/CLI及重连缓存结果。PF618e456、harness cd62842经实际检查成功直推main；4 Rust、1受影响worker、1 CLI、JS/浏览器及两条606传输的宿主HTTP链通过。显式render_comm，无筛选帧指标null；无部署/真机/性能收益结论。
           - [ ] PRODUCER-RECOVERY-03B4C2B 在同一采样资源合同内接显式有限输入、需停充时复用绑定context的ChargeSuspend；明确实际窗口与功耗/能耗资格。
+            - [ ] PRODUCER-RECOVERY-03B4C2B1 先接显式有限输入计划：沿每round不可变plan、真实图片坐标/方向和自然完成，不自动转镜头；按计划全时长约束剩余预算。版本化动作能力防新helper把input投给只支持idle的旧owner后被忽略；兼容恢复C1/C2A，Web/API同批。
+            - [ ] PRODUCER-RECOVERY-03B4C2B2 再接显式供电条件：原charge记录绑定同context，跨轮政策与恢复顺序明确；只在同期可核窗口计算能耗，不把不同窗口的平均值拼接。
           - [ ] PRODUCER-RECOVERY-03B4C2C 将quality begin/finish改为跨人工等待的同session客户端，不重启finish；保留原图与旧半分辨率预览差别。
           - [ ] PRODUCER-RECOVERY-03B4C2D 迁移reference、test_loadop四臂refbench和旧gray-layer挂层入口；保留无层基线、字符串extras、自报/自然退出。旧keep-prop不启动语义与C1不同，不直接别名；保留typed off旧遗留、status诊断和离线分析。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。

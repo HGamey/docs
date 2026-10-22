@@ -1,6 +1,6 @@
 # 持续会话中的当前场景采样
 
-状态：2026-10-23，03B4C2A 实施合同，尚未实现。承接已发布的 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md)。本阶段仅源码和宿主替身，不部署或操作手机。
+状态：2026-10-23，03B4C2A 已实现，源码/宿主worker、实际PF + fake ADB + node HTTP及网页验收通过，发布索引见 [BATCHES](BATCHES.md)。承接 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md)。本阶段仅源码和宿主替身，不部署或操作手机。
 
 ## 首批结果与范围
 
@@ -41,5 +41,7 @@ Web 提供秒数、开始采样、measuring/回执/失败、结果和原件入�
 ## 最小验收与后续
 
 首批验证一条正常实际 PF + node HTTP + fake ADB 链：同 owner 两次不同秒数采集，中间抓图/有限输入，测量中观察不执行，结果/原件可查，同 ID 不重复。第二条注入完整父恢复失败并从原 context 继续，证明 base 不能提前 complete；旧 C1 恢复兼容用既有相关测试和一处最小宿主检查。worker只跑受影响模式/窗口回归，不重跑所有旧实验。Web检查新增表单、measuring、失败和结果链接，复用已有布局。
+
+上述两条链已通过，319+287=606次门控fake传输；四项相关Rust回归和一个受影响worker用例通过。旧C1仅做了新版状态读取（零ADB）及恢复合同单测，未重跑旧C1整条恢复链。Web新增缓存接续：GET读取latest_sample，不触发采集；用户已选旧回执不被后续状态刷新覆盖。
 
 03B4C2B 再增加显式有限输入及充电绑定，03B4C2C 迁移 quality，03B4C2D 迁移 reference/refbench/旧挂层入口。旧 keep-prop 的“不启动”与 C1 的“保留属性但已启动”不同，不能直接别名。reference 旧延后功耗窗与新 owned 窗口必须分协议；refbench 保留四臂无层/改写、字符串 extras 和自然退出。上述各项未完成前，03B4及整体目标继续 active。
