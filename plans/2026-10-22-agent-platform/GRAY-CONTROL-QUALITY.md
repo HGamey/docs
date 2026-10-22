@@ -1,6 +1,6 @@
 # 同一持续会话中的画质采集检查点
 
-状态：2026-10-23，03B4C2C1源码、宿主替身与Web/CLI验证后已发布，见BATCHES。只源码/宿主替身，不部署、不操作手机。C2C2正在迁移旧genshin_quality客户端；C2C整体在旧入口迁移前保持待办。
+状态：2026-10-23，03B4C2C1源码、宿主替身与Web/CLI验证后已发布，见BATCHES。只源码/宿主替身，不部署、不操作手机。C2C2旧genshin_quality客户端亦已迁移并验证，C2C限定范围完成；旧reference/refbench/挂层路径仍归C2D。
 
 ## 一个有限动作与共享原件
 
@@ -31,9 +31,9 @@ Web提供label及begin/checkpoint/finish三个按钮、当前阶段/缺失原因
 
 保留`genshin_quality.sh begin MODE LABEL`与`finish LABEL`作为薄入口，转交stdlib Python客户端。必须选择既有`--job`或`--session-out`，远端必须明确`--node-url`或PF_NODE_URL，不沿用pf-node默认生产地址；凭据沿既有pf-node来源，不写日志。mode只断言现有owner，不再安装、摘层、重启、清marker、登录或点门。profile显式指定package、width、height、rotation及菜单/时钟/确认/关闭/返回坐标，不缩放。调用者负责已站定大世界这一初态；旧passes/frame启发式不迁入核心。
 
-begin按fresh capture→菜单→等3秒→fresh capture→时钟→等3秒→quality begin执行。finish在人工等待后fresh capture→2500ms显式SWIPE→等1秒→quality checkpoint，再分别fresh capture后确认/等12秒、关闭/等3秒、返回/等8秒，最后quality finish。每次调用首次读到的actor/epoch固定，后续输入前检查仍相同；中途接管或归还改变epoch即中断，不自行接管。每次capture尺寸/方向必须精确匹配profile。
+begin按fresh capture→菜单→等3秒→fresh capture→时钟→等3秒→quality begin执行。finish在人工等待后fresh capture→2500ms显式SWIPE→等1秒→quality checkpoint，再分别fresh capture后确认/等12秒、关闭/等3秒、返回/等8秒，最后quality finish。每次调用首次读到的actor/epoch固定，后续输入前检查仍相同；中途接管或归还改变epoch即中断，不自行接管。每次capture尺寸/方向必须精确匹配profile。已完成回执可能先于descriptor的ready落盘；客户端仅对相同身份/epoch的live、accepting、executing做短暂只读重试，measuring/恢复/关闭直接停止。
 
-请求ID按label/阶段/步骤确定（label不超过48个安全ASCII字符），先记录原ID再投递，最多一次POST。调用前查询本阶段首ID和最终quality ID：完整结束仅回报旧结果；首ID存在而未完整结束即partial并停止，不能自动重跑导航。网络超时只查原ID；查询不确定仍停止。失败质量阶段可用现有Web/generic action显式新ID补采，不暗中重走输入。共享owner回执和manifest为真相，客户端不另造恢复状态机。
+请求ID按label/阶段/步骤确定（label不超过48个安全ASCII字符），先记录原ID再投递，最多一次POST。调用前查询本阶段首ID和最终quality ID：完整结束仅回报旧结果；首ID存在而未完整结束即partial并停止，不能自动重跑导航。网络超时只查原ID；查询不确定仍停止。失败质量阶段可用现有Web/generic action显式新ID补采，不暗中重走输入。共享owner回执和manifest为真相，客户端不另造恢复状态机。完整重复调用可在owner结束或控制权转交后只读返回旧回执；仅新动作要求当前控制权。begin先沿既有artifact目录元数据分页核同label不存在（本机检查既有目录），列表错误不视为空。finish要求latest_quality正是目标且begun；历史label或partial流程由Web/generic动作显式接续，不自动恢复导航。
 
 pf-node session-status新增opt-in --json：成功保持现有JSON；失败非零并输出结构化error/code及http_status，兼容默认人类错误路径。只有404且原服务端code=not_found可以证明某request不存在；连接错误、坏响应、未知错误不能推成不存在。没有新增HTTP/API或owner能力。local读取既有gray-control-error@1的明确not_found；其他失败均阻断客户端。
 

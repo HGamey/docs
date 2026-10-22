@@ -390,3 +390,16 @@ actualPF+nodeHTTP+fakeADB唯一会话一次通过199传输：4张截图，14工�
 PF [45737cc](https://github.com/HGamey/phonefarm/commit/45737cc89b780dd5e2d3192623c8a6092a759bea)经code-only120134106935（run39867743861）；harness [c62e062](https://github.com/HGamey/harness-ops/commit/c62e062515763f8dc8a2d2efcad1265622751ab4)经code-only120133380672（run39867530203）、protocol3.11/3.14 120133380614/120133380885（run39867530213）全部completed/success后同SHA直推main并ls-remote核远端。
 
 只勾C2C1。C2C2已按docs f1db6b4开始迁移旧genshin_quality客户端，不混入这批提交；C2C/C2D/03B4/03/JOB-EXEC-03/M3与整体goal保持active，未调用update_goal。
+
+
+## 2026-10-23 旧画质导航接入既有会话（PRODUCER-RECOVERY-03B4C2C2）
+
+旧genshin_quality.sh改为薄入口与stdlib Python客户端；显式既有本机out或node URL+job，没有隐式生产地址、serial或新job/owner。mode只核现有层，调用者负责已站定大世界；原off/force-stop/安装/清marker/点门及passes/frame启发式移除。显式package/尺寸/rotation/坐标profile，每个输入前freshcapture，人工等待后finish重新取图；调用内固定actor/epoch，跨调用可读新epoch，中途改变即停止。原2500ms时钟拖动和等待顺序保留，图片使用owner的完整PNG与明确派生半尺寸引用，不伪造raw或覆盖历史shot.png。
+
+确定式步骤ID与共享回执防重复：完整调用只返回旧结果（owner退出后也可读），partial不重走导航，丢响应仅查原ID后停止。新label沿既有目录元数据查冲突，失败不当空；finish限制当前latest begun label，历史/partial由Web/generic动作显式接续。pf-node session-status --json新增可选结构化错误，只有原服务端not_found+404才作缺请求，泛404/5xx/网络/坏响应分别保留，不改默认人类输出或action行为。真实owner先写completed回执后写ready，客户端对相同live身份executing短暂只读重试；不等待measuring/恢复或采用新控制权。输出scene_comparison=not_evaluated，不制造未核实的恢复/画质布尔结论。
+
+Python/bash/help检查通过；1既有CLI用例扩展并仅跑1次通过，回执注明无独立raw log、未为补证据重跑。纯客户端fixture一次通过5case/9次真实薄脚本调用：正常local begin→remote finish保留真实等待、6输入各freshcapture、一次completed/ready间隙、完整重复；epoch中断+partial重复；丢响应同ID查询；泛404零POST；profile不符仅capture零输入。总18动作POST/71读取，98已知client/fake-tool PID全退。没有运行PF、ADB、owner、网络或lease；未重复C1像素/供电/恢复链，旧B1/B2负租约未动。qa/gray-quality-client-{host-summary,cli-validation,source-review,publish}.json与host-20261023T075952944642原件保全部stdout/stderr/requests。无部署、真机或数据迁移。
+
+PF [14d9c30](https://github.com/HGamey/phonefarm/commit/14d9c304feb63a75a06ad0f8eaf8675da16826d3)经code-only120138570930（run39869058863）；harness [8d44d09](https://github.com/HGamey/harness-ops/commit/8d44d0960c926bb9a0b2ffd3003167a45c7a1420)经code-only120135626045（run39868193086）与protocol3.11/3.14 120135625631/120135625744（run39868192952）全部completed/success后，同SHA直推main并核远端。没有PR。
+
+勾C2C2与限定C2C，继续C2D旧reference/test_loadop/挂层入口的实际ownership迁移。C2/03B4/03/JOB-EXEC-03/M3与整体goal仍active，未调用update_goal。最新接续入口已压缩，历史INIT-PROMPT完整留本机单独文件，HANDOFF/conversation继续保留批次记录。
