@@ -45,3 +45,24 @@ Web 提供秒数、开始采样、measuring/回执/失败、结果和原件入�
 上述两条链已通过，319+287=606次门控fake传输；四项相关Rust回归和一个受影响worker用例通过。旧C1仅做了新版状态读取（零ADB）及恢复合同单测，未重跑旧C1整条恢复链。Web新增缓存接续：GET读取latest_sample，不触发采集；用户已选旧回执不被后续状态刷新覆盖。
 
 03B4C2B 再增加显式有限输入及充电绑定，03B4C2C 迁移 quality，03B4C2D 迁移 reference/refbench/旧挂层入口。旧 keep-prop 的“不启动”与 C1 的“保留属性但已启动”不同，不能直接别名。reference 旧延后功耗窗与新 owned 窗口必须分协议；refbench 保留四臂无层/改写、字符串 extras 和自然退出。上述各项未完成前，03B4及整体目标继续 active。
+
+
+## 03B4C2B1：显式有限输入（实施合同，尚未验收）
+
+沿用 sample 动作。无 input 保持原 idle 行为；显式输入为 params.input（既有有限 script 数组或仅含 steps 的对象），同时必须提供 params.frame_id。frame_id 单独出现或 input=null 均拒绝。示例：
+
+```json
+{"seconds":3,"frame_id":"capture-1","input":[{"action":"sleep","ms":6000},{"action":"swipe","x":80,"y":100,"to_x":120,"to_y":100,"duration_ms":1000},{"action":"sleep","ms":6000}]}
+```
+
+复用有限 Plan 解析器，支持已定义的 sleep/tap/swipe/repeat 和精确旧数值 input swipe；不接受任意 shell、文件路径或隐式导航。seconds 仍1至120。显式计划必须覆盖 seconds+10 秒且不超过600秒；不悄悄补等待、循环或改变计划。该10秒余量沿当前采样合同覆盖6秒trace lead及读回余量。剩余会话预算按 max(计划声明时长, seconds+10秒) 检查；实际执行开销与原件中的真实窗口另记，不能将声明时长当实测耗时。stop继续在有界动作完成后收尾，不中途重放或另开owner。
+
+输入必须引用最新且30秒内的真实截图，方向已知，全部坐标在该图边界内。owner先按缓存截图核坐标/新鲜度；在资源部署与本轮脚本上传完成后、worker放行前再次截取真实PNG并读方向，复核尺寸、方向、新鲜度及剩余预算。这样部署耗时不能绕过30秒图龄限制。保存 input-frame.json、原引用及检查截图作为输入几何证据；只证明开始时几何，不声称序列中场景/方向恒定。检查失败不启动输入或trace；可能已准备的owned工具/round脚本仍归原父会话收尾。各round冻结规范化plan、生成脚本与输入类型，恢复用该round原plan核自然完成，不能换成最近计划或默认idle。自然完成缺失时保持恢复义务。
+
+新owner公开 action_capabilities.sample=2；C2A没有该字段，只支持idle。新版publisher在投递input前同时检查该版本与新资源父绑定，缺能力时返回明确错误且不进入旧owner队列。owner也检查同一合同。新资源父用 phonefarm/gray-control-resources@2，base仍用@3但绑定父schema=@2，因此旧C2A程序会拒绝新会话而不能按idle恢复。新版读旧@1保持严格idle校验，兼容旧C1@2无父与C2A恢复；@1不能用新输入plan升级。
+
+新@2 round保留 input_kind=idle|finite：idle仍精确匹配Plan::idle，finite从保存的规范化steps重新解析并精确核对，二者均按每轮seconds验证。不改三child协议、child guard或自然完成schema；复用已验执行体。恢复收据仍表达完整资源/层/属性/停止目标范围，输入自然完成核验在前。
+
+网页在原采样表单增加明确的“执行有限输入”选项与JSON步骤编辑；默认关闭，旧会话不提供该能力时禁用。开启时展示所绑定帧ID/方向、声明计划时长规则，使用同一action回执，保留失败和原件入口。CLI示例同批更新。网页不自动抓图，不把旧坐标缩放到新方向。
+
+最小验证：扩展既有parser/owner/parent/mailbox相关用例，宿主HTTP正常链验证一次显式计划与后续idle round及幂等；不支持版本/非法计划/过时或变化几何在输入前拒绝。自然完成缺失用一条独立失败链证明仍保留义务，不用伪造收据解除。旧C1/C2A兼容用单测和旧原件只读检查，不重跑全部旧链。若执行体未改，不重复既有worker完整测试。本批不改供电、不部署、不碰真机。
