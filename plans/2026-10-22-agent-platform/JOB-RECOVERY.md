@@ -29,3 +29,18 @@ CLI新增`pf-node leases`、`--device-access`、`--recovery-for`，显式新参�
 接续重点：将job身份绑定到强lease记录和可审核的设备执行/恢复收据；统一持久化lease根及重启语义。目前默认DEVLOCK_DIR位于临时目录，不能承诺断电/重启后屏障仍在；只迁移node路径会和旧参与者分叉，必须整体安排。强marker label仍可能是操作名，不能据此猜job ID。
 
 完整设备lease托管、通用设备恢复收据、宿主断电/脱离进程组后代、两节点及实际手机验收仍要继续，不能仅凭本批观察/队列联动勾选完整JOB-EXEC-03或M3。
+
+
+## 接续实施：job与lease证据关联（本机验收通过）
+
+node在启动作业前创建`out/lease-receipts/`（兼容升级前已排队作业），启动worker时设置`PF_JOB_ID`与`PF_JOB_LEASE_DIR`。这些变量是可信节点给命令进程的关联上下文，不是额外权限。phonefarm不从label推断job；缺省不要求节点上下文，提供时必须完整且格式有效。强marker及全局lease状态的可选job_id/lease_id归属只用于关联（旧记录为null），旧恢复消费者遇不认识字段应拒绝而不是清除。
+
+每个实际lease持久写一份`phonefarm/job-lease@1`快照，包含job_id、lease_id、serial、label、state(active/released/retained)、recovery(status: not_reported/required/reported_complete，reason、context、scope、evidence_origin、evidence字符串数组)、RFC3339格式updated_at。receipt不含token、owner原文或子进程命令。恢复接管产生新lease实例及新快照，recovery_of只引用先前job_id/lease_id，不改写原失败记录。普通Drop即使释放锁也只报告not_reported；只有调用者已完成范围内验证的complete_recovery才报告reported_complete，必须注明范围、来源和已有证据位置。synthetic来源保留，局部helper清理不称为完整设备恢复。
+
+收据是对应lease范围的证据，不能证明未纳入lease的动作或整个job均恢复；本批不自动解除原作业资源保留。实际获取/恢复命令仍执行原有资格检查。收据发布失败必须报错/保留恢复不确定性，不能显示成功完成。
+
+只读`GET /jobs/:id/leases`及dashboard别名返回schema_version=1、job_id、status(not_reported/recorded/partial/unknown)、entries和errors。entries包含原快照的公开字段和artifact_path（`lease-receipts/<id>.json`），原件仍经已有out接口读取。节点只读固定作业内路径，不跟随context或evidence中的宿主路径；超过有界数量、损坏/不兼容/身份不匹配单列错误，不报空记录成功。能力为jobs.leases-v1；CLI `pf-node leases [id]`、网页详情提供同一内容。缺能力的旧节点明确未提供，不作设备已恢复推断。
+
+本批本机验证：48项node协议测试通过；9项devlease定向单测串行通过，2条已有synthetic恢复CLI通过。跨仓真实worker、已签名phonefarm、宿主文件锁与HTTP的4项检查通过：显式job/lease关联一致，原始收据可读，普通exit0/released仍not_reported且队列blocked。坏上下文建锁前拒绝；收据发布失败即使此前无hold，旧marker仍使后续进程ABANDONED，须显式核查。5项旧devlock隔离回归验证快速退出与取消不留下心跳/日志管道。网页三宽度浅深色、缺能力、空记录、部分错误、unknown与synthetic显示通过。均未操作手机或部署节点。
+
+边界不变：只有调用complete_recovery的既有流程提供scoped完成证据，其他路径仍可not_reported；收据不代表整个任务设备状态。统一持久lease根、宿主重启、脱离进程组后代及两节点真机验收继续列在JOB-EXEC-03。并行Rust定向组曾出现Drop后bridge_held短暂为true（8/9），去掉新测试不必要的子进程后串行组9/9；原失败日志保留，未据此宣称解决所有并行时序问题。

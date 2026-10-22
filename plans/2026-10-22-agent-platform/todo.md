@@ -81,8 +81,10 @@
 - [x] JOB-EXEC-02 [提交幂等、持久队列与原子领取](JOB-QUEUE.md)，58fc0dc已发布；44项本机测试、Linux双版本CI、网页提交/找回/撤销/释放验收通过，未部署。
 - [ ] JOB-EXEC-03 lease/恢复屏障与执行收据：worker丢失或恢复未知时限制后续设备写入，明确脱离进程组后代与主机重启的处理边界。
   - 第一批[宿主屏障/恢复通道](JOB-RECOVERY.md)已实现：phonefarm cafdbba、harness-ops 2b4747e。47项协议、跨仓真实宿主锁/无害进程和浏览器验收通过；恢复worker丢失也保留资源，祖先链恢复不放行同级任务。未部署/未真机，完整条目继续保持未勾选。
-  - 下一批系统重点：job身份绑定强lease与执行/恢复收据；将默认临时lease根改为所有参与者共用的可持久位置及迁移方案；补主机重启/脱离进程组后代边界。不能只移动node路径、猜测marker label属于哪个job，或把手动放行说明当设备还原证据。
-  - 旧devlock run心跳sleep可能继承stdout管道，主进程退出后等待管道EOF仍延迟；已保留复现说明，后续同执行生命周期批次处理。
+  - 第二批job身份与scoped收据已实现：phonefarm dc35335、harness-ops 11b50d9。节点启动时传入显式身份，强lease与恢复接管输出有来源/范围的收据，CLI/网页按需读取；不自动解除整个job屏障。验证和发布进度见BATCHES。
+  - 下一批系统重点：将默认临时lease根改为所有参与者共用的可持久位置及迁移方案；补主机重启/脱离进程组后代边界。不能只移动node路径或把手动放行说明当设备还原证据。
+  - producer覆盖后续：bench锁频回读尚无完整hold，capture shutdown没有恢复回读，gray-ab若干off结果未检查，eval摘层仍用字符串检查；逐条按已知范围保存typed证据和恢复屏障，再调用complete_recovery。当前均不得从released/not_reported推断恢复，不让node猜实验产物格式。
+  - 旧devlock心跳遗留管道问题已修复b986fcf：zsh内建等待，明确停止并回收自建心跳；5项隔离回归通过，取消保留锁，不把信号退出当还原。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
 

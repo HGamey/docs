@@ -109,3 +109,22 @@ node/CLI/网页共同显示实际lease；非clear时设备写任务继续排队�
 产品决定持续写PRODUCT-CHARTER/DISCUSSION/todo；可获得的用户消息与重要回应写本机conversation.jsonl，明确原话/摘要，不把回顾伪称完整历史导出，不保存聊天凭据到仓库。
 
 下一批按todo继续JOB-EXEC-03的强lease身份/恢复收据及重启边界。游戏分发、跨节点注册/索引、研究状态和异步人工请求仍在计划；前端由具体subagent实现，主Agent负责系统合同与整合。
+
+
+## 2026-10-22：job身份、局部恢复收据与心跳收尾
+
+本批phonefarm [dc35335](https://github.com/HGamey/phonefarm/commit/dc35335)包含[b986fcf](https://github.com/HGamey/phonefarm/commit/b986fcf)心跳修复；harness-ops [11b50d9](https://github.com/HGamey/harness-ops/commit/11b50d9)包含[1d7ad6d](https://github.com/HGamey/harness-ops/commit/1d7ad6d)网页/CLI。发布回执见下段；合同在[JOB-RECOVERY](JOB-RECOVERY.md)。
+
+node在启动worker前补建作业收据目录，传入明确job ID。phonefarm每次取得强lease发布独立公开lease ID及持久快照；全局lease观察带同一关联ID，恢复接管通过recovery_of指回原失败记录。普通退出/释放仅not_reported；完成报告必须带scope、evidence_origin和已存在文件引用。配置回读、会话静止与helper退役范围分别记录，synthetic不变成真机证据。再次hold、未知marker或发布失败保留不确定性；无hold的发布失败也留下ABANDONED屏障，后续进程不能静默取得。
+
+只读API、CLI `pf-node leases [id]`和网页按需读取同一合同。读取限制在作业内固定目录，拒绝链接/身份不匹配；坏记录逐项显示，部分成功不报完整成功。网页提供原件下载、范围/来源/时间及旧能力缺失状态，证据宿主路径仅文本展示，不直接跟随访问。收据是最后发布的快照，崩溃可停留在active；必须结合job与当前全局lease观察，不据此自动清整个job资源屏障。
+
+旧devlock心跳改用zsh内建定时等待，退出时只停止并回收自己创建的心跳；快速非零退出及时关闭日志管道，INT/TERM/HUP取消保留锁记录。没有用广泛杀进程或删除锁来规避恢复义务。
+
+验证：48项节点协议（14.101秒）、9项devlease定向单测串行、2条既有synthetic恢复CLI、5项devlock隔离回归通过。真实签名phonefarm + node worker + 宿主文件锁 + HTTP的4项检查通过，设备传输0：job与全局lease身份一致，原始收据可读，exit0/released仍not_reported且队列blocked。独立宿主CLI验证坏上下文拒绝、发布失败后死owner仍ABANDONED。浏览器验证partial/unknown/空记录/旧能力、synthetic提示和引用展示，390/768/1440浅深色无水平溢出；前端关键JS验证迟到响应不覆盖其他任务。模拟服务56802已停止，临时tab关闭并恢复viewport。
+
+失败记录保留：最初测试路径错误与跨线程Lease缺Sync在实施中修正；一次并行定向组8/9，Drop后bridge_held短暂为true。移除新测试不必要的子进程后串行9/9，未将这写成所有并行时序问题均已解决。此前完整confirmation集成的deadline/heartbeat偶发问题仍列TEST-03，不重复盲跑全套。
+
+本机证据在transition/qa/job-lease-*.log、job-lease-host-smoke.json、job-lease-host-integration.json、jobs-lease-evidence-browser.json及截图。没有生产节点部署、手机操作或原始数据迁移。完整JOB-EXEC-03仍未勾选；下一批继续所有参与者统一持久lease根及主机重启/脱离进程组后代。bench、capture、gray/eval恢复producer覆盖单列待办，不能把它们released/not_reported解释为还原成功。
+
+提交前CI通过：[phonefarm code-only](https://github.com/HGamey/phonefarm/actions/runs/39792389304)、[harness-ops code-only](https://github.com/HGamey/harness-ops/actions/runs/39791953614)、[Linux Python3.11/3.14 node-tests](https://github.com/HGamey/harness-ops/actions/runs/39791953589)。同一候选SHA直接推main，不开PR，不关闭必需检查。
