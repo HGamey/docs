@@ -119,6 +119,8 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [ ] CTRL-04 明确操作回执：已发出、传输失败、后端拒绝、可观测确认；退出码不冒充游戏已响应。
 - [ ] CTRL-05 无人观看停采、断线释放触点/按键、测量时观察干扰控制；网页可见当前控制者与模式。
 
+- [ ] CTRL-06 进行中，按GRAY-REFERENCE-CLIENT实施合同补网页reference流程与CLI整组体验对齐：显式passdump/几何/供电期望、同组label与epoch、重复/partial原ID接续；共享平台回执，不做浏览器私有ledger。现有capture/sample/marker/stop原语已具备，只能称手动可完成，不能称整组自动门禁已覆盖。
+
 ## P2：更完整的远程手机能力
 
 - [ ] CONTROL-01 通用pointer down/move/up、多指、长按、组合手势、持续摇杆/按键与时间轴动作；逐平台验收。
@@ -192,7 +194,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
             - [x] PRODUCER-RECOVERY-03B4C2C1 源码、宿主替身与Web/CLI验证后已发布，按 [GRAY-CONTROL-QUALITY](GRAY-CONTROL-QUALITY.md) 接owner内begin/checkpoint/finish共享manifest、完整原图/半尺寸预览、Web/CLI与跨epoch续接；不自动断言同状态。
             - [x] PRODUCER-RECOVERY-03B4C2C2 已发布并通过客户端验收，迁移旧genshin_quality为既有session客户端，自动导航仅用显式尺寸/方向profile；人工等待后新图输入，无raw adb/off/restart。C2C1完成不代表旧入口已改。
           - [ ] PRODUCER-RECOVERY-03B4C2D 迁移reference、test_loadop四臂refbench和旧gray-layer挂层入口；保留无层基线、字符串extras、自报/自然退出。旧keep-prop不启动语义与C1不同，不直接别名；保留typed off旧遗留、status诊断和离线分析。
-            - [ ] PRODUCER-RECOVERY-03B4C2D1 进行中，按 [GRAY-REFERENCE-CLIENT](GRAY-REFERENCE-CLIENT.md) 迁移REF_ARM=1 passdump参考客户端，复用既有会话与共享CLI组件；显式几何/供电政策/有限输入，不声称无层或同状态。
+            - [x] PRODUCER-RECOVERY-03B4C2D1 已发布bf56025并通过6case纯客户端验收，按 [GRAY-REFERENCE-CLIENT](GRAY-REFERENCE-CLIENT.md) 迁移REF_ARM=1 passdump参考客户端，复用既有会话与共享CLI组件；显式几何/供电政策/有限输入，不声称无层或同状态。
             - [ ] PRODUCER-RECOVERY-03B4C2D2 将test_loadop四臂迁入单Lease+现有Session，真实无层A/B后再安装C/D，保留字符串extras、八原件、自报与自然退出。
             - [ ] PRODUCER-RECOVERY-03B4C2D3 迁移/收口旧gray-layer mount入口，先解决keep-prop仅安装不启动的明确语义；保留typed off/status/离线分析，不直接别名。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。

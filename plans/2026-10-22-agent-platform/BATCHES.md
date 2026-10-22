@@ -403,3 +403,12 @@ Python/bash/help检查通过；1既有CLI用例扩展并仅跑1次通过，回�
 PF [14d9c30](https://github.com/HGamey/phonefarm/commit/14d9c304feb63a75a06ad0f8eaf8675da16826d3)经code-only120138570930（run39869058863）；harness [8d44d09](https://github.com/HGamey/harness-ops/commit/8d44d0960c926bb9a0b2ffd3003167a45c7a1420)经code-only120135626045（run39868193086）与protocol3.11/3.14 120135625631/120135625744（run39868192952）全部completed/success后，同SHA直推main并核远端。没有PR。
 
 勾C2C2与限定C2C，继续C2D旧reference/test_loadop/挂层入口的实际ownership迁移。C2/03B4/03/JOB-EXEC-03/M3与整体goal仍active，未调用update_goal。最新接续入口已压缩，历史INIT-PROMPT完整留本机单独文件，HANDOFF/conversation继续保留批次记录。
+
+
+## 2026-10-23 参考采集连接已有会话（PRODUCER-RECOVERY-03B4C2D1）
+
+REF_ARM=1从raw ADB/重启/独立perf改为显式既有passdump owner中的capture→有限sample→marker。要求原图几何profile与供电期望，不推断世界场景或内部极高画质；不自动stop。默认保留40秒输入（3×12秒swipe）和30秒trace，WL/CAPDUR提供默认值、CLI优先；LEAD固定6秒，其他值在查询前拒绝。新供电窗口沿现有sample，不伪造旧power.json或summary。完整重复读取三旧回执，partial/丢响应只查原ID、不重采。quality/reference抽取共享CLI传输和调用检查，游戏导航仍在quality。
+
+AST/bash/help静态检查与唯一纯客户端fixture通过：5reference+1受影响quality回归，共9调用、12动作/64只读，85已记录PID全退出。覆盖旧默认时序、完整/partial重复、sample丢响应、epoch/geometry/policy拒绝；无PF/ADB/网络/owner/lease、Cargo构建或旧核心链重跑。qa/gray-reference-client-{host-summary,source-review,publish}.json及host-20261023T081747665442/result.json留本机原件；没有失败/重跑，B1/B2负租约未动。
+
+PF [bf56025](https://github.com/HGamey/phonefarm/commit/bf560254e1fcc9e0b46f7aa0dd1f82013c8191de)经actual code-only120145441975（run39871097174）completed/success后，同SHA直推main并ls-remote核对。harness本批未修改/未重复检查。只勾D1；D2四臂refbench与D3旧挂层仍待。网页原语已可手动完成，但整组幂等/epoch/profile/power断言缺口CTRL-06独立实施，不能提前称完全等价。总goal仍active，未调用update_goal。
