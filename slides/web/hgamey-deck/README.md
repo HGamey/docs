@@ -59,6 +59,17 @@ FONTTOOLS_PY=/path/to/python-with-fonttools bash build.sh        # 产出 dist/
 FONTTOOLS_PY=... bash build.sh serve                              # 本地预览 http://127.0.0.1:8123（无密码）
 ```
 
+在非 `docs/` 原始路径的检出（例如 `hgamey/_wt/deck-slides` 工作树）中构建时，`Cargo.toml` 的同级工具目录与 `build.rs` 的私有数据默认路径都会算错，需要显式指定：
+
+```bash
+ln -sfn ../tools hgamey/tools     # 使 ../../../../../tools 指向 agent/tools
+FONTTOOLS_PY=... HGAMEY_DECK_PRIVATE=/path/to/hgamey/internal/decks/hgamey-deck/private bash build.sh
+```
+
+不设 `HGAMEY_DECK_PRIVATE` 也能构建，但 wasm 会小约 1.4 MB，结果浏览的「画面对比」为空。构建后 wasm 约 9.98 MB 可作校验。
+
+部署：`dist/.vercel/project.json` 指向项目 `hgamey-deck`（`build.sh` 会 `rm -rf dist`，工作树里需重新写回），再 `vercel deploy --prod --yes`。缺这个链接时 Vercel 会按目录名新建一个 `dist` 项目。
+
 `build.sh` 在 cargo-makepad 产物之上做了三件事：
 
 1. 把 makepad JS 里写死的共享内存初始值从 64 页（4 MB）调到 256 页：本 deck 嵌了数据和裁剪图，静态段超过 4 MB，否则加载时 LinkError。
