@@ -189,8 +189,8 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
             - [x] PRODUCER-RECOVERY-03B4C2B1 显式input+frame_id、逐round计划、部署后真实图/方向/图龄及完整预算复核；sample capability2与父@2隔离旧owner，兼容C1/C2A。PF65de801、harness e0818b4检查成功直推main；5Rust、1CLI、JS/网页及两链493次fake传输通过。缺natural负例按预期保QA隔离lease，全部已知PID退出。无部署/真机。
             - [x] PRODUCER-RECOVERY-03B4C2B2 按 [GRAY-CONTROL-POWER](GRAY-CONTROL-POWER.md) 交付创建时observe/battery、绑定ChargeSuspend/恢复与同期积分估计。PF86edb56、harness d4d8428实际检查成功直推；6Rust/2Python、定向JS/网页、3会话+1短CLI共830次fake传输通过，缺natural保1个QA隔离lease。无真机/部署，每帧能耗仍待完整分组窗。
           - [ ] PRODUCER-RECOVERY-03B4C2C 将quality begin/finish改为跨人工等待的同session客户端，不重启finish；保留原图与旧半分辨率预览差别。
-            - [ ] PRODUCER-RECOVERY-03B4C2C1 进行中，按 [GRAY-CONTROL-QUALITY](GRAY-CONTROL-QUALITY.md) 接owner内begin/checkpoint/finish共享manifest、完整原图/半尺寸预览、Web/CLI与跨epoch续接；不自动断言同状态。
-            - [ ] PRODUCER-RECOVERY-03B4C2C2 迁移旧genshin_quality为既有session客户端，自动导航仅用显式尺寸/方向profile；人工等待后新图输入，无raw adb/off/restart。C2C1完成不代表旧入口已改。
+            - [x] PRODUCER-RECOVERY-03B4C2C1 源码、宿主替身与Web/CLI验证后已发布，按 [GRAY-CONTROL-QUALITY](GRAY-CONTROL-QUALITY.md) 接owner内begin/checkpoint/finish共享manifest、完整原图/半尺寸预览、Web/CLI与跨epoch续接；不自动断言同状态。
+            - [ ] PRODUCER-RECOVERY-03B4C2C2 进行中，迁移旧genshin_quality为既有session客户端，自动导航仅用显式尺寸/方向profile；人工等待后新图输入，无raw adb/off/restart。C2C1完成不代表旧入口已改。
           - [ ] PRODUCER-RECOVERY-03B4C2D 迁移reference、test_loadop四臂refbench和旧gray-layer挂层入口；保留无层基线、字符串extras、自报/自然退出。旧keep-prop不启动语义与C1不同，不直接别名；保留typed off旧遗留、status诊断和离线分析。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。

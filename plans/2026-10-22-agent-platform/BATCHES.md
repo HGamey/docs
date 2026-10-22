@@ -377,3 +377,16 @@ Web模板只填现有argv，默认observe、显式battery，不自动POST或覆�
 PF [86edb56](https://github.com/HGamey/phonefarm/commit/86edb56f2e9e445f16b574a0e00988078793de4c)经actual code-only120122515647（run39864307969）成功；harness [d4d8428](https://github.com/HGamey/harness-ops/commit/d4d8428422cf9273e51c084fd47a0d90fcfef8f5)经code-only120122573729（run39864325073）与protocol3.11/3.14 120122572790/120122573023（run39864324691）全部completed/success后同SHA直推main并ls-remote核对，无PR。
 
 勾B2与限定B，继续C2C画质跨人工等待同owner，后续C2D旧reference/refbench/挂层迁移。C2/03B4/03/JOB-EXEC-03/M3及整体goal仍active，未调用update_goal。
+
+
+## 2026-10-23 同owner的共享画质检查点（PRODUCER-RECOVERY-03B4C2C1）
+
+按 [GRAY-CONTROL-QUALITY](GRAY-CONTROL-QUALITY.md) 增加quality能力1，begin/checkpoint/finish沿既有mailbox/current actor/epoch。manifest记录三成功阶段与最近尝试，attempt原件按request ID分开；新ID可重采失败阶段，同ID不重放。完整PNG与RGB偶数坐标stride2半尺寸预览独立保存，finish还需native layer_loaded/pkg/readonly_stats marker。缺marker保图、阶段不前进；采集完成不代表同场景/同时辰/画质通过或设备恢复。没有新增HTTP、owner、lease或worker协议。
+
+Web/CLI同回执与manifest，重连恢复共享状态，未决attempt不冒充正在运行；quality错误不会混进性能sample结果。网页swipe范围对齐既有10000ms API。构建签名、3相关Rust各一次、1既有CLI、定向JS与390浅/1440深浏览器通过；未决attempt文案只增量跑相关JS。原界面截图与日志留本机。源码审核发现真实marker计数在readonly_stats内，已在构建前修正源码和fixture，未拿替身顶层格式冒充真机。
+
+actualPF+nodeHTTP+fakeADB唯一会话一次通过199传输：4张截图，14工件逐字节HTTP下载，4张32×18原图的16×9预览逐像素核验。人工接管/归还和CLI重连、旧epoch/旧图零transport拒绝、同ID成功或失败均不重采、缺marker后显式新ID完成均通过。仅最初启动一次，无quality导航/重启/off/采样。stop exit0，202已知PID全部退出，本会话无lease遗留；B1/B2隔离负租约未动。qa/gray-control-quality-host-summary.json、host-cli-20261023T074748109188/result.json、unit-results、ui-validation、source-review、publish记录完整。首次发给空闲QA agent的普通消息未唤醒，发现后用followup启动；没有实际链重复执行。无部署、真机、数据迁移或性能结论。
+
+PF [45737cc](https://github.com/HGamey/phonefarm/commit/45737cc89b780dd5e2d3192623c8a6092a759bea)经code-only120134106935（run39867743861）；harness [c62e062](https://github.com/HGamey/harness-ops/commit/c62e062515763f8dc8a2d2efcad1265622751ab4)经code-only120133380672（run39867530203）、protocol3.11/3.14 120133380614/120133380885（run39867530213）全部completed/success后同SHA直推main并ls-remote核远端。
+
+只勾C2C1。C2C2已按docs f1db6b4开始迁移旧genshin_quality客户端，不混入这批提交；C2C/C2D/03B4/03/JOB-EXEC-03/M3与整体goal保持active，未调用update_goal。
