@@ -267,3 +267,14 @@ phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check1
 QA一处断言误去stderr读取本来在JSON stdout的拒绝说明，原负记录保留，离线核对后只续跑剩余3调用，无重跑。首条CLI已运行的签名映像与最终增量只差命中兜底/最终统计/help，该例实际begins=2且恢复失败未进入最终统计，适用性已单独记录；其余最终签名binary。所有2048模拟进程退出、隔离lease清空，无服务。证据qa/gray-eval-host-validation.json、041728/042432原件、unit结果及worker日志。
 
 源码9e1bb0a81c93f02d9532435d4585972c7e0bdd61已直推main并ls-remote核对。原check120037546850步骤成功但终态卡住；仅重跑code-only检查一次，实际check120042514678 completed/success（run39839817705），推送前再次确认同SHA与远端并发状态，未重跑实验验证。没有部署、真机验证、锁根迁移或原始数据搬动。网页沿既有job产物与恢复收据合同，没有另建协议；未重复无关布局测试。03B脚本路线/gray-ab及整体goal继续，不能把该子批当全目标完成。
+
+
+## 2026-10-23 有限触控脚本 gray eval 会话（PRODUCER-RECOVERY-03B2C）
+
+按 [GRAY-EVAL-SCRIPT-SESSION](GRAY-EVAL-SCRIPT-SESSION.md) 统一launch/script父循环，移除旧未受控eval脚本通路。有限sleep/tap/swipe计划在写设备前验证；精确兼容旧input swipe以保留默认三次12秒拖动。输入、trace、sampler各有登记PGID、设备时钟deadline与实际退出/采样窗口。坐标用实际PNG边界；自然输入成功必须覆盖trace，输入中断不以进程消失代替触控恢复。旧launch collection字段和负结果保留，最终质量/冻结指标判据不变。
+
+phonefarm 2fb0b164f431b7ea37339896a768360f0fab6f63 经实际code-only check120059560881 completed/success（[run39846075471](https://github.com/HGamey/phonefarm/actions/runs/39846075471)）后同SHA直推main并核对远端。10相关Rust单测通过；3唯一worker行为共5执行（真实模板替换重跑1项，POSIX awk表达式失败修复重跑1项，旧两child合同通过）。所有失败原件保留。4实际=4有效CLI一次通过，共1868传输、410base写前pending/41父pending：16采样及18比较PNG后已知fan恢复失败；同context恢复成功、原失败不变；输入中断缺自然收据保屏障；非法exec零transport。全部模拟PID结束，仅预期中断fixture屏障保留。
+
+最后launch字段兼容增量不影响四条script CLI；最终构建签名并追加既有live-check单测，没有重跑整链。原始回执qa/gray-script-host-validation.json、gray-script-host-cli-20261023T045448/result.json及unit/worker/source-review均在本机。没有部署、手机操作、锁根迁移、原始数据搬动或真实性能结论。网页继续消费既有job产物/恢复收据，没有新页面合同，不重复布局测试。
+
+本项完成，03B/03/JOB-EXEC-03/M3和整体goal仍active。下一03B3 gray-ab loadop：显式整轮停充、owned sampler、按原ctrl/knob顺序采集、两臂passdump=0；不把旧t≈10后短功耗点列当同步trace窗，也不套eval资格/ABBA。03B4其余路径仍待。
