@@ -241,3 +241,14 @@ phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check1
 签名构建后17项相关Rust unit通过（2 session、5 graylayer、3 lease_command、7 devlock）；初始过滤误用graylayer::tests导致0项，纠正后只执行该组并保留日志。9项有效CLI语义验收通过，共896次fake ADB传输，均核PID/PGID/serial和写前hold/pending。覆盖正常、坏PNG但完成恢复、恢复不符后阻断新任务、错误serial、同context恢复且保留旧失败、未知写及后续恢复拒绝、最终metadata落盘失败保留恢复报告。实际共11次CLI：runner误给recover添加--lock-wait造成2次参数拒绝，未计有效身份/恢复验收；修参数后从已有session接续，前面通过案例未重跑。原始两轮qa/gray-capture-host-cli-20261023T033457和033750、unit-results/host-validation保留。
 
 源码 f966c53aad66de5754ff3dbce0acfdfe4165898f 经实际code-only check120015070859 completed/success（run39833339122）后同SHA推main，并ls-remote核对。没有部署、手机操作、真实锁根/原数据迁移，不声称真实设备恢复或性能验证。网页合同未变，结果仍通过既有作业产物与恢复收据消费；未重复无关布局测试。03B父项、LEASE-STORAGE-02/JOB-EXEC-03/M3及整体goal继续进行。下一具体子项是storeop-check的同一会话控制，再处理eval父租约借用；子范围完成不能清父任务屏障。
+
+
+## 2026-10-23 独立storeop检查会话（PRODUCER-RECOVERY-03B2A）
+
+合同为 [GRAY-STOREOP-SESSION](GRAY-STOREOP-SESSION.md)。独立frame-audit storeop-check复用已有GraySession，rule/live/on在开启全局层和启动前验证、设置并读回，现场开关读回成功才继续。每段三张无损PNG落盘，使用已有image库在资源上限内解码RGBA；沿用pixel_diff、UI排除区域及三类比较，坏图/缺帧/不同尺寸明确失败。JSON保留原指标字段并提供result、全部帧路径、session、collection和recovery；本地失败不跳过安全收尾。
+
+20项相关Rust unit通过（4 session、15 frameaudit、1 eval livecheck）；初次eval测试模块路径误用导致0项，已纠正为path_tests并保留日志。签名实际CLI四条一次通过：正常214次transport/9张PNG/6组零差值；PNG签名合法但截断IDAT触发解码失败，187次/1张且恢复完成；on=1非零116次/3张，pending保留且后续零transport；坏rule47次只读/零写，scope=no_device_mutations。共564次门控传输、124写前pending核验，所有fixture PID退出，无服务。qa/gray-storeop-host-cli-20261023T034828/result.json、host-validation、unit-results均保留；未重跑03B1九条。
+
+源码7a3d7d1ba704d8689e6b6642e4880e93a5d48458经实际code-only check120021145525 completed/success（run39835080780）后同SHA直推main，并ls-remote核对。没有部署、真实设备、数据迁移或性能验证。没有网页协议变化，沿现有产物/恢复收据显示；不重复布局测试。eval仍显式调用storeop_check_legacy，不能宣称整eval已经受本session保护。
+
+下一03B2B与完整gray_eval父会话合并，先交付调用storeop的workload.launch分支及recover，避免发布借用子步骤后父层永久required的半成品。源码核实storeop前仅能力只读/本地准备；实际后续义务是层/原属性/历史输出、fan、目标/启动marker、sampler、专属ftrace实例和专属工具目录。gray_eval当前没有停充或锁频，不能凭共享helper名称扩大恢复声明或隐式新增这些操作。script分支允许任意exec/gamepad及额外工具上传，另列未迁移范围。整体goal保持active。
