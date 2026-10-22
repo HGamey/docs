@@ -20,8 +20,8 @@ assert "<script type='module'>" in s, "index.html 结构变了"
 open(p, "w", encoding="utf-8").write(s.replace("<script type='module'>", js + "<script type='module'>", 1))
 PY
 # makepad 的 JS 把共享内存初始值写死为 64 页（4 MB）；本 deck 嵌入了数据和裁剪图，静态段超过 4 MB，调大到 256 页。
-sed -i '' 's/initial:64,maximum:16384,shared:true/initial:256,maximum:16384,shared:true/' dist/makepad_wasm_bridge/wasm_bridge.js
-grep -q 'initial:256,maximum:16384' dist/makepad_wasm_bridge/wasm_bridge.js || { echo '共享内存补丁没打上（makepad JS 变了？）'; exit 1; }
+sed -i '' -e 's/initial:64,maximum:16384,shared:true/initial:256,maximum:16384,shared:true/' -e 's/initial: 64, maximum: 16384, shared: true/initial: 256, maximum: 16384, shared: true/' dist/makepad_wasm_bridge/wasm_bridge.js
+grep -qE 'initial:( )?256, ?maximum:( )?16384' dist/makepad_wasm_bridge/wasm_bridge.js || { echo '共享内存补丁没打上（makepad JS 变了？）'; exit 1; }
 # 中文字体只保留用到的字（18 MB → 约 1 MB）
 "${FONTTOOLS_PY:-python3}" -I scripts/subset_fonts.py dist
 cp deploy/middleware.js deploy/vercel.json dist/
