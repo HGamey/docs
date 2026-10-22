@@ -182,6 +182,10 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
         - [x] PRODUCER-RECOVERY-03B4B 清理无调用的 storeop_check_legacy→reach_scene/launch_to_world_layered 及私有 raw 抓帧/摘层链；保留 whitebox 的 screencap_raw_bin 和像素分析。557158a 检查成功直推 main，3项既有相关测试通过。后续持久会话合同见 [GRAY-CONTROL-SESSION](GRAY-CONTROL-SESSION.md)，仅设计已完成。
         - [x] PRODUCER-RECOVERY-03B4C1 按 GRAY-CONTROL-SESSION 实现持续 owner、断线接回、有序请求/控制 epoch、看屏和有限输入、灰层证据、停止与同 context 恢复。PF 4ca316d、harness 2b8066d 检查成功直推 main；21 Rust/10 Python 相关用例、JS及网页通过，两条实际 PF + fake ADB + HTTP 链435次门控传输。保留初次失败原件，无部署/真机；整体 job 仍沿 fresh clear + 核查说明释放。
         - [ ] PRODUCER-RECOVERY-03B4C2 在同一 manual owner 内接入性能采样并暂停观察干扰，迁移仍可执行的旧 gray-layer/reference/quality 路径。保留旧实验语义和原件；完成前不关闭03B4，不将局部恢复收据自动当整个 job 完成。
+          - [ ] PRODUCER-RECOVERY-03B4C2A 按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 接入当前场景 sample：1–120秒、复用三child和纯sleep plan、每轮原件、完整资源父恢复、Web/API/CLI同批。不自动重启/触控/停充/改风扇频率，尚无真实设备性能结论。
+          - [ ] PRODUCER-RECOVERY-03B4C2B 在同一采样资源合同内接显式有限输入、需停充时复用绑定context的ChargeSuspend；明确实际窗口与功耗/能耗资格。
+          - [ ] PRODUCER-RECOVERY-03B4C2C 将quality begin/finish改为跨人工等待的同session客户端，不重启finish；保留原图与旧半分辨率预览差别。
+          - [ ] PRODUCER-RECOVERY-03B4C2D 迁移reference、test_loadop四臂refbench和旧gray-layer挂层入口；保留无层基线、字符串extras、自报/自然退出。旧keep-prop不启动语义与C1不同，不直接别名；保留typed off旧遗留、status诊断和离线分析。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
