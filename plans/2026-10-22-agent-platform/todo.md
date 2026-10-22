@@ -25,7 +25,7 @@
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；CLI和网页都可查询，客户端遇不兼容时解释具体差异。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
-- [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。
+- [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
   - 已发布订阅生命周期修复 `phonefarm 591889e`；本批 LEASE-OBSERVE-01 增加每帧互斥与异常屏障。远程认证接入与真机开销仍未完成，完整条目不提前勾选。
 - [x] BUG-02 修复服务重启后job取消失效（225cb5c）；独立worker持有命令进程组和实际子进程对象，flock确认所有权，不凭保存PID发信号。旧任务继续可读，无法确认所有权时明确不支持取消。
@@ -82,8 +82,8 @@
 - [ ] JOB-EXEC-03 lease/恢复屏障与执行收据：worker丢失或恢复未知时限制后续设备写入，明确脱离进程组后代与主机重启的处理边界。
   - 第一批[宿主屏障/恢复通道](JOB-RECOVERY.md)已实现：phonefarm cafdbba、harness-ops 2b4747e。47项协议、跨仓真实宿主锁/无害进程和浏览器验收通过；恢复worker丢失也保留资源，祖先链恢复不放行同级任务。未部署/未真机，完整条目继续保持未勾选。
   - 第二批job身份与scoped收据已实现：phonefarm dc35335、harness-ops 11b50d9。节点启动时传入显式身份，强lease与恢复接管输出有来源/范围的收据，CLI/网页按需读取；不自动解除整个job屏障。验证和发布进度见BATCHES。
-  - LEASE-STORAGE-01 已统一持久lease域并提供显式迁移合同；LEASE-OBSERVE-01 补采样窗口所有权；LEASE-STORAGE-02A 已修hwcond恢复记录（e06e1ff）。bench已补producer typed恢复证据及实际lease hold（2f5f11d）；下一条capture；真实主机重启/脱离进程组后代仍待验收，不能把手动放行当还原证据。
-  - producer覆盖后续：bench已完成本批范围，capture shutdown没有恢复回读，gray-ab若干off结果未检查，eval摘层仍用字符串检查；逐条按已知范围保存typed证据和恢复屏障，再调用complete_recovery。当前均不得从released/not_reported推断恢复，不让node猜实验产物格式。
+  - LEASE-STORAGE-01 已统一持久lease域并提供显式迁移合同；LEASE-OBSERVE-01 补采样窗口所有权；LEASE-STORAGE-02A 已修hwcond恢复记录（e06e1ff）。bench/capture已补producer typed恢复证据及实际lease hold（2f5f11d/bd67d97）；下一条gray-ab/eval；真实主机重启/脱离进程组后代仍待验收，不能把手动放行当还原证据。
+  - producer覆盖后续：bench/capture已完成各自声明范围，gray-ab若干off结果未检查，eval摘层仍用字符串检查；逐条按已知范围保存typed证据和恢复屏障，再调用complete_recovery。当前均不得从released/not_reported推断恢复，不让node猜实验产物格式。
   - 旧devlock心跳遗留管道问题已修复b986fcf：zsh内建等待，明确停止并回收自建心跳；5项隔离回归通过，取消保留锁，不把信号退出当还原。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
@@ -166,7 +166,9 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [ ] LEASE-STORAGE-02 后续：统一 hwcond 恢复状态目录，取消失败时临时回退；清点 raw adb/旧 carrier 脚本是否经过同一 ownership，普通旧 owner 超时接管与完整恢复义务分别处理。
   - [x] LEASE-STORAGE-02A 按 [HWCOND-RECOVERY](HWCOND-RECOVERY.md) 统一持久路径、拒绝覆盖遗留快照、明确损坏/读取/恢复错误；修复bench恢复失败仍继续。28hwcond/3storage单测、6实际CLI/fake ADB通过；e06e1ff实际code-only成功并直推main。仅宿主验证，未部署；producer全局恢复收据另批处理。
   - [x] PRODUCER-RECOVERY-01 按 [BENCH-RECOVERY](BENCH-RECOVERY.md) 完成bench实际hold、本地命令门控、远端负载收尾、独立恢复证据及同context续接；2f5f11d检查通过后直推main。43相关单测、3 shell宿主fixture、9实际CLI/fakeADB通过，仅宿主验证。硬件写入未知和未完成部署保留屏障，不能自动complete；不是整个job或真机恢复验收。
-  - [ ] PRODUCER-RECOVERY-02 下一具体批：capture实际lease hold与shutdown/恢复回读，范围覆盖其修改的控制和采集进程；沿用已明确的命令门控/证据合同，先冻结scope再实现，不以本机进程退出当远端已停。随后gray-ab/eval分别处理。
+  - [x] PRODUCER-RECOVERY-02 按 [CAPTURE-RECOVERY](CAPTURE-RECOVERY.md) 完成capture实际hold、worker组门控、完成记录、输入/原stayon/退出政策读回及同context恢复；bd67d97实际code-only成功后直推main。27相关unit、11实际CLI/fakeADB、64传输核验通过；未部署/未真机，不声称游戏状态恢复。
+  - [ ] PRODUCER-RECOVERY-03 下一批gray-ab/eval：先冻结挂层、全局属性、文件、采集/输入、应用进程的恢复范围，移除字符串冒充完成及忽略off错误；复用已有lease/worker/收据，分清共享摘层合同与整job恢复。
+  - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
 记录变更/提交、网页与API验收、离线测试、实际设备验证、未覆盖边界、迁移/恢复结果，以及下一批具体问题。实现条目只有达到相应验收才勾选；原实验失败记录保持不变。

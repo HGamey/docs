@@ -208,3 +208,14 @@ rootless/no-lock兼容；root可用时受控worker和负载采用root UID，报�
 负结果保留：QA首次输出目录与复制session重名，在CLI调用前失败，修正后通过；短审修正旧状态错误分支RefCell panic、无root探测错误处理和硬件写超时后误complete漏洞。最后一项另增超时回归，未盲目重复全套测试。证据在本机qa/bench-recovery-*、bench-worker-host.log；无node协议/页面布局改动，不重跑无关网页布局。
 
 PRODUCER-RECOVERY-01已勾选，整体LEASE-STORAGE-02/JOB-EXEC-03/M3仍未完成。下一具体批PRODUCER-RECOVERY-02处理capture shutdown与恢复回读，随后gray-ab/eval；未知写入/部署核验和恢复label统一另入todo。未部署、操作手机、初始化真实锁域或迁移原数据；Doom继续暂存。
+
+
+## 2026-10-23 capture worker与声明范围恢复（PRODUCER-RECOVERY-02）
+
+问题：capture准备/落盘失败跳过shutdown，正常shutdown也覆盖原stayon并未读回；持续HID和截图传输没有同一受控所有权。合同先写CAPTURE-RECOVERY。现以父强lease监督same-exe worker PGID，启动门控后执行，父死EOF/独立deadline有界。session保存原设置、boot、输入身份和退出政策；每次写/HID创建前durable pending。只在worker全部设备操作与本地清理结束后写completion，active恢复必须具备该身份绑定记录；避免worker uncertainty落盘失败被旧manifest误放行。
+
+父进程确认owned HID缺席、原stayon读回和请求的退出政策；no-shutdown保留应用/屏幕但仍关闭输入并恢复临时设置。game_state_restored明确false，不能声称角色、任务、存档或原前台已还原。采集结果和恢复结果独立，缺completion/unknown/pending/读回失败保持屏障；同context recover保留旧失败。PNG不经UTF-8转换，独立session避免旧frame/manifest混合。插件只加小QuestDevice接口，旧Device行为保留，mode/auto_choice/ready-only策略另批。
+
+phonefarm bd67d97已推main并ls-remote核对；实际code-only check119988773686 completed/success（run39825838744）后推同SHA，无PR/强推。27项相关unit通过（初次genshin过滤为0，已纠正并执行3项plugin_tests）；11次实际CLI/fakeADB、64次传输门控通过，含父死EOF、deadline、恢复失败/续接、HID未知、原始PNG。qa/capture-recovery-host-validation.json记录两次fixture校准负结果和清理证明。没有运行真实游戏、操作手机、部署、迁移锁根或原数据；未改node合同/网页布局，不重复无关UI测试。BASE-07补记外层devlock拒绝无JSON；RECOVERY-UX-01/CAPTURE-POLICY-01保留未完成。
+
+下一条仍为gray-ab/eval各自的producer恢复证据；整体LEASE-STORAGE-02/JOB-EXEC-03/M3尚未完成。用户明确未清空todo/plan前继续，整体goal保持active，单批完成不结束开发。
