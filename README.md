@@ -9,7 +9,7 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 | 内容 | 写在哪 |
 |---|---|
 | 这次改了什么、为什么改 | commit message 正文 |
-| 一个功能或修复的完整说明、验证方法、实验数字、截图 | PR 描述（图片直接拖进 PR） |
+| 一个功能或修复的说明、验证方法与限制 | commit message 正文；需要长期保留的详细说明放本仓库并链接 |
 | 长期有效的文档：设计、规格、架构图、进展汇报、实验报告 | 本仓库 |
 
 代码仓库里允许保留的非代码文件：
@@ -19,7 +19,9 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 - 许可证：`LICENSE`、`THIRD_PARTY_NOTICES.md`
 - 程序或测试要读取的数据：`tests/`、`fixtures/`、`testdata/`、`evidence/`，以及 phonefarm 的 `tasks/`、`loop_v1/runs*/`
 
-每个代码仓库都有 CI 检查 `code-only`，PR 里新增或修改了其他 `.md`、图片、PPT、PDF、drawio 文件时检查失败。
+每个代码仓库都有 CI 检查 `code-only`，新增或修改上述例外之外的 `.md`、图片、PPT、PDF、drawio 文件会受到检查约束。
+
+2026-10-22 起本轮开发采用直接 commit、push 的协作方式，不新开 PR。每批只提交自己的改动，记录验证与限制，推送前核对远端并保留同事的并发修改；不 force push。已有 PR 和历史报告继续作为历史证据，不自动批量合并或关闭。
 
 各代码仓库原有的文档已连同修改历史迁到 `repos/<仓库名>/`，路径与原仓库一致。
 
@@ -27,6 +29,7 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 
 | 路径 | 内容 |
 |---|---|
+| `plans/2026-10-22-agent-platform/` | 外部 Agent 远程真机优化平台：已确认目的、项目地图、多机/分发/队列/结果计划、网页与CLI/API共同验收及完整待办 |
 | `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
 | `plans/2026-10-11-implementation-progress.md` | 本轮 draft PR、集成验证范围、剩余端到端接口与真机门槛 |
 | `plans/harness-runbook.md` | 候选准备、独立确认、只读页面的实际入口与结果含义 |
