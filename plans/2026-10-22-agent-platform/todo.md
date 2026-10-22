@@ -185,7 +185,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
         - [ ] PRODUCER-RECOVERY-03B4C2 在同一 manual owner 内接入性能采样并暂停观察干扰，迁移仍可执行的旧 gray-layer/reference/quality 路径。保留旧实验语义和原件；完成前不关闭03B4，不将局部恢复收据自动当整个 job 完成。
           - [x] PRODUCER-RECOVERY-03B4C2A 按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 接入当前场景sample，1–120秒、每轮sleep plan/三child、完整父恢复、Web/API/CLI及重连缓存结果。PF618e456、harness cd62842经实际检查成功直推main；4 Rust、1受影响worker、1 CLI、JS/浏览器及两条606传输的宿主HTTP链通过。显式render_comm，无筛选帧指标null；无部署/真机/性能收益结论。
           - [ ] PRODUCER-RECOVERY-03B4C2B 在同一采样资源合同内接显式有限输入、需停充时复用绑定context的ChargeSuspend；明确实际窗口与功耗/能耗资格。
-            - [ ] PRODUCER-RECOVERY-03B4C2B1 进行中，合同见GRAY-CONTROL-SAMPLING末节。先接显式有限输入计划：沿每round不可变plan、真实图片坐标/方向和自然完成，不自动转镜头；按计划全时长约束剩余预算。版本化动作能力防新helper把input投给只支持idle的旧owner后被忽略；兼容恢复C1/C2A，Web/API同批。
+            - [x] PRODUCER-RECOVERY-03B4C2B1 显式input+frame_id、逐round计划、部署后真实图/方向/图龄及完整预算复核；sample capability2与父@2隔离旧owner，兼容C1/C2A。PF65de801、harness e0818b4检查成功直推main；5Rust、1CLI、JS/网页及两链493次fake传输通过。缺natural负例按预期保QA隔离lease，全部已知PID退出。无部署/真机。
             - [ ] PRODUCER-RECOVERY-03B4C2B2 再接显式供电条件：原charge记录绑定同context，跨轮政策与恢复顺序明确；只在同期可核窗口计算能耗，不把不同窗口的平均值拼接。
           - [ ] PRODUCER-RECOVERY-03B4C2C 将quality begin/finish改为跨人工等待的同session客户端，不重启finish；保留原图与旧半分辨率预览差别。
           - [ ] PRODUCER-RECOVERY-03B4C2D 迁移reference、test_loadop四臂refbench和旧gray-layer挂层入口；保留无层基线、字符串extras、自报/自然退出。旧keep-prop不启动语义与C1不同，不直接别名；保留typed off旧遗留、status诊断和离线分析。

@@ -343,3 +343,20 @@ Web/API/CLI沿同一action合同；网页新增秒数/可选线程、measuring�
 PF [618e456](https://github.com/HGamey/phonefarm/commit/618e456b910e3513d431ad237b204b60b5f72a8b) 经实际code-only120107718390成功；harness [cd62842](https://github.com/HGamey/harness-ops/commit/cd62842ec307163fe70a34e6bf1f5956f09d5a0d) 经code-only120107749700、protocol3.11/3.14的120107749875/120107749897全部completed/success。同SHA直推main并核远端，没有PR。
 
 只勾C2A。下一C2B1先接显式有限输入及动作版本能力，防新helper将输入计划投给旧idle owner后被忽略；C2B2再接显式充电绑定与同期能耗。quality、reference、四臂refbench和旧挂层入口迁移继续待办。C2/03B4/03/JOB-EXEC-03/M3及整个goal保持active，未调用update_goal。
+
+
+## 2026-10-23 当前场景的显式有限输入（PRODUCER-RECOVERY-03B4C2B1）
+
+按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 增加sample的显式input+frame_id，默认仍idle。复用有限Plan与三child执行体，每round保存input_kind、规范化计划和生成脚本；声明时长须覆盖seconds+10、最多600秒，不自动补输入。预算按完整计划核对。cached图先核坐标，资源部署和上传完成后、worker放行前再取真实PNG/rotation核图龄、尺寸、方向与预算。输入来源图和检查原件保存，initial_frame.path沿会话图片合同相对job out；run.artifacts相对run目录。自然完成只证明有限输入结束，不声称游戏状态已还原。
+
+sample capability=2与resource parent@2绑定；新publisher对旧idle-only owner明确拒绝input，旧binary对新父绑定拒绝。新版保留C1无父及C2A @1严格idle的恢复语义，不能把旧parent升级成新计划。缺自然完成记录使action unknown并保持完整恢复义务；预放行几何拒绝没有worker permit，原件仍可读、健康会话可继续。
+
+网页默认无输入，提供JSON步骤、示例、绑定帧信息和明确重绑；新图或过期禁止提交，不自动采图或缩放。结果显示输入类型、声明时长（非实测耗时）、参考图。CLI帮助与原序列化用例同批更新。
+
+构建签名、5相关Rust既有用例各一次通过；定向JS、1CLI及浏览器单流程通过，390浅/1440深无溢出、console空，fixture与tab已关闭。worker执行体未改，沿用已有验证，不重跑。实际PF+nodeHTTP+fakeADB两链一次通过493次门控传输：normal336，5种非法请求及cached帧/坐标拒绝无transport，上传后方向变化拒绝零worker，finite13秒→idle15秒、逐轮计划、幂等、同owner及完整stop；negative157，缺自然收据时即使模拟组静止也不提前恢复base，exit2/recovery_required。
+
+normal核339个已知PID全部退出且无lease；negative核160个已知PID全部退出，仅QA隔离目录保留1个recovery_required租约（无pending/childPID/PGID）与模拟远端原件，没有伪造收据或强制clear。旧C2A closed状态只读一次零ADB，新旧恢复边界由相关unit覆盖。qa/gray-control-input-host-summary.json、065811955825/result.json、unit-results、ui-validation、source-review、publish留本机。无部署/真机/原数据迁移，无性能结论。
+
+PF [65de801](https://github.com/HGamey/phonefarm/commit/65de801d25a1c1bb083a0d13dcf1c901db0bc290)经actual code-only120113860496（run39861735718）成功；harness [e0818b4](https://github.com/HGamey/harness-ops/commit/e0818b41bb3fb7a9d9d203d58c349348e14b2ec0)经code-only120113919879（run39861754546）及protocol3.11/3.14 120113920234/120113920426（run39861754523）全部completed/success后同SHA直推main并核远端。无PR。
+
+只勾C2B1，下一C2B2显式供电条件与同期指标资格。C2B/C2/03B4/03/JOB-EXEC-03/M3及整体goal保持active，未调用update_goal。
