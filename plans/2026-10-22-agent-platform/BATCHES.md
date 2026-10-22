@@ -128,3 +128,18 @@ node在启动worker前补建作业收据目录，传入明确job ID。phonefarm�
 本机证据在transition/qa/job-lease-*.log、job-lease-host-smoke.json、job-lease-host-integration.json、jobs-lease-evidence-browser.json及截图。没有生产节点部署、手机操作或原始数据迁移。完整JOB-EXEC-03仍未勾选；下一批继续所有参与者统一持久lease根及主机重启/脱离进程组后代。bench、capture、gray/eval恢复producer覆盖单列待办，不能把它们released/not_reported解释为还原成功。
 
 提交前CI通过：[phonefarm code-only](https://github.com/HGamey/phonefarm/actions/runs/39792389304)、[harness-ops code-only](https://github.com/HGamey/harness-ops/actions/runs/39791953614)、[Linux Python3.11/3.14 node-tests](https://github.com/HGamey/harness-ops/actions/runs/39791953589)。同一候选SHA直接推main，不开PR，不关闭必需检查。
+
+
+## 2026-10-22：统一持久 lease 存储（本机验收通过，main 发布待 CI）
+
+候选代码已提交并推到各仓 `verify/lease-storage-20261022`：phonefarm `588b1c197827a56d97004673cf2ae462c1802ec3`（含脚本47d96aa）、harness-ops `336eaaf9bcc485f94f99a30c0c6c2756e96e0251`（含网页1227f22）、game_opt_loop `29514d89b3ca3bce72055b7c73797ee8c86e5141`（含29c7863/469b9d4）。截至本记录，尚未发布到 main；后续以同一SHA的实际check-run及远端main为准，无PR。
+
+合同见 LEASE-STORAGE。默认PHONEFARM_STATE_DIR/locks与devices经单一Rust解析器，所有参与者读取status.storage；custom显式兼容，旧协议或未初始化不猜空闲。显式init仅在旧参与者停止后绑定并停用旧域，不搬整个临时目录，不改新恢复marker；普通/强/嵌套锁、queue、qmutex、bridge及未知退休记录拒绝。临时旧域丢失后要求重新init，持久恢复记录保留。网页显示路径/模式/就绪状态，未就绪不可解除设备资源保留。
+
+节点fleet、PF fleet与只读preflight在非clear时停止探测；preflight --fix持有实际强lease，使用其serial。配置错误立即失败，不当成设备忙等两小时；GOL只重试exit1。fleet观察门禁尚不等于覆盖整个采样过程的排他lease，竞争窗口继续留在todo。
+
+本机通过：49项node协议（最终14.060秒）；6项devlock隔离回归；9项唯一Rust定向case（3存储、1fleet门禁、5实际CLI）；GOL4项devlock与1项路径回归、实际CLI构建签名。跨仓已签名实际PF/GOL、真实锁脚本、独立node worker和只读HTTP共4项通过，device transport调用0。默认迁移只在Rust内部注入临时旧根验证，跨仓使用显式custom隔离根，不包装成生产迁移或真机重启。网页390/768/1440浅深、clear+迁移冲突、unavailable/custom-ready、说明不能越过屏障均通过；fixture已关闭。
+
+失败与修正：旧CLI测试精确JSON断言因新增storage字段失败，已保留旧字段断言并核对新合同；review发现并修正preflight --fix被自身outer锁误拒及配置错误长时间重试。GitHub工作流摘要曾显示success但同SHA实际code-only job仍queued，main推送被GH013拒绝；未绕过必需检查，不能按摘要称已发布。PF code-only run39796569493；harness code-only39795913237、node-tests39795913238；GOL最终code-only39796330509。验收日志、截图及这次发布状态在本机qa/lease-storage-*、jobs-storage-*。
+
+无生产部署、真实锁根初始化、手机操作或原始数据迁移。完整JOB-EXEC-03/M3仍未完成。下一步先完成本批CI和同SHA直推main，再推进观察采样 ownership、producer恢复证据、普通旧owner超时/断电/逃离进程组等剩余条目，暂不切回Doom。
