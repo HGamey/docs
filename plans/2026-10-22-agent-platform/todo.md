@@ -97,6 +97,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [ ] RESULT-05 旧Doom自定义结果和GOL报告的兼容读取适配，原文件不可变；不靠重新运行实验补索引。
 - [ ] RESULT-06 指标schema明确模块/窗口/单位/电源轨/分母/ROI/全帧/实测或估算；缺失不填0。
 - [ ] METRIC-OWNERSHIP-01 将当前场景trace的渲染线程/ctx与目标进程身份绑定，独立验证帧语义；不能从Unity默认comm或字符串筛选推断游戏FPS。03B4C2A先支持显式render_comm并保留未验证标记，没有筛选时帧指标为null、raw trace仍保留。复用已有render ownership能力，不为每个游戏另造过滤器。
+- [ ] ENERGY-WINDOW-01 复用trace parser导出完整GPU-submit分组对应的实际时间窗，对相同窗口电池积分后报告分组能耗估计；目标/显示语义未核时不能命名游戏每帧能耗。C2B2仅交capture窗口电池能量，energy_per_frame_mj保持null。
 - [ ] RESULT-07 source/runtime/game/device/scene/method/reader身份贯通；一个数字能定位原始证据和计算方法。
 - [ ] RESULT-08 失败、无收益、未执行、未知和恢复异常一等展示；不能只展正结果。
 - [ ] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。
@@ -186,7 +187,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
           - [x] PRODUCER-RECOVERY-03B4C2A 按 [GRAY-CONTROL-SAMPLING](GRAY-CONTROL-SAMPLING.md) 接入当前场景sample，1–120秒、每轮sleep plan/三child、完整父恢复、Web/API/CLI及重连缓存结果。PF618e456、harness cd62842经实际检查成功直推main；4 Rust、1受影响worker、1 CLI、JS/浏览器及两条606传输的宿主HTTP链通过。显式render_comm，无筛选帧指标null；无部署/真机/性能收益结论。
           - [ ] PRODUCER-RECOVERY-03B4C2B 在同一采样资源合同内接显式有限输入、需停充时复用绑定context的ChargeSuspend；明确实际窗口与功耗/能耗资格。
             - [x] PRODUCER-RECOVERY-03B4C2B1 显式input+frame_id、逐round计划、部署后真实图/方向/图龄及完整预算复核；sample capability2与父@2隔离旧owner，兼容C1/C2A。PF65de801、harness e0818b4检查成功直推main；5Rust、1CLI、JS/网页及两链493次fake传输通过。缺natural负例按预期保QA隔离lease，全部已知PID退出。无部署/真机。
-            - [ ] PRODUCER-RECOVERY-03B4C2B2 再接显式供电条件：原charge记录绑定同context，跨轮政策与恢复顺序明确；只在同期可核窗口计算能耗，不把不同窗口的平均值拼接。
+            - [ ] PRODUCER-RECOVERY-03B4C2B2 进行中，按 [GRAY-CONTROL-POWER](GRAY-CONTROL-POWER.md) 接创建时observe/battery固定政策、绑定ChargeSuspend及恢复；同期电池能量/功率明确为积分估计。每帧能耗仍待完整分组窗，不拼接不同窗口。
           - [ ] PRODUCER-RECOVERY-03B4C2C 将quality begin/finish改为跨人工等待的同session客户端，不重启finish；保留原图与旧半分辨率预览差别。
           - [ ] PRODUCER-RECOVERY-03B4C2D 迁移reference、test_loadop四臂refbench和旧gray-layer挂层入口；保留无层基线、字符串extras、自报/自然退出。旧keep-prop不启动语义与C1不同，不直接别名；保留typed off旧遗留、status诊断和离线分析。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
