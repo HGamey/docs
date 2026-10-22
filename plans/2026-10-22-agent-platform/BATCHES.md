@@ -219,3 +219,14 @@ PRODUCER-RECOVERY-01已勾选，整体LEASE-STORAGE-02/JOB-EXEC-03/M3仍未完�
 phonefarm bd67d97已推main并ls-remote核对；实际code-only check119988773686 completed/success（run39825838744）后推同SHA，无PR/强推。27项相关unit通过（初次genshin过滤为0，已纠正并执行3项plugin_tests）；11次实际CLI/fakeADB、64次传输门控通过，含父死EOF、deadline、恢复失败/续接、HID未知、原始PNG。qa/capture-recovery-host-validation.json记录两次fixture校准负结果和清理证明。没有运行真实游戏、操作手机、部署、迁移锁根或原数据；未改node合同/网页布局，不重复无关UI测试。BASE-07补记外层devlock拒绝无JSON；RECOVERY-UX-01/CAPTURE-POLICY-01保留未完成。
 
 下一条仍为gray-ab/eval各自的producer恢复证据；整体LEASE-STORAGE-02/JOB-EXEC-03/M3尚未完成。用户明确未清空todo/plan前继续，整体goal保持active，单批完成不结束开发。
+
+
+## 2026-10-23 指定目标灰层停用（PRODUCER-RECOVERY-03A）
+
+合同见 [GRAY-RETIREMENT](GRAY-RETIREMENT.md)。共享off返回带serial、命令原始输出、范围的typed证据；读与校验先于修改，目标/state/当前安装路径或全局层冲突时停止。精确停止目标并读回，关闭并读回当前层12个属性（含旧清单遗漏的npuprobe），只删登记SO和已核验后的state。其它包同名SO、共享临时SO、历史marker和无快照的legacy settings保留；权限/传输错误不能当文件缺席。
+
+gray-ab、frameaudit和eval保存停用证据，失败非零或ABORT并停止后续设备写。gray-ab不再在臂失败后继续并返回全部完成。eval明确layer_deactivated与整体restored未知，禁止用摘层文本生成PASS/KEEP。审查修复了首次snapshot先于部署脚本的顺序问题。完整sampler/输入/ftrace/停充/原属性恢复仍归03B，本批不调用complete_recovery。
+
+phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check119999626232 completed/success（[run39828942704](https://github.com/HGamey/phonefarm/actions/runs/39828942704)）。提交前吸收并发fd0bb36的fleet/keepalive鸿蒙状态修改并重新构建签名，不覆盖同事修改。24项相关Rust unit通过；实际CLI初轮3条65次fake ADB，npuprobe修复后仅重跑受影响2条68次，复用未变前置失败案例，最终适用证据共3案例69次。两个预期权限失败均保留state/原始输出，不进入下一臂；所有fixture PID结束。证据qa/gray-retirement-host-validation.json及030605/030830两目录。无部署、手机操作、锁根迁移或原始数据搬动；没有网页合同变化，未重复布局测试。
+
+03A限定停用已完成；03B完整producer会话尚未实现，整体目标保持active并继续。
