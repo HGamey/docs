@@ -175,8 +175,9 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
         - [x] PRODUCER-RECOVERY-03B2A 独立storeop-check复用受控Session和PNG证据；7a3d7d1检查成功直推main。20相关unit、4有效CLI/564 fake传输通过，无部署；eval legacy调用明确保留待迁。
         - [x] PRODUCER-RECOVERY-03B2B 按 [GRAY-EVAL-LAUNCH-SESSION](GRAY-EVAL-LAUNCH-SESSION.md) 合并完整gray_eval父会话的workload.launch路线（资格/3基线/ABBA/recover）；实际父lease/context、子范围只写verified，全部真实资源恢复后才父complete。9e1bb0a经实际code-only成功直推main，13唯一unit/3唯一worker/5有效CLI通过。gray路径不隐式新增停充/锁频；script任意exec/gamepad另批。
       - [x] PRODUCER-RECOVERY-03B2C 按 [GRAY-EVAL-SCRIPT-SESSION](GRAY-EVAL-SCRIPT-SESSION.md) 完成有限输入、3-child所有权、资格/3baseline/ABBA及同context恢复。默认12秒拖动保留，非法脚本提前拒绝，无自然输入收据不清屏障。2fb0b16实际code-only成功后直推main；10相关unit、3唯一worker和4有效CLI/1868门控fake传输通过，仅宿主验证。
-      - [ ] PRODUCER-RECOVERY-03B3 按 [GRAY-AB-LOADOP-SESSION](GRAY-AB-LOADOP-SESSION.md) 迁移gray-ab loadop，复用有限脚本会话；另外登记实际--suspend-charging借用的perf资源及自有ftrace/input，不把layer off当全恢复。 差量审计发现旧power采样实际8点×200ms且t≈10后才停充/settle，无trace同窗证明；下一合同显式版本化整轮停充+owned sampler，保留采集命令顺序/两臂passdump=0，不套eval资格/ABBA。
+      - [x] PRODUCER-RECOVERY-03B3 按 [GRAY-AB-LOADOP-SESSION](GRAY-AB-LOADOP-SESSION.md) 完成loadop完整会话：一次停充跨两臂、充电原值/记录绑定、3child采样、同context恢复；保留ctrl/knob顺序和passdump=0。73c0a8d检查成功直推main；8unit、1worker、3CLI/512门控fake传输通过，仅宿主验证。power协议明确40秒sampler，不能混旧t10短点列。
       - [ ] PRODUCER-RECOVERY-03B4 gray-ab none/probe等路径按实际native可达分支接会话；copyprobe/dynamic_upop各自保留命中/disabled证据，不随生命周期迁移恢复或扩大注入功能。
+        - [ ] PRODUCER-RECOVERY-03B4A 先完成未支持模式准入：默认native copyprobe/upop生产分支不可执行，应在gray-ab的none基线和gray-layer公共mount入口任何设备写前拒绝；自定义SO只能标能力未核验，不能凭ABI/manifest当执行许可。审阅enable_layer及会先off/基线的旧shell入口，同批覆盖或明确MERGE-03剩余范围；保留离线工件/分析和旧disabled证据，不重新开放注入。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 

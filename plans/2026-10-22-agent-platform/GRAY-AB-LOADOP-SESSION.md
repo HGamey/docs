@@ -1,6 +1,6 @@
 # gray-ab loadop 的完整会话与停充恢复
 
-状态：2026-10-23，PRODUCER-RECOVERY-03B3 实施前规格，主 Agent 已审核冻结。基于已发布的有限输入与 owned sampler/trace 生命周期；本批只迁移 `gray-ab --mode loadop`，不部署、不操作真机、不产生新的性能结论。
+状态：2026-10-23，PRODUCER-RECOVERY-03B3 已发布源码73c0a8d，宿主验证完成；未部署或真机验收。基于已发布的有限输入与 owned sampler/trace 生命周期；本批只迁移 `gray-ab --mode loadop`，不部署、不操作真机、不产生新的性能结论。
 
 ## 保留实验本身
 
@@ -65,3 +65,12 @@ Session 的硬件 Shell adapter 区分可选节点缺席与执行不确定性。
 ## 已冻结的对外入口
 
 采用 `gray-ab recover --session DIR --serial S [--json]`，只接本 loadop owner；0/1/2 按上述采集与恢复组合返回。loadop 支持 `--json` 和 `--evidence-origin device|synthetic`，copyprobe 不因新增选项改变测量能力。`power.json` 保留 PerfSnapshot 顶层字段，新增协议、采样窗口与父充电证据；功耗只用经过放电及完整窗口核验的电池样本。以上由主 Agent 按既有产品准则确认，无待人批准项。
+
+
+## 实现与当前验证
+
+已统一构建签名，8项相关Rust unit通过：持久停充记录/错误传播、owner身份、功耗窗口和恢复锁入口；新增只读进程组核验复用三child测试，1项受影响worker行为通过。灰层与charge均由同一个parent负责，pending与原记录绑定先于写；loadop已知缺失round证据作为采集错误保留，不把缺文件冒充传输未知。原launch/script分支维持既有行为。
+
+审读修复了collection写盘失败被返回普通采集失败的问题；持久化错误独立保留并返回2，即使设备恢复已完成也不丢恢复状态。已放电的observed_no_mutation路径目前经源码审读确认无充电控制写；针对性unit覆盖停充候选缺席/权限/未知写与恢复，三条CLI集中验证主动停充的完整闭环，不把未执行分支记为CLI通过。无自然收据时先恢复charge的依赖顺序由worker缺收据核验和源码组合审读覆盖，未另跑完整CLI。
+
+3条实际CLI/fakeADB一次通过，共512传输、99次base写前pending、16次parent pending、3次charge binding核验。完整ctrl1→knob1后已知恢复读回差异保屏障；同context恢复成功，旧报告/collection/绑定原件不变；初始外来record零传输拒绝且原样保留。每臂30秒trace、40秒input、40秒sampler和20点样本；两臂passdump=0，无fan/锁频写。全部模拟PID已退出，无lease遗留。原始qa/gray-ab-loadop-host-cli-20261023T052339/result.json及host-validation保留。源码经实际code-only check120070209770 completed/success（run39849109461）后同SHA直推main并核对远端。不据此声明真机恢复或性能收益。

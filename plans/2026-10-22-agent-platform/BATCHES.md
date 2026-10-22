@@ -278,3 +278,16 @@ phonefarm 2fb0b164f431b7ea37339896a768360f0fab6f63 经实际code-only check12005
 最后launch字段兼容增量不影响四条script CLI；最终构建签名并追加既有live-check单测，没有重跑整链。原始回执qa/gray-script-host-validation.json、gray-script-host-cli-20261023T045448/result.json及unit/worker/source-review均在本机。没有部署、手机操作、锁根迁移、原始数据搬动或真实性能结论。网页继续消费既有job产物/恢复收据，没有新页面合同，不重复布局测试。
 
 本项完成，03B/03/JOB-EXEC-03/M3和整体goal仍active。下一03B3 gray-ab loadop：显式整轮停充、owned sampler、按原ctrl/knob顺序采集、两臂passdump=0；不把旧t≈10后短功耗点列当同步trace窗，也不套eval资格/ABBA。03B4其余路径仍待。
+
+
+## 2026-10-23 Gray-ab loadop 采集和停充恢复（PRODUCER-RECOVERY-03B3）
+
+按 [GRAY-AB-LOADOP-SESSION](GRAY-AB-LOADOP-SESSION.md) 迁移loadop完整命令。保留ctrl/knob顺序、默认有限拖动、原场景门禁和两臂passdump=0；复用三child输入/trace/sampler与原始证据，不套eval资格/基线/ABBA。新协议在首臂前停充、跨场景准备保持，明确记录40秒sampler全窗；保留PerfSnapshot关键字段和null原因，旧env charge_suspended不作新owner证明。没有新增fan、锁频或温控写。
+
+停充记录在首次写前绑定serial/token/context/原节点值，候选缺席与权限/传输未知分开；新session不能接管外来record。loadop收尾先只读核当前groups，再恢复充电并读回，随后输入自然完成/关闭worker/trace/层和属性。输入未自然完成不能清整个屏障；已核实的charge部分恢复仍在required报告保留。gray-ab recover只接本owner，eval/frame-audit不能代替。已知缺失round证据保留为采集错误；报告持久化失败独立返回2而不掩盖已知恢复结果。
+
+源码73c0a8d5765351b1ed6d9c7dd70f2b6eb18e8005经实际code-only check120070209770 completed/success（[run39849109461](https://github.com/HGamey/phonefarm/actions/runs/39849109461)）后同SHA直推main、ls-remote核对。构建签名及8相关Rust unit、1受影响worker测试通过；3实际=3有效CLI一次通过512门控传输、99base pending/16父pending/3charge binding：完整ctrl1→knob1末尾known charge mismatch；同context恢复成功、原失败/collection/绑定原件不变；foreign record零传输拒绝。全部模拟PID结束，无lease遗留，外来record原样保留。
+
+回执qa/gray-ab-loadop-host-validation.json、052339/result.json、unit/worker/source-review均在本机。已放电observed_no_mutation仅源码审读；输入缺natural但先恢复charge以worker核验+源码顺序审读覆盖，未宣称这两个分支已做完整CLI。无生产部署、手机操作、锁根/数据迁移或真实性能结论；网页沿现有job产物/恢复收据，无新UI合同，不重复布局测试。
+
+03B3勾选，03B/03/JOB-EXEC-03/M3与整体goal仍active。下一03B4A先把默认native不可执行的copyprobe/upop从宿主和已知shell入口提前拒绝，避免先运行none基线、摘层和触控；自定义SO能力未核验，不凭ABI/manifest直接放行。保留工件构建/离线分析与旧disabled证据，不恢复注入功能。
