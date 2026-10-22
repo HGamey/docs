@@ -22,6 +22,7 @@
 | [MAINTAINER-REVIEW.md](MAINTAINER-REVIEW.md) | 维护者手册的共同原则、差异、证据边界及自身复盘 |
 | [BATCHES.md](BATCHES.md) | 每批提交、验证结果、失败与剩余范围 |
 | [JOB-EXECUTION.md](JOB-EXECUTION.md) | 作业所有权、重启取消与恢复证据合同 |
+| [JOB-RECOVERY.md](JOB-RECOVERY.md) | 宿主lease观察、恢复任务、祖先资源链和放行条件 |
 | [JOB-QUEUE.md](JOB-QUEUE.md) | 提交幂等、持久等待、资源声明及管理员释放合同 |
 | [OLD-PR-AUDIT.md](OLD-PR-AUDIT.md) | 近期旧 PR 整合审计与具体回归证据 |
 | [FRONTEND.md](FRONTEND.md) | 用户指定设计参考、配色/间距/交互与网页验收约定 |

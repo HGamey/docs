@@ -86,10 +86,26 @@ SQLite唯一请求记录与事务领取保证同ID同内容只对应一个job；
 
 边界：未部署运行节点、未操作手机、未迁移原始实验数据。本批声明资源不是设备lease；旧global devlock仍可能串行，恢复not_reported仍未接入强屏障；主机断电、脱离进程组后代、恢复诊断任务通道和两节点真机流程仍待做。下一批继续JOB-EXEC-03，不将本批写成完整M3达标。
 
+## 2026-10-22：宿主 lease 屏障与显式恢复任务
+
+已直接推 main：phonefarm [cafdbba](https://github.com/HGamey/phonefarm/commit/cafdbba)（lease只读入口4b330c2、旧桥接保护cafdbba），harness-ops [2b4747e](https://github.com/HGamey/harness-ops/commit/2b4747e)（网页14e901f/2ae2eec、CLI67afcf7、系统整合2b4747e）。合同见[JOB-RECOVERY](JOB-RECOVERY.md)。
+
+phonefarm `lease status --json`观察主/嵌套marker和bridge，返回clear/held/blocked/unknown，不探手机、不建状态、不修改恢复记录。旧devlock acquire不能因owner缺失/过期绕过强marker；普通外层release保留嵌套恢复记录，合法进程树的外层心跳可继续。未知格式或普通旧锁不被误报clear。
+
+node/CLI/网页共同显示实际lease；非clear时设备写任务继续排队，纯宿主工作可运行。blocked只保留资源而不占执行名额。显式恢复任务继承目标资源，可借用目标与blocked祖先链，与兄弟恢复和其他活动任务互斥；恢复任务结束不自动清父屏障。write任务not_reported、任何worker lost或recovery required均保留相应屏障。释放需管理员说明，无未结束/blocked恢复子任务，write/recovery还需fresh leaseclear；原恢复异常不被修改。
+
+本批审计复现：初版把丢失worker的恢复子任务记done，另一同父恢复会获同一资源。已改为保留blocked并开放显式祖先链恢复，复现与回归保留。另修复lease在领取/启动间变化导致重复领取循环，以及新增默认device_access改变旧request指纹的问题。第一次HTTP测试把token提交写成dashboard JSON body导致400，已按已有X-Job合同纠正，失败日志保留。
+
+验证：6项devlease单测、4项实际CLI恢复回归、3项devlock隔离回归；47项节点协议通过（13.376秒），Linux Python3.11/3.14 CI通过。跨仓实际debug binary、真实flock/无害子进程和HTTP的6项检查全部通过，设备传输调用为0：held时write等待，host任务运行；释放后write执行exit0，但not_reported仍blocked。实际网页验证note不能绕屏障、准备恢复仅预填、显式提交、取消与clear后带说明释放；390/768/1440浅深色无水平溢出。JS检查覆盖旧节点能力降级、409保留原因与重新采样。
+
+提交前回执：[phonefarm code-only](https://github.com/HGamey/phonefarm/actions/runs/39789235284)、[harness-ops code-only](https://github.com/HGamey/harness-ops/actions/runs/39789238774)、[node-tests](https://github.com/HGamey/harness-ops/actions/runs/39789238751)。本机qa保留lease-status-*、lease-recovery-node-tests*.log、recovery-child-lost-reservation.txt、lease-node-host-integration.*、jobs-recovery-*截图与浏览器回执；模拟服务54725已停止，临时页面关闭。没有运行节点部署、手机操作或原数据迁移。
+
+边界：宿主观察不授予lease，也不证明设备还原。全局bridge仍串行；默认临时lease根不保证重启持久性。通用恢复收据、job与强lease身份绑定、脱离进程组后代、两节点故障及手机验收未完成，JOB-EXEC-03保持未勾选。下一批继续这些系统问题；同时记录旧devlock心跳sleep继承日志管道的收尾延迟，未在本批扩大修改。
+
 ## GitHub流程与协作记录
 
 用户明确授权管理员取消强制PR。phonefarm、harness-ops、game_opt_loop、refbench规则保留禁止强推、禁止删除及code-only必需检查；本机保存修改前规则到transition/qa。开发提交先进入verify分支，通过后直接推main；不创建PR、不绕过失败检查。
 
 产品决定持续写PRODUCT-CHARTER/DISCUSSION/todo；可获得的用户消息与重要回应写本机conversation.jsonl，明确原话/摘要，不把回顾伪称完整历史导出，不保存聊天凭据到仓库。
 
-下一批按todo继续JOB-EXEC-03设备lease/恢复联动。游戏分发、跨节点注册/索引、研究状态和异步人工请求仍在计划；前端由具体subagent实现，主Agent负责系统合同与整合。
+下一批按todo继续JOB-EXEC-03的强lease身份/恢复收据及重启边界。游戏分发、跨节点注册/索引、研究状态和异步人工请求仍在计划；前端由具体subagent实现，主Agent负责系统合同与整合。

@@ -14,11 +14,11 @@ GET /requests/:id 只读找回原job，不存在404；不得用不确定结果�
 
 输入准备完成才进入queued。领取后先写starting记录，再启动上一批worker。launch.json的只发布一次标记存在时绝不再次执行：有活worker就接续读取；没worker且无终态则interrupted，不盲重试。标记尚未产生的claimed项可以继续启动，因为命令尚未发出。客户端断线和HTTP服务重启不删除队列。
 
-resources为独占字符串数组。未声明资源的phonefarm/GOL/adb/fetch_apk保守使用legacy-device，其余默认无独占资源；显式声明支持不同设备/宿主资源分开排队。调度按提交顺序寻找第一个满足容量与资源条件的任务，无关任务可越过忙的队首。max-running默认2，可由节点参数修改。claimed与blocked均占容量；blocked保留声明资源。当前仍可能受旧global devlock串行限制，不能将宿主队列并行写成物理设备lease并行已完成。
+resources为独占字符串数组。未声明资源的phonefarm/GOL/adb/fetch_apk保守使用legacy-device，其余默认无独占资源；显式声明支持不同设备/宿主资源分开排队。调度按提交顺序寻找第一个满足容量与资源条件的任务，无关任务可越过忙的队首。max-running默认2，可由节点参数修改。后续JOB-EXEC-03批次改为只有claimed占执行容量，blocked只保留声明资源；恢复任务及lease约束见[JOB-RECOVERY](JOB-RECOVERY.md)。当前仍可能受旧global devlock串行限制，不能将宿主队列并行写成物理设备lease并行已完成。
 
 ## 取消、阻断和释放
 
-准备/等待中的cancel在事务内标为done，命令不执行，outcome=cancelled、recovery=not_needed、exit=null。已领取项沿用独立worker取消通道。worker丢失或终态recovery.required转blocked；不从exit0判断恢复完成。POST /jobs/:id/queue-release 必须管理/掌舵权限，提供非空note，保存核查说明后允许再次调度；这是管理员对队列资源可复用的确认，不自动执行设备恢复，也不将其包装成平台已验证还原。
+准备/等待中的cancel在事务内标为done，命令不执行，outcome=cancelled、recovery=not_needed、exit=null。已领取项沿用独立worker取消通道。worker丢失或终态recovery.required转blocked；后续JOB-EXEC-03也保留设备写入但recovery.not_reported的资源。不从exit0判断恢复完成。POST /jobs/:id/queue-release 必须管理/掌舵权限，提供非空note，满足恢复子任务和实际lease条件后，保存核查说明并允许再次调度（见JOB-RECOVERY）；这是管理员对队列资源可复用的确认，不自动执行设备恢复，也不将其包装成平台已验证还原。
 
 ## 同级界面
 
