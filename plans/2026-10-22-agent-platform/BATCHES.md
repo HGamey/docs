@@ -143,3 +143,12 @@ node在启动worker前补建作业收据目录，传入明确job ID。phonefarm�
 失败与修正：旧CLI测试精确JSON断言因新增storage字段失败，已保留旧字段断言并核对新合同；review发现并修正preflight --fix被自身outer锁误拒及配置错误长时间重试。GitHub工作流摘要曾显示success但同SHA实际code-only job仍queued，main推送被GH013拒绝；未绕过必需检查，不能按摘要称已发布。PF code-only run39796569493；harness code-only39795913237、node-tests39795913238；GOL最终code-only39796330509。验收日志、截图及这次发布状态在本机qa/lease-storage-*、jobs-storage-*。
 
 无生产部署、真实锁根初始化、手机操作或原始数据迁移。完整JOB-EXEC-03/M3仍未完成。下一步先完成本批CI和同SHA直推main，再推进观察采样 ownership、producer恢复证据、普通旧owner超时/断电/逃离进程组等剩余条目，暂不切回Doom。
+
+
+## 持久 lease 存储发布进度（接续时以本节为准）
+
+phonefarm `588b1c197827a56d97004673cf2ae462c1802ec3` 与 harness-ops `336eaaf9bcc485f94f99a30c0c6c2756e96e0251` 已经在实际check-run通过后直接推main，并用ls-remote核实。harness的Linux Python3.11/3.14及code-only均成功。没有PR或强推。
+
+GOL `29514d89b3ca3bce72055b7c73797ee8c86e5141` 仍在 `verify/lease-storage-20261022`，main尚未更新。check-run/job `119884317536`（run39796330509）的所有步骤均success，但check-run整体仍in_progress且conclusion=null；workflow摘要提前success不足为发布依据。早先一次main推送被GH013拒绝，未重复绕过。下一步只需等待实际check-run终态，成功后fetch检查并发、同SHA直推main并核实远端；失败则按日志修复，不重做整批测试。不因等待CI切换新开发批次。
+
+本批本机验收与恢复边界见上一节及LEASE-STORAGE。临时测试服务/浏览器均已关闭，源码工作树干净；无部署、手机、真实锁域初始化或数据迁移。qa/lease-storage-publish.json记录两个已发布SHA与GOL待发布。广义开发目标保持active，完整JOB-EXEC-03仍未完成。
