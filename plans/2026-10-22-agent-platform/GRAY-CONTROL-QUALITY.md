@@ -20,7 +20,7 @@ manifest固定gray-control/quality/<label>/quality.json，schema phonefarm/gray-
 
 Web提供label及begin/checkpoint/finish三个按钮、当前阶段/缺失原因、原图/半尺寸预览/marker/manifest入口、最近请求回执；当前actor/epoch与同ID不重放沿现有控制面。默认不自动导航、不自动判断画质。将网页swipe上限从2000ms对齐现有API的10000ms，支持旧时钟2500ms手势，不改变API范围。pf-node帮助给同一quality请求例；不新增服务端API。
 
-旧genshin_quality.sh目前begin会off/重启/挂层/固定坐标进入时钟，finish不重启但直接adb触控截图。旧PNG取全分辨率raw每2像素抽样，不是原尺寸。C2C2须把它改成既有session客户端，固定坐标自动流程只在显式宽高/方向profile下执行；人工等待后重新capture再输入，禁止沿用begin旧图。启动由既有session托管，finish不能重新install/off/restart。历史raw/PNG保持原义，新原图和preview分开，不制造raw文件或静默替换旧shot.png。C2C1先交付可跨Web/Agent使用的共享采集原语，不能据此宣称旧脚本已迁移。
+迁移前的genshin_quality.sh在begin会off/重启/挂层/固定坐标进入时钟，finish不重启但直接adb触控截图。旧PNG取全分辨率raw每2像素抽样，不是原尺寸。C2C2已把它改成既有session客户端，固定坐标自动流程只在显式宽高/方向profile下执行；人工等待后重新capture再输入，禁止沿用begin旧图。启动由既有session托管，finish不能重新install/off/restart。历史raw/PNG保持原义，新原图和preview分开，不制造raw文件或静默替换旧shot.png。C2C1先交付共享采集原语，C2C2再迁移旧脚本；两批的验证与发布分别记录。
 
 ## 最小验证
 
