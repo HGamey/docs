@@ -24,6 +24,14 @@ ftrace只用本session创建的独占实例，拒绝已有实例和无instances�
 
 在父会话仍持有恢复义务时，Experiment admission 可将 control/restored 的 unknown 作为待采集/待收尾事实，不能假填 restored=true；仅新父会话专用入口采用此规则，调用前先读回已登记进程静止、trace关闭且父pending为空。已知恢复失败仍阻断；Conclusion 一律需要完整恢复。既有独立资格入口、性能/画质/统计阈值不变。
 
+## 调用与产物
+
+`eval --request REQUEST --serial S --out DIR [--evidence-origin device|synthetic]` 自动将 gray + workload.launch 路由到父会话，原脚本路线保持原边界。可选 `payload.layer_so` 指定本地构建层，缺省使用原层路径；storeop_dont_care 必须同时通过信封白名单和原 scope 解析。自驱动路线拒绝 loadop、onboard 输入，seconds 限1..86400。无synthetic结论豁免；来源会进入资格证据。
+
+输出在唯一gray-TOKEN子目录，含eval-session.json原请求/阶段/资源、eval-collection.json基线/两臂/部分PNG、各轮原trace/env/退出码/marker和eval-report.json。恢复通过 `eval recover --session DIR/gray-TOKEN --serial S --json`；原失败报告不改写。正常或REJECT为0、ABORT且已恢复为1、恢复/报告错误为2；恢复入口完成为0，否则2。
+
+已知未启动的部分工具部署可关闭登记后恢复；未知写/pending仍拒绝自动清除。父资源恢复写先核boot；独立frame-audit recover不接父身份。首次只读失败且没有设备修改，可以产生no_device_mutations局部报告并正常结束，不制造假恢复屏障。
+
 ## 验收与接口分工
 
 先冻结实际调用的最小接口，再并行实施：GraySession的父身份/restart/marker与延迟完成；专属trace采样worker；父资源会话和eval编排/恢复入口。不要先发布无调用骨架或永远required的父壳。验证只覆盖改变：既有关键纯解析/判据；远端worker宿主fixture的两个子进程退出与失败；少量实际CLI/fakeADB覆盖完整launch路线、资格早退仍收尾、恢复失败/续接以及独立recover拒绝父身份。复用已完成的gray/lease负例，不再反复全套测试。模拟不能替代真机性能、断电或逃离进程组验收。

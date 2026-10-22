@@ -252,3 +252,18 @@ phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check1
 源码7a3d7d1ba704d8689e6b6642e4880e93a5d48458经实际code-only check120021145525 completed/success（run39835080780）后同SHA直推main，并ls-remote核对。没有部署、真实设备、数据迁移或性能验证。没有网页协议变化，沿现有产物/恢复收据显示；不重复布局测试。eval仍显式调用storeop_check_legacy，不能宣称整eval已经受本session保护。
 
 下一03B2B与完整gray_eval父会话合并，先交付调用storeop的workload.launch分支及recover，避免发布借用子步骤后父层永久required的半成品。源码核实storeop前仅能力只读/本地准备；实际后续义务是层/原属性/历史输出、fan、目标/启动marker、sampler、专属ftrace实例和专属工具目录。gray_eval当前没有停充或锁频，不能凭共享helper名称扩大恢复声明或隐式新增这些操作。script分支允许任意exec/gamepad及额外工具上传，另列未迁移范围。整体goal保持active。
+
+
+## 2026-10-23 Gray 自驱动 eval 父会话（PRODUCER-RECOVERY-03B2B，检查终态待发布）
+
+按 [GRAY-EVAL-LAUNCH-SESSION](GRAY-EVAL-LAUNCH-SESSION.md) 让同一个强Lease覆盖静态storeop检查、运动自检、三基线、交替候选/对照和最终恢复。子collector不创建/结束租约；新v2会话有明确completion_owner，frame-audit recover拒接父身份。属性、安装与历史文件只备份一次，各代产物归档；无层基线和probe两臂会重置image-check观测开销。
+
+父会话登记真实改变的fan、自有工具/采样进程/trace实例；worker有两个受控child、独立采集退出码、当前静止验证与关闭账本。trace只使用独占实例和boot时钟，删除前确认自有进程停止；不动全局trace、不隐式停充/锁频。已知部分上传尚未启动可收尾；未知写/pending保屏障。eval recover只续接相同context，原失败报告不改写，game_state_restored=false。远端关闭账本、脚本和轮次原件按报告政策保留，不声称无残留。
+
+恢复和采集结果独立。父在Experiment阶段保留restored未知，只有已核静止且无pending的专用admission可以继续采集；Conclusion仍需完整恢复。审查修正两个判定缺陷：普通renderpass数量不能补成改写命中，最终统计必须使用冻结required_metrics，避免render_cadence仅凭功耗改善而PASS。原阈值、图像差值和统计实现复用。
+
+13项唯一相关Rust unit通过，实际14执行（审查后只重跑命中扩展及新增冻结目标回归）；3项唯一worker宿主fixture通过，新增idle模式后仅重跑受影响1项。5次实际=5次有效CLI/fakeADB、2048门控传输，529次写前base pending与41次父pending核验。完整三基线+六对ABBA/15张静态PNG完成后注入fan恢复差异，正确保屏障；独立recover拒父0传输；同context恢复成功109传输且旧原件不变；synthetic来源只到三基线、不进候选，仍完成恢复；首次id只读失败0写正常no_device_mutations。
+
+QA一处断言误去stderr读取本来在JSON stdout的拒绝说明，原负记录保留，离线核对后只续跑剩余3调用，无重跑。首条CLI已运行的签名映像与最终增量只差命中兜底/最终统计/help，该例实际begins=2且恢复失败未进入最终统计，适用性已单独记录；其余最终签名binary。所有2048模拟进程退出、隔离lease清空，无服务。证据qa/gray-eval-host-validation.json、041728/042432原件、unit结果及worker日志。
+
+源码9e1bb0a81c93f02d9532435d4585972c7e0bdd61已推verify分支。实际check120037546850（run39839817705）步骤成功但check-run终态尚未到；不能提前称main发布。没有部署、真机验证、锁根迁移或原始数据搬动。网页沿既有job产物与恢复收据合同，没有另建协议；未重复无关布局测试。03B脚本路线/gray-ab及整体goal继续，不能把该子批当全目标完成。

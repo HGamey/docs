@@ -174,6 +174,9 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
       - [ ] PRODUCER-RECOVERY-03B2 将storeop-check切换到同一受控会话，独立入口先接；随后eval借用父lease，只写子范围报告，不提前清除父屏障。保持既有画质比较和判据，合同见 [GRAY-STOREOP-SESSION](GRAY-STOREOP-SESSION.md)。
         - [x] PRODUCER-RECOVERY-03B2A 独立storeop-check复用受控Session和PNG证据；7a3d7d1检查成功直推main。20相关unit、4有效CLI/564 fake传输通过，无部署；eval legacy调用明确保留待迁。
         - [ ] PRODUCER-RECOVERY-03B2B 按 [GRAY-EVAL-LAUNCH-SESSION](GRAY-EVAL-LAUNCH-SESSION.md) 合并完整gray_eval父会话的workload.launch路线（资格/3基线/ABBA/recover）；实际父lease/context、子范围只写verified，全部真实资源恢复后才父complete。gray路径不隐式新增停充/锁频；script任意exec/gamepad另批。
+      - [ ] PRODUCER-RECOVERY-03B2C 下一批有限脚本gray_eval：先冻结sleep/tap/swipe可恢复子集、受控输入进程及秒数合同；不直接套旧script（仍写pf_t1/pf_t2、任意exec/HID、部分动作错误记achieved）。默认spin_touch的12000ms input swipe不能被当前固定350ms的普通swipe静默替换；精确输入语义和其它脚本拒绝边界先定规格。
+      - [ ] PRODUCER-RECOVERY-03B3 gray-ab loadop复用有限脚本会话；另外登记实际--suspend-charging借用的perf资源及自有ftrace/input，不把layer off当全恢复。
+      - [ ] PRODUCER-RECOVERY-03B4 gray-ab none/probe等路径按实际native可达分支接会话；copyprobe/dynamic_upop各自保留命中/disabled证据，不随生命周期迁移恢复或扩大注入功能。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
