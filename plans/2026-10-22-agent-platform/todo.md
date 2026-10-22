@@ -20,7 +20,7 @@
 
 - [ ] BASE-01 对照上游与本地分叉，列可回收提交/补丁、依赖、测试；保护phonefarm与GOL未提交修改。验收：每项有去向，不一把推历史分支。
 - [ ] BASE-02 回收job唯一锁名、raw adb/fetch_apk锁路由、fleet队列解析等既有增强；验证与现有强lease/bridge兼容。
-  - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；fleet 查询/队列解析仍待做。
+  - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；旧global bridge之外的强lease集成仍待验收。
 - [ ] BASE-03 回收APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改等成果。
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；CLI和网页都可查询，客户端遇不兼容时解释具体差异。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
@@ -29,10 +29,10 @@
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
   - 已发布订阅生命周期修复 `phonefarm 591889e`；测量互斥、远程认证与真机开销仍未完成。
 - [ ] BUG-02 修复服务重启后job取消失效；绑定进程起始身份和进程组，不能仅凭可能复用的PID发信号。
-- [ ] BUG-03 只读状态查询不再创建job；超时节点不能静默消失，返回完整列表和分项错误。
+- [x] BUG-03 只读状态查询不再创建job；超时节点不能静默消失，返回完整列表和分项错误（harness-ops `947a4b9`，模拟协议与浏览器验收；未部署运行节点）。
 - [x] BUG-04 修复原件只读授权缺口，覆盖元数据/日志/单文件/Range；验证访客不能开任务或访问配置凭据。
 - [ ] TEST-01 为harness-ops建立协议/故障回归：重复请求、同label、断网、重启、取消、缺原件、坏缓存、路径边界、auth。
-- [ ] TEST-02 直接push流程的CI覆盖必要单测和接口测试；构建成功与真机验收分开显示。
+- [x] TEST-02 直接push流程的CI覆盖当前节点协议回归（Python3.11/3.14）及页面脚本检查；构建成功与真机验收分开记录，新模块继续补必要覆盖。
 - [ ] TEST-03 将长集成中的真实等待与快速回归分开；调查并行 confirmation_driver 的 deadline/heartbeat 偶发失败，不靠反复全套重跑掩盖。
 - [x] MERGE-01 修复旧 PR 带入的 gray eval 循环资格阻断；未知 control 可采证但不能形成结论（`8dba439`）。
 - [x] MERGE-02 同步普通/动态灰层构建输入与 GOL 消费端，补 npuprobe.cpp；NDK实编、旧工件与跨仓合同验证通过，已发布 phonefarm `6cd1ac5`、GOL `1a8601e`。
@@ -44,6 +44,7 @@
 
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
 - [ ] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。
+  - `/dash/fleet`、`pf-node fleet`和跨节点`pf-fleet status`已共用读取合同；网页目前只展示当前节点，跨节点注册与强lease/恢复态未完成。
 - [ ] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
