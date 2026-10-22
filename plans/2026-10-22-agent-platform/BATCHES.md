@@ -68,10 +68,28 @@ HTTP服务先发布作业记录，再启动独立worker；flock随描述符交�
 
 边界：这批没有持久排队/提交去重/每设备原子资源领取/恢复屏障，未保证主机断电或脱离进程组后代退出。下一批按todo继续提交幂等和持久队列，不把宿主进程退出包装为设备恢复成功。
 
+## 2026-10-22：服务入口补漏与持久队列
+
+先修复上一批遗漏的signal导入：服务main仍使用signal，单测绕过main未发现入口失败。已发布 [2e0d140](https://github.com/HGamey/harness-ops/commit/2e0d140)，补配置错误路径的真实入口冒烟；[code-only](https://github.com/HGamey/harness-ops/actions/runs/39781284309)、[node-tests](https://github.com/HGamey/harness-ops/actions/runs/39781284307)通过。上批未部署，不能据此声称现网曾受影响。
+
+队列批次已直接推main [58fc0dc](https://github.com/HGamey/harness-ops/commit/58fc0dc)。包含队列核心8c1f78a/966141e、CLI57f554a、网页061f7e0/9298f80/c006daa。合同见 [JOB-QUEUE](JOB-QUEUE.md)。
+
+SQLite唯一请求记录与事务领取保证同ID同内容只对应一个job；同ID不同内容409。输入准备、待执行、已领取、恢复阻断、完成分别持久保存。独立调度器flock防止两个服务重复启动；已有launch标记不重放命令。队列按声明资源和宿主容量排队，无关资源可越过等待队首。准备/等待取消与领取使用同一事务边界，撤销后不执行；worker丢失/恢复required时保留资源，管理员说明释放后仍保留原恢复异常。
+
+网页与CLI/API共同支持提交、队列、按请求ID找回、撤销、资源释放。只读角色可查询，修改需管理/掌舵权限；格式错误400与请求冲突409分开。网络结果未知时不生成新ID；网页刷新仅保留ID，允许重新填写并用原ID提交。调度器异常明确显示，队列记录仍可见。CLI向旧节点发送前先查幂等能力，不默默POST重试。
+
+验证：本机44项节点测试通过（13.163秒）；Linux Python3.11/3.14 CI通过。真实HTTP进程被杀死/重启后，原worker与等待任务保留；4路重复请求都指向同一任务，资源等待任务只执行一次，被撤销任务没有执行标记。实际API验证查询权限、网页幂等/冲突与释放说明，恢复异常未被释放覆盖。两进程SQLite领取、无关资源继续等边界有针对性回归。JS检查覆盖不确定提交、409查询、迟到回执不覆盖当前选择、刷新→404→原ID重填、排队撤销与带说明释放；浏览器实走撤销/释放/503找回/刷新重填同ID，390/768/1440浅深色均无水平溢出。
+
+整合中复现并修复两个竞态：调度线程在释放flock前发布空闲，新请求可能留在无人执行的队列；取消准备任务后，迟到metadata写入可能在重启后永久显示cancelling。失败和修复后触发回执均保留。首次整合测试因旧测试仍预期立即launch及将SQLite文件当任务目录而失败，调整到新执行边界后通过，没有用重复重跑掩盖。
+
+提交前回执：[code-only](https://github.com/HGamey/harness-ops/actions/runs/39785760084)、[node-tests](https://github.com/HGamey/harness-ops/actions/runs/39785760282)。本机transition/qa：queue-integration-first.log、queue-node-final.log、queue-restart-final.log、dispatch-exit-race*.txt、prepare-cancel-restart-race*.txt、jobs-queue-browser-validation.json、jobs-queue-*.png。所有数据来自临时目录、无害宿主子进程或明确标记的网页fixture，fixture和临时网页已关闭。
+
+边界：未部署运行节点、未操作手机、未迁移原始实验数据。本批声明资源不是设备lease；旧global devlock仍可能串行，恢复not_reported仍未接入强屏障；主机断电、脱离进程组后代、恢复诊断任务通道和两节点真机流程仍待做。下一批继续JOB-EXEC-03，不将本批写成完整M3达标。
+
 ## GitHub流程与协作记录
 
 用户明确授权管理员取消强制PR。phonefarm、harness-ops、game_opt_loop、refbench规则保留禁止强推、禁止删除及code-only必需检查；本机保存修改前规则到transition/qa。开发提交先进入verify分支，通过后直接推main；不创建PR、不绕过失败检查。
 
 产品决定持续写PRODUCT-CHARTER/DISCUSSION/todo；可获得的用户消息与重要回应写本机conversation.jsonl，明确原话/摘要，不把回顾伪称完整历史导出，不保存聊天凭据到仓库。
 
-下一批聚焦系统：游戏分发合同、持久队列与可恢复进程身份、跨节点注册/索引、研究状态和异步人工请求。前端由具体subagent实现，主Agent负责系统合同与整合。
+下一批按todo继续JOB-EXEC-03设备lease/恢复联动。游戏分发、跨节点注册/索引、研究状态和异步人工请求仍在计划；前端由具体subagent实现，主Agent负责系统合同与整合。
