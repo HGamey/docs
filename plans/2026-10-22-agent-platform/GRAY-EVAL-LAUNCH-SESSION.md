@@ -22,6 +22,8 @@ ftrace只用本session创建的独占实例，拒绝已有实例和无instances�
 
 所有采集、marker、PNG/trace/env和失败原件可追到父目录。沿用现有qualification、live_check_verdict、trace/env解析和ABBA统计；不改收益或画质阈值。恢复事实独立：base.restore_for_eval只产生局部verified/required；父核验所有登记资源并持久报告后才complete_eval。只有完整父收据允许facts.restored=true。本地结果落盘失败仍执行已知安全收尾并保留已知恢复结果；game_state_restored=false。
 
+在父会话仍持有恢复义务时，Experiment admission 可将 control/restored 的 unknown 作为待采集/待收尾事实，不能假填 restored=true；仅新父会话专用入口采用此规则，调用前先读回已登记进程静止、trace关闭且父pending为空。已知恢复失败仍阻断；Conclusion 一律需要完整恢复。既有独立资格入口、性能/画质/统计阈值不变。
+
 ## 验收与接口分工
 
 先冻结实际调用的最小接口，再并行实施：GraySession的父身份/restart/marker与延迟完成；专属trace采样worker；父资源会话和eval编排/恢复入口。不要先发布无调用骨架或永远required的父壳。验证只覆盖改变：既有关键纯解析/判据；远端worker宿主fixture的两个子进程退出与失败；少量实际CLI/fakeADB覆盖完整launch路线、资格早退仍收尾、恢复失败/续接以及独立recover拒绝父身份。复用已完成的gray/lease负例，不再反复全套测试。模拟不能替代真机性能、断电或逃离进程组验收。
