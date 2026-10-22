@@ -171,7 +171,9 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
     - [x] PRODUCER-RECOVERY-03A 按 [GRAY-RETIREMENT](GRAY-RETIREMENT.md) 修shared off typed限定目标停用及gray-ab/eval/frameaudit错误传播，a38afa9实际code-only成功；24相关unit、3条适用CLI/fakeADB证据通过。未部署，不声明整job恢复。
     - [ ] PRODUCER-RECOVERY-03B 完整gray producer session：首次写入hold、属性/安装范围、受控采样/输入进程、ftrace实例及停充回读，全部义务完成后才complete_recovery。
       - [x] PRODUCER-RECOVERY-03B1 按 [GRAY-CAPTURE-SESSION](GRAY-CAPTURE-SESSION.md) 完成frame-audit capture强lease、原属性/安装/历史文件恢复及recover；f966c53实际code-only成功直推main。17相关unit、9有效CLI/896 fake传输通过，仅宿主验证；父03B不完成。
-      - [ ] PRODUCER-RECOVERY-03B2 将storeop-check切换到同一受控会话，独立入口先接；随后eval借用父lease，只写子范围报告，不提前清除父屏障。保持既有画质比较和判据，先冻结合同。
+      - [ ] PRODUCER-RECOVERY-03B2 将storeop-check切换到同一受控会话，独立入口先接；随后eval借用父lease，只写子范围报告，不提前清除父屏障。保持既有画质比较和判据，合同见 [GRAY-STOREOP-SESSION](GRAY-STOREOP-SESSION.md)。
+        - [ ] PRODUCER-RECOVERY-03B2A 独立storeop-check复用受控Session和PNG证据，eval legacy调用明确保留待迁。
+        - [ ] PRODUCER-RECOVERY-03B2B eval实际父lease/context与子范围报告；禁止子complete或独立recover清父屏障，随后继续完整eval恢复。
   - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
