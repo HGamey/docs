@@ -254,7 +254,7 @@ phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check1
 下一03B2B与完整gray_eval父会话合并，先交付调用storeop的workload.launch分支及recover，避免发布借用子步骤后父层永久required的半成品。源码核实storeop前仅能力只读/本地准备；实际后续义务是层/原属性/历史输出、fan、目标/启动marker、sampler、专属ftrace实例和专属工具目录。gray_eval当前没有停充或锁频，不能凭共享helper名称扩大恢复声明或隐式新增这些操作。script分支允许任意exec/gamepad及额外工具上传，另列未迁移范围。整体goal保持active。
 
 
-## 2026-10-23 Gray 自驱动 eval 父会话（PRODUCER-RECOVERY-03B2B，检查终态待发布）
+## 2026-10-23 Gray 自驱动 eval 父会话（PRODUCER-RECOVERY-03B2B）
 
 按 [GRAY-EVAL-LAUNCH-SESSION](GRAY-EVAL-LAUNCH-SESSION.md) 让同一个强Lease覆盖静态storeop检查、运动自检、三基线、交替候选/对照和最终恢复。子collector不创建/结束租约；新v2会话有明确completion_owner，frame-audit recover拒接父身份。属性、安装与历史文件只备份一次，各代产物归档；无层基线和probe两臂会重置image-check观测开销。
 
@@ -266,4 +266,4 @@ phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check1
 
 QA一处断言误去stderr读取本来在JSON stdout的拒绝说明，原负记录保留，离线核对后只续跑剩余3调用，无重跑。首条CLI已运行的签名映像与最终增量只差命中兜底/最终统计/help，该例实际begins=2且恢复失败未进入最终统计，适用性已单独记录；其余最终签名binary。所有2048模拟进程退出、隔离lease清空，无服务。证据qa/gray-eval-host-validation.json、041728/042432原件、unit结果及worker日志。
 
-源码9e1bb0a81c93f02d9532435d4585972c7e0bdd61已推verify分支。实际check120037546850（run39839817705）步骤成功但check-run终态尚未到；不能提前称main发布。没有部署、真机验证、锁根迁移或原始数据搬动。网页沿既有job产物与恢复收据合同，没有另建协议；未重复无关布局测试。03B脚本路线/gray-ab及整体goal继续，不能把该子批当全目标完成。
+源码9e1bb0a81c93f02d9532435d4585972c7e0bdd61已直推main并ls-remote核对。原check120037546850步骤成功但终态卡住；仅重跑code-only检查一次，实际check120042514678 completed/success（run39839817705），推送前再次确认同SHA与远端并发状态，未重跑实验验证。没有部署、真机验证、锁根迁移或原始数据搬动。网页沿既有job产物与恢复收据合同，没有另建协议；未重复无关布局测试。03B脚本路线/gray-ab及整体goal继续，不能把该子批当全目标完成。
