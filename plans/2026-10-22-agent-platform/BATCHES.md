@@ -230,3 +230,14 @@ gray-ab、frameaudit和eval保存停用证据，失败非零或ABORT并停止后
 phonefarm提交a38afa961f4fe2e87d0baa9eea21025d860acab0，实际code-only check119999626232 completed/success（[run39828942704](https://github.com/HGamey/phonefarm/actions/runs/39828942704)）。提交前吸收并发fd0bb36的fleet/keepalive鸿蒙状态修改并重新构建签名，不覆盖同事修改。24项相关Rust unit通过；实际CLI初轮3条65次fake ADB，npuprobe修复后仅重跑受影响2条68次，复用未变前置失败案例，最终适用证据共3案例69次。两个预期权限失败均保留state/原始输出，不进入下一臂；所有fixture PID结束。证据qa/gray-retirement-host-validation.json及030605/030830两目录。无部署、手机操作、锁根迁移或原始数据搬动；没有网页合同变化，未重复布局测试。
 
 03A限定停用已完成；03B完整producer会话尚未实现，整体目标保持active并继续。
+
+
+## 2026-10-23 有限灰层抓帧会话（PRODUCER-RECOVERY-03B1）
+
+按 [GRAY-CAPTURE-SESSION](GRAY-CAPTURE-SESSION.md) 将实际 frame-audit capture 接到强 Lease 和串行有界传输。首次写前持久 hold 与 pending，保存 boot、目标安装目录和12个精确原属性；拒绝未知已有安装。只接管停止目标后确认的文件，旧 marker/audit 原目录备份、恢复，暂存目录由 shell 创建确保 adb push 可写。所有点击、触发、截图经同一会话，PNG取原始字节。
+
+采集与恢复分别记录；本地采集/最终报告写失败不丢已知恢复结果。恢复先核 boot、安装及 STATE 归属，再停目标、清理自有安装/临时文件、恢复历史和原属性并读回。frame-audit recover 仅接同serial/context已退出owner，未知命令或写入保持屏障；报告原件 verified，租约完成后返回 reported_complete。scope限于原属性、自有文件和目标停止，game_state_restored=false；无设备写的准备失败用 no_device_mutations。
+
+签名构建后17项相关Rust unit通过（2 session、5 graylayer、3 lease_command、7 devlock）；初始过滤误用graylayer::tests导致0项，纠正后只执行该组并保留日志。9项有效CLI语义验收通过，共896次fake ADB传输，均核PID/PGID/serial和写前hold/pending。覆盖正常、坏PNG但完成恢复、恢复不符后阻断新任务、错误serial、同context恢复且保留旧失败、未知写及后续恢复拒绝、最终metadata落盘失败保留恢复报告。实际共11次CLI：runner误给recover添加--lock-wait造成2次参数拒绝，未计有效身份/恢复验收；修参数后从已有session接续，前面通过案例未重跑。原始两轮qa/gray-capture-host-cli-20261023T033457和033750、unit-results/host-validation保留。
+
+源码 f966c53aad66de5754ff3dbce0acfdfe4165898f 经实际code-only check120015070859 completed/success（run39833339122）后同SHA推main，并ls-remote核对。没有部署、手机操作、真实锁根/原数据迁移，不声称真实设备恢复或性能验证。网页合同未变，结果仍通过既有作业产物与恢复收据消费；未重复无关布局测试。03B父项、LEASE-STORAGE-02/JOB-EXEC-03/M3及整体goal继续进行。下一具体子项是storeop-check的同一会话控制，再处理eval父租约借用；子范围完成不能清父任务屏障。
