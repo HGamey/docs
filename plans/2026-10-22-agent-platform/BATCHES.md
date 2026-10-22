@@ -412,3 +412,12 @@ REF_ARM=1从raw ADB/重启/独立perf改为显式既有passdump owner中的captu
 AST/bash/help静态检查与唯一纯客户端fixture通过：5reference+1受影响quality回归，共9调用、12动作/64只读，85已记录PID全退出。覆盖旧默认时序、完整/partial重复、sample丢响应、epoch/geometry/policy拒绝；无PF/ADB/网络/owner/lease、Cargo构建或旧核心链重跑。qa/gray-reference-client-{host-summary,source-review,publish}.json及host-20261023T081747665442/result.json留本机原件；没有失败/重跑，B1/B2负租约未动。
 
 PF [bf56025](https://github.com/HGamey/phonefarm/commit/bf560254e1fcc9e0b46f7aa0dd1f82013c8191de)经actual code-only120145441975（run39871097174）completed/success后，同SHA直推main并ls-remote核对。harness本批未修改/未重复检查。只勾D1；D2四臂refbench与D3旧挂层仍待。网页原语已可手动完成，但整组幂等/epoch/profile/power断言缺口CTRL-06独立实施，不能提前称完全等价。总goal仍active，未调用update_goal。
+
+
+## 2026-10-23 网页参考组与CLI共享回执（CTRL-06）
+
+任务详情新增折叠参考采集：显式profile/固定供电期待/有限input，只有三固定gr-label回执均明确not_found才执行capture/sample/marker。整个调用冻结session/actor/epoch，逐步检查预算/几何/最新图；重复完整组从旧回执读参数，owner关闭后仍可查询。partial/断线不自动续跑；POST不确定仅查原ID一次后停止。页面隐藏/离开/切换任务停止后续提交，已发送动作由owner收尾；整组不自动stop，无浏览器持久reference ledger，无新HTTP协议。
+
+定向JS一次通过；单次390浅/1440深浏览器流程无溢出/console错误，最终3POST完整采集，closed重复与partial零POST。首次旧UI fixture capture回执缺result.image，被正确阻断，保留1capture校准日志，仅修新fixture再继续，产品源码未改、JS未重跑。qa/gray-reference-ui-{validation,source-review,publish}.json、http-log、校准日志和3截图留本机；两个fixture服务及tab已清理。没有PF/ADB/设备/部署或真实指标验证。
+
+harness [114d867](https://github.com/HGamey/harness-ops/commit/114d867b708f920b234dc8e6500fa9355d0d3cd9)经actual code-only120149890095(run39872448995)、protocol3.11/3.14 120149889819/120149889370(run39872449017)全部completed/success后同SHA直推main并ls-remote核对。只勾CTRL-06；D2四臂宿主验证仍在进行，D3待，整体goal active未update_goal。

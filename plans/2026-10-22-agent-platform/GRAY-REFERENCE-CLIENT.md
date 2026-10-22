@@ -28,7 +28,7 @@ trace lead仍6秒、默认输入40秒/trace30秒，保留旧有限输入时序�
 
 D2需一个真实Lease+既有Session覆盖A无层/off、B无层/on、C改写/off、D改写/on；保留A_noloayer_off历史文件名和八份原件、--es字符串extras、passdump=0、自报与自然退出。A/B不允许通过安装层后关闭改写冒充无层。当前restart_mode要求已安装，不能直接拿来跑A/B。D3等两实际脚本链迁移后再收口旧mount/launch链；旧--keep-prop不启动语义不能别名当前始终启动的control，typed off历史恢复/status/离线分析仍保留。
 
-## CTRL-06 网页整组参考流程（实施合同，尚未实现）
+## CTRL-06 网页整组参考流程（源码与UI替身已验，harness114d867已发布）
 
 任务详情增加折叠“参考臂采集”。显式填写label、profile的package/原图width/height/rotation、期望observe/battery、seconds、有限input JSON和可选render_comm；旧40秒计划只有用户点击才填入，不自动缩放。查询本组只读gr-LABEL-00/01/02；三份完整回执即展示旧结果，owner关闭仍可查询。任一存在但不完整只展示原ID及partial/unknown，不自动接续；只有三个明确not_found+HTTP404才允许新执行。GET必须保留结构化错误，泛404/断网不能当未开始。
 

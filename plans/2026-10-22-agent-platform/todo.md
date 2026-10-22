@@ -119,7 +119,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [ ] CTRL-04 明确操作回执：已发出、传输失败、后端拒绝、可观测确认；退出码不冒充游戏已响应。
 - [ ] CTRL-05 无人观看停采、断线释放触点/按键、测量时观察干扰控制；网页可见当前控制者与模式。
 
-- [ ] CTRL-06 进行中，按GRAY-REFERENCE-CLIENT实施合同补网页reference流程与CLI整组体验对齐：显式passdump/几何/供电期望、同组label与epoch、重复/partial原ID接续；共享平台回执，不做浏览器私有ledger。现有capture/sample/marker/stop原语已具备，只能称手动可完成，不能称整组自动门禁已覆盖。
+- [x] CTRL-06 已发布harness114d867，按GRAY-REFERENCE-CLIENT合同补网页reference流程与CLI整组体验对齐：显式passdump/几何/供电期望、同组label与epoch、重复/partial原ID接续；共享平台回执，不做浏览器私有ledger。整组门禁与旧回执重连已通过定向JS/390浅1440深UI替身，未部署；页面隐藏/离开停止后续提交，不是持久工作流worker。
 
 ## P2：更完整的远程手机能力
 

@@ -25,3 +25,7 @@ A/B已active但未安装同样有输出/目标义务，按原ownership字段恢�
 ## 最小验证与分工
 
 platform独占gray_session.rs的专属owner/固定inventory/小型私有抽取/API；root负责新gray_refbench.rs、main/graylayer/devlock路由、薄shell、AGENTS、Git/Cargo/docs。project唯一actualPF+fakeADB QA owner，源码冻结及签名构建后一次跑正常四臂、超时可恢复、恢复读回失败再同context恢复三条短链，保失败原件；不跑已有control/供电/quality整链。相关纯解析/owner小测试各一次，受抽取影响选现有对应测试，不做全矩阵。无真实设备/部署/数据迁移。
+
+## 网页任务模板（同批补齐）
+
+任务提交区增加四臂refbench模板：serial必填，frames/intensity/timeout沿CLI范围和默认值，可选SO路径。填写模板只生成bin=phonefarm、argv=gray-layer refbench-loadop ... --out @out --json，仍由现有提交按钮/请求幂等/任务队列执行，失败原件沿任务out页；不直接触发本地设备、不提供浏览器恢复捷径。未确认任务提交时模板不得覆盖。显示A/B真无层、C/D改写，采集自报而非性能，避免误当游戏采样模板。小型HTML/JS改动和定向交互检查，不重跑CTRL-06整链或node协议本地全套；root拥有AGENTS/docs，frontend独占jobs.*与CLI帮助示例。
