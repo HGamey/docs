@@ -4,7 +4,7 @@
 
 用户只提一种任务：**「把 \<游戏\> 在 \<手机\> 上优化一下」**。剩下的由这个仓库决定——先摸清这台设备和这个游戏当前是什么状况，判断该开哪几条优化路线，让大模型提出候选改动，交给 [phonefarm](https://github.com/BH3GEI/phonefarm) 在真机上做对照实验，按统计结果留下能站住的改动，其余回退，最后出一份总报告。
 
-harness 本身就是产品。交付的不是某一个优化算子，而是这条从一句话任务到一份可核对报告的流水线。
+harness 本身就是产品。目标是从一句话任务到可核对报告的流水线；当前还有跨入口自动部署、真实连续质量、模型训练部署和独立确认等结构断点，详见 [STATUS 系统交付差距](STATUS.md#系统交付差距2026-10-11核对)。
 
 ---
 
@@ -71,6 +71,27 @@ cargo run --release -- goal run goals/g1 --sysparam-probe probe.txt --frame-audi
 - 第四层 `whitebox`（④ 引擎设置）：只对把渲染设置做成启动参数的白盒游戏开（目前 Megacity，旋钮 store_opt / fog_event / ssao_src / ssao_after_opaque / depth_priming，以及只量上限的 msaa / feat_off / shadowres；语义见 phonefarm `docs/MEGACITY_WHITEBOX_KNOBS.md`）。goal.md 的 layers 里写 `whitebox` 即可，大模型和本地变异器都会在这些旋钮之间组合。
 - 真机还没跑过一次完整的目标运行；端到端只在假 phonefarm 上验证过（`tests/goal_mode.rs`）。
 
+---
+
+## 模型工件阶段（协议层，尚未交付真实模型流程）
+
+`model-pipeline` 用明确配置的外部 argv 驱动 design/train/quantize/deploy/evaluate。
+它记录模型格式、framework/runtime/ABI/量化声明、数据来源与各阶段输入输出 SHA，
+提供逐阶段专家接受/拒绝/延期和不重复下发的恢复账本。中断状态必须人工核对，
+输出完成会重新验证当前字节；驱动协议完成不证明模型有效或真实游戏优化成立。
+训练/量化/部署适配器、模型格式解析、可信预算计量和 phonefarm 资格评测尚未接入。
+
+离线协议演示（全部合成产物，没有训练、API 或设备操作）：
+
+```bash
+python3 examples/model_pipeline/make_demo.py /tmp/gol-model-demo autonomous
+cargo run -- model-pipeline start --plan /tmp/gol-model-demo/plan.json --out /tmp/gol-model-demo/run
+cargo run -- model-pipeline resume --out /tmp/gol-model-demo/run
+```
+
+演示使用真实外部 fake driver；`promotion_allowed`、`real_game_optimization_proven`、
+`model_semantics_verified` 始终为 false。专家模式、驱动回执和恢复门禁详见
+[SPEC_MODEL_ARTIFACT_PIPELINE](docs/SPEC_MODEL_ARTIFACT_PIPELINE.md)。
 
 ---
 
@@ -157,7 +178,7 @@ cargo run --release -- goal run goals/g1 --sysparam-probe probe.txt --frame-audi
 
 - 本地静态检查：红队语料 16/16 拦下且拦对原因，合规算子 48/48 放行，单次检查 < 10 ms。
 - 真机评测闭环：候选 → 静态检查 → phonefarm 实测 → 写进档案。2026-09-22 那一轮（M1）走的是大模型出候选。
-- 画质用真机帧当真值：2026-09-23 在 NX809J 上，19 张原神实拍帧，赛道基线模板均值 34.52 dB，演化出的最好一个算子多花 0.22 ms 换来 +3.3 dB，凭画质进了前沿。那一轮为了可复现用的是 `--no-llm` 的本地确定性变异器，不是大模型（`evidence/M2_realframes_report.json`）。
+- 画质用真机帧当真值：2026-09-23 在 NX809J 的 refbench 上测耗时，headless runner 用 19 张原神静态实拍帧测画质，赛道基线模板均值 34.52 dB，演化出的最好一个算子多花 0.22 ms 换来 +3.3 dB，凭画质进了前沿。那一轮为了可复现用的是 `--no-llm` 的本地确定性变异器，不是大模型（`evidence/M2_realframes_report.json`）。
 - 可视化前端：只读、离线的本机面板，总览 / 轮次 / 图 / 手机四页（见下面「可视化面板」）。
 - 给 agent 用的 skill 说明书：`skills/game_opt_loop/SKILL.md` 已就位。
 
