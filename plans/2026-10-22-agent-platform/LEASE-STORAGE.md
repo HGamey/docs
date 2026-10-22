@@ -37,6 +37,6 @@ GOL `--lock-root` 只供历史锁日志读取；实时 fleet 使用 phonefarm �
 
 以隔离 HOME/状态根和内部注入旧根验证：只读无副作用，活动旧参与者拒绝，两个域绑定，退休标记阻断，重建旧域时保留新恢复 marker；实际 CLI、devlock、节点、GOL 消费同一路径。全程宿主无害进程，不能把模拟临时域丢失写成真实断电/手机验证。
 
-普通 legacy owner 超过 600 秒仍可能被旧规则接管；全局 bridge 串行、逃离进程组后代、原始 adb 脚本绕开 wrapper、各 producer 的恢复证据、hwcond 状态目录的临时回退、真实宿主重启与双节点设备验收仍在待办。
+普通 legacy owner 超过 600 秒仍可能被旧规则接管；全局 bridge 串行、逃离进程组后代、原始 adb 脚本绕开 wrapper、各 producer 的恢复证据、真实宿主重启与双节点设备验收仍在待办。hwcond 的临时回退与恢复记录另批处理，当前进度见 [HWCOND-RECOVERY](HWCOND-RECOVERY.md)。
 
-fleet 的 clear 检查仍是观察门禁，尚未取得覆盖整个采样过程的排他 lease；检查后其他命令取得设备的竞争窗口仍须结合观察订阅/测量互斥继续解决。
+后续 LEASE-OBSERVE-01 已补 fleet/只读preflight/每帧screen覆盖采样窗口的排他lease与受控worker，见 [OBSERVATION-OWNERSHIP](OBSERVATION-OWNERSHIP.md)；不再把clear快照当作采样授权。

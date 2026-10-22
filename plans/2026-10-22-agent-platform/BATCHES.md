@@ -183,3 +183,14 @@ fleet 明确 sampled/deferred/error；成功零设备仍为 exit 1。Node 与 GO
 phonefarm `da3d2f5`、harness-ops `f5e101a`、game_opt_loop `d2d1840` 已全部直接推 main，并用 ls-remote 核对同一SHA。phonefarm check-run119904493688最终completed/success后推送通过；此前GH013拒绝与延迟终态记录保留。harness最终提交的code-only119903474376、Python3.11 119903474296、Python3.14 119903474637均success；GOL重跑check119904487547成功。CI工作流：[PF](https://github.com/HGamey/phonefarm/actions/runs/39801013347)、[harness code-only](https://github.com/HGamey/harness-ops/actions/runs/39801599790)、[node协议](https://github.com/HGamey/harness-ops/actions/runs/39801599650)、[GOL](https://github.com/HGamey/game_opt_loop/actions/runs/39801162942)。
 
 LEASE-OBSERVE-01已勾选；共享合同、本机交接/对话记录/原始回执已更新。最终模拟截图与服务清理回执见qa/fleet-observe-browser-validation.json；GOL最终二进制已构建并签名（首次签名命令误用连字符文件名，纠正为实际game_opt_loop，无未签名执行）。无生产部署、手机操作、真实锁域迁移或原始数据移动。下一批先读PLAN/todo，聚焦LEASE-STORAGE-02中hwcond持久恢复状态与失败处理，随后逐项producer恢复证据。不要重做本批测试，也不切回Doom。
+
+
+## 2026-10-23：hwcond 持久恢复记录已发布
+
+phonefarm main=`e06e1ff48beabe258a5d991dd8c7137c0b257273`，实际code-only check119919776212 completed/success后直推并核对远端，无PR或强推。[CI](https://github.com/HGamey/phonefarm/actions/runs/39806147255)。合同见 [HWCOND-RECOVERY](HWCOND-RECOVERY.md)。
+
+状态根与lease共享解析，不再临时回退。新恢复文件独占创建、长度封装并同步文件/相关目录，拒绝覆盖未处理记录；旧纯文本严格解析兼容。未知有损serial别名/default/已知临时根记录保留并明确报错，不猜目标设备。恢复读取错误不伪装成不存在；回读匹配原节点与值后才删除记录。停充失败候选须确认回滚，否则停止；恢复失败不再误报已完成。四消费者提前处理状态错误，bench失败停止后续轮次，selftest输出先打开且不再删除未知fan记录。
+
+最终构建签名后通过28项hwcond单测、3项storage单测和6项实际CLI/fake ADB验证。CLI覆盖损坏/不可读记录不写设备、unlock失败exit1、普通bench失败exit2并拒绝部署/测量、相对状态目录错误零transport、成功恢复对照。原始结果在本机qa/hwcond-host-cli-20261023T003403/result.json，单测/编译日志与前次fixture JSON解析失败均保留。本批没有网页协议改变，错误通过现有作业日志和selftest JSON显示，未重跑无关布局测试。
+
+LEASE-STORAGE-02A已勾选；LEASE-STORAGE-02/JOB-EXEC-03/M3仍未完成。无生产部署、真实锁域迁移、手机操作或原始数据移动。停充守卫同实例重试为源码审读，未单独替身执行；不声称真实断电/设备恢复已验证。下一具体批PRODUCER-RECOVERY-01：bench实际lease hold与scoped typed恢复收据，再逐条capture/gray-ab/eval。不要重做本批或切回Doom。
