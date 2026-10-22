@@ -194,3 +194,17 @@ phonefarm main=`e06e1ff48beabe258a5d991dd8c7137c0b257273`，实际code-only chec
 最终构建签名后通过28项hwcond单测、3项storage单测和6项实际CLI/fake ADB验证。CLI覆盖损坏/不可读记录不写设备、unlock失败exit1、普通bench失败exit2并拒绝部署/测量、相对状态目录错误零transport、成功恢复对照。原始结果在本机qa/hwcond-host-cli-20261023T003403/result.json，单测/编译日志与前次fixture JSON解析失败均保留。本批没有网页协议改变，错误通过现有作业日志和selftest JSON显示，未重跑无关布局测试。
 
 LEASE-STORAGE-02A已勾选；LEASE-STORAGE-02/JOB-EXEC-03/M3仍未完成。无生产部署、真实锁域迁移、手机操作或原始数据移动。停充守卫同实例重试为源码审读，未单独替身执行；不声称真实断电/设备恢复已验证。下一具体批PRODUCER-RECOVERY-01：bench实际lease hold与scoped typed恢复收据，再逐条capture/gray-ab/eval。不要重做本批或切回Doom。
+
+## 2026-10-23：bench 范围明确的执行和恢复已发布
+
+phonefarm main=`2f5f11d1636841212fa78daf51ba7040b9fd392a`，实际code-only check119967822754 completed/success后直接推送并核对远端。[CI](https://github.com/HGamey/phonefarm/actions/runs/39819820066)。合同见 [BENCH-RECOVERY](BENCH-RECOVERY.md)。没有PR、强推或绕过检查。
+
+bench首次设备写前持久记录session并hold实际强lease；本地命令记录PID/PGID后放行。远端复用worker所有权账本，管理benchmark与sampler，进程组确认结束后才恢复频率，最终关闭session并只读复核。实验成败和恢复结果分开记录；恢复失败保留屏障。`bench --recover`只接管同serial/context已结束owner，成功新增证据，旧失败原件不变。已有job回执接口继续展示scope/origin/evidence，不从bench退出码推断完整job恢复。
+
+rootless/no-lock兼容；root可用时受控worker和负载采用root UID，报告明确记录，不能混用旧shell UID性能基线。默认只删除runner/model，保留关闭账本。所有未完成部署、未知硬件写入以及未知worker锁保持屏障；当前这类状态可能需独立核验，未实现自动恢复。硬件写前持久pending，只有明确命令成功才清除，重启recover也不能用新回读抹掉可能还在进行的旧写。
+
+最终通过43相关Rust单测、3远端shell宿主fixture、9已签名实际CLI/fake ADB用例，共93次传输均核对PID/PGID/serial/pending，设备写均已有hold。覆盖rootless正常运行、旧别名无panic/零ADB、恢复失败阻断新任务、错误serial/context零ADB、同context成功恢复保留旧失败证据，以及15秒真实本地命令超时后无后续设备调用、recover仍required/零ADB。shell测试使用真实宿主进程组，/proc身份和kill错误为fixture；CLI远端响应均模拟，不声称Android、断电或性能验收。
+
+负结果保留：QA首次输出目录与复制session重名，在CLI调用前失败，修正后通过；短审修正旧状态错误分支RefCell panic、无root探测错误处理和硬件写超时后误complete漏洞。最后一项另增超时回归，未盲目重复全套测试。证据在本机qa/bench-recovery-*、bench-worker-host.log；无node协议/页面布局改动，不重跑无关网页布局。
+
+PRODUCER-RECOVERY-01已勾选，整体LEASE-STORAGE-02/JOB-EXEC-03/M3仍未完成。下一具体批PRODUCER-RECOVERY-02处理capture shutdown与恢复回读，随后gray-ab/eval；未知写入/部署核验和恢复label统一另入todo。未部署、操作手机、初始化真实锁域或迁移原数据；Doom继续暂存。
