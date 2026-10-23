@@ -1,6 +1,6 @@
 # 强 lease 的宿主进程身份
 
-2026-10-23，LEASE-IDENTITY-02下一批合同。只读审计完成，尚未实现、构建或测试。本阶段继续源码与隔离宿主；不部署或操作真实设备/lease根。
+2026-10-23，LEASE-IDENTITY-02源码与隔离宿主验收完成。PF 201719b、harness 66a532e；仅此范围完成，不代表部署、真实重启或设备恢复已验收。
 
 ## 具体问题与复用范围
 
@@ -24,3 +24,16 @@ queue_owner已经能核对宿主boot和进程start；强devlease marker仍只有
 ## 验证与未完成边界
 
 精简回归覆盖身份变化、同boot残留组拒绝、previous boot仅进入显式恢复、旧/不完整字段兼容，以及短命child。复用已有queue identity和Lease合同用例，只跑受影响范围及仓库规定检查；原失败保留。隔离fixture的不同boot字段证明分支行为，不能写成真实主机重启或实际手机恢复已经验收。完整JOB-EXEC-03与总goal保持开放。
+
+
+## 实现、发布与验证
+
+新marker的host_boot_id/pid_start成组保存，child_pid/child_pgid存在时要求child_start；Lease.check、Drop和两种worker验证实例。恢复保留previous_owner并写新身份，清旧child字段。只读状态新增host_process对象（status、pid、start、host_boot_id、reason），七种status为alive/previous_boot/exited/zombie/pid_reused/legacy/unknown；Jobs与Fleet呈现同一事实，既有整体状态和恢复动作门禁不变。损坏marker仍直接unknown，不从损坏内容推导身份。
+
+本机11项devlease用例中10项首次通过，真实未reap短命child首次失败：macOS原PROC_PIDTBSDINFO调用arg=0不查询zombie。依据[Apple XNU实现](https://raw.githubusercontent.com/apple-oss-distributions/xnu/main/bsd/kern/proc_info.c)，改为arg=1纳入未回收进程，同一用例复测通过；未引入第二种身份算法。另1项queue身份和3项命令监督测试通过。失败日志保留，没有盲重跑整个实验链。
+
+3组实际宿主CLI一次通过：22条PF命令、23个已知PID全部退出、0设备/传输调用。覆盖真实owner/child、短命命令、模拟前次boot但数字仍活、同boot PID复用且原PGID仍活、旧记录保守恢复、不完整身份拒绝。pending、required、partial三份负例marker原样保留；前批B1/B2负例未触碰。定向DOM一次通过七种显示、缺字段/legacy区分、文本转义与既有门禁；未重复浏览器整链。
+
+证据位于本机developer_transition_20261022/qa/strong-lease-identity-*，原始宿主目录strong-lease-identity-host-cli-20261023T095823557908。PF code-only 120179340708（run39881389533），harness code-only 120179343980（run39881390580）、protocol3.11/3.14 120179343947/120179344082（run39881390532）均completed/success后才同SHA推main，无PR。
+
+macOS本机验收不等于Linux运行验证；伪造fixture boot字段不等于真实主机重启；owner实例结束不等于脱组后代、远端活动或手机恢复。JOB-CONTAINMENT-01、完整JOB-EXEC-03、端到端流程与整体goal保持开放。

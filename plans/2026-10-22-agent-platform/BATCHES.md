@@ -470,3 +470,12 @@ harness eb3e69dcf407b86b9b08308cd8efc469d85f3794已通过code-only120165766193�
 harness 8381c19aa86816f20021f00e6457b2d344cfea75通过code-only120173034747（run39879451850）、protocol3.11/3.14 120173033919/120173033777（run39879451702）后同SHA直推main核远端，无新上游冲突。61项本地协议17.514秒全过；3项SafeRoot/2条host故障链及定向DOM通过，原命令计数仍1、无关作业继续、缺meta权限路径可见，原始日志/预期fsync异常留qa/job-durability-*。未部署、真机、真实断电或Doom重跑，不证明任意producer输出持久化。
 
 只关闭JOB-DURABILITY-01声明范围。整体goal经核实继续active，未调用update_goal；用户质疑关goal已记入本机conversation。下一按todo预审LEASE-IDENTITY-02：强lease与恢复上下文复用已实现宿主boot/start身份，避免PID复用推断；queue身份本身不重做。JOB-EXEC-03/containment/端到端与其他待办仍开放。
+
+
+## 2026-10-23 LEASE-IDENTITY-02：强lease区分宿主进程实例
+
+PF [201719b](https://github.com/HGamey/phonefarm/commit/201719b97321862f3872a29b79bbb9ee24d396e4)与harness [66a532e](https://github.com/HGamey/harness-ops/commit/66a532e5500b2d58aabf14f1303cd3a3354b4ee3)复用已有boot/start读取并扩展强lease、恢复接管及worker核验；同boot换PID实例仍须原组消失，不同boot只排除旧本地进程，pending/设备恢复义务不变。Web呈现七种宿主身份事实，旧/缺/坏记录不伪装成已验证身份。完整合同见[STRONG-LEASE-IDENTITY](STRONG-LEASE-IDENTITY.md)。
+
+11项lease中短命zombie一项首次失败，依据Apple接口参数修复后单项通过，原日志保留；另1项queue和3项命令监督通过。3组实际宿主CLI一次通过22命令、23PID全退、0设备/传输调用；保留pending/required/partial负例。一次DOM验证显示与门禁，不重复整套浏览器或灰层实验。PF code-only120179340708与harness code-only120179343980、protocol3.11/3.14 120179343947/120179344082全success后同SHA推main，无PR/部署/真机/物理重启。
+
+用户再次询问是否关闭goal，get_goal确认active，未调用update_goal。只勾本批子项；JOB-CONTAINMENT-01下一只读收束，完整JOB-EXEC-03/两节点/真实设备和其余计划保持开放。
