@@ -75,7 +75,7 @@ worker从管理员提供的固定配置获得空的专用cgroup根及专用非ro
 只勾01B这一隔离范围。普通node的contained仍false，生产特权启动、跨UID PF会话和worker失联/重启恢复属于JOB-CONTAINMENT-02；没有部署、手机访问、真实lease修改或原数据迁移。
 
 
-## JOB-CONTAINMENT-02A：可信入口与有限作业结果（下一批合同，未实现）
+## JOB-CONTAINMENT-02A：可信入口与有限作业结果（源码与隔离CI已验收）
 
 源码核查确认run_node.sh仍是用户态macOS/Homebrew循环；update_node.sh将用户clone同步到~/node/harness-ops。没有Linux installer/systemd/sudoers可直接复用。node_session还需要以node身份读session-control.json、遍历原件并启动PF publisher；PF使用显式0600/0700。因此禁止把当前可自更新源码树直接sudo执行，也不能用umask声称实时权限已解决。
 
@@ -88,3 +88,14 @@ worker从管理员提供的固定配置获得空的专用cgroup根及专用非ro
 02B随后处理PF实时会话/设备lease跨UID：优先明确会话输出树专用共享组，producer在创建和原子替换时主动设置组/模式，mailbox/锁同合同。管理记录、输入、凭据及cgroup不加入共享范围；旧job封存继续挡历史访问。任意未适配producer不能承诺实时原件访问。worker失联/重启后的域及输出恢复另有验证义务。
 
 部署选择暂缓：实际Linux节点、管理员可信路径及升级方式、node/job身份、cgroup委派位置和sudo的FD保留策略都必须显式配置；源码阶段先在隔离CI选临时值。没有需要用户立即完成的操作，不阻断源码开发。
+
+
+02A 已发布 harness [97a8946](https://github.com/HGamey/harness-ops/commit/97a894675b3804648b660d8bbfe66c7e3025426e)。`install_worker.py` 仅安装新的可信副本并打印未激活的 sudo 策略；固定入口在导入模块前核安装权限，只接收 job ID 和 FD 3。普通节点通过独立 child 传递原 runner 锁，不在多线程服务内改 FD。入口核 job、node 身份、锁文件及未启动状态；运行时再次要求 contained，避免 mutable launch 记录切换到 root 通用执行路径。已结束作业不能从此入口重放。
+
+SafeRoot 的显式特权发布模式保持管理 JSON 属于 node；原子替换前设置 owner 并同步。目标输出运行中归 job，域空后先封存 job 根，再通过固定目录描述符将普通文件和目录交还 node；链接、特殊文件及外来 owner 拒绝。交还失败保留空域与 recovery.required，当前尚无自动恢复此状态的功能。普通输出/管理路径默认模式保持原行为，公共 contained 准入仍关闭。
+
+本机 4 项 runtime 回归一次通过（1.700 秒）、13 项 artifact IO 回归一次通过（0.560 秒）。隔离 Ubuntu CI 的一条真实 nonroot→固定入口→worker 链验证：启动者退出后持锁；node 实时读取日志、写 force cancel、读取最终 0600 原件；job UID 不能再读封存后的原件和管理记录；错误 FD、非 contained 和终态重放均在执行前拒绝。17 个已知 PID 全部退出，临时账户、域、安装目录与 sudoers 片段全部清理。原 01B 内核链仍通过，不把它当作新增生产部署证据。
+
+首次 CI 617a0f5/run39886934844 的测试安装位置选在 `/opt`，该 runner 祖先目录不满足可信权限，安装器按设计拒绝，未启动作业。保留原件及清理结果，只改 fixture 为根下新建的独占临时目录，未放宽产品校验或修改公共目录权限。最终 code-only120197554622（run39887050496）、protocol3.11/3.14 120197554157/120197554223 与 cgroup-kernel120197553890（run39887050372）全部成功后，同一 SHA 直推 main 并核远端。原始证据在本机 developer_transition_20261022/qa/job-privileged-*。
+
+02A 只完成固定入口与有限作业的结果交还。02B 的跨 UID 实时 PF 会话、失联/重启恢复、普通节点能力开放与实际部署均未完成；没有手机访问、真实 lease 修改或数据迁移。

@@ -497,3 +497,12 @@ harness [487e5fb](https://github.com/HGamey/harness-ops/commit/487e5fb0076e8a78a
 本机4项worker回归一次通过1.834秒。第一次Linux CI因fixture把tuple和list比较失败，原始日志显示目标权限和入域事实，但不计通过；仅修fixture规范化和早失败PID记录。最终Ubuntu24.04/kernel6.17内核链通过输入/输出、权限与迁出拒绝、setsid后代、leader退出保留、force域空和旧数据封存。4PID全退，账户/域清理完成；qa/job-cgroup-*留本机两次原始证据。code-only120190073130、protocol3.11/3.14 120190072430/120190072703和cgroup-kernel120190072687全success后同SHA推main核远端。
 
 下一JOB-CONTAINMENT-02只读收束生产固定特权启动、跨UID工件/PF控制与worker失联恢复；未部署、未操作手机或真实lease，Doom/迁移继续暂存。总goal仍active，未调用update_goal；只勾01B，不关闭完整containment和JOB-EXEC-03。
+
+
+## 2026-10-23 JOB-CONTAINMENT-02A：普通节点启动固定特权worker并取回结果
+
+harness [97a8946](https://github.com/HGamey/harness-ops/commit/97a894675b3804648b660d8bbfe66c7e3025426e)交付管理员独立安装、固定 job ID/锁 FD 入口、node-owned 管理 JSON 与域空封存后的输出交还。源码审计补上旧 job 重放拒绝和 runtime 再次强制 contained；公开节点能力仍关闭。具体边界见 [JOB-CONTAINMENT](JOB-CONTAINMENT.md)。
+
+4 项 runtime/13 项 artifact IO 本地回归各跑一次通过。首次 CI 因测试 `/opt` 祖先可被普通用户修改，安装器提前拒绝；保存失败原件，只调整 fixture 专属路径。最终真实非 root 启动链验证锁存续、日志/取消、原件归还、历史访问拒绝和三类入口拒绝，17PID全退，临时账户/域/安装/策略清理。四项 actual checks：code-only120197554622、protocol3.11/3.14 120197554157/120197554223、cgroup-kernel120197553890全success后同SHA直推main核远端。qa/job-privileged-*保存两次原件和验证/发布索引。
+
+只勾02A，完整02与JOB-EXEC-03保持开放。下一只读收束PF实时会话跨UID访问，不把有限作业结果交还冒充运行中producer通用可读；失联恢复另验。本轮未部署、访问手机、改真实lease或迁移数据。goal核实active，未关闭或暂停。
