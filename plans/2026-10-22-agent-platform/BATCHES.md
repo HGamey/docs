@@ -461,3 +461,12 @@ LEASE-IDENTITY仅关闭自身源码/宿主范围。JOB-EXEC-03、恢复UX、真�
 harness eb3e69dcf407b86b9b08308cd8efc469d85f3794已通过code-only120165766193（run39877260415）与protocol3.11/3.14 120165766110/120165766509（run39877260474）后同SHA推main核远端。5既有worker/CLI测试、1实际宿主回归（host/recovery双路径、8PID全退）、任务详情与维护页定向验证通过；未重跑浏览器或灰层整链，无真机/部署。qa/job-group-*完整索引与负预检记录留本机。
 
 下一JOB-DURABILITY-01：不能只在rename后补fsync；必须避免dispatcher在未持久化终态上先done。先审现有SQLite与worker/meta提交顺序并冻结最小合同。JOB-EXEC-03/主机重启/脱组containment/端到端与整体goal仍开放。
+
+
+## 2026-10-23 JOB-DURABILITY-01：结果保存确认后才释放资源
+
+把terminal候选与SQL提交分开：worker仍持flock或记录未完成同步时公开finalizing；同步失败转storage_blocked，SQL持久reason并保留声明资源，释放宿主执行名额。显式retry-finalize仅重同步原候选；保存成功后仍按设备恢复义务保留资源，普通release无法绕过存储失败。准备失败/取消有SQL未执行事实，缺目录/meta也能被网页/API列表发现；输入目录和人工放行说明各在对应SQL转换前同步。Web、CLI与API使用同一能力与回包。
+
+harness 8381c19aa86816f20021f00e6457b2d344cfea75通过code-only120173034747（run39879451850）、protocol3.11/3.14 120173033919/120173033777（run39879451702）后同SHA直推main核远端，无新上游冲突。61项本地协议17.514秒全过；3项SafeRoot/2条host故障链及定向DOM通过，原命令计数仍1、无关作业继续、缺meta权限路径可见，原始日志/预期fsync异常留qa/job-durability-*。未部署、真机、真实断电或Doom重跑，不证明任意producer输出持久化。
+
+只关闭JOB-DURABILITY-01声明范围。整体goal经核实继续active，未调用update_goal；用户质疑关goal已记入本机conversation。下一按todo预审LEASE-IDENTITY-02：强lease与恢复上下文复用已实现宿主boot/start身份，避免PID复用推断；queue身份本身不重做。JOB-EXEC-03/containment/端到端与其他待办仍开放。
