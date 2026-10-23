@@ -452,3 +452,12 @@ PF [8dce700](https://github.com/HGamey/phonefarm/commit/8dce7003725cefdd5cc45e59
 5PF定向单测、3旧脚本用例一次通过；GOL Guard首次有效lib用例及rebase后同一受影响用例通过，保留错误target/0测试日志。三宿主组一次通过18顶层命令/4身份拒绝，1严格host adapter、0真实设备调用，41已知PID全退出、本轮marker清空；不重跑旧灰层实验链。网页一次静态浏览器流程与定向脚本通过，原图/原始日志留qa/lease-identity-*。Linux实现未由本机这批实跑，旧B1/B2负租约保留。
 
 LEASE-IDENTITY仅关闭自身源码/宿主范围。JOB-EXEC-03、恢复UX、真实重启/脱组后代及端到端验收仍开放；goal经get_goal核实active，未调用update_goal。下一聚焦node作业终态：主命令退出后同组后代仍存活时不能释放调度资源；先冻结窄合同，不把它宣称为任意进程树或整机断电保证。
+
+
+## 2026-10-23 JOB-FINISH-01：命令退出不提前放行同组资源
+
+现有worker回收直接子进程后，最多0.5秒只读核查原进程组；组仍在/未知时保留真实退出码，发布interrupted/required，既有调度继续保资源。host-none与恢复任务均适用，无关资源继续；不凭历史PGID补发信号。Web详情呈现范围/时间/事实，维护页不再用exit0写“完成”，CLI exit0+未确认组结束返回125。缺字段旧记录明确未提供；setsid脱组及设备恢复不由absent证明。
+
+harness eb3e69dcf407b86b9b08308cd8efc469d85f3794已通过code-only120165766193（run39877260415）与protocol3.11/3.14 120165766110/120165766509（run39877260474）后同SHA推main核远端。5既有worker/CLI测试、1实际宿主回归（host/recovery双路径、8PID全退）、任务详情与维护页定向验证通过；未重跑浏览器或灰层整链，无真机/部署。qa/job-group-*完整索引与负预检记录留本机。
+
+下一JOB-DURABILITY-01：不能只在rename后补fsync；必须避免dispatcher在未持久化终态上先done。先审现有SQLite与worker/meta提交顺序并冻结最小合同。JOB-EXEC-03/主机重启/脱组containment/端到端与整体goal仍开放。
