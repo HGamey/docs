@@ -88,7 +88,7 @@
 
 - [x] JOB-FINISH-01 按[JOB-GROUP-COMPLETION](JOB-GROUP-COMPLETION.md)交付原进程组结束证据与资源保留，Web/CLI/维护页同事实；harness eb3e69d实际必需检查成功直推main。5既有测试、新增1条宿主双模式回归与定向DOM通过，8PID退出；只覆盖原进程组，无设备/部署。
 - [x] JOB-DURABILITY-01 按[JOB-DURABILITY](JOB-DURABILITY.md)交付worker释放锁、关键记录同步后再SQL提交；失败保资源让出名额，retry-finalize不重放，取消/未执行事实由SQL保留。harness 8381c19实际必需CI成功后直推main；61项本地协议与定向Web通过。只关闭源码/隔离宿主范围，真实断电、producer数据与完整JOB-EXEC-03仍开放。
-- [ ] LEASE-IDENTITY-02 强lease/恢复上下文复用宿主boot/start身份，解释重启后的PID重用；不另造进程身份实现。
+- [ ] LEASE-IDENTITY-02 按[STRONG-LEASE-IDENTITY](STRONG-LEASE-IDENTITY.md)让强lease/恢复上下文复用宿主boot/start身份，解释重启后的PID重用；只读审计及窄合同已完成，尚未实施。同boot leader变化不能代替原组结束，设备boot不混用。
 - [ ] JOB-CONTAINMENT-01 明确setsid脱组后代的内核containment与跨OS能力边界；无该能力不能宣称整个进程树终止。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
