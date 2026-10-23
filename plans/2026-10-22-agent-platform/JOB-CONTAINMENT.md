@@ -99,3 +99,18 @@ SafeRoot 的显式特权发布模式保持管理 JSON 属于 node；原子替换
 首次 CI 617a0f5/run39886934844 的测试安装位置选在 `/opt`，该 runner 祖先目录不满足可信权限，安装器按设计拒绝，未启动作业。保留原件及清理结果，只改 fixture 为根下新建的独占临时目录，未放宽产品校验或修改公共目录权限。最终 code-only120197554622（run39887050496）、protocol3.11/3.14 120197554157/120197554223 与 cgroup-kernel120197553890（run39887050372）全部成功后，同一 SHA 直推 main 并核远端。原始证据在本机 developer_transition_20261022/qa/job-privileged-*。
 
 02A 只完成固定入口与有限作业的结果交还。02B 的跨 UID 实时 PF 会话、失联/重启恢复、普通节点能力开放与实际部署均未完成；没有手机访问、真实 lease 修改或数据迁移。
+
+
+## JOB-CONTAINMENT-02B1：一条跨UID的PF实时控制链（下一批合同，未实现）
+
+先完成固定入口→job UID的PF→同一持久lease域→scoped receipt→node UID查询/投递gray-control动作/读原件→正常停止封存这一条链。继续使用既有PF publisher、owner锁、动作ID和恢复schema；普通公共contained仍不启用。实际节点、手机、后台和历史数据不变。
+
+已核实的阻断：当前worker清洁环境只有PF_JOB_ID/IN/OUT，缺少与ID成对要求的PF_JOB_LEASE_DIR；dispatcher又在启动前创建out/lease-receipts，与空out要求冲突。HOME=out还会使PF默认state根按job变化。node的LeaseState只继承服务环境调用PF lease status，没有现成的共享固定配置入口。PF的queue_owner稳定锁、gray-control内部记录/owner/publisher锁/请求目录都显式使用0600/0700；仅调整最外层目录或umask无法让实时publisher工作。
+
+创建和配置职责：process_group保留现有receipt准备行为；contained保持out全空，由可信worker在验证身份与空目录后，经pinned out FD创建唯一lease-receipts目录，再注入PF_JOB_LEASE_DIR。持久PHONEFARM_STATE_DIR、DEVLOCK_DIR、PHONEFARM_LEASE_DIR由管理员配置；固定安装配置给node reader和worker提供相同的白名单PF环境，不接受请求自选根。实际位置继续由PF resolver及lease status.storage确认，Python不另造路径推导。不可读旧私有状态明确拒绝，不在线递归chmod已有状态。
+
+权限只对声明的PF会话输出和持久lease访问显式启用；新文件与原子替换文件均在发布前主动设置组/模式，默认独立CLI保持原行为。node helper必须能读取session.json/eval-session.json，并打开现有owner/publisher锁与请求目录；node_session继续调用同一PF helper。管理JSON、输入、凭据、安装代码和cgroup不加入输出共享范围。结束仍先封存job根，后交还输出；复用job身份不能访问历史。
+
+源码入口：harness的install_worker/worker_entry/job_cgroup/job_dispatch/node_lease/node_session；PF的小型显式权限策略及gray_control、devlease、queue_owner、confirmation_transport、lease_command和必要目录创建点/tools/devlock。不改方向调度、会话身份或结果schema，不新增账本或独立publisher。
+
+验收采用一条隔离Linux实际PF与固定入口链，传输用fake：node读取活lease和scoped receipt，既有session helper完成capture、同ID查询、stop，读取实际PNG及回执，结束后job身份不能读旧输出；相关默认权限回归确认不启用共享模式仍按旧行为。此前01B/02A通过不替代这条PF实链。全局battery恢复记录、任意producer实时输出、失联/重启域及输出恢复均另有验收义务，不能因正常停止链通过而宣称完成。
