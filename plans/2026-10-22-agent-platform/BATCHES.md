@@ -441,3 +441,14 @@ PF [4282d09](https://github.com/HGamey/phonefarm/commit/4282d09637ecacec8a89f5fa
 签名main/unit构建、4相关单测与唯一11项host拦截一次通过：8 actualPF（6 retired/2 unsupported）、3 shell（1 retired/2 fakePF透传）；真实gate/ADB=0、无lease，11已知PID均退出。没有失败或重跑D2/旧控制链。qa/gray-legacy-mount-{host-summary,unit-results,source-review,publish}.json及host-cli-20261023T084417524768原始结果留本机。源码删除并非真机能力退役验收，未部署。
 
 PF [f7b4012](https://github.com/HGamey/phonefarm/commit/f7b40122e7f5a67507e4cb84355c70128da1e24b)经actual code-only120154703260（run39873906724）completed/success后同SHA直推main并ls-remote核对，无PR。下一项LEASE-IDENTITY-01：普通外层label仍被当身份，需实例绑定并与nested强lease关联；不能只修unknown显示。整体goal保持active。
+
+
+## 2026-10-23 LEASE-IDENTITY-01：同名不再授予所有权
+
+普通外层队列由PF单一Rust helper记录实例、实际holder启动/宿主启动身份；PF/GOL/run继承并验证同一实例，nested强lease持久引用。父holder退出阻止新借用，已有强owner仍可完成恢复。显式queue退役要求无nested且bridge可独占，只出元数据审计；旧/坏/不完整记录继续阻断。Web通过真实job_id关联任务，展示outer/device/unknown/recovery事实，不再按label认定正在测量。
+
+PF [8dce700](https://github.com/HGamey/phonefarm/commit/8dce7003725cefdd5cc45e5940b7084db7f90f1b)：code-only120162030846（run39876120980）。GOL [30a0921](https://github.com/HGamey/game_opt_loop/commit/30a0921e29fccbd96b14dd6f1b066a77687003c0)：code-only120162365155（run39876224244），rebase保留同事98fc250。harness [cc47f0e](https://github.com/HGamey/harness-ops/commit/cc47f0e3ce309679c2d7de41b17601d22f6c7406)：code-only120162029055（run39876120487）、protocol3.11/3.14 120162029767/120162029593（run39876120481）。均completed/success后同SHA推main并核远端，无PR。
+
+5PF定向单测、3旧脚本用例一次通过；GOL Guard首次有效lib用例及rebase后同一受影响用例通过，保留错误target/0测试日志。三宿主组一次通过18顶层命令/4身份拒绝，1严格host adapter、0真实设备调用，41已知PID全退出、本轮marker清空；不重跑旧灰层实验链。网页一次静态浏览器流程与定向脚本通过，原图/原始日志留qa/lease-identity-*。Linux实现未由本机这批实跑，旧B1/B2负租约保留。
+
+LEASE-IDENTITY仅关闭自身源码/宿主范围。JOB-EXEC-03、恢复UX、真实重启/脱组后代及端到端验收仍开放；goal经get_goal核实active，未调用update_goal。下一聚焦node作业终态：主命令退出后同组后代仍存活时不能释放调度资源；先冻结窄合同，不把它宣称为任意进程树或整机断电保证。

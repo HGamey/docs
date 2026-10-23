@@ -168,7 +168,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [x] LEASE-STORAGE-01 按 LEASE-STORAGE 统一 Rust、devlock、node/fleet、GOL 路径，显式 init 与旧域退休屏障；网页和 CLI 同状态。PF588b1c1、harness336eaaf、GOL29514d8已检查通过直推main；仅宿主验证，未部署。
 - [x] LEASE-OBSERVE-01 按 OBSERVATION-OWNERSHIP.md 完成fleet/只读preflight/每帧screen同域强lease与有界worker；网页保留成功时间和暂缓原因。2026-10-23宿主/API/网页验收通过，PF da3d2f5、harness f5e101a、GOL d2d1840实际检查通过直推main。未部署/未真机，完整JOB-EXEC-03仍未完成。
 - [ ] LEASE-STORAGE-02 后续：统一 hwcond 恢复状态目录，取消失败时临时回退；清点 raw adb/旧 carrier 脚本是否经过同一 ownership，普通旧 owner 超时接管与完整恢复义务分别处理。
-  - [ ] LEASE-IDENTITY-01 进行中，按[LEASE-IDENTITY](LEASE-IDENTITY.md)为普通外层 devlock 队列记录实例身份，并让 nested 强 lease 显式引用它；只读状态准确关联同一 owner。当前 active gray control 的强 lease 和 bridge 可证实，但普通外层缺 marker，保留 unknown 诊断；不得用相同 label 推断归属。03B4C1 仅修正“已知恢复义务优先显示 blocked”，未放宽准入或 clear。
+  - [x] LEASE-IDENTITY-01 按[LEASE-IDENTITY](LEASE-IDENTITY.md)完成PF/devlock/GOL实例与宿主进程身份、nested显式引用和Web事实显示；8dce700/30a0921/cc47f0e必需检查成功后直推main。5PF单测、3脚本、GOL Guard和18宿主命令/4身份拒绝通过；无真实设备或部署。旧/损坏记录不自动删除，完整JOB-EXEC-03保持未完成。
   - [x] LEASE-STORAGE-02A 按 [HWCOND-RECOVERY](HWCOND-RECOVERY.md) 统一持久路径、拒绝覆盖遗留快照、明确损坏/读取/恢复错误；修复bench恢复失败仍继续。28hwcond/3storage单测、6实际CLI/fake ADB通过；e06e1ff实际code-only成功并直推main。仅宿主验证，未部署；producer全局恢复收据另批处理。
   - [x] PRODUCER-RECOVERY-01 按 [BENCH-RECOVERY](BENCH-RECOVERY.md) 完成bench实际hold、本地命令门控、远端负载收尾、独立恢复证据及同context续接；2f5f11d检查通过后直推main。43相关单测、3 shell宿主fixture、9实际CLI/fakeADB通过，仅宿主验证。硬件写入未知和未完成部署保留屏障，不能自动complete；不是整个job或真机恢复验收。
   - [x] PRODUCER-RECOVERY-02 按 [CAPTURE-RECOVERY](CAPTURE-RECOVERY.md) 完成capture实际hold、worker组门控、完成记录、输入/原stayon/退出政策读回及同context恢复；bd67d97实际code-only成功后直推main。27相关unit、11实际CLI/fakeADB、64传输核验通过；未部署/未真机，不声称游戏状态恢复。
