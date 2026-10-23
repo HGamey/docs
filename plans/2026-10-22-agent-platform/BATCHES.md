@@ -479,3 +479,12 @@ PF [201719b](https://github.com/HGamey/phonefarm/commit/201719b97321862f3872a29b
 11项lease中短命zombie一项首次失败，依据Apple接口参数修复后单项通过，原日志保留；另1项queue和3项命令监督通过。3组实际宿主CLI一次通过22命令、23PID全退、0设备/传输调用；保留pending/required/partial负例。一次DOM验证显示与门禁，不重复整套浏览器或灰层实验。PF code-only120179340708与harness code-only120179343980、protocol3.11/3.14 120179343947/120179344082全success后同SHA推main，无PR/部署/真机/物理重启。
 
 用户再次询问是否关闭goal，get_goal确认active，未调用update_goal。只勾本批子项；JOB-CONTAINMENT-01下一只读收束，完整JOB-EXEC-03/两节点/真实设备和其余计划保持开放。
+
+
+## 2026-10-23 JOB-CONTAINMENT-01A：显式请求执行范围
+
+harness [fb4dc56](https://github.com/HGamey/harness-ops/commit/fb4dc56375252f175732619c11d959a3f1dfbb52)交付execution_policy准入、/node实际策略能力、worker执行范围及Web/CLI入口。contained未实现时在上传body/输入准备/child启动前拒绝，不静默降级；缺省请求不改旧幂等指纹，未决请求沿原body重试。请求与实际后端分开，旧记录缺证据不回填。只完成协议与有限范围声明，完整containment/JOB-EXEC-03不关闭。
+
+63项协议一次通过17.856秒，DOM一次通过；三组宿主11HTTP/2job/6PID全退，零设备。首次fixture误挡只读lease快照，已保原result/log并按原ID续接，未重放已创建job；只新增未执行的explicit job，实际观察setsid后代仍活时原组已空，回执为unverified。最终SHA（功能5468e0f加末尾空行修正）code-only120184129840、protocol3.11/3.14 120184130255/120184129669全success后直推main；无部署/PR/真实cgroup。qa/job-execution-policy-*保存证据与负结果。
+
+下一只读收束Linux后端的实际权限模型与隔离内核验收：不能把同UID可迁出域当防逃逸保证，也不凭本机Darwin或fixture宣称Linux已支持。goal继续active；本轮未调用update_goal。

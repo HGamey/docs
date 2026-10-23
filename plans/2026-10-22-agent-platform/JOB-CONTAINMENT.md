@@ -1,6 +1,6 @@
 # 作业执行范围与脱组后代
 
-2026-10-23，JOB-CONTAINMENT-01实施前合同。只读审计已完成，以下尚未实现。先交协议与能力边界，再实现有真实内核验收的后端；完整条目不能由协议批次勾完。
+2026-10-23，JOB-CONTAINMENT-01分两批推进。第一批显式策略与能力边界已实现，源码/隔离宿主验证完成并发布；第二批内核后端尚未实现。完整条目不由协议批次勾完。
 
 ## 当前事实
 
@@ -32,3 +32,19 @@ job_runtime只控制实际子进程及其原PGID。直接命令退出后，原�
 第一批：一个实际setsid的有界宿主负例说明有限范围，contained不可用时零准备/启动，策略幂等冲突与旧请求兼容，Web/CLI同字段反馈。测试仅使用自建无害进程并回收，不碰设备、真实lease或系统cgroup。节点协议变更按AGENTS运行必需协议测试。
 
 第二批另验真实Linux内核：setsid仍留域、取消和域空、权限/查询失败保资源。仅filesystem fixture或本机模拟不能勾这批。整体JOB-EXEC-03、两节点与真机流程、总goal继续开放。
+
+
+## 第一批已实现合同与验收
+
+/node.execution.process_policies为按策略名索引的对象，capabilities另声明jobs.execution-policy-v1。每种策略含available、backend、completion_scope、reason；当前process_group可用，后端posix_process_group，完成范围original_process_group；contained不可用，不因Linux名称推断支持。
+
+显式请求在X-Job.execution_policy传字符串，缺失不加入原规范化spec，因此旧幂等指纹保持不变。元数据以execution_policy和execution_policy_source分别记录请求与explicit/legacy_default来源；缺省请求与新显式请求是不同的冻结内容，同ID改字段仍409。直接API在读取上传body前拒绝不可用策略（422，code=execution_policy_unavailable），Dashboard共用Jobs.start，CLI在pack之前核能力。排队启动与独立worker再按冻结请求校验，未执行失败沿既有持久终态逻辑处理。
+
+worker仅在实际Popen成功后写execution.process_management={policy,backend,completion_scope,detached_descendants}；当前detached_descendants为unverified。已有owned_process_group继续提供完成事实。旧记录不补造这个对象，取消前未启动/启动失败也没有实际后端证明。网页新旧节点、未决请求原body重试与CLI同语义；无新数据库或调度状态。
+
+63项本地协议测试一次通过（17.856秒），定向DOM一次通过。宿主QA三组通过，共11次HTTP、2个实际job、6个已知PID退出、零设备调用：不发送声明的4096字节body即可收到contained拒绝，零job/prepare/spawn；缺省与显式策略、同ID重试/冲突与只读拒绝；实际setsid子进程在父命令exit0、原组absent后仍活，记录如实为unverified，随后自然退出。
+
+第一次宿主脚本过严地拒绝lease的只读快照，导致已创建legacy job的状态HTTP断开；保留原result/log/清理补充。只修fixture，在同数据根按原request ID找回旧job，不重放；剩余explicit job才新增并完成现场脱组验证。该故障不归为产品失败，也不隐去首次结果。证据保留在developer_transition_20261022/qa/job-execution-policy-*。没有部署、设备访问、真实cgroup后端或任意进程树完成证明。
+
+
+第一批harness [fb4dc56](https://github.com/HGamey/harness-ops/commit/fb4dc56375252f175732619c11d959a3f1dfbb52)包含功能提交5468e0f与文件末尾空行修正。最终SHA通过code-only120184129840（run39882870707）、protocol3.11/3.14 120184130255/120184129669（run39882870737）后直推main。空白修正没有重跑本地全协议；最终SHA的必需CI仍重新通过。无PR、force push或部署。
