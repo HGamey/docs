@@ -48,3 +48,16 @@ worker仅在实际Popen成功后写execution.process_management={policy,backend,
 
 
 第一批harness [fb4dc56](https://github.com/HGamey/harness-ops/commit/fb4dc56375252f175732619c11d959a3f1dfbb52)包含功能提交5468e0f与文件末尾空行修正。最终SHA通过code-only120184129840（run39882870707）、protocol3.11/3.14 120184130255/120184129669（run39882870737）后直推main。空白修正没有重跑本地全协议；最终SHA的必需CI仍重新通过。无PR、force push或部署。
+
+
+## JOB-CONTAINMENT-01B：独立特权worker的内核范围（实施合同，未实现）
+
+当前非特权HTTP node既不能切换UID/GID，也不能读取另一UID写入的0600原件。不能把整个HTTP服务或Python解释器提权来绕过边界。因此本批只交付独立worker内可显式启用的Linux cgroup v2后端及隔离CI；所有普通node/API/Web/CLI的contained仍不可用，不新增对外可用能力。生产的固定特权启动边界、跨UID实时输出与PF控制会话单列后续事项。
+
+worker从管理员提供的固定配置获得空的专用cgroup根及专用非root UID/GID，请求spec不能指定或改写这些值。worker处于域外；作业无补充组并设置no_new_privs，以清洁环境运行。配置中的身份不能同时用作登录、其他作业或服务账号；首次内核验收创建临时账号和专属域，不操作真实节点。普通同UID委派不是本合同的contained实现。
+
+每次新建独占子域，目标在可信启动门等待；worker加入并确认实际成员身份后才允许目标执行。fork/exec/setsid后代留域；作业不可写域及祖先迁移入口。只依据cgroup.events populated确认宿主成员结束；主命令已退出而域仍活时worker继续持锁，force在原信号流程后使用cgroup.kill，未知保持恢复义务。域空不证明设备恢复；worker丢失、重启和重新取得域的生产恢复仍待后续。
+
+保持管理记录0600、job根归worker且只有遍历权限；输入归worker只读，输出归作业可写，日志使用worker已打开的FD。既有私有祖先不自动chmod，实验配置必须选可遍历的隔离目录。原始输出不迁移。只复用现有worker/flock/持久收据，不添加数据库表、资源控制器、容器或daemon。
+
+精简验证：保留普通节点contained拒绝回归；新增一个非矩阵Linux真实内核集成过程，覆盖输入/输出与身份权限、setsid脱组、迁出拒绝、直接命令退出后的保留、force后的域空及收据。必需接口/权限不可用时明确失败，不跳过后报通过。只清理本次账户和域，原始失败和诊断保留。
