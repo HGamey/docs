@@ -86,6 +86,11 @@
   - producer覆盖后续：bench/capture已完成各自声明范围，gray-ab若干off结果未检查，eval摘层仍用字符串检查；逐条按已知范围保存typed证据和恢复屏障，再调用complete_recovery。当前均不得从released/not_reported推断恢复，不让node猜实验产物格式。
   - 旧devlock心跳遗留管道问题已修复b986fcf：zsh内建等待，明确停止并回收自建心跳；5项隔离回归通过，取消保留锁，不把信号退出当还原。
 
+- [ ] JOB-FINISH-01 按[JOB-GROUP-COMPLETION](JOB-GROUP-COMPLETION.md)补原进程组结束证据；直接子退出但同组仍活/未知时保留资源，Web/CLI明确完成范围。当前实施，不触设备。
+- [ ] JOB-DURABILITY-01 对关键job目录、launch/终态metadata明确fsync与SQLite提交次序；失败不得提前done，断电实测另列，不把原子rename当持久性。
+- [ ] LEASE-IDENTITY-02 强lease/恢复上下文复用宿主boot/start身份，解释重启后的PID重用；不另造进程身份实现。
+- [ ] JOB-CONTAINMENT-01 明确setsid脱组后代的内核containment与跨OS能力边界；无该能力不能宣称整个进程树终止。
+
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
 
 ## P1：结果发现、共享与研究状态
