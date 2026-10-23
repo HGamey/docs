@@ -73,3 +73,18 @@ worker从管理员提供的固定配置获得空的专用cgroup根及专用非ro
 最终harness [487e5fb](https://github.com/HGamey/harness-ops/commit/487e5fb0076e8a78a7fd4aa34523768a8238264e)经code-only120190073130、protocol3.11/3.14 120190072430/120190072703、cgroup-kernel120190072687全部成功后同SHA直推main。内核run39884713585确认真实输入读取/日志/输出、身份/环境、管理记录及迁出拒绝、setsid后代在leader exit0后仍在域且worker持锁、force清空域、同UID不能再读取封存输出。4个已知PID全部退出，专属域/临时账号清理完毕；原件下载保存在本机qa/job-cgroup-kernel-attempt-2。首次失败原件保留在attempt-1，未以重跑删除或覆盖。
 
 只勾01B这一隔离范围。普通node的contained仍false，生产特权启动、跨UID PF会话和worker失联/重启恢复属于JOB-CONTAINMENT-02；没有部署、手机访问、真实lease修改或原数据迁移。
+
+
+## JOB-CONTAINMENT-02A：可信入口与有限作业结果（下一批合同，未实现）
+
+源码核查确认run_node.sh仍是用户态macOS/Homebrew循环；update_node.sh将用户clone同步到~/node/harness-ops。没有Linux installer/systemd/sudoers可直接复用。node_session还需要以node身份读session-control.json、遍历原件并启动PF publisher；PF使用显式0600/0700。因此禁止把当前可自更新源码树直接sudo执行，也不能用umask声称实时权限已解决。
+
+下一窄批只覆盖有限宿主作业：管理员独立安装root-owned可信worker入口、固定解释器/导入路径和配置，普通node更新不能覆盖。入口仅接受job ID和固定锁FD，实际job根、cgroup根、node/job身份由固定配置选择，请求不得注入其他root路径或解释器。sudo只能授权该入口，不能授权通用Python或shell。复用真实runner.lock的同一打开描述符，不另造owner；要实际核FD对应当前job且锁可用。未配置/权限不足继续明确不可用，不自动修改机器权限或sudo策略。
+
+生产管理树归node身份，worker原子发布管理记录时也保持node可读写；job身份仍不能修改meta、launch、cancel和锁文件。配置/程序归root。输出运行中归job身份；域空且根封存后，限定在固定job/out内、不跟链接地交还可归档原件给node读取，再完成持久化。输出交还失败须保留资源并可恢复，不能把无法读取的结果标成已完成。stdout仍可经预打开FD实时读取；不扫描修改运行中producer文件权限。此模型必须先与SafeRoot和终态同步边界一起实现，而非只在命令前加sudo。
+
+只用一条隔离Linux验收链证明非root launcher→固定特权入口→worker，launcher退出后runner锁仍存续，node可取消、读日志和最终原件，job不可写管理记录。可信安装只在隔离CI演练，不部署任何已有节点。public contained仍不可用；为未来启用补齐真实安装基础，不伪装现有节点已就绪。
+
+02B随后处理PF实时会话/设备lease跨UID：优先明确会话输出树专用共享组，producer在创建和原子替换时主动设置组/模式，mailbox/锁同合同。管理记录、输入、凭据及cgroup不加入共享范围；旧job封存继续挡历史访问。任意未适配producer不能承诺实时原件访问。worker失联/重启后的域及输出恢复另有验证义务。
+
+部署选择暂缓：实际Linux节点、管理员可信路径及升级方式、node/job身份、cgroup委派位置和sudo的FD保留策略都必须显式配置；源码阶段先在隔离CI选临时值。没有需要用户立即完成的操作，不阻断源码开发。

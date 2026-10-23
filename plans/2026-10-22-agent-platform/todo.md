@@ -93,6 +93,8 @@
 
 - [x] JOB-CONTAINMENT-01B 独立特权worker的Linux cgroup v2后端已发布487e5fb，实际cgroup-kernel及必需CI全部成功后直推main。4本地worker回归与一条内核链通过，4PID全退；首次fixture类型错误与原件保留。普通节点contained继续不可用，只关闭隔离后端范围，合同见JOB-CONTAINMENT。
 - [ ] JOB-CONTAINMENT-02 固定特权worker启动边界、跨UID实时工件/PF控制、worker丢失及主机重启后的域恢复；不得给HTTP服务或整个解释器提权代替此设计。
+  - [ ] JOB-CONTAINMENT-02A 先交固定root-owned入口/配置、真实runner锁FD交接、node-owned管理记录与完成后输出交还；按JOB-CONTAINMENT合同隔离CI验证，公共策略暂不启用。
+  - [ ] JOB-CONTAINMENT-02B PF实时会话/设备lease跨UID权限，producer主动维护共享组及原子发布模式；失联/重启域恢复独立验证。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
 
