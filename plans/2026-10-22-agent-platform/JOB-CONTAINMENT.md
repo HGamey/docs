@@ -1,10 +1,10 @@
 # 作业执行范围与脱组后代
 
-2026-10-23，JOB-CONTAINMENT-01分两批推进。第一批显式策略与能力边界已实现，源码/隔离宿主验证完成并发布；第二批内核后端尚未实现。完整条目不由协议批次勾完。
+2026-10-23，JOB-CONTAINMENT-01分批推进。策略/API/Web/CLI与隔离Linux内核worker已发布；普通节点启用所需的特权入口、跨UID工件/控制与失联恢复仍未完成，完整条目保持开放。
 
 ## 当前事实
 
-job_runtime只控制实际子进程及其原PGID。直接命令退出后，原组absent可以形成该范围完成证据；setsid脱组后代不在其中。JOB-FINISH已有回执与网页说明，不能把它扩写成整棵进程树结束。node身份目前列协议能力，没有执行保证的运行时声明。Mac launchd同组清理与瞬时child PID枚举也不能提供持久脱组约束。
+job_runtime只控制实际子进程及其原PGID。直接命令退出后，原组absent可以形成该范围完成证据；setsid脱组后代不在其中。JOB-FINISH已有回执与网页说明，不能把它扩写成整棵进程树结束。/node现已区分协议支持与实际可用策略，普通节点仍仅支持原进程组范围。Mac launchd同组清理与瞬时child PID枚举也不能提供持久脱组约束。
 
 ## 第一批：可选择、可审计的执行保证
 
@@ -25,7 +25,7 @@ job_runtime只控制实际子进程及其原PGID。直接命令退出后，原�
 
 必须先冻结权限保证：普通fork/exec/setsid成员留域，不等于同UID或特权任务不能主动迁出。可写域本身不足以宣称防逃逸；如使用contained的强保证，需明确实际权限隔离及不支持条件，不能只给有限后端换名称。worker丢失、主机重启后的域核查和设备恢复仍分别验证。
 
-当前只有Darwin隔离宿主验收环境，不推断Linux可写委派域。Mac没有已验的对应实现时如实不可用；不能用ps轮询或launchd同组清理冒充。
+本机为Darwin；新增Linux内核后端已在隔离Ubuntu24.04 CI实跑，不能据此推断任何部署节点有可写委派域。Mac没有已验的对应实现时如实不可用；不能用ps轮询或launchd同组清理冒充。
 
 ## 精简验收与交付边界
 
@@ -50,7 +50,7 @@ worker仅在实际Popen成功后写execution.process_management={policy,backend,
 第一批harness [fb4dc56](https://github.com/HGamey/harness-ops/commit/fb4dc56375252f175732619c11d959a3f1dfbb52)包含功能提交5468e0f与文件末尾空行修正。最终SHA通过code-only120184129840（run39882870707）、protocol3.11/3.14 120184130255/120184129669（run39882870737）后直推main。空白修正没有重跑本地全协议；最终SHA的必需CI仍重新通过。无PR、force push或部署。
 
 
-## JOB-CONTAINMENT-01B：独立特权worker的内核范围（实施合同，未实现）
+## JOB-CONTAINMENT-01B：独立特权worker的内核范围（隔离内核验收完成）
 
 当前非特权HTTP node既不能切换UID/GID，也不能读取另一UID写入的0600原件。不能把整个HTTP服务或Python解释器提权来绕过边界。因此本批只交付独立worker内可显式启用的Linux cgroup v2后端及隔离CI；所有普通node/API/Web/CLI的contained仍不可用，不新增对外可用能力。生产的固定特权启动边界、跨UID实时输出与PF控制会话单列后续事项。
 
@@ -61,3 +61,15 @@ worker从管理员提供的固定配置获得空的专用cgroup根及专用非ro
 保持管理记录0600、job根归worker且只有遍历权限；输入归worker只读，输出归作业可写，日志使用worker已打开的FD。既有私有祖先不自动chmod，实验配置必须选可遍历的隔离目录。原始输出不迁移。只复用现有worker/flock/持久收据，不添加数据库表、资源控制器、容器或daemon。
 
 精简验证：保留普通节点contained拒绝回归；新增一个非矩阵Linux真实内核集成过程，覆盖输入/输出与身份权限、setsid脱组、迁出拒绝、直接命令退出后的保留、force后的域空及收据。必需接口/权限不可用时明确失败，不跳过后报通过。只清理本次账户和域，原始失败和诊断保留。
+
+
+01B源码以管理员显式传入的contained_config连接独立worker，HTTP node没有提权路径。每作业目录通过SafeRoot固定，输入只读、输出属于专用身份，启动门不继承管理凭据；主命令退出后phase为collecting，worker仍持锁，force可对域kill。结束前恢复job根0700并同步，避免后续同UID作业读写旧证据；任何遗留子域（含空域）均阻断身份复用。门控进程回收超时进入worker-lost，保留遗留域，不伪造not_needed。后续生产恢复设计不在本批。
+
+本机4项既有worker回归一次通过（1.834秒）。首次真实内核CI b232f55/run39884495270因fixture中tuple与list比较提前失败：原件显示UID/GID、空组、NoNewPrivs、零cap与7键环境正确，但剩余生命周期未验，不能算通过。临时域和账号均清理；保留完整raw和失败日志，修正fixture后再验证。CI使用Ubuntu24.04 VM，不等同任何部署节点。
+
+实现核对了Linux的[cgroup v2成员继承、迁移权限与域结束接口](https://docs.kernel.org/admin-guide/cgroup-v2.html)和[no_new_privs继承语义](https://docs.kernel.org/userspace-api/no_new_privs.html)；实际可用仍以隔离内核结果为证据。
+
+
+最终harness [487e5fb](https://github.com/HGamey/harness-ops/commit/487e5fb0076e8a78a7fd4aa34523768a8238264e)经code-only120190073130、protocol3.11/3.14 120190072430/120190072703、cgroup-kernel120190072687全部成功后同SHA直推main。内核run39884713585确认真实输入读取/日志/输出、身份/环境、管理记录及迁出拒绝、setsid后代在leader exit0后仍在域且worker持锁、force清空域、同UID不能再读取封存输出。4个已知PID全部退出，专属域/临时账号清理完毕；原件下载保存在本机qa/job-cgroup-kernel-attempt-2。首次失败原件保留在attempt-1，未以重跑删除或覆盖。
+
+只勾01B这一隔离范围。普通node的contained仍false，生产特权启动、跨UID PF会话和worker失联/重启恢复属于JOB-CONTAINMENT-02；没有部署、手机访问、真实lease修改或原数据迁移。

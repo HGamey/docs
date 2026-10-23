@@ -488,3 +488,12 @@ harness [fb4dc56](https://github.com/HGamey/harness-ops/commit/fb4dc56375252f175
 63项协议一次通过17.856秒，DOM一次通过；三组宿主11HTTP/2job/6PID全退，零设备。首次fixture误挡只读lease快照，已保原result/log并按原ID续接，未重放已创建job；只新增未执行的explicit job，实际观察setsid后代仍活时原组已空，回执为unverified。最终SHA（功能5468e0f加末尾空行修正）code-only120184129840、protocol3.11/3.14 120184130255/120184129669全success后直推main；无部署/PR/真实cgroup。qa/job-execution-policy-*保存证据与负结果。
 
 下一只读收束Linux后端的实际权限模型与隔离内核验收：不能把同UID可迁出域当防逃逸保证，也不凭本机Darwin或fixture宣称Linux已支持。goal继续active；本轮未调用update_goal。
+
+
+## 2026-10-23 JOB-CONTAINMENT-01B：实际内核管理脱组后代
+
+harness [487e5fb](https://github.com/HGamey/harness-ops/commit/487e5fb0076e8a78a7fd4aa34523768a8238264e)增加管理员显式配置的独立Linux特权worker后端。门控入域后才exec，非root身份/NNP/清洁环境；leader退出仍持域及取消能力，域空后封存目录再完成。源码审查修复同UID后续访问旧输出，以及启动门未确认退出却误报not_needed两处问题。普通HTTP node不提权、contained仍不可用。
+
+本机4项worker回归一次通过1.834秒。第一次Linux CI因fixture把tuple和list比较失败，原始日志显示目标权限和入域事实，但不计通过；仅修fixture规范化和早失败PID记录。最终Ubuntu24.04/kernel6.17内核链通过输入/输出、权限与迁出拒绝、setsid后代、leader退出保留、force域空和旧数据封存。4PID全退，账户/域清理完成；qa/job-cgroup-*留本机两次原始证据。code-only120190073130、protocol3.11/3.14 120190072430/120190072703和cgroup-kernel120190072687全success后同SHA推main核远端。
+
+下一JOB-CONTAINMENT-02只读收束生产固定特权启动、跨UID工件/PF控制与worker失联恢复；未部署、未操作手机或真实lease，Doom/迁移继续暂存。总goal仍active，未调用update_goal；只勾01B，不关闭完整containment和JOB-EXEC-03。

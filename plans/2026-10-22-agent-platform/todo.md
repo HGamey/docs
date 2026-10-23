@@ -89,9 +89,9 @@
 - [x] JOB-FINISH-01 按[JOB-GROUP-COMPLETION](JOB-GROUP-COMPLETION.md)交付原进程组结束证据与资源保留，Web/CLI/维护页同事实；harness eb3e69d实际必需检查成功直推main。5既有测试、新增1条宿主双模式回归与定向DOM通过，8PID退出；只覆盖原进程组，无设备/部署。
 - [x] JOB-DURABILITY-01 按[JOB-DURABILITY](JOB-DURABILITY.md)交付worker释放锁、关键记录同步后再SQL提交；失败保资源让出名额，retry-finalize不重放，取消/未执行事实由SQL保留。harness 8381c19实际必需CI成功后直推main；61项本地协议与定向Web通过。只关闭源码/隔离宿主范围，真实断电、producer数据与完整JOB-EXEC-03仍开放。
 - [x] LEASE-IDENTITY-02 按[STRONG-LEASE-IDENTITY](STRONG-LEASE-IDENTITY.md)完成强lease宿主boot/start身份与Web事实展示；PF201719b/harness66a532e必需CI通过后直推main。11项lease、1项queue、3项命令测试和22条隔离宿主CLI通过；修复实际短命zombie边界并保留首次失败。仅完成源码/宿主范围，真实重启、设备恢复和完整JOB-EXEC-03仍开放。
-- [ ] JOB-CONTAINMENT-01 按[JOB-CONTAINMENT](JOB-CONTAINMENT.md)明确setsid脱组后代的内核执行保证与跨OS边界；第一批策略/准入/回执/WebCLI已发布fb4dc56，63项本地协议、3组宿主与DOM通过。当前contained仍不可用；第二批Linux权限与内核后端待实现/真实验收，完整条目不勾。
+- [ ] JOB-CONTAINMENT-01 按[JOB-CONTAINMENT](JOB-CONTAINMENT.md)明确setsid脱组后代的内核执行保证与跨OS边界；第一批策略/准入/回执/WebCLI已发布fb4dc56，63项本地协议、3组宿主与DOM通过。普通节点contained仍不可用；隔离Linux内核worker另完成01B，生产权限与恢复边界待02，完整条目不勾。
 
-- [ ] JOB-CONTAINMENT-01B 独立特权worker的Linux cgroup v2后端与一次真实内核CI；普通节点contained继续不可用，合同见JOB-CONTAINMENT。
+- [x] JOB-CONTAINMENT-01B 独立特权worker的Linux cgroup v2后端已发布487e5fb，实际cgroup-kernel及必需CI全部成功后直推main。4本地worker回归与一条内核链通过，4PID全退；首次fixture类型错误与原件保留。普通节点contained继续不可用，只关闭隔离后端范围，合同见JOB-CONTAINMENT。
 - [ ] JOB-CONTAINMENT-02 固定特权worker启动边界、跨UID实时工件/PF控制、worker丢失及主机重启后的域恢复；不得给HTTP服务或整个解释器提权代替此设计。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
