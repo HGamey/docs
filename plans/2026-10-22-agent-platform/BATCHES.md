@@ -515,3 +515,12 @@ PF [b247ea2](https://github.com/HGamey/phonefarm/commit/b247ea253387f6bcce14acb1
 3项PF、4项受影响node回归及1条普通profile作业回归通过，PF构建签名通过。最终隔离Linux使用真实PF和synthetic transport，capture/同ID查询/stop/历史查询通过，1次截图958字节，活lease到最终clear；194已知PID全退、账户/域/安装/策略清理。actual code-only、protocol3.11/3.14、cgroup-kernel、pf-shared-kernel全部success后同SHA直推main，未部署或碰手机。详见[JOB-CONTAINMENT](JOB-CONTAINMENT.md)及本机qa/pf-shared-*。
 
 只勾02B1；完整02和goal保持开放。下一02B2先处理停充记录与封存来源恢复，02B3单列失联/重启域与输出交还；public contained仍不可用。用户再次询问关闭goal，实际get_goal核实active，未调用update_goal，未请求关闭或暂停。
+
+
+## 2026-10-23 JOB-CONTAINMENT-02B3：失联执行域异步核查与输出交还
+
+harness [c61dae9](https://github.com/HGamey/harness-ops/commit/c61dae9d4d27f6c570fb9b243b8f97a16513761c)交付固定reconcile入口、持久boot/domain/handoff与UID复用门禁、Web/CLI异步入口及共用的会话恢复/队列释放资格。普通核查不杀进程，强制操作单独显式确认；不重放、不修改原失联/失败及设备恢复义务，旧安装不误报新能力。
+
+本地69协议首轮68过；新跨boot fixture因macOS路径别名提前拒绝，修正fixture后2项相关回归通过，失败原件保留。定向DOM/CLI和双版本CI通过。真实Linux单链验证worker失联留下setsid后代、普通核查和同UID启动阻断、force域空及输出私有交还、下一作业拒读历史；3job中2执行1拒绝，22PID全退，临时账户/域/安装/策略清理。全部actual required checks及两个kernel任务success后同SHA推main核远端；无部署、真机、物理重启或迁移，public contained仍false。详见[合同与证据](JOB-CONTAINMENT.md)。
+
+只勾02B3的源码/隔离宿主子项。完整02、JOB-EXEC-03、失败恢复子链接续等仍开放。下一回到既定多机管理FLEET-01/02，之后游戏分发与结果索引，避免宿主边界扩展吞掉业务主线。

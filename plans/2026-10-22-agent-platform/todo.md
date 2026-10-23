@@ -42,6 +42,8 @@
 
 ## P1：多机管理
 
+当前下一批回到FLEET-01/02：先沿已有node身份、pf-fleet登记配置和网页fleet梳理跨节点读写合同，再实现显式登记与同一节点目录；不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办，不无限增加同类宿主防御批次。
+
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
 - [ ] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。
   - `/dash/fleet`、`pf-node fleet`和跨节点`pf-fleet status`已共用读取合同；网页目前只展示当前节点，跨节点注册与强lease/恢复态未完成。
@@ -97,7 +99,7 @@
   - [ ] JOB-CONTAINMENT-02B PF实时会话/设备lease跨UID权限，producer主动维护共享组及原子发布模式；失联/重启域恢复独立验证。
     - [x] JOB-CONTAINMENT-02B1 先按JOB-CONTAINMENT合同接通固定PF环境/持久锁域、worker创建scoped receipt与现有gray-control publisher跨UID访问；实际Linux PF+fake transport一条正常停止链验证，默认私有权限保持。全局battery恢复/任意producer/失联与重启恢复仍独立待验。 已发布PF b247ea2/harness914f711，实际Linux跨UID链通过，四次失败原件保留；public contained仍false。
     - [x] JOB-CONTAINMENT-02B2 共享供电恢复记录与node私有封存会话来源分开；Web/CLI/API typed异步恢复同上下文，先验原worker已域空/交还，不重新开放历史输出。PF f98f619/harness b1e4fab已通过实际CI后直推main；1轮battery失败→恢复链、幂等与原件保留通过，首轮替身失败保留。失联/跨boot及失败恢复子链接续仍分别待验。
-    - [ ] JOB-CONTAINMENT-02B3 固定入口按job ID显式核查失联域及交还输出，补跨boot持久未封存作业核查与release门禁；不按历史PID发信号、不重放，不等同设备恢复。
+    - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [ ] JOB-SESSION-RECOVERY-02 恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。

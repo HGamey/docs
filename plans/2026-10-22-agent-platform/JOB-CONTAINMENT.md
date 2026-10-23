@@ -147,7 +147,7 @@ CLI提交前打印请求ID与续查命令；网页按原job保存恢复请求ID�
 后续02B3另做worker失联/重启后的显式域核查与输出交还。固定可信入口仅按job ID和已配置根接管，复用runner/cgroup锁；不得按历史PID补发信号或重放命令。域清理不代表设备恢复。跨boot内核域会消失，磁盘未封存旧job仍可能存在；复用专用UID前必须核持久作业记录，普通queue release不能越过未确认的域/输出交还状态。
 
 
-## JOB-CONTAINMENT-02B3：显式核查旧域与持久交还义务（设计，未实现）
+## JOB-CONTAINMENT-02B3：显式核查旧域与持久交还义务（源码与隔离Linux验收完成）
 
 固定特权入口增加有限reconcile操作，只收job ID及显式force选择，复用runner锁FD交接与cgroup根锁；活worker仍持锁时拒绝。核查打开既有绑定域，绝不重新运行launch命令。同boot确认旧域仍populated时，普通核查只报告，显式force才使用cgroup.kill；域空后复用return_outputs封存交还，不向历史PID或PGID发信号。
 
@@ -156,3 +156,19 @@ CLI提交前打印请求ID与续查命令；网页按原job保存恢复请求ID�
 queue-release和typed session-recover消费同一宿主收尾资格。成功reconcile保留原lost/interrupted/outcome事实及设备recovery.required，不将事故改成正常finished；结果提交仍经过现有finalize锁与持久化边界。
 
 最小真实Linux负例：杀域外worker而保留setsid后代，确认queue-release/同UID新启动被挡、普通核查不杀进程；明确force后域空并交还输出，原lost保留且下一作业拒读历史。跨boot判定独立验证，不把同boot链写成物理重启验收。完成这组主机边界后，回到既定多机管理、游戏分发与结果流程；不因抽象风险无限追加同类防御批次。
+
+
+源码入口为 `POST /jobs/{id}/execution/reconcile`（网页前缀 `/dash/api`）与 `pf-node execution-reconcile ID [--force]`。只收 force 布尔值，默认 false；固定安装声明 `jobs.execution-reconcile-v1` 后节点才公开该能力，旧安装不会因服务源码更新而误报支持。无PF共享profile也可配置宿主核查入口；安装配置仅含路径与身份，root:node组0640，仍须管理员显式新安装，不原地启用。
+
+请求立即返回原job和accepted，现有runner flock交给固定入口，HTTP不等待回收、不重放launch、不新增实验/队列行。操作状态保存在 `execution.reconciliation`（requested/running/blocked/complete/failed/unknown），后续显式尝试把原记录归入reconciliation_history。helper未留下终态而锁已释放时查询返回unknown。客户端超时先GET原job，既不自动重发POST也不自动加force。Web对强制操作单独确认，恢复会话与释放资源共用宿主完成资格。
+
+新binding记录schema、宿主boot、job/node UID/GID、cgroup根/name/dev/inode与handoff状态；首次权限交出之前持久化pending，域空且封存/递归交还及fsync完成后记录returned。同boot绑定域存在须核inode/dev；缺域只接受已有returned及匹配absent观察。新boot只在旧域缺席时证明旧本机进程已不存在，磁盘输出仍需交还。lost/interrupted来源即使已记录returned，也需明确reconciliation complete才用于会话恢复/资源释放。不会更改原lost/outcome或设备恢复义务。
+
+mkdir之后、首次binding之前的极小退出窗，可由固定launch=contained、无实际执行/域记录、job/out均node私有0700及同名空域证明目标尚未放行；只移除空域，记录 `basis=unstarted_empty_domain`，不制造实际执行或handoff记录。理由是唯一GO写端在worker，实际入域meta持久发布在GO之前；不另建门控账本、不按保存PID补杀。
+
+本地69项协议首轮有1个新fixture路径错误：macOS临时目录别名与resolve后的固定根不一致，尚未进入跨boot判定。修复仅规范fixture路径，受影响2项通过；其余68项首轮通过，记录保留。跨boot仅模型判断，不是物理重启验收。实际Linux失联/强制回收链已通过，见下方发布记录；公共contained准入继续false，没有部署、真实设备或迁移。
+
+
+02B3已发布harness [c61dae9](https://github.com/HGamey/harness-ops/commit/c61dae9d4d27f6c570fb9b243b8f97a16513761c)。[实际Linux链](https://github.com/HGamey/harness-ops/actions/runs/39918619146/job/120298119563)使用真实非root node、固定sudo入口、SQLite与cgroup：源job执行且leader退出后仍保留setsid后代；以pidfd结束当前核实身份的域外worker，由finalize产生lost/blocked；普通HTTP核查不杀后代且queue-release返回409；同UID候选在workload前拒绝。显式force后cgroup空、输出node私有700/600、原lost/outcome/recovery.required及queueblocked保留；下一同UID作业成功执行但拒读旧输出。3个实际预备job中2个执行、1个准入拒绝；22个已知PID全退出，临时账户/域/安装/策略清理，无错误。
+
+本机协议已解决上述单个fixture错误；双版本protocol、code-only、cgroup-kernel和既有PF正常/供电恢复链全部actual success后同SHA直推main并核远端。check IDs依次为120298119063/120298119500、120298119272、120298119563、120298119399。本机qa/job-reconcile-publish.json与job-reconcile-kernel-attempt-1保存验证索引和原件；网页使用两次各自受改范围的定向DOM检查，没有重复跑旧完整流程。这里只关闭02B3的源码/隔离宿主范围，跨boot为判定模型验证，物理重启、生产部署、任意producer与完整02仍开放。
