@@ -506,3 +506,12 @@ harness [97a8946](https://github.com/HGamey/harness-ops/commit/97a894675b3804648
 4 项 runtime/13 项 artifact IO 本地回归各跑一次通过。首次 CI 因测试 `/opt` 祖先可被普通用户修改，安装器提前拒绝；保存失败原件，只调整 fixture 专属路径。最终真实非 root 启动链验证锁存续、日志/取消、原件归还、历史访问拒绝和三类入口拒绝，17PID全退，临时账户/域/安装/策略清理。四项 actual checks：code-only120197554622、protocol3.11/3.14 120197554157/120197554223、cgroup-kernel120197553890全success后同SHA直推main核远端。qa/job-privileged-*保存两次原件和验证/发布索引。
 
 只勾02A，完整02与JOB-EXEC-03保持开放。下一只读收束PF实时会话跨UID访问，不把有限作业结果交还冒充运行中producer通用可读；失联恢复另验。本轮未部署、访问手机、改真实lease或迁移数据。goal核实active，未关闭或暂停。
+
+
+## 2026-10-23 JOB-CONTAINMENT-02B1：跨账号实时PF控制与结果交还
+
+PF [b247ea2](https://github.com/HGamey/phonefarm/commit/b247ea253387f6bcce14acb1bce7f32a37f85f93)、harness [914f711](https://github.com/HGamey/harness-ops/commit/914f711629d757d85622ff5284ba42dd4875a900)已完成固定PF环境、同持久lease根、producer主动共享发布、node实时publisher及封存后历史读取。显式profile也适配普通process_group；旧私有queued输出在启动前拒绝，默认无profile不变。真实Linux链发现并修复目录API误用和越过输出边界同步祖先两处问题，前两次fixture/编译配置错误也保留原件。
+
+3项PF、4项受影响node回归及1条普通profile作业回归通过，PF构建签名通过。最终隔离Linux使用真实PF和synthetic transport，capture/同ID查询/stop/历史查询通过，1次截图958字节，活lease到最终clear；194已知PID全退、账户/域/安装/策略清理。actual code-only、protocol3.11/3.14、cgroup-kernel、pf-shared-kernel全部success后同SHA直推main，未部署或碰手机。详见[JOB-CONTAINMENT](JOB-CONTAINMENT.md)及本机qa/pf-shared-*。
+
+只勾02B1；完整02和goal保持开放。下一02B2先处理停充记录与封存来源恢复，02B3单列失联/重启域与输出交还；public contained仍不可用。用户再次询问关闭goal，实际get_goal核实active，未调用update_goal，未请求关闭或暂停。

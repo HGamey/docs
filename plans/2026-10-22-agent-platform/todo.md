@@ -95,7 +95,9 @@
 - [ ] JOB-CONTAINMENT-02 固定特权worker启动边界、跨UID实时工件/PF控制、worker丢失及主机重启后的域恢复；不得给HTTP服务或整个解释器提权代替此设计。
   - [x] JOB-CONTAINMENT-02A 固定root-owned入口/配置、runner锁FD交接、node-owned管理记录与完成后输出交还已发布97a8946。17本地相关回归及一条真实nonroot内核链通过，17PID全退；首次fixture祖先权限错误留原件。四项实际CI全成功后同SHA直推main，公共策略暂不启用、无部署。
   - [ ] JOB-CONTAINMENT-02B PF实时会话/设备lease跨UID权限，producer主动维护共享组及原子发布模式；失联/重启域恢复独立验证。
-    - [ ] JOB-CONTAINMENT-02B1 先按JOB-CONTAINMENT合同接通固定PF环境/持久锁域、worker创建scoped receipt与现有gray-control publisher跨UID访问；实际Linux PF+fake transport一条正常停止链验证，默认私有权限保持。全局battery恢复/任意producer/失联与重启恢复仍独立待验。
+    - [x] JOB-CONTAINMENT-02B1 先按JOB-CONTAINMENT合同接通固定PF环境/持久锁域、worker创建scoped receipt与现有gray-control publisher跨UID访问；实际Linux PF+fake transport一条正常停止链验证，默认私有权限保持。全局battery恢复/任意producer/失联与重启恢复仍独立待验。 已发布PF b247ea2/harness914f711，实际Linux跨UID链通过，四次失败原件保留；public contained仍false。
+    - [ ] JOB-CONTAINMENT-02B2 共享供电恢复记录与node私有封存会话来源分开；复用同上下文recovery_for，先验原worker已域空/交还的失败会话，不重新开放历史输出。
+    - [ ] JOB-CONTAINMENT-02B3 固定入口按job ID显式核查失联域及交还输出，补跨boot持久未封存作业核查与release门禁；不按历史PID发信号、不重放，不等同设备恢复。
 
 JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选这些完整条目。下一批围绕 JOB-EXEC-03/JOB-03/06；新想法先记录，不切走当前工作。
 

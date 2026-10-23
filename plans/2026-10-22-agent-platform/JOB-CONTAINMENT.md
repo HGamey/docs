@@ -101,16 +101,35 @@ SafeRoot 的显式特权发布模式保持管理 JSON 属于 node；原子替换
 02A 只完成固定入口与有限作业的结果交还。02B 的跨 UID 实时 PF 会话、失联/重启恢复、普通节点能力开放与实际部署均未完成；没有手机访问、真实 lease 修改或数据迁移。
 
 
-## JOB-CONTAINMENT-02B1：一条跨UID的PF实时控制链（下一批合同，未实现）
+## JOB-CONTAINMENT-02B1：一条跨UID的PF实时控制链（源码与隔离Linux验收完成）
 
 先完成固定入口→job UID的PF→同一持久lease域→scoped receipt→node UID查询/投递gray-control动作/读原件→正常停止封存这一条链。继续使用既有PF publisher、owner锁、动作ID和恢复schema；普通公共contained仍不启用。实际节点、手机、后台和历史数据不变。
 
-已核实的阻断：当前worker清洁环境只有PF_JOB_ID/IN/OUT，缺少与ID成对要求的PF_JOB_LEASE_DIR；dispatcher又在启动前创建out/lease-receipts，与空out要求冲突。HOME=out还会使PF默认state根按job变化。node的LeaseState只继承服务环境调用PF lease status，没有现成的共享固定配置入口。PF的queue_owner稳定锁、gray-control内部记录/owner/publisher锁/请求目录都显式使用0600/0700；仅调整最外层目录或umask无法让实时publisher工作。
+实施前的阻断：worker清洁环境只有PF_JOB_ID/IN/OUT，缺少与ID成对要求的PF_JOB_LEASE_DIR；dispatcher又在启动前创建out/lease-receipts，与空out要求冲突。HOME=out还会使PF默认state根按job变化。node的LeaseState只继承服务环境调用PF lease status，没有现成的共享固定配置入口。PF的queue_owner稳定锁、gray-control内部记录/owner/publisher锁/请求目录都显式使用0600/0700；仅调整最外层目录或umask无法让实时publisher工作。
 
-创建和配置职责：process_group保留现有receipt准备行为；contained保持out全空，由可信worker在验证身份与空目录后，经pinned out FD创建唯一lease-receipts目录，再注入PF_JOB_LEASE_DIR。持久PHONEFARM_STATE_DIR、DEVLOCK_DIR、PHONEFARM_LEASE_DIR由管理员配置；固定安装配置给node reader和worker提供相同的白名单PF环境，不接受请求自选根。实际位置继续由PF resolver及lease status.storage确认，Python不另造路径推导。不可读旧私有状态明确拒绝，不在线递归chmod已有状态。
+创建和配置职责：无profile的process_group保留原私有目录；显式profile下只对新out和lease-receipts设置同组2770，旧queued私有输出在启动前拒绝，不在线改权。contained保持out全空，由可信worker在验证身份与空目录后，经pinned out FD创建唯一lease-receipts目录，再注入PF_JOB_LEASE_DIR。持久PHONEFARM_STATE_DIR、DEVLOCK_DIR、PHONEFARM_LEASE_DIR由管理员配置；固定安装配置给node reader和worker提供相同的白名单PF环境，不接受请求自选根。实际位置继续由PF resolver及lease status.storage确认，Python不另造路径推导。不可读旧私有状态明确拒绝，不在线递归chmod已有状态。
 
 权限只对声明的PF会话输出和持久lease访问显式启用；新文件与原子替换文件均在发布前主动设置组/模式，默认独立CLI保持原行为。node helper必须能读取session.json/eval-session.json，并打开现有owner/publisher锁与请求目录；node_session继续调用同一PF helper。管理JSON、输入、凭据、安装代码和cgroup不加入输出共享范围。结束仍先封存job根，后交还输出；复用job身份不能访问历史。
 
 源码入口：harness的install_worker/worker_entry/job_cgroup/job_dispatch/node_lease/node_session；PF的小型显式权限策略及gray_control、devlease、queue_owner、confirmation_transport、lease_command和必要目录创建点/tools/devlock。不改方向调度、会话身份或结果schema，不新增账本或独立publisher。
 
 验收采用一条隔离Linux实际PF与固定入口链，传输用fake：node读取活lease和scoped receipt，既有session helper完成capture、同ID查询、stop，读取实际PNG及回执，结束后job身份不能读旧输出；相关默认权限回归确认不启用共享模式仍按旧行为。此前01B/02A通过不替代这条PF实链。全局battery恢复记录、任意producer实时输出、失联/重启域及输出恢复均另有验收义务，不能因正常停止链通过而宣称完成。
+
+
+02B1已发布PF [b247ea2](https://github.com/HGamey/phonefarm/commit/b247ea253387f6bcce14acb1bce7f32a37f85f93)与harness [914f711](https://github.com/HGamey/harness-ops/commit/914f711629d757d85622ff5284ba42dd4875a900)。固定worker配置给node与作业相同的白名单PF环境，配置只含路径/身份；共享目录2770、协调锁/追加记录660、原子记录和PNG640。既有不兼容对象不自动改权。会话只同步自身目录及声明输出根，worker负责管理祖先的持久化；结束封存后node按私有权限读历史回执。普通无profile路径保持原权限。
+
+3项PF定向回归、签名构建、4项受影响node回归通过；另外一条真实普通作业回归验证profile目录与环境、旧queued目录不启动且模式不变（修正测试入口名后通过，首个fixture错误保留）。最终Linux actual PF链完成活lease/scoped receipt、同publisher抓图/同ID查询/stop、两份内部manifest可读、封存后历史查询及旧job UID拒读。185次synthetic传输中只有1次截图，32×18 PNG原件958字节；capture和stop均completed，最终lease clear、exit0、cgroup absent。194个已知PID全部退出，临时账户/域/安装/策略清理完成。不代表真实设备画质、性能或完整游戏世界状态恢复。
+
+前四次失败原件均保留：①稀疏检出漏编译嵌入源；②runner私有祖先使新UID无法读checkout；③SafeRoot被错误用作context manager；④PF同步worker所有的仅可遍历job祖先时报权限错误。分别修正检出、复制真实测试输入到专属目录、使用已有close接口、按输出所有权限制同步范围；未放宽公共目录权限或跳过实际链。证据在本机qa/pf-shared-attempt-{1..5}、pf-shared-validation.json及pf-shared-publish.json。
+
+PF code-only120212099978，以及harness code-only120212249398、protocol3.11/3.14 120212250040/120212249871、cgroup-kernel120212250300、pf-shared-kernel120212250225全部completed/success后，同SHA直推main并核远端。没有部署、真实手机/lease操作或数据迁移。02B1仅完成这条正常停止链；完整02、任意producer、供电/失联恢复和public contained仍开放。
+
+## JOB-CONTAINMENT-02B2：供电记录与封存会话恢复（下一批设计，未实现）
+
+复用已有hwcond记录、gray控制父上下文及recovery_for，不引入新恢复账本。新供电恢复记录和必要目录在显式profile下按同组发布，旧私有记录明确拒绝；已有独占创建、fsync、原值/上下文绑定与回读检查保留。
+
+已交还node的旧job保持私有，下一job UID不能访问历史。恢复以node身份的process_group接续明确指定的旧session，当前恢复作业输出/receipt和全局state/lease继续共享；旧session来源按私有node权限核验，与新输出权限分开。不得删除整个共享环境或重新开放旧job树。首批只处理原worker已完成域清空和输出交还的旧作业，worker失联不能借此绕过内核核查。
+
+最小验收是一条隔离Linux实际PF链：battery采样后注入明确恢复回读失败，原worker完成域清空/输出交还，再由node恢复作业沿旧上下文恢复供电。核原始负结果保留、charge记录解除和旧job UID仍拒读历史；自然完成凭证缺失时的原恢复规则保持。不重做整套采样矩阵，不据此开放public contained。
+
+后续02B3另做worker失联/重启后的显式域核查与输出交还。固定可信入口仅按job ID和已配置根接管，复用runner/cgroup锁；不得按历史PID补发信号或重放命令。域清理不代表设备恢复。跨boot内核域会消失，磁盘未封存旧job仍可能存在；复用专用UID前必须核持久作业记录，普通queue release不能越过未确认的域/输出交还状态。
