@@ -124,12 +124,35 @@ SafeRoot 的显式特权发布模式保持管理 JSON 属于 node；原子替换
 
 PF code-only120212099978，以及harness code-only120212249398、protocol3.11/3.14 120212250040/120212249871、cgroup-kernel120212250300、pf-shared-kernel120212250225全部completed/success后，同SHA直推main并核远端。没有部署、真实手机/lease操作或数据迁移。02B1仅完成这条正常停止链；完整02、任意producer、供电/失联恢复和public contained仍开放。
 
-## JOB-CONTAINMENT-02B2：供电记录与封存会话恢复（下一批设计，未实现）
+## JOB-CONTAINMENT-02B2：供电记录与封存会话恢复（源码与隔离Linux验收完成）
 
 复用已有hwcond记录、gray控制父上下文及recovery_for，不引入新恢复账本。新供电恢复记录和必要目录在显式profile下按同组发布，旧私有记录明确拒绝；已有独占创建、fsync、原值/上下文绑定与回读检查保留。
 
 已交还node的旧job保持私有，下一job UID不能访问历史。恢复以node身份的process_group接续明确指定的旧session，当前恢复作业输出/receipt和全局state/lease继续共享；旧session来源按私有node权限核验，与新输出权限分开。不得删除整个共享环境或重新开放旧job树。首批只处理原worker已完成域清空和输出交还的旧作业，worker失联不能借此绕过内核核查。
 
+节点从 `recovery_for` 派生 `PF_RECOVERY_OUT`。旧来源根为当前node UID的0700时，PF保持其私有权限；仍为共享组2770的普通来源沿原共享合同写入。新的 `PF_JOB_OUT`、receipt、全局state/lease继续使用显式共享profile。既有对象不在线迁移或改权。
+
+网页、CLI和API共用 `jobs.session-recovery-v1`：`POST /jobs/{id}/session/recover`（网页前缀 `/dash/api`）只接受空JSON及必需的 `X-Request-ID`，立即返回新作业的普通status，带 `recovery_for`。节点从原descriptor确定serial/session路径，以process_group执行固定 `gray-layer session-recover` 命令并继承原资源。首次提交要求原作业finished+queue blocked、worker完成与对应进程范围absent；contained还要求输出已私有交还。fresh会话必须recovery_required且live_owner=false。结果未保存先retry-finalize，失联域先独立核查。原请求ID重试仍经既有内容指纹复用，即使会话已closed也不新建任务。
+
+CLI提交前打印请求ID与续查命令；网页按原job保存恢复请求ID和返回的job ID。客户端超时不自动重发，先查 `/requests/{id}`，同ID显式重试。成功回包只表示任务已记录，不代表恢复完成。局部恢复成功也不自动解除原queue屏障，仍需已有fresh lease clear与显式review note释放流程。
+
+网页“新建恢复尝试”先只读核上一恢复任务finished且queue done，再在原会话仍fresh/recovery_required时准备新ID；另行点击才提交，保留上一任务链接。未知或blocked不换ID。恢复子任务自身失败且设备恢复义务仍未完成时，不能先清除屏障；typed子链接续另列JOB-SESSION-RECOVERY-02，本批不宣称已覆盖。
+
 最小验收是一条隔离Linux实际PF链：battery采样后注入明确恢复回读失败，原worker完成域清空/输出交还，再由node恢复作业沿旧上下文恢复供电。核原始负结果保留、charge记录解除和旧job UID仍拒读历史；自然完成凭证缺失时的原恢复规则保持。不重做整套采样矩阵，不据此开放public contained。
 
+02B2已发布PF [f98f619](https://github.com/HGamey/phonefarm/commit/f98f6191c7e4790aec8f27842f0eee39917e9828)与harness [b1e4fab](https://github.com/HGamey/harness-ops/commit/b1e4fab842810e200efb0f4c52a55d361ff35d2a)。66项本地协议、两项供电恢复记录回归与定向网页检查通过；[实际Linux链](https://github.com/HGamey/harness-ops/actions/runs/39894591830/job/120221963445)验证1轮idle battery采样、明确回读失败、源job exit2/blocked、空域与私有交还、跨UID读取共享charge记录、typed异步恢复exit0、同请求ID复用和旧身份拒读历史。原始失败动作、采样、报告与charge绑定字节保留，源queue仍blocked。308次替身传输，321个已知PID全退出，临时账户/域/安装/策略清理完成。
+
+首轮失败发生在替身采样准备：漏建tracing祖先，导致创建后的实例存在检查失败，尚未到恢复；原始失败保留。修复仅补替身初始化及零轮idle语义，第二轮通过。所有必需检查及两个内核CI任务完成success后，同SHA直推main并核远端。没有部署、真实设备/lease操作或数据迁移；public contained仍不可用，完整02B/03B与整体计划仍开放。
+
 后续02B3另做worker失联/重启后的显式域核查与输出交还。固定可信入口仅按job ID和已配置根接管，复用runner/cgroup锁；不得按历史PID补发信号或重放命令。域清理不代表设备恢复。跨boot内核域会消失，磁盘未封存旧job仍可能存在；复用专用UID前必须核持久作业记录，普通queue release不能越过未确认的域/输出交还状态。
+
+
+## JOB-CONTAINMENT-02B3：显式核查旧域与持久交还义务（设计，未实现）
+
+固定特权入口增加有限reconcile操作，只收job ID及显式force选择，复用runner锁FD交接与cgroup根锁；活worker仍持锁时拒绝。核查打开既有绑定域，绝不重新运行launch命令。同boot确认旧域仍populated时，普通核查只报告，显式force才使用cgroup.kill；域空后复用return_outputs封存交还，不向历史PID或PGID发信号。
+
+首次将job根改为可遍历前，在现有meta.execution持久记录宿主boot、固定job UID/GID、域身份和输出尚未交还；正常收尾更新同一记录。持cgroup根锁的新启动除检查内核域，还须核固定jobs根里的未交还作业，防跨boot域已消失却重用UID访问旧输出。boot/身份不完整或域冲突保持unknown。新boot排除旧本机进程后仍需交还旧输出，不能据此宣称设备恢复。
+
+queue-release和typed session-recover消费同一宿主收尾资格。成功reconcile保留原lost/interrupted/outcome事实及设备recovery.required，不将事故改成正常finished；结果提交仍经过现有finalize锁与持久化边界。
+
+最小真实Linux负例：杀域外worker而保留setsid后代，确认queue-release/同UID新启动被挡、普通核查不杀进程；明确force后域空并交还输出，原lost保留且下一作业拒读历史。跨boot判定独立验证，不把同boot链写成物理重启验收。完成这组主机边界后，回到既定多机管理、游戏分发与结果流程；不因抽象风险无限追加同类防御批次。
