@@ -87,7 +87,7 @@
   - 旧devlock心跳遗留管道问题已修复b986fcf：zsh内建等待，明确停止并回收自建心跳；5项隔离回归通过，取消保留锁，不把信号退出当还原。
 
 - [x] JOB-FINISH-01 按[JOB-GROUP-COMPLETION](JOB-GROUP-COMPLETION.md)交付原进程组结束证据与资源保留，Web/CLI/维护页同事实；harness eb3e69d实际必需检查成功直推main。5既有测试、新增1条宿主双模式回归与定向DOM通过，8PID退出；只覆盖原进程组，无设备/部署。
-- [ ] JOB-DURABILITY-01 对关键job目录、launch/终态metadata明确fsync与SQLite提交次序；失败不得提前done，断电实测另列，不把原子rename当持久性。
+- [ ] JOB-DURABILITY-01 按[JOB-DURABILITY](JOB-DURABILITY.md)收束关键job目录、launch/终态metadata与SQLite提交边界；失败不得提前done，blocked保资源让出宿主名额，显式重试不重放命令。设计已写，尚未实现；准备失败缺候选的未执行依据须先固定。断电实测另列。
 - [ ] LEASE-IDENTITY-02 强lease/恢复上下文复用宿主boot/start身份，解释重启后的PID重用；不另造进程身份实现。
 - [ ] JOB-CONTAINMENT-01 明确setsid脱组后代的内核containment与跨OS能力边界；无该能力不能宣称整个进程树终止。
 
