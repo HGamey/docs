@@ -4,7 +4,7 @@
 
 ## 当前实施位置
 
-2026-10-24：M1多机目录子项已发布，Web/CLI共用持久登记、身份绑定及历史观测，合同与验收见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。M2首个 [GAME-DISTRIBUTION](GAME-DISTRIBUTION.md) 子项已发布harness 12eda9a：不可变游戏版本、持久宿主准备、内容缓存、Web/CLI及BASE-03旧APK增强统一；Doom只复用5项既有元数据。下一DIST-UPLOAD-01补本机大文件流式接收，然后继续设备部署/场景合同；不重下旧资源。完整设备实例能力、跨节点执行、失败恢复子链接续仍保留todo；生产部署、真实重启和手机验收单列。整体平台和goal仍未完成。
+2026-10-24：M1多机目录子项已发布，Web/CLI共用持久登记、身份绑定及历史观测，合同与验收见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。M2首个 [GAME-DISTRIBUTION](GAME-DISTRIBUTION.md) 子项已发布harness 12eda9a：不可变游戏版本、持久宿主准备、内容缓存、Web/CLI及BASE-03旧APK增强统一；Doom只复用5项既有元数据。[DIST-UPLOAD-01](GAME-UPLOAD.md)已发布harness 02da7cd：Web/CLI从本机分块上传、断线/重启接续、单资源后台校验，共用原内容缓存与任务系统。下一继续DIST-03/06的设备安装/资源部署/备份/场景合同，先对照PF现有lease和会话能力；不重下旧资源。完整设备实例能力、跨节点执行、失败恢复子链接续仍保留todo；生产部署、真实重启和手机验收单列。整体平台和goal仍未完成。
 
 ## 先解决什么问题
 
