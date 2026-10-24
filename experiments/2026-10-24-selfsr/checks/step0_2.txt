@@ -1,0 +1,35 @@
+== 2026-10-24 12:03:31 step0: devlock 能拿锁
+持锁中
+{"devices": null, "observation": "deferred", "reason": "device domain occupied or unknown: devlock.d", "schema": "phonefarm/fleet@1"}
+exit=0
+== step2: 一键关掉并还原 — 先挂层
+debug.knobs.npuop_budget_frames  = []
+debug.knobs.npuop_init_frame  = []
+debug.knobs.npuop_zc  = []
+debug.knobs.npuop_ts  = []
+state = <无>  (未施加)
+== 12:04:01 会话 phase=ready, 层已挂:
+
+
+app 内层文件: 
+== 12:04:01 一键关掉: phonefarm gray-layer off com.miHoYo.Yuanshen --serial 91253241019A
+    "unregistered_installations_verified": false
+  },
+  "schema": "phonefarm/gray-layer-deactivation@1",
+  "status": "verified"
+}
+== 12:09:24 关掉后:
+layers=[] app=[]
+app 内层文件: []
+state = <无>  (未施加)
+
+== 12:09:55 挂层会话 (--keep-prop) phase=ready:
+层 .so 在 app lib 目录: 1 个; debug.vulkan.layers=[VK_LAYER_refknobs_readonly]
+== 12:11:23 会话结束 (keep-prop, 层保留):
+层 .so 在 app lib 目录: 0 个; debug.vulkan.layers=[]
+state = <无>  (未施加)
+== 12:11:25 一键关掉: phonefarm gray-layer off com.miHoYo.Yuanshen --serial 91253241019A
+  "status": "verified"
+== 12:11:29 关掉后:
+层 .so 在 app lib 目录: 0 个; debug.vulkan.layers=[]
+state = <无>  (未施加)
