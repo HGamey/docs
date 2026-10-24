@@ -26,7 +26,7 @@
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
-  - [ ] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。
+  - [x] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。PF c37df6b已发布，9单元/8调用宿主链/code-only首过；无设备，父BASE-07仍开放。
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
   - 已发布订阅生命周期修复 `phonefarm 591889e`；本批 LEASE-OBSERVE-01 增加每帧互斥与异常屏障。远程认证接入已由REMOTE-OWNERSHIP完成；真机观察开销仍未核，完整条目保持开放。
 - [x] BUG-02 修复服务重启后job取消失效（225cb5c）；独立worker持有命令进程组和实际子进程对象，flock确认所有权，不凭保存PID发信号。旧任务继续可读，无法确认所有权时明确不支持取消。
@@ -120,7 +120,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、真实重启/其他producer、暂停、预算或两执行节点验收。失败恢复子链已发布，不再作为未完成重复实现。M4的RESULT-03/RESEARCH-05已发布，当前BASE-07外层结构化拒绝、CTRL-03截图绑定和BASE-04实际程序身份；真实设备阶段另列。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、真实重启/其他producer、暂停、预算或两执行节点验收。失败恢复子链已发布，不再作为未完成重复实现。M4的RESULT-03/RESEARCH-05已发布，BASE-07外层子项已发布，当前CTRL-03截图绑定，随后BASE-04实际程序身份；真实设备阶段另列。
 
 ## P1：结果发现、共享与研究状态
 
@@ -154,7 +154,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍�
 - [x] HUMAN-05 人的建议进入事件流，外部Agent记录采纳/暂缓理由；不静默覆盖预注册的旧实验方法。 fb9ecf1不可变反馈/事件与adopt/defer/reject理由已交付；新计划保留原research_revision，不改旧问题与旧方法。
 - [x] CTRL-01 将现有screen与基本点击/滑动/键输入接入node统一认证/API，网页设备页直接使用。 Android首批有限screen/live/tap/swipe/text/key/start/stop已统一operator认证与PF owner，见REMOTE-OWNERSHIP-REPAIR；高帧率/任意raw/HDC另列。
 - [ ] CTRL-02 人工接管/归还与Agent共用lease；有测量时先安全停止/还原并标记该轮状态，其他设备继续。
-- [ ] CTRL-03 截图带设备、方向、尺寸、时间和frame标识；动作绑定画面/坐标变换，避免点在陈旧截图。
+- [ ] CTRL-03 按[CONTROL-FRAME](CONTROL-FRAME.md)补普通owner截图设备/方向/尺寸/采集时间/frame、原坐标绑定、单次消费与执行前几何校验；灰层已有能力复用，不重做接管。
 - [x] CTRL-04 明确操作回执：已发出、传输失败、后端拒绝、可观测确认；退出码不冒充游戏已响应。 有限动作的accepted/started/completed/failed/unknown/not_executed和原ID找回已交付；completed只证明声明范围的命令/采集完成，应用响应未知不冒充确认。
 - [ ] CTRL-05 无人观看停采、断线释放触点/按键、测量时观察干扰控制；网页可见当前控制者与模式。
 

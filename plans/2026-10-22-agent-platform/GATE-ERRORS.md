@@ -1,6 +1,6 @@
 # BASE-GATE-JSON-01：外层准入拒绝
 
-2026-10-25，实施合同。仅补 phonefarm devlock gate 的可读结果，不改锁所有权、排队、producer 格式或 Node 恢复判定。
+2026-10-25，已发布 PF c37df6b，code-only 实际成功后同 SHA 推 main 并核远端。仅补 phonefarm devlock gate 的可读结果，不改锁所有权、排队、producer 格式或 Node 恢复判定。
 
 ## 输出合同
 
@@ -30,3 +30,9 @@ command_started:false 只表示本次 gate 未放行子命令。外层脚本可�
 已静读 GOL evaluate/optimize/enter_scene、PF MCP/experiment/parallel、Node eval/session 等实际消费者：它们以退出码或专属 schema 判断，不以 stdout 非空当成功。未承诺仓外私有脚本兼容。Node 合并日志和网页原文本展示已能呈现这一行，日志整体不是单一 JSON 文档；不新增推断卡片或自动重试。
 
 一条现有隔离宿主夹具扩展验证六类拒绝、capture 前置拒绝、普通非JSON调用，以及成功/已启动失败不被误标；运行既有 devlock 单元回归。重用现有构建缓存，签名后运行；不跑全套长集成或真机。BASE-07 的所有 producer 错误统一仍未完成，本批只收口明确的外层缺口。
+
+## 实际验证
+
+复用缓存的 debug 构建9.588秒，主程序与两测试程序均 codesign 后 verify。9条既有 devlock 单元通过；新增一条集中宿主链含8次CLI调用（6拒绝、继承成功和 acquire→child→producer参数失败→release），1.37秒测试内时间、1.821秒进程时间，首轮通过。所有调用 capture --frames 0，无 ADB/HDC；无效 owner 替身原件仍保留。新增超大 lock-wait 倍率用 checked_mul 返回参数拒绝，避免溢出。
+
+未重跑长集成或构建 release，不部署/真机。旧 release 仍为 cbc53e4；本批 debug 验收程序对应本提交源码。Web和Node原样日志无需改动；全producer错误统一仍在BASE-07，不能勾掉父项。证据本机 qa/gate-json-{build-1,tests-1,validation,checks,publish}.json 与宿主原件。
