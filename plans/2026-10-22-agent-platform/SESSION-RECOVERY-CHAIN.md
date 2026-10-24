@@ -1,6 +1,6 @@
 # JOB-SESSION-RECOVERY-02：失败恢复任务的原会话接续
 
-2026-10-25，下一批合同。仅源码、隔离宿主和既有 Linux CI；无生产或真实设备操作。只读依据：本机 qa/session-recovery-child-next.md。继承 [JOB-RECOVERY](JOB-RECOVERY.md) 的祖先资源借用与 [JOB-CONTAINMENT](JOB-CONTAINMENT.md) 的宿主完成边界。
+2026-10-25，已发布 harness `f6929726c2d143e3098bd7c8f1b14e650dcf170c`。仅源码、隔离宿主和既有 Linux CI；无生产或真实设备操作。只读依据：本机 qa/session-recovery-child-next.md。继承 [JOB-RECOVERY](JOB-RECOVERY.md) 的祖先资源借用与 [JOB-CONTAINMENT](JOB-CONTAINMENT.md) 的宿主完成边界。
 
 ## 身份与范围
 
@@ -37,3 +37,11 @@ CLI 新增 `session-recovery JOB` 只读同计划；`session-recover JOB --reque
 既有 Linux pf-shared-kernel 的 integration_pf_recovery.py 延长首恢复再次失败→第二恢复成功，核 actual PF_RECOVERY_OUT、私有原 out 与共享新 out、真实 receipt/recovery_of、旧 UID 权限与收尾。当前 Mac 不重复容器/设备实验；实际 Linux 检查由同 SHA CI 给证据。按 AGENTS 协议整轮一次，之后只修失败链。网页一次390流程展示叶子和原ID找回；不重做所有控制动作。
 
 真实设备、公共 contained 启用、跨 boot、历史未知 QA 屏障仍单列。本项不解除它们，也不以源码修复声称已恢复手机。
+
+## 发布证据与边界
+
+同 SHA 的 code-only、protocol (3.11)/(3.14)、pf-shared-kernel、cgroup-kernel 五项 actual check-runs 全部 success 后直推 main，并核 ls-remote。4 项定向首过 4.857s；119 项整轮首过 58.473s。Linux CI 使用真实 PF、不同 UID 和共享输出权限，实际完成原失败→R1 再失败→R2 限定恢复成功及显式叶子释放；成功不自动解除祖先屏障。
+
+390px 网页验收为一个真实浏览器 context、synthetic HTTP 替身：原 A 入口准备固定 R1 叶子，唯一恢复 POST 的响应截断后重载，计划已指 R2 仍按原 request ID 找回 R2，不重新提交、不改投入口。4 次显式计划读取，0 pageerror/横向溢出。产品流程完成后，QA 自身导出 receipt 遇循环 JSON 两次失败；保留原失败，从原 jsonl 整理计数，未重跑浏览器。此项不是实际 Node/PF 网页端到端，也不证明手机恢复。
+
+本机索引：`qa/session-recovery-chain-{validation,publish,checks,ui-validation}.json`。PID77330、端口54962和浏览器已关闭。未知历史 QA 屏障保留；PF 源码和 runtime 未改变。公共 contained、真实设备与跨 boot 另列，不因本批通过提前关闭。

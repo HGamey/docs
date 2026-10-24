@@ -117,7 +117,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
     - [x] JOB-CONTAINMENT-02B1 先按JOB-CONTAINMENT合同接通固定PF环境/持久锁域、worker创建scoped receipt与现有gray-control publisher跨UID访问；实际Linux PF+fake transport一条正常停止链验证，默认私有权限保持。全局battery恢复/任意producer/失联与重启恢复仍独立待验。 已发布PF b247ea2/harness914f711，实际Linux跨UID链通过，四次失败原件保留；public contained仍false。
     - [x] JOB-CONTAINMENT-02B2 共享供电恢复记录与node私有封存会话来源分开；Web/CLI/API typed异步恢复同上下文，先验原worker已域空/交还，不重新开放历史输出。PF f98f619/harness b1e4fab已通过实际CI后直推main；1轮battery失败→恢复链、幂等与原件保留通过，首轮替身失败保留。失联/跨boot及失败恢复子链接续仍分别待验。
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
-    - [ ] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。
+    - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
 JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、恢复子链/真实重启、暂停、预算或两执行节点验收。JOB-05仅剩失败恢复子链接续未收口。当前先完成M4既定批次，不重做已验队列/回执。
 
@@ -138,7 +138,7 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
 - [x] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。 fb9ecf1已交付单节点目标/方向、结果引用与覆盖声明；预算/优先级由外部Agent使用，不是硬限额或调度器。
   - [x] RESEARCH-STATE-01 [合同与验收](RESEARCH-STATE.md)：harness fb9ecf1五项actual required CI成功后同SHA main；116协议54.941s、两HTTP/CLI链1.881s首过。390实际流程分3context接续，5次JS/6次HTTP，浏览器重传仍1回执；两QA偏差及未实点分支如实保留。四类对象/CAS/历史/局部依赖/文本协助/事件与Web/CLI已交付，不新建调度器。
 - [x] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。 fb9ecf1独立revision/CAS、同研究局部依赖核环与历史已交付；原operation及重启接续已验，无私有聊天导入。
-- [ ] RESEARCH-03 参考prompt/skill + 稳定工具：消费反馈、选择可行方向、提交、回收、更新证据和优先级。
+- [ ] RESEARCH-03 按[RESEARCH-HARNESS](RESEARCH-HARNESS.md)交付参考prompt/skill与入口纠正：消费反馈、选择可行方向、提交、回收、更新证据和优先级；复用已有工具，不内置Agent。
 - [ ] RESEARCH-04 事件游标/watch、客户端通知适配和无人可做时的可恢复空闲；不无意义轮询。
 - [ ] RESEARCH-05 目标配置支持性能/画质/功耗权衡、原生基线和模块ms收益，保留Pareto结果而非全局固定一票否决。
 
