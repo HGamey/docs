@@ -51,6 +51,9 @@
 FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。完整设备身份/能力和跨节点执行仍开放；下一批按主线推进游戏分发，不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办。
 
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
+  - [x] FLEET-DEVICE-IDENTITY-01 按[DEVICE-IDENTITY](DEVICE-IDENTITY.md)交付PF权威device_id/alias登记、版本CAS与Web/CLI/API；PF1ce93b8/harnessae3c7e0已发布，126协议/3Rust/实际PF链/390网页与六项CI通过。JOB03必需前置；仍全域执行，不宣称物理核验。
+  - [ ] JOB-DEVICE-DOMAIN-01 单根v2布局、旧工具fence与兼容读路径；先冻结中断/未知记录处理，不迁移现有QA恢复屏障。
+  - [ ] JOB-DEVICE-LANES-01 在版本化单根与登记身份上接显式会话作用域、Node排队及局部恢复；不同设备实际并发，同机别名/全域/未知记录仍排他。
   - [x] FLEET-TARGET-01 [合同与验收](FLEET-TARGET.md)：harness548ca96五项actual CI成功后同SHA直推main。CLI/Web/API统一原node绑定，取消隐式后台/凭据fallback，legacy fleet不串token，部署restart同目标单次发送；110协议、实际HTTP/CLI与DOM/390浏览器通过。旧API无pin兼容边界明确，旧未绑定请求不自动续接。未部署/真机；legacy migrate缺SSH绑定暂unsupported，迁移仍留FUTURE-01。
 - [x] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。 共享目录展示已交付，见FLEET-DIRECTORY与FLEET-TARGET；运行二进制身份完善仍归BASE-04，展示不是跨节点执行或生产部署。
   - `/dash/fleet`与`pf-fleet --hub`已共用`/nodes`持久目录；显示所选远端身份、存储、设备/队列/lease/恢复快照及新鲜度。旧无hub模式兼容保留，跨节点任务代理与真实多机部署尚未完成。
