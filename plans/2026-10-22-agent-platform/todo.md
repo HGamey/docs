@@ -127,7 +127,7 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
   - [x] RESULT-INDEX-01 [RESULT-INDEX](RESULT-INDEX.md)：harness78dcfbb五项actual required CI成功后同SHA直推main；112协议/HTTP/CLI/真实12,498B Doom/DOM390验收通过。同节点不可变登记、固定ID找回、分页索引、Web/CLI与Doom/GOL显式小JSON导入。旧/失败/unknown可见；大原件留job/out，字节匹配不授予实验资格。跨节点索引另批，不提前勾RESULT-02/03。
 - [x] RESULT-02 已交付选定目录节点的结果检索，元数据与原件位置分离、原件回源；没有隐式复制/迁移。范围为源码与隔离节点，不含生产可达性或持久离线缓存。
   - [x] RESULT-FEDERATION-01 [RESULT-FEDERATION](RESULT-FEDERATION.md)：harness42b2605五项actual CI成功后同SHA直推main，114协议/两源HTTPCLI/DOM390通过；复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
-- [ ] RESULT-03 网页按游戏/设备/研究/方向检索、比较与下钻，CLI/API分页/游标查询同一索引。检索/分页/下钻已交付；当前只是单result内指标列表，跨结果候选对照仍需实现，不将文案“并列”当比较功能。
+- [ ] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)补显式候选矩阵；网页按游戏/设备/研究/方向检索、比较与下钻，CLI/API分页/游标查询同一索引。检索/分页/下钻已交付；当前只是单result内指标列表，跨结果候选对照仍需实现，不将文案“并列”当比较功能。
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
 - [x] RESULT-06 统一指标schema及Web/CLI已交付：模块/窗口/单位/电源轨/分母/ROI/全帧/方法与null分开；未核来源不授予科学有效性，producer全链身份仍留RESULT-07。
@@ -139,7 +139,7 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
   - [x] RESEARCH-STATE-01 [合同与验收](RESEARCH-STATE.md)：harness fb9ecf1五项actual required CI成功后同SHA main；116协议54.941s、两HTTP/CLI链1.881s首过。390实际流程分3context接续，5次JS/6次HTTP，浏览器重传仍1回执；两QA偏差及未实点分支如实保留。四类对象/CAS/历史/局部依赖/文本协助/事件与Web/CLI已交付，不新建调度器。
 - [x] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。 fb9ecf1独立revision/CAS、同研究局部依赖核环与历史已交付；原operation及重启接续已验，无私有聊天导入。
 - [x] RESEARCH-03 按[RESEARCH-HARNESS](RESEARCH-HARNESS.md)交付参考prompt/skill与入口纠正：消费反馈、选择可行方向、提交、回收、更新证据和优先级；复用已有工具，不内置Agent。已发布harness de01858/PF af96ae6，3技能校验及一次实际离线PF/HTTPCLI接续通过；首次夹具准备失败保留，唯一实际分析无设备调用，required CI同SHA main。
-- [ ] RESEARCH-04 按[RESEARCH-WATCH](RESEARCH-WATCH.md)交付研究元数据有界等待、绑定游标、Web显式监听/浏览位置及CLI JSON通知适配；无人可做时保存独立已处理位置，不无意义轮询。job/result事件与停止运行器的外部唤醒不由此流代替。
+- [x] RESEARCH-04 按[RESEARCH-WATCH](RESEARCH-WATCH.md)交付研究元数据有界等待、绑定游标、Web显式监听/浏览位置及CLI JSON通知适配；无人可做时保存独立已处理位置，不无意义轮询。job/result事件与停止运行器的外部唤醒不由此流代替。已发布df7c4ec，2定向/121协议/390真实NodeResearch与五项actual CI同SHA main；界面隐藏为模拟，容量/源码边界见合同。
 - [ ] RESEARCH-05 目标配置支持性能/画质/功耗权衡、原生基线和模块ms收益，保留Pareto结果而非全局固定一票否决。
 
 ## P1：异步人类协作与基础接管

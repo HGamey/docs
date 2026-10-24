@@ -1,6 +1,6 @@
 # RESEARCH-04：有界研究事件等待与接续
 
-2026-10-25，下一批实施合同。仅源码、隔离宿主与 CI。复用 [RESEARCH-STATE](RESEARCH-STATE.md) 的已提交事件及 [RESEARCH-HARNESS](RESEARCH-HARNESS.md) 的客户端交接，不新增 Agent、共享消费锁、任务调度器、消息代理或模型调用。
+2026-10-25，已发布harness df7c4ecece85ebb3b0b364b2a2a11b45ee05ca7b。仅源码、隔离宿主与 CI。复用 [RESEARCH-STATE](RESEARCH-STATE.md) 的已提交事件及 [RESEARCH-HARNESS](RESEARCH-HARNESS.md) 的客户端交接，不新增 Agent、共享消费锁、任务调度器、消息代理或模型调用。
 
 ## 流与游标
 
@@ -33,3 +33,11 @@ CLI `research events --wait-seconds 15 --cursor CURSOR` 单次 GET，沿现30秒
 一条真实HTTP/CLI纵向：空等截止→等待时并发提交及时返回→同库重启原cursor续读→原过滤/错误流/原事件锚不匹配被拒且保游标。核只发一GET、提交仅产生一原事件、等待无设备/队列任务；必要竞态/容量边界并入同一模块，不重写原CAS/媒体测试。协议整轮一次，失败仅续受影响项。
 
 一条390真实浏览器：显式监听→新事件可见且草稿保留→隐藏取消→显式原位置恢复→网络错误不推进→重载携带原浏览位置。仅isolated fixture，先冻结计划和资产，不重复全部研究UI验收。公开页面/CLI/API同级交付，源码与隔离结果不冒充生产部署。
+
+## 发布证据
+
+2新HTTP/CLI定向首过2.798s，121整轮协议首过61.723s；CLI/parser/skill与JS语法通过。五项actual required CI成功后同SHA main并核ls-remote。
+
+390实际浏览器+真实NodeResearch/HTTP首轮通过：7事件GET，2次fixture元数据写（另setup种子1），总HTTP38，最多1个浏览器事件在途；未保存草稿保持、隐藏后原cursor显式接续、截断正文错误不推进、重载仅恢复浏览位置。pageerror0、scrollWidth390；root已看截图。隐藏为headless内document.hidden/visibilitychange模拟，不是OS后台行为。5分钟预算、200DOM、4页补读和旧cap只静态核验。PID81725/57936和browser已关闭。
+
+本机证据qa/research-watch-{validation,publish,checks,ui-validation}.json、CLI和syntax记录。无设备/生产，研究流不替代job/result事件或已停止运行器的唤醒。下一[RESULT-03](RESULT-COMPARE.md)先交显式候选矩阵，RESEARCH-05随后复用。
