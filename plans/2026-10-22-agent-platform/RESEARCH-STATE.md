@@ -1,6 +1,6 @@
 # RESEARCH-STATE-01：独立研究状态与异步协助
 
-2026-10-25，合同冻结，待实施。依据产品准则和只读稿 qa/research-state-next.md。只做源码与隔离宿主/浏览器，不部署或操作真实手机。外部 Agent 自行排序和执行；这里保存元数据，不建立新的调度器，也不读取私有聊天历史。
+2026-10-25，合同已实现，协议通过，已发布 harness fb9ecf10336c7d24d5ff8ada359e233d342bd5ce，五项actual required检查成功后同SHA直推main并核远端。依据产品准则和只读稿 qa/research-state-next.md。只做源码与隔离宿主/浏览器，不部署或操作真实手机。外部 Agent 自行排序和执行；这里保存元数据，不建立新的调度器，也不读取私有聊天历史。
 
 ## 对象与版本
 
@@ -80,9 +80,9 @@ evidence_refs为有限typed引用，不接受可执行命令：
 
 ## Web、CLI与一条工作流程
 
-CLI `pf-node research list KIND [filters]`、`show KIND ID [--revision N]`、`history KIND ID [paging]`、`create KIND ID FILE [--operation-id ID]`、`update KIND ID FILE --revision N [--operation-id ID] --reason TEXT`、`operation ID`、`events [--after N --research-id ID --limit N]`；FILE为data对象，actor-label可选。共享Target/NoRedirect，写前打印原target/object/operation ID，至多读64KiB且只POST一次；未知只查原operation ID，不替用户合并并发草稿。
+CLI `pf-node research list KIND [filters]`、`show KIND ID [--revision N]`、`history KIND ID [paging]`、`create KIND ID FILE [--operation-id ID]`、`update KIND ID FILE --revision N [--operation-id ID] --reason TEXT`、`operation ID`、`events [--after N --research-id ID --limit N]`；FILE为data对象，actor-label可选。共享Target/NoRedirect，写前打印原target/object/operation ID，至多读64KiB且只POST一次；未知先查原operation ID，不自动重发、不替用户合并并发草稿。CLI再次写入需要显式相同operation-id及原内容；Web只有查询未找到回执后才显示显式原操作接续，固定原target/对象/base_revision。页面重载不留草稿，重新填写如与已提交内容不同会409，不悄悄新建ID。
 
-网页`/dash/research`提供研究列表/目标编辑、方向列表/局部依赖/处理反馈、三类协助请求/收件箱/答复/关闭、版本历史与原操作找回。基础文字字段用表单；复杂计划/预算/引用可展开JSON。编辑冻结base_revision，409保草稿和原操作ID，显式读新版本/另开编辑才可合并，不能自动覆盖。收到回答与依赖已处理分开显示。未决存kind/id/operation_id/target/base_revision，不保存完整草稿或素材到浏览器存储。
+网页`/dash/research`提供研究列表/目标编辑、方向列表/局部依赖/处理反馈、三类协助请求/收件箱/答复/关闭、版本历史与原操作找回。基础文字字段用表单；复杂计划/预算/引用可展开JSON。编辑冻结base_revision，409保草稿和原操作ID，显式读新版本/另开编辑才可合并，不能自动覆盖。收到回答与依赖已处理分开显示。未决存kind/id/operation_id/target/base_revision，不保存完整草稿或素材到浏览器存储。页面只发起一次 fetch，但浏览器传输层可在连接中断时重复同一 POST；操作幂等负责去重，不能把一次 UI 动作声称为网络上必然只有一次请求。
 
 验收流程：外部客户端创建研究及A/B两方向→A声明等待请求，B仍独立可更新/可选→网页对固定原问题回答→CLI读原反馈/事件→Agent显式记录采用/暂缓和依赖resolution→旧版本/原操作重启后可查。这个过程不要求内置GOL或自然人同步在线。
 
@@ -91,3 +91,14 @@ CLI `pf-node research list KIND [filters]`、`show KIND ID [--revision N]`、`hi
 两个协议纵向：同revision并发只有一个更新成功/原operation幂等先于CAS/服务重启与核环回滚；A等待不阻B、反馈追加/关闭/到期不自动解阻、旧上下文保留、权限和目标。一次实际390px浏览器主要流程覆盖创建/编辑/冲突草稿/请求回答/原ID找回；不新增手写DOM stub矩阵，不重复设备或旧结果导入。按AGENTS整轮协议一次，失败只修对应链。
 
 本批仅单节点共享研究/基础文本协助。后续仍做Agent参考prompt、事件watch/唤醒、明确实验方法/producer身份贯通、HUMAN-04盲化A/B、多用户真实身份/权限、研究跨节点协作以及部署/真机端到端。不把元数据可行性当设备准入或整个研究已完成。
+
+## 本批实现与验证记录
+
+- `node_research.py` 使用短 SQLite 事务保存四类对象；所有页面/CLI读取同一存储。历史 data、audit、evidence_bindings 不覆盖；当前事实另列 derived/current_revision。
+- direction.derived 为 unresolved_dependencies/metadata_blocked。request.derived 为 feedback_count/last_feedback_at/affected_directions/context_changed/overdue；affected_directions 项保存 id/revision/dependency_id/blocking/resolved。feedback.derived 固定 request_state_at_submit/request_revision_at_submit/context_changed_at_submit。research.derived 显示当前 direction_counts。
+- 事件项为 sequence/research_id/kind/id/revision/operation_id/at；history.items 是完整对象。列表游标固定首屏上界，不因新修改漏掉旧快照对象。
+- 两条真实隔离 HTTP/CLI 纵向首轮通过，2 项/1.881 秒；重建服务后复用同一数据根核历史和原操作。116 项完整协议一轮通过，54.941 秒。证据在本机 `qa/research-state-targeted-1.{log,json}` 和 `qa/research-state-protocol-1.{log,json}`，不重复跑已通过链。
+- 测试评价素材是明确的 synthetic/external 登记元数据，身份为 unverified，没有看过图像或声称实际主观评价。全部测试未创建执行任务、未调用 PF/GOL/设备，也未部署或移动历史数据。
+
+- Web 实际 390px 流程完成，源码未因 QA 改动。一次工作流分 3 个隔离 context 接续：首次 QA 用 innerText 读折叠内容失败；第二次连接直接断开触发 Chromium 传输层重试，服务正确去重，QA等待未知态超时；第三次仅补响应头后截断及原ID查询，随后完成历史/事件。总计5次JS研究提交、6次HTTP，4个成功独立操作和1个CAS拒绝；两个答复各1 revision/event。全部原始失败保留，没有重跑创建/B修改。冲突后的“另开草稿”按钮未实点，静读核过，不声称浏览器覆盖。
+- 390px无横向溢出，3个context均无pageerror；截断正文产生预期网络错误。两个fixture PID71605/72164退出，50671/50919不监听，所有浏览器context关闭。证据索引 `qa/research-state-ui-validation.json`；root已查看请求页截图。真实用户浏览器、设备与历史媒体未操作。
