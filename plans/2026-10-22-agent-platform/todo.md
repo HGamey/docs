@@ -123,16 +123,18 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 
 ## P1：结果发现、共享与研究状态
 
-- [ ] RESULT-01 任意合法job显式注册artifact/result，不再按命令名和近期200条目录猜测。
+- [x] RESULT-01 已发布显式登记、全量分页及通用job/out来源，旧/失败/unknown任务同样可登记；源码/隔离范围，不代表生产部署已完成。
+  - [x] RESULT-INDEX-01 [RESULT-INDEX](RESULT-INDEX.md)：harness78dcfbb五项actual required CI成功后同SHA直推main；112协议/HTTP/CLI/真实12,498B Doom/DOM390验收通过。同节点不可变登记、固定ID找回、分页索引、Web/CLI与Doom/GOL显式小JSON导入。旧/失败/unknown可见；大原件留job/out，字节匹配不授予实验资格。跨节点索引另批，不提前勾RESULT-02/03。
 - [ ] RESULT-02 元数据索引与原件存储位置分离；数据留原节点也可跨节点检索，复制/迁移是显式动作。
+  - [ ] RESULT-FEDERATION-01 下一批复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
 - [ ] RESULT-03 网页按游戏/设备/研究/方向检索、比较与下钻，CLI/API分页/游标查询同一索引。
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
-- [ ] RESULT-05 旧Doom自定义结果和GOL报告的兼容读取适配，原文件不可变；不靠重新运行实验补索引。
-- [ ] RESULT-06 指标schema明确模块/窗口/单位/电源轨/分母/ROI/全帧/实测或估算；缺失不填0。
+- [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
+- [x] RESULT-06 统一指标schema及Web/CLI已交付：模块/窗口/单位/电源轨/分母/ROI/全帧/方法与null分开；未核来源不授予科学有效性，producer全链身份仍留RESULT-07。
 - [ ] METRIC-OWNERSHIP-01 将当前场景trace的渲染线程/ctx与目标进程身份绑定，独立验证帧语义；不能从Unity默认comm或字符串筛选推断游戏FPS。03B4C2A先支持显式render_comm并保留未验证标记，没有筛选时帧指标为null、raw trace仍保留。复用已有render ownership能力，不为每个游戏另造过滤器。
 - [ ] ENERGY-WINDOW-01 复用trace parser导出完整GPU-submit分组对应的实际时间窗，对相同窗口电池积分后报告分组能耗估计；目标/显示语义未核时不能命名游戏每帧能耗。C2B2仅交capture窗口电池能量，energy_per_frame_mj保持null。
 - [ ] RESULT-07 source/runtime/game/device/scene/method/reader身份贯通；一个数字能定位原始证据和计算方法。
-- [ ] RESULT-08 失败、无收益、未执行、未知和恢复异常一等展示；不能只展正结果。
+- [x] RESULT-08 全部报告结论可筛选并同等展示，当前job恢复事实单列；旧/失败/unknown及GOL非kept记录验收通过。只覆盖索引展示，不替producer判定结果。
 - [ ] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。
 - [ ] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。
 - [ ] RESEARCH-03 参考prompt/skill + 稳定工具：消费反馈、选择可行方向、提交、回收、更新证据和优先级。

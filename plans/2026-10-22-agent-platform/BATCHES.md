@@ -571,3 +571,10 @@ PF `cbc53e4` / harness `58efc7f`，六项actual CI成功后同SHA直推main并�
 harness `548ca96`，五项actual required CI成功后同SHA直推main并核远端。统一 expected node guard（routing/body/100 Continue前）、CLI显式URL/凭据/能力、legacy fleet身份冻结、部署restart与Web目录/登录/未决请求绑定。旧raw API无pin仍兼容且不保证目标；legacy SSH migrate入口暂unsupported。完整合同见[FLEET-TARGET](FLEET-TARGET.md)。
 
 110本地协议48.551秒通过；两节点HTTP、operator/login、CLI关键合同、旧夹具适配、采样门和无害wrapper/未知restart通过。7项DOM与390px两origin浏览器只发1次POST、1次原IDGET、1次原件GET；初轮旧错误正文断言及fixture type/kind失败保留，只补相应项。无部署/手机/迁移/Rust变更；所有fixture/browser已清理，历史unknown lease仍保留。qa/fleet-target-{validation,publish,ui-validation}.json为本机索引。只关闭该子项，下一RESULT-INDEX-01，goal持续active。
+
+
+## 2026-10-25 RESULT-INDEX-01
+
+harness `78dcfbb` 五项actual required CI成功后同SHA直推main并核远端。交付显式不可变结果、分页与来源、API/CLI/Web、Doom/GOL小JSON原文原子导入；任意旧/失败/unknown任务可见，不依赖worker完成资格。原件留原job/out，变化时拒绝下载新字节冒充旧结果，null与模块语义保留。合同[RESULT-INDEX](RESULT-INDEX.md)。
+
+112本地协议49.507秒首轮通过；两纵向HTTP/CLI测试1.589秒及实际12,498B Doom报告导入0.592秒通过，16项原值/空值和原文不变，无新job。Web定向DOM与390px浏览器通过，1登记丢响应仅GET找回+1导入+原件下载；首次QA stub布尔转换失败保留，仅续跑余下分支。所有fixture/browser关闭。源码/隔离验收，不部署、不触手机/大原件，不声称新FPS/功耗收益。qa/result-index-{validation,publish,ui-validation,actual-doom-validation}.json留本机。下一RESULT-FEDERATION-01，goal active。
