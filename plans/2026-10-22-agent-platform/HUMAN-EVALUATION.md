@@ -1,6 +1,6 @@
 # HUMAN-EVALUATION-01：固定原件的图片/视频 A/B 评价
 
-2026-10-25，下一批合同冻结，尚未实施。属于 HUMAN-04；复用 RESEARCH-STATE 的四类对象、原操作、版本与结果来源。只做源码、隔离小媒体和浏览器，不部署、不操作手机、不复制旧实验媒体。只读审查依据在本机 qa/human-evaluation-next.md。
+2026-10-25，已发布 harness f7e1ee1704421794e9f2fc0f877f556e9631dbf6；五项实际必需CI成功后同提交直推main并核远端。属于 HUMAN-04；复用 RESEARCH-STATE 的四类对象、原操作、版本与结果来源。只做源码、隔离小媒体和浏览器，不部署、不操作手机、不复制旧实验媒体。只读审查依据在本机 qa/human-evaluation-next.md。
 
 ## 一条流程
 
@@ -66,7 +66,7 @@ HTML/SVG/JSON、未知/无法识别格式拒绝，不按后缀回退。容器识
 
 原件由显式按钮加载；video preload=none、无autoplay、默认静音和独立原生controls。响应式布局不交换A/B。隐藏、切换请求/离页时暂停并移除媒体src；再次显示不自动继续加载。图片contain缩放，显示原尺寸，不拉伸伪装同状态。素材变化/关闭问题/上下文版本差异各自显示，不合并成虚假的“评价有效”真值。
 
-Web/CLI同读写request/feedback；CLI create 带evaluation时先核新增能力。show request 返回固定版本的同源媒体路径/范围说明（不自动下载），CLI可用原有target认证读取指定槽位。丢回执只读原operation；修正答复新ID+supersedes，不重开问题或改依赖。
+Web/CLI同读写request/feedback；CLI create 带evaluation时先核新增能力。show request 返回固定版本的同源媒体路径/范围说明（不自动下载），CLI显式 `research media REQUEST A|B --revision N --output FILE`，使用同一target认证，只读一次整件流式下载；同遍核长度/SHA，完整后原子发布且不覆盖已有文件。失败仅处理本次partial，不自动重试或创建反馈。丢回执只读原operation；修正答复新ID+supersedes，不重开问题或改依赖。
 
 ## 最少验收与范围
 
@@ -76,3 +76,19 @@ Web/CLI同读写request/feedback；CLI create 带evaluation时先核新增能力
 
 后续参与者真实身份/更细权限、保密盲化、跨人随机化/一致性统计、裁片/ROI/同步播放另列；这些不算本批完成，也不要求同步等人。
 
+
+## 实现接口补充
+
+request.derived 的新增 evaluation 保存 schema/media_kind/slots，并给出 media.A/B（token API相对路径，含revision与expected_node_id）、limits(max_bytes/max_dimension/max_pixels)与blinding=presentation_only。网页沿同源dash API使用这些路径。详情仍只读元数据，不打开媒体。
+
+feedback.derived.evaluation_binding 保存原请求的schema/media_kind/slots及references.A/B、evidence_bindings.A/B。原data中的评价声明、服务端固定原件绑定、客户端显示报告与提交时上下文各自保留。旧对象不补任何evaluation键。
+
+媒体GET只允许revision/expected_node_id查询，Range用HTTP头，不新增meta/offset接口。明确错误：未绑定目标400 target_required；非AB问题409 research_evaluation_required；登记源不符合可读job_output元数据409 research_media_unbound；大小413 media_too_large、图像尺寸413 media_dimensions_exceeded、头格式415 media_unsupported；原件变化/缺失沿结果来源原错误。浏览器解码仍独立核。
+
+
+## 当前验收记录
+
+两条新 HTTP/CLI 纵向首次通过（1.241秒）；完整118项节点协议首次通过（55.825秒），无重复整轮。旧canonical回执、原请求绑定、变化/不支持/大小限制与实际CLI不覆盖下载已核。网页390链已完成：1个图像请求、2个主观答复共3次研究POST均201；PNG/JPEG与160×96、1.2秒MP4实际解码，失败视频415后提交无法判断。源身份展开后同页面重读仍记录true，一次现有CLI show核对原v1绑定。合成媒体共13,145B，仅用于平台验收，不作为Doom画质证据。首次QA的Playwright option.isDisabled断言不适配原生option；按真实DOM disabled属性确认后只续视频反馈，原失败保留，没有重发图片/请求写入。2个browser contexts均pageerror=0且390px无横向溢出，fixture PID75305和53126端口关闭。页面隐藏卸载仅静态审查，不宣称浏览器注入验证。本机索引 qa/human-evaluation-validation.json，原日志 human-evaluation-targeted-1.log 与 human-evaluation-protocol-1.log。
+
+
+同页素材身份揭示按 node/request/revision 记录在内存；重读不回退为未揭示，跨新页面/浏览器不追踪。它仍只是客户端声明，不是保密盲化证明。

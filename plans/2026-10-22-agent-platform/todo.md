@@ -117,7 +117,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
     - [x] JOB-CONTAINMENT-02B1 先按JOB-CONTAINMENT合同接通固定PF环境/持久锁域、worker创建scoped receipt与现有gray-control publisher跨UID访问；实际Linux PF+fake transport一条正常停止链验证，默认私有权限保持。全局battery恢复/任意producer/失联与重启恢复仍独立待验。 已发布PF b247ea2/harness914f711，实际Linux跨UID链通过，四次失败原件保留；public contained仍false。
     - [x] JOB-CONTAINMENT-02B2 共享供电恢复记录与node私有封存会话来源分开；Web/CLI/API typed异步恢复同上下文，先验原worker已域空/交还，不重新开放历史输出。PF f98f619/harness b1e4fab已通过实际CI后直推main；1轮battery失败→恢复链、幂等与原件保留通过，首轮替身失败保留。失联/跨boot及失败恢复子链接续仍分别待验。
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
-    - [ ] JOB-SESSION-RECOVERY-02 恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。
+    - [ ] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。
 
 JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、恢复子链/真实重启、暂停、预算或两执行节点验收。JOB-05仅剩失败恢复子链接续未收口。当前先完成M4既定批次，不重做已验队列/回执。
 
@@ -147,8 +147,8 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
 - [x] HUMAN-01 指导、数据/现场协助、主观评价三类持久请求；说明所需内容与依赖方向。 fb9ecf1三类持久请求与反向依赖投影已交付；本项基础文本，图片视频量表仍HUMAN-04。
 - [x] HUMAN-02 网页收件箱/回答/历史/状态，CLI/API同读写；回答有ID、对象版本和工件身份。 fb9ecf1研究页收件箱/回答/历史/状态与CLI/API同级，原版本及注册证据绑定保留；actor为自报标签而非实名身份。
 - [x] HUMAN-03 只阻断明确依赖的工作；反馈超时保持未知，不自动同意，不把所有方向置为等待。 fb9ecf1已验A等人/B独立，回复、关闭或到期都不自动解阻；显式resolution与处理理由独立保存。
-- [ ] HUMAN-04 图片/视频A/B主观评价，记录偏好、差异程度与评论；支持盲化/随机左右和过期反馈识别。
-  - [ ] HUMAN-EVALUATION-01 按[HUMAN-EVALUATION](HUMAN-EVALUATION.md)冻结合同：固定原件/排列、受限显式媒体读取、结构化主观反馈、界面隐藏标签和旧操作兼容；下一实施批。
+- [x] HUMAN-04 图片/视频A/B主观评价：HUMAN-EVALUATION-01已发布f7e1ee1，固定原件/随机一次、偏好/差异/评论和原上下文迟答；盲化仅界面隐藏标签，不宣称保密双盲，多人统计另列FUTURE-09。
+  - [x] HUMAN-EVALUATION-01 已发布f7e1ee1，固定原件/排列、受限显式媒体、结构化反馈、界面隐藏标签及旧canonical兼容。118协议/2新HTTPCLI/实际390媒体与五项CI通过；首轮QA断言保留，仅续视频反馈，详见[合同与边界](HUMAN-EVALUATION.md)。
 - [x] HUMAN-05 人的建议进入事件流，外部Agent记录采纳/暂缓理由；不静默覆盖预注册的旧实验方法。 fb9ecf1不可变反馈/事件与adopt/defer/reject理由已交付；新计划保留原research_revision，不改旧问题与旧方法。
 - [x] CTRL-01 将现有screen与基本点击/滑动/键输入接入node统一认证/API，网页设备页直接使用。 Android首批有限screen/live/tap/swipe/text/key/start/stop已统一operator认证与PF owner，见REMOTE-OWNERSHIP-REPAIR；高帧率/任意raw/HDC另列。
 - [ ] CTRL-02 人工接管/归还与Agent共用lease；有测量时先安全停止/还原并标记该轮状态，其他设备继续。
