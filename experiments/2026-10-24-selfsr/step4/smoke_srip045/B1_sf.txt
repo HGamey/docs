@@ -1,0 +1,37 @@
+	GameFrameRateOverrides=
+FrameRateOverrides=
+        (uid, frameRate)={10518, 144.00 Hz}
+    frameRateOverrideConfig=Enabled
+	Refresh Rate Map:
+	Refresh Rate Map:
+  Layer [18415] Background for 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#18415
+  Layer [18414] 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#18414
+  Layer [18409] com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity#18409
+  Layer [18409] com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity#18409
+  Layer [18414] 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#18414
+  Layer [18415] Background for 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#18415
+  Layer [18417] c868e0b ActivityRecordInputSink com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity#18417
+ │  │  │        │        ├─ e5dfc72 com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity#18408 pid=3231 uid=1000 isHiddenByPolicy = false
+ │  │  │        │        │  ├─ com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity#18409 pid=10644 uid=10518 isHiddenByPolicy = false
+ │  │  │        │        │  │  ├─ (Relative) 68b11cf SurfaceView[com.miHoYo.Yuans[...]Yo.GetMobileInfo.MainActivity]#18413 parent=18412 pid=10644 uid=10518 isHiddenByPolicy = false
+ │  │  │        │        │  │  │  └─ 68b11cf SurfaceView[com.miHoYo.Yuans[...]obileInfo.MainActivity](BLAST)#18414 requestedFrameRate: {144.00 Hz FrameRateCompatibility::ExactOrMultiple FrameRateCategory::Default} pid=10644 uid=10518 isHiddenByPolicy = false
+ │  │  │        │        │  │  └─ Bounds for - com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity#18412 pid=10644 uid=10518 isHiddenByPolicy = false
+           Z |  Window Type |  Layer Class | Comp Type |  Transform |   Disp Frame (LTRB) |          Source Crop (LTRB) |     Frame Rate (Explicit) (Seamlessness) [Focused]
+ 68b11cf SurfaceView[com.miHoYo.Yuans[...]obileInfo.MainActivity](BLAST)#18414
+    frameRateOverrideConfig=Enabled
+  - Output Layer 0xb400007758883c40(68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#18414)
+EGL_ANDROID_front_buffer_auto_refresh EGL_ANDROID_get_native_client_buffer EGL_ANDROID_presentation_time EGL_EXT_surface_CTA861_3_metadata EGL_EXT_surface_SMPTE2086_metadata EGL_KHR_get_all_proc_addresses EGL_KHR_swap_buffers_with_damage EGL_ANDROID_get_frame_timestamps EGL_EXT_gl_colorspace_scrgb EGL_EXT_gl_colorspace_scrgb_linear EGL_EXT_gl_colorspace_display_p3_linear EGL_EXT_gl_colorspace_display_p3 EGL_EXT_gl_colorspace_display_p3_passthrough EGL_EXT_gl_colorspace_bt2020_hlg EGL_EXT_gl_colorspace_bt2020_linear EGL_EXT_gl_colorspace_bt2020_pq EGL_ANDROID_image_native_buffer EGL_ANDROID_native_fence_sync EGL_ANDROID_recordable EGL_EXT_create_context_robustness EGL_EXT_image_gl_colorspace EGL_EXT_pixel_format_float EGL_EXT_protected_content EGL_EXT_yuv_surface EGL_IMG_context_priority EGL_KHR_create_context EGL_KHR_create_context_no_error EGL_KHR_fence_sync EGL_KHR_gl_colorspace EGL_KHR_gl_renderbuffer_image EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_3D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_image EGL_KHR_image_base EGL_KHR_lock_surface EGL_KHR_mutable_render_buffer EGL_KHR_no_config_context EGL_KHR_partial_update EGL_KHR_reusable_sync EGL_KHR_surfaceless_context EGL_KHR_wait_sync EGL_NV_context_priority_realtime 
+  peak-refresh-rate         : 144.00 Hz
+layer: 3757 name:    68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1 z: 0 composition: 2/1 alpha: 65535 format:              RGBA_8888 dataspace:0x08810000 transform: 90/0/0 buffer_id: 0xb400006db6a11300 secure: 0
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25372, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25369, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25370, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25365, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25371, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25367, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25368, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
++ name:68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity]#1(BLAST Consumer)1, id:25366, size:8432.00KiB, w/h:2141x969, usage: 0xb00, req fmt:1, fourcc/mod:875708993/0, dataspace: 0x8810000, compressed: false
+refresh_rate_overlay_on_external_display: false
+idle_screen_refresh_rate_timeout: true
+latch_unsignaled_with_auto_refresh_changed: true
+use_known_refresh_rate_for_fps_consistency: false

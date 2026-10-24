@@ -1,0 +1,9 @@
+orig min=null peak=null refresh_rate_mode=0
+base: mPeriod: 16634454 ns (60.116 fps) | 
+A min/peak=144: mPeriod: 16634667 ns (60.115 fps) | 
+B refresh_rate_mode=1: mPeriod: 16633683 ns (60.119 fps) | 
+B refresh_rate_mode=2: mPeriod: 11088338 ns (90.185 fps) | 
+B refresh_rate_mode=3: mPeriod: 8313870 ns (120.281 fps) | 
+B refresh_rate_mode=4: mPeriod: 6921030 ns (144.487 fps) | 
+after: mPeriod: 8314486 ns (120.272 fps) | 
+restored min=null peak=null refresh_rate_mode=0
