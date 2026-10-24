@@ -49,7 +49,7 @@
 FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。完整设备身份/能力和跨节点执行仍开放；下一批按主线推进游戏分发，不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办。
 
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
-  - [ ] FLEET-TARGET-01 统一pf-node/pf-fleet/网页的显式目标选择；清点旧CLI的隐式生产URL与凭据fallback，给出迁移兼容策略。写入前让目标node_id和存储位置可核对，不因旧默认配置误投到另一后台。
+  - [x] FLEET-TARGET-01 [合同与验收](FLEET-TARGET.md)：harness548ca96五项actual CI成功后同SHA直推main。CLI/Web/API统一原node绑定，取消隐式后台/凭据fallback，legacy fleet不串token，部署restart同目标单次发送；110协议、实际HTTP/CLI与DOM/390浏览器通过。旧API无pin兼容边界明确，旧未绑定请求不自动续接。未部署/真机；legacy migrate缺SSH绑定暂unsupported，迁移仍留FUTURE-01。
 - [ ] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。
   - `/dash/fleet`与`pf-fleet --hub`已共用`/nodes`持久目录；显示所选远端身份、存储、设备/队列/lease/恢复快照及新鲜度。旧无hub模式兼容保留，跨节点任务代理与真实多机部署尚未完成。
 - [ ] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。

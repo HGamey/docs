@@ -564,3 +564,10 @@ harness dd003401af2bdff6611e6d4baabef3350e75a150已检查成功后同SHA直推ma
 PF `cbc53e4` / harness `58efc7f`，六项actual CI成功后同SHA直推main并核远端。Doom v73场景请求沿原game-deploy队列，冻结原部署report+session与两个小种子，复用initialize唯一owner、有界启动/日志/截图/停止及未知恢复；Web/CLI/API同批。原资源只读、新runtime有意保留，配置或冷启/同状态未核仍unknown，不授予性能资格。
 
 104协议42.040秒、3Rust、实际PF三替身链117传输、旧initialize两相关回归43传输、DOM/390浏览器首次全过，291个已知PF/transport PID全退；浏览器和fixture亦退出。source-invalid和未知恢复零传输，两个unknown-launch负租约保留。未操作真机/生产或旧大文件。完整边界见[GAME-SCENE](GAME-SCENE.md)，证据qa/game-scene-{validation,publish,ui-validation}.json留本机。只勾本子项；下一FLEET-TARGET-01修复已确认的隐式后台和凭据串用，goal继续active。
+
+
+## 2026-10-25 FLEET-TARGET-01
+
+harness `548ca96`，五项actual required CI成功后同SHA直推main并核远端。统一 expected node guard（routing/body/100 Continue前）、CLI显式URL/凭据/能力、legacy fleet身份冻结、部署restart与Web目录/登录/未决请求绑定。旧raw API无pin仍兼容且不保证目标；legacy SSH migrate入口暂unsupported。完整合同见[FLEET-TARGET](FLEET-TARGET.md)。
+
+110本地协议48.551秒通过；两节点HTTP、operator/login、CLI关键合同、旧夹具适配、采样门和无害wrapper/未知restart通过。7项DOM与390px两origin浏览器只发1次POST、1次原IDGET、1次原件GET；初轮旧错误正文断言及fixture type/kind失败保留，只补相应项。无部署/手机/迁移/Rust变更；所有fixture/browser已清理，历史unknown lease仍保留。qa/fleet-target-{validation,publish,ui-validation}.json为本机索引。只关闭该子项，下一RESULT-INDEX-01，goal持续active。
