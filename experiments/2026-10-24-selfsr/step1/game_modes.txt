@@ -1,0 +1,18 @@
+com.miHoYo.Yuanshen current mode: standard, available game modes: [standard,custom]
+com.miHoYo.Yuanshen interventions: 
+ No intervention found for package com.miHoYo.Yuanshen
+*Dump GameManagerService*
+
+ No intervention found for package com.kurogame.wutheringwaves.global
+
+ No intervention found for package com.hypergryph.endfield
+
+ No intervention found for package com.xiaoji.egggame.redmagic
+
+ No intervention found for package com.limelight
+
+ No intervention found for package com.miHoYo.Yuanshen
+
+ No intervention found for package com.miHoYo.GenshinImpact
+
+ No intervention found for package com.zte.streamgame

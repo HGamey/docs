@@ -1,0 +1,41 @@
+Display 4630947168392018835 (active) HWC layers:
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Layer name
+           Z |  Window Type |  Layer Class | Comp Type |  Transform |   Disp Frame (LTRB) |          Source Crop (LTRB) |     Frame Rate (Explicit) (Seamlessness) [Focused]
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 68b11cf SurfaceView[com.miHoYo.Yuans[...]MobileInfo.MainActivity](BLAST)#4793
+           9 |            0 |            0 |     DEVICE |     ROT_90 |    0    0 1216 2688 |    0.0    0.0 2141.0  969.0 |                                              [*]
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+ ScreenDecorHwcOverlay#88
+          20 |         2024 |            0 | DISPLAY_DECORATION |          0 |    0    0 1216 2688 |    0.0    0.0 1216.0 2688.0 |                                              [ ]
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Window Infos:
+  max send vsync id: -1
+  max send delay (ns): 0 ns
+  unsent messages: 0
+
+Displays (1 entries)
+Display 4630947168392018835
+    port=147
+    connectionType=Internal
+    colorModes=
+        ColorMode::NATIVE
+        ColorMode::SRGB
+        ColorMode::DISPLAY_P3
+    deviceProductInfo={name="", manufacturerPnpId=QCM, productId=1, manufactureWeek=27, manufactureYear=2006, relativeAddress=[]}
+    name=""
+    powerMode=On
+    optimizationPolicy=optimizeForPerformance
+    renderRate=60.00 Hz
+    activeMode={id=0, hwcId=0, resolution=1216x2688, vsyncRate=60.00 Hz, dpi=428.98x432.12, group=0, vrrConfig=N/A, supportedHdrTypes=SYSTEM}
+    displayModes=
+        {id=0, hwcId=0, resolution=1216x2688, vsyncRate=60.00 Hz, dpi=428.98x432.12, group=0, vrrConfig=N/A, supportedHdrTypes=SYSTEM}
+        {id=1, hwcId=1, resolution=1216x2688, vsyncRate=144.00 Hz, dpi=428.98x432.12, group=0, vrrConfig=N/A, supportedHdrTypes=SYSTEM}
+        {id=2, hwcId=2, resolution=1216x2688, vsyncRate=120.00 Hz, dpi=428.98x432.12, group=0, vrrConfig=N/A, supportedHdrTypes=SYSTEM}
+        {id=3, hwcId=3, resolution=1216x2688, vsyncRate=90.00 Hz, dpi=428.98x432.12, group=0, vrrConfig=N/A, supportedHdrTypes=SYSTEM}
+    displayManagerPolicy={defaultModeId=0, allowGroupSwitching=true, primaryRanges={physical=[60.00 Hz, 60.00 Hz], render=[60.00 Hz, 60.00 Hz]}, appRequestRanges={physical=[60.00 Hz, 60.00 Hz], render=[60.00 Hz, 60.00 Hz]} idleScreenConfig=nullptr}
+    frameRateOverrideConfig=Enabled
+    idleTimer=
+        interval=nullopt
+        controller=Platform

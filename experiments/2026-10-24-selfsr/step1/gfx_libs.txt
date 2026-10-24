@@ -1,0 +1,16 @@
+/storage/emulated/0/Android/data/com.miHoYo.Yuanshen/files/il2cpp/Metadata/global-metadata.dat
+/storage/emulated/0/Android/data/com.miHoYo.Yuanshen/files/il2cpp/Resources/mscorlib.dll-resources.dat
+/system/lib64/libegl_flags.so
+/system/lib64/libEGL.so
+/system/lib64/libGLESv1_CM.so
+/system/lib64/libGLESv2.so
+/system/lib64/libGLESv3.so
+/system/lib64/libvulkan.so
+/vendor/lib64/egl/eglSubDriverAndroid.so
+/vendor/lib64/egl/libEGL_adreno.so
+/vendor/lib64/egl/libGLESv1_CM_adreno.so
+/vendor/lib64/egl/libGLESv2_adreno.so
+/vendor/lib64/hw/vulkan.adreno.so
+/vendor/lib64/libadreno_app_profiles.so
+/vendor/lib64/libadreno_utils.so
+/vendor/lib64/libgsl.so

@@ -1,0 +1,11 @@
+global.enable_gpu_debug_layers=null
+global.gpu_debug_app=null
+global.gpu_debug_layers=null
+global.gpu_debug_layer_app=null
+global.game_driver_opt_in_apps=null
+debug.vulkan.layers=
+debug.gles.layers=
+ro.debuggable=0
+ro.hardware.vulkan=adreno
+ro.hardware.egl=adreno
+debug.hwui.renderer=
