@@ -125,8 +125,8 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 
 - [x] RESULT-01 已发布显式登记、全量分页及通用job/out来源，旧/失败/unknown任务同样可登记；源码/隔离范围，不代表生产部署已完成。
   - [x] RESULT-INDEX-01 [RESULT-INDEX](RESULT-INDEX.md)：harness78dcfbb五项actual required CI成功后同SHA直推main；112协议/HTTP/CLI/真实12,498B Doom/DOM390验收通过。同节点不可变登记、固定ID找回、分页索引、Web/CLI与Doom/GOL显式小JSON导入。旧/失败/unknown可见；大原件留job/out，字节匹配不授予实验资格。跨节点索引另批，不提前勾RESULT-02/03。
-- [ ] RESULT-02 元数据索引与原件存储位置分离；数据留原节点也可跨节点检索，复制/迁移是显式动作。
-  - [ ] RESULT-FEDERATION-01 下一批复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
+- [x] RESULT-02 已交付选定目录节点的结果检索，元数据与原件位置分离、原件回源；没有隐式复制/迁移。范围为源码与隔离节点，不含生产可达性或持久离线缓存。
+  - [x] RESULT-FEDERATION-01 [RESULT-FEDERATION](RESULT-FEDERATION.md)：harness42b2605五项actual CI成功后同SHA直推main，114协议/两源HTTPCLI/DOM390通过；复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
 - [ ] RESULT-03 网页按游戏/设备/研究/方向检索、比较与下钻，CLI/API分页/游标查询同一索引。
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
@@ -136,6 +136,7 @@ JOB-EXEC-01/02只覆盖 JOB-01/03/04/05/06/07 的基础部分，不提前勾选�
 - [ ] RESULT-07 source/runtime/game/device/scene/method/reader身份贯通；一个数字能定位原始证据和计算方法。
 - [x] RESULT-08 全部报告结论可筛选并同等展示，当前job恢复事实单列；旧/失败/unknown及GOL非kept记录验收通过。只覆盖索引展示，不替producer判定结果。
 - [ ] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。
+  - [ ] RESEARCH-STATE-01 按[RESEARCH-STATE](RESEARCH-STATE.md)冻结合同：四类持久对象、版本/CAS/操作回执、局部依赖、基础文本协助与事件，Web/CLI同批；不另建调度器、不自动批准或解除依赖。
 - [ ] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。
 - [ ] RESEARCH-03 参考prompt/skill + 稳定工具：消费反馈、选择可行方向、提交、回收、更新证据和优先级。
 - [ ] RESEARCH-04 事件游标/watch、客户端通知适配和无人可做时的可恢复空闲；不无意义轮询。

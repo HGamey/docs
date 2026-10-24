@@ -578,3 +578,10 @@ harness `548ca96`，五项actual required CI成功后同SHA直推main并核远�
 harness `78dcfbb` 五项actual required CI成功后同SHA直推main并核远端。交付显式不可变结果、分页与来源、API/CLI/Web、Doom/GOL小JSON原文原子导入；任意旧/失败/unknown任务可见，不依赖worker完成资格。原件留原job/out，变化时拒绝下载新字节冒充旧结果，null与模块语义保留。合同[RESULT-INDEX](RESULT-INDEX.md)。
 
 112本地协议49.507秒首轮通过；两纵向HTTP/CLI测试1.589秒及实际12,498B Doom报告导入0.592秒通过，16项原值/空值和原文不变，无新job。Web定向DOM与390px浏览器通过，1登记丢响应仅GET找回+1导入+原件下载；首次QA stub布尔转换失败保留，仅续跑余下分支。所有fixture/browser关闭。源码/隔离验收，不部署、不触手机/大原件，不声称新FPS/功耗收益。qa/result-index-{validation,publish,ui-validation,actual-doom-validation}.json留本机。下一RESULT-FEDERATION-01，goal active。
+
+
+## 2026-10-25 RESULT-FEDERATION-01
+
+harness `42b2605` 五项actual required CI成功后同SHA直推main并核远端。明确targets(name/node_id/revision)、4个服务级reader槽/8秒截止、源身份pin、逐源页/错误及Web/CLI回源；原件不复制。合同[RESULT-FEDERATION](RESULT-FEDERATION.md)。
+
+114协议52.856秒与两条实际HTTP/CLI链3.279秒首过；6个fixture server、reader槽全收尾。DOM/390页通过2远查/1源导航，无写入/设备/源API；两个QA替身/后置断言错误原件保留，只续相应分支，未重跑已过浏览器。page_errors未保存不声称零。PID69371与65113/65112及浏览器已关闭。qa/result-federation-{validation,publish,ui-validation}.json留本机。无生产/手机/大原件，旧unknown义务保留；下一RESEARCH-STATE-01，goal active。
