@@ -69,7 +69,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [x] DIST-02 网页游戏目录与准备状态，CLI inspect/prepare；分别显示已下载、已安装、资源就绪、等待登录、场景就绪。 目录、准备与各typed回执已Web/CLI同级显示；login/scene无证据保持unknown，实际场景资格与协助接线仍留DIST-03/08。
 - [ ] DIST-03 复用已有Doom样本建立第一个recipe；不重新下载现有大资源，不在规划阶段触碰手机。
   - [x] DIST-SCENE-01 [合同与验收](GAME-SCENE.md)：PF cbc53e4/harness58efc7f六项actual CI成功后同SHA直推main。旧部署证据+两小种子、新运行根、有界诊断与共用恢复，Web/CLI/API齐备。104协议、3Rust、actualPF三链117传输/242PID、旧initialize两回归43传输/49PID及DOM/390浏览器首次通过；未知QA屏障保留。仅源码/隔离宿主范围，未部署/真机，真实demo原件与冷启消费仍未核。
-- [ ] DIST-04 节点直取文件、流式接收、断点续传、接收端hash、原子完成、内容缓存和空间预检。
+- [x] DIST-04 节点直取、流式接收、断点续传、接收端hash、原子缓存与空间预检的源码流程已由12eda9a/02da7cd交付；下列DIST-LARGEFILE-01多GiB资源使用验收仍独立开放，不代表该负载已验。
   - [x] DIST-UPLOAD-01 [合同与验收](GAME-UPLOAD.md)：harness 02da7cd同一缓存分块接收/原ID接续/单资产worker校验，Web/CLI同批；本地88项协议及定向修复、DOM/实际浏览器替身通过，五项actual CI成功后同SHA直推main。未部署、未操作手机。
   - [ ] DIST-LARGEFILE-01 在有空间预算的隔离节点验证多GiB流式上传的内存/磁盘使用和断线接续；复用已授权素材或可控合成流，不在本Mac重复下载/复制旧Doom大文件。
 - [ ] DIST-05 任务输入/输出改为显式工件引用和依赖清单；处理嵌套JSON/脚本路径，避免只有argv重写有效。
@@ -89,10 +89,10 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
   - 58fc0dc已完成SQLite原子领取、声明资源排队及宿主并发上限；本批2b4747e接入宿主lease屏障、恢复任务和独立阻断容量；原子设备所有权与旧global锁解除串行仍待做。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
-- [ ] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复操作；CLI/API同等功能。
+- [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
 - [ ] JOB-06 掉线、重启、超时、用户取消、失去lease后执行明确收尾；恢复失败占用独立屏障，不用exit0掩盖。
 - [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
-- [ ] JOB-08 一条方向等人/缺设备时，其他可行任务继续；队列等待与Agent研究优先级分开。
+- [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；多设备并行锁域仍归JOB-03。
 - [ ] JOB-09 任务/研究预算、超时与磁盘上限；停止后可解释哪些动作发生、哪些没发生、哪些恢复待核。
 - [ ] JOB-10 完成两节点故障注入验收，然后单列实际手机的准备、执行、还原验收。
 
@@ -119,7 +119,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、恢复子链/真实重启、暂停、预算或两执行节点验收。JOB-05仅剩失败恢复子链接续未收口。当前先完成M4既定批次，不重做已验队列/回执。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、真实重启/其他producer、暂停、预算或两执行节点验收。失败恢复子链已发布，不再作为未完成重复实现。当前完成M4的RESULT-03/RESEARCH-05，随后BASE-07外层结构化拒绝、CTRL-03截图绑定和BASE-04实际程序身份；真实设备阶段另列。
 
 ## P1：结果发现、共享与研究状态
 
@@ -127,7 +127,8 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
   - [x] RESULT-INDEX-01 [RESULT-INDEX](RESULT-INDEX.md)：harness78dcfbb五项actual required CI成功后同SHA直推main；112协议/HTTP/CLI/真实12,498B Doom/DOM390验收通过。同节点不可变登记、固定ID找回、分页索引、Web/CLI与Doom/GOL显式小JSON导入。旧/失败/unknown可见；大原件留job/out，字节匹配不授予实验资格。跨节点索引另批，不提前勾RESULT-02/03。
 - [x] RESULT-02 已交付选定目录节点的结果检索，元数据与原件位置分离、原件回源；没有隐式复制/迁移。范围为源码与隔离节点，不含生产可达性或持久离线缓存。
   - [x] RESULT-FEDERATION-01 [RESULT-FEDERATION](RESULT-FEDERATION.md)：harness42b2605五项actual CI成功后同SHA直推main，114协议/两源HTTPCLI/DOM390通过；复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
-- [ ] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)补显式候选矩阵；网页按游戏/设备/研究/方向检索、比较与下钻，CLI/API分页/游标查询同一索引。检索/分页/下钻已交付；当前只是单result内指标列表，跨结果候选对照仍需实现，不将文案“并列”当比较功能。
+- [x] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)交付同节点显式候选矩阵e9d0e12；已有检索/分页/下钻加2–4列精确metric_index对照，允许同报告多condition、原值差/部分失败/描述缺口、Web导出与深链、CLI单GET。1定向/122协议/390真实HTTP及五项actual CI通过；不宣称科学资格或完整跨节点候选比较。跨节点详情/混合比较待RESULT-CROSS-COMPARE-01。
+- [ ] RESULT-CROSS-COMPARE-01 复用已有远端索引和显式node身份，提供有界远端详情与候选比较；各节点基线/来源独立，不从同名指标自动拼同一实验。
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
 - [x] RESULT-06 统一指标schema及Web/CLI已交付：模块/窗口/单位/电源轨/分母/ROI/全帧/方法与null分开；未核来源不授予科学有效性，producer全链身份仍留RESULT-07。
@@ -140,7 +141,7 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
 - [x] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。 fb9ecf1独立revision/CAS、同研究局部依赖核环与历史已交付；原operation及重启接续已验，无私有聊天导入。
 - [x] RESEARCH-03 按[RESEARCH-HARNESS](RESEARCH-HARNESS.md)交付参考prompt/skill与入口纠正：消费反馈、选择可行方向、提交、回收、更新证据和优先级；复用已有工具，不内置Agent。已发布harness de01858/PF af96ae6，3技能校验及一次实际离线PF/HTTPCLI接续通过；首次夹具准备失败保留，唯一实际分析无设备调用，required CI同SHA main。
 - [x] RESEARCH-04 按[RESEARCH-WATCH](RESEARCH-WATCH.md)交付研究元数据有界等待、绑定游标、Web显式监听/浏览位置及CLI JSON通知适配；无人可做时保存独立已处理位置，不无意义轮询。job/result事件与停止运行器的外部唤醒不由此流代替。已发布df7c4ec，2定向/121协议/390真实NodeResearch与五项actual CI同SHA main；界面隐藏为模拟，容量/源码边界见合同。
-- [ ] RESEARCH-05 目标配置支持性能/画质/功耗权衡、原生基线和模块ms收益，保留Pareto结果而非全局固定一票否决。
+- [ ] RESEARCH-05 按[RESEARCH-CRITERIA](RESEARCH-CRITERIA.md)交付版本化目标、预声明候选、原生基线/模块ms规则和条件性点值Pareto；复用RESULT-03，不以质量或未采功耗固定一票否决，不改原报告结论。
 
 ## P1：异步人类协作与基础接管
 

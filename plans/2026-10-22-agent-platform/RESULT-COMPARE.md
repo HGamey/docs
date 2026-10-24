@@ -1,6 +1,6 @@
 # RESULT-03：显式候选指标矩阵
 
-2026-10-25，下一批实施合同。仅源码、隔离宿主与 CI。先交同节点2–4列显式数值对照，随后 RESEARCH-05 复用同一选择/范围加目标判据与条件性点估计 Pareto。原始登记值可以有用，不要求先完成 RESULT-07 才显示算术；字段一致也不能升级为已证明科学可比。
+2026-10-25，实施合同。仅源码、隔离宿主与 CI。先交同节点2–4列显式数值对照，随后 RESEARCH-05 复用同一选择/范围加目标判据与条件性点估计 Pareto。原始登记值可以有用，不要求先完成 RESULT-07 才显示算术；字段一致也不能升级为已证明科学可比。
 
 ## 输入与接口
 
@@ -38,3 +38,9 @@ spec 的 schema 为 `phonefarm/result-compare@1`，含：
 一条实际HTTP/CLI链：2个小结果、3列（同result选两个condition）/若干显式行，含模块ms、画质下降、null功耗、相同name但scope或unit不同、零基线、越界与不可查列。核数值算术/原字段/部分失败/原manifest不变/只读权限/pin、CLI单GET且不自动注册。复用小结果夹具，不导入大报告、不重跑旧真机或媒体矩阵；协议整轮一次，失败只续相应路径。
 
 一条390浏览器链：选择明确基线/候选指标→比较→看缺失与描述差异→下钻原件→导出/深链重载保持身份与选择。先计划后执行，不反复全页遍历。先不声称有科学资格自动验证、统计显著或完整跨节点比较；RESEARCH-05将消费此矩阵做用户配置的条件性点值判据/Pareto。
+
+## 发布证据
+
+2026-10-25发布harness `e9d0e1260c154650cbec7f6bc033c3aa34fac18c`，五项实际必需CI成功后同SHA直推main并核远端。单实际HTTP/CLI首过0.593秒，122协议首过62.057秒；真实NodeResults/HTTP浏览器390px通过，3列3行、同报告两condition，31次HTTP全GET、2次compare、0设备/producer job/写入。106B原件和导出spec保持原样，固定pin深链接续，scrollWidth390、pageerror0。
+
+QA首启动初始化顺序错误与附件下载误作导航均保留；第二browser context只续原件/导出/深链余项，不重播已过表单流程，产品源未改。PID84101、59880端口与两browser context关闭。旧能力/迟到回应/基线重排/容量/20秒超时只静读；本批未重验桌面/暗色主题、没有设备或科学收益验证。证据索引本机 `qa/result-compare-{validation,publish,checks,ui-validation}.json`；原报告与所有unknown恢复义务保留。
