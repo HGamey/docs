@@ -13,6 +13,8 @@
 `GET /nodes` 返回 `{schema_version:1, now, local:<NodeRead.identity>, items:[entry]}`。
 `GET /nodes/{name}` 返回一个 entry。`?refresh=1` 排队刷新已到期的缓存后立即返回；不等待网络。单条查询可用 `?devices=1` 显式刷新设备，也立即返回。普通 GET 完全只读缓存。最多四个远端请求并行，每条总截止 8 秒；自动刷新最短 30 秒，设备显式刷新不受 30 秒限制但不重复已有请求。
 
+设备显式刷新遇已有在途请求返回 409，不能把普通目录查询冒充设备采样排队。网络截止会终止已连接 socket；系统 DNS 解析本身可能超过截止并占据一个已有 worker，但解析返回后不再发送过期请求，关闭服务不等待解析结束。
+
 entry 包含 `name,url,tags,note,ssh,goals_dir,enabled,revision,node_id,credential_present,created_at,updated_at,connection,snapshot,stale,refreshing`。ssh/goals_dir 仅保留旧配置元数据，本批不执行。
 
 connection 是 `{status,reachable,attempted_at,last_seen_at,error}`。status 为 unverified、ready、unavailable、unauthorized、incompatible、identity_mismatch、disabled 或 no_credentials。ready 只说明节点协议可达，不代表有手机、空闲或已恢复。
@@ -36,3 +38,13 @@ Bearer 只读凭据可查询/刷新；管理凭据可登记。`/dash/api/nodes` 
 使用两个隔离 HTTP 节点验证：登记后两端共用事实、重启保留、只读不能写、离线保留、身份变化拒绝、在途修改不回写、无隐式设备采样。必要协议测试一次，页面宽窄布局和关键交互检查。修复 FleetState 未继承固定 PF profile 环境这一已发现的连接缺口。
 
 本批覆盖 FLEET-01/02/03 的目录部分；跨节点作业分发、设备实例能力、生产部署与真机验收仍开放，不把整项勾完。
+
+## 已交付与验证
+
+2026-10-24，功能提交 [ff18e96](https://github.com/HGamey/harness-ops/commit/ff18e967da1fb7a17af2850473cea1c71d55b7ca)，发布到 main 的最终提交 [1cbc7b1](https://github.com/HGamey/harness-ops/commit/1cbc7b1e43a6a942322609f1a1a618accf24f7e9)。76项本地协议一次通过（25.107秒），其中两个实际隔离HTTP服务验证Web/token读写权限、统一事实和仅显式触发设备采样；设备采样接收端为替身，无PF/ADB或手机。
+
+定向DOM检查及实际浏览器暗色桌面/390px窄屏、浅色表单通过；390×844视口下文档宽390、表单宽320，无横溢。验证了身份不匹配/离线保留、远端job链接、空凭据、保存回执及不重放写入。模拟fixture最初年龄基准及空token默认状态不准确，已修正并复核；原件保留本机，服务已停止、视口复位。
+
+首次CI仅Python3.11旧restart fixture失败：子进程ready日志先于worker的running metadata落盘。修正测试等待这两个条件，保留严格running断言与原有重启/取消流程；定向1项0.739秒通过。最终同SHA五项actual check全部success：code-only120856467039、protocol3.11/3.14 120856467084/120856467096、cgroup-kernel120856466936、pf-shared-kernel120856467098，再直推main并核远端。未部署、迁移、访问手机，也没有新的性能收益结论。
+
+本机证据索引 `qa/fleet-directory-validation.json`、`fleet-directory-ui-validation.json`、初始失败日志和最终CI快照。既有lease/恢复屏障原件不改动；目录停用不取消远端任务。

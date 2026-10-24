@@ -42,19 +42,21 @@
 
 ## P1：多机管理
 
-当前实施FLEET-01/02，合同已冻结在[FLEET-DIRECTORY](FLEET-DIRECTORY.md)：服务端持久目录、只写凭据、身份绑定、Web/CLI同一API和只读缓存；不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办，不无限增加同类宿主防御批次。
+FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。完整设备身份/能力和跨节点执行仍开放；下一批按主线推进游戏分发，不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办。
 
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
 - [ ] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。
-  - `/dash/fleet`、`pf-node fleet`和跨节点`pf-fleet status`已共用读取合同；网页目前只展示当前节点，跨节点注册与强lease/恢复态未完成。
+  - `/dash/fleet`与`pf-fleet --hub`已共用`/nodes`持久目录；显示所选远端身份、存储、设备/队列/lease/恢复快照及新鲜度。旧无hub模式兼容保留，跨节点任务代理与真实多机部署尚未完成。
 - [ ] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。
-  - [ ] FLEET-DIRECTORY-01 共享目录登记/更新/停用、旧配置显式导入、两节点隔离HTTP验收、网页窄屏交互；固定PF profile的fleet采样环境同步修复。完整设备实例身份/跨节点执行和生产验收仍分开。
+  - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
 - [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。
 - [ ] FLEET-07 CPU编译/分析与手机实验资源分开，能力标签不混成设备存在证明。
 
 ## P1：游戏与任务分发
+
+下一批先冻结DIST-01/02/04最小合同并回收BASE-03。旧增强源仍在本机 `tasks/phonefarm_node_migration_20261014/harness-ops/node/fetch_apk.sh`，已有显式serial、SHA内容缓存、partial隔离与取消隐式权限/音量修改。当前上游脚本仍使用默认serial和安装后音量修改；复用旧成果并接入服务/Web/CLI，不能继续并列另一份私有配置。Doom仅复用既有清单，不下载或操作手机。
 
 - [ ] DIST-01 定义游戏bundle manifest：应用/引擎/包/资源/存档/场景/配置/来源/哈希/设备条件/空间/回执。
 - [ ] DIST-02 网页游戏目录与准备状态，CLI inspect/prepare；分别显示已下载、已安装、资源就绪、等待登录、场景就绪。

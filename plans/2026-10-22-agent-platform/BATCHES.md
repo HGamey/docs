@@ -524,3 +524,11 @@ harness [c61dae9](https://github.com/HGamey/harness-ops/commit/c61dae9d4d27f6c57
 本地69协议首轮68过；新跨boot fixture因macOS路径别名提前拒绝，修正fixture后2项相关回归通过，失败原件保留。定向DOM/CLI和双版本CI通过。真实Linux单链验证worker失联留下setsid后代、普通核查和同UID启动阻断、force域空及输出私有交还、下一作业拒读历史；3job中2执行1拒绝，22PID全退，临时账户/域/安装/策略清理。全部actual required checks及两个kernel任务success后同SHA推main核远端；无部署、真机、物理重启或迁移，public contained仍false。详见[合同与证据](JOB-CONTAINMENT.md)。
 
 只勾02B3的源码/隔离宿主子项。完整02、JOB-EXEC-03、失败恢复子链接续等仍开放。下一回到既定多机管理FLEET-01/02，之后游戏分发与结果索引，避免宿主边界扩展吞掉业务主线。
+
+## 2026-10-24 FLEET-DIRECTORY-01：网页与CLI共享多机目录
+
+harness [1cbc7b1](https://github.com/HGamey/harness-ops/commit/1cbc7b1e43a6a942322609f1a1a618accf24f7e9)已直推main。网页和`pf-fleet --hub`共用持久登记、私有只写凭据、稳定node_id绑定、revision更新、启停和离线快照。目录刷新只读远端宿主缓存，设备采样单独显式请求；远端任务链接指向实际快照来源。修复FleetState遗漏固定PF环境的问题。
+
+76项本地协议25.107秒一次通过，包含两个隔离HTTP节点；定向DOM、390px和桌面浏览器通过。首轮CI只有旧restart fixture出现ready日志先于running落盘的竞态，失败原件保留，仅修测试等待已发布状态，定向1项通过。最终5项actual checks全部success后推同SHA。详见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。无部署/手机/迁移，旧Doom数据留本机。
+
+只勾目录子项，完整FLEET与总体goal仍开放。get_goal核实active，未调用update_goal；本批不关闭或暂停目标。下一批回收BASE-03 APK缓存成果并冻结游戏bundle/准备/分发合同，Web与CLI共同交付。
