@@ -546,3 +546,8 @@ harness [12eda9a](https://github.com/HGamey/harness-ops/commit/12eda9ae41c72cfcd
 ## 2026-10-25 DIST-INSTALL-01
 
 PF `baef293` / harness `fd1ef8f`，六项actual CI全部success后同SHA直推main。限定新装、持久PackageInstaller归属/未知commit屏障、真实aapt2、固定Node队列与Web/CLI已交付；缺元数据工具仍可接续旧恢复。91本地协议35.446秒、真实CLI/HTTP1.469秒、真实PF/SDK+模拟ADB六场景、另Node/worker/PF链及DOM/1440与390浏览器通过。未签名807B fixture只验证元数据，模拟commit不证明真实验签；原未知负例与两次DOM断言失误保留。详细边界/证据见[GAME-INSTALLATION](GAME-INSTALLATION.md)。只勾安装子项，DIST-INITIALIZE-01及完整M2继续，goal保持active。
+
+
+## 2026-10-25 DIST-INITIALIZE-01
+
+PF `537a62f` / harness `e20758b`，六项actual CI成功后同SHA直推main。新增显式Launcher初始化、目录已就绪不启动、有限停止义务与未知屏障；提取共用Transport，Web/CLI同批。92本地协议36.652秒、3相关Rust测试、实际PF六上下文100传输、旧三关键回归108传输、另HTTP/worker/PF25传输及DOM/390浏览器通过。首次Node fixture相对binary错误留原件，改为绝对路径后通过；无产品修复。四个synthetic未知context保留，全部已知PID退出。详见[GAME-INITIALIZATION](GAME-INITIALIZATION.md)。仅完成本子项，未部署/真机/场景；下一DIST-INPUTS-01，完整todo/plan和goal仍active。

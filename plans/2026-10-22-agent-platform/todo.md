@@ -68,10 +68,11 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
   - [x] DIST-UPLOAD-01 [合同与验收](GAME-UPLOAD.md)：harness 02da7cd同一缓存分块接收/原ID接续/单资产worker校验，Web/CLI同批；本地88项协议及定向修复、DOM/实际浏览器替身通过，五项actual CI成功后同SHA直推main。未部署、未操作手机。
   - [ ] DIST-LARGEFILE-01 在有空间预算的隔离节点验证多GiB流式上传的内存/磁盘使用和断线接续；复用已授权素材或可控合成流，不在本Mac重复下载/复制旧Doom大文件。
 - [ ] DIST-05 任务输入/输出改为显式工件引用和依赖清单；处理嵌套JSON/脚本路径，避免只有argv重写有效。
+  - [ ] DIST-INPUTS-01 **下一批**：同节点已完成宿主收尾的小工件引用，冻结到任务in，显式JSON pointer生成独立派生文件；CLI/API/网页共用。源原件保留，大APK/PK4不重复复制；未知收尾/缺失/变化在命令前拒绝。
 - [ ] DIST-06 资源包/OBB/loose文件/存档按目标平台受限路径安装；保存旧存档与恢复收据，检验游戏UID可访问性。
   - [x] DIST-DEPLOY-01 [限定资源部署合同与验收](GAME-DEPLOYMENT.md)，PF f9ba7a6、harness ddeaef7：Android user0 已安装精确匹配单APK引擎，选定资源部署到新独占子树；强lease/持久恢复、Node固定任务、Web/CLI同等入口。90协议、实际PF/fake ADB三上下文、真实HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过，同SHA直推main。未知传输保留屏障/负例，未操作真机或生产、未覆盖旧游戏数据。
   - [x] DIST-INSTALL-01 [合同与验收](GAME-INSTALLATION.md)：PF baef293/harness fd1ef8f已发布；明确缺席单APK新装、真实aapt2元数据、-R禁止替换、owned session已知失败abandon、未知commit保屏障，Web/CLI共用。91协议、CLI/HTTP、实际PF/SDK+模拟ADB六场景、另actual HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过。缺工具不禁已有恢复。未部署/真机安装；已有升级、存档替换、应用存储初始化和场景仍未完成。
-  - [ ] DIST-INITIALIZE-01 补新装到资源部署的外部files父目录缺口：显式、限定应用初始化及结果观测；先确定启动/停止/UID和首次启动副作用边界，目录不存在不自动mkdir/chown假冒应用就绪，无法自动完成时转局部协助。场景仍独立核验，复用既有lease/传输/会话，避免逐操作复制整套引擎。
+  - [x] DIST-INITIALIZE-01 [合同与验收](GAME-INITIALIZATION.md)：PF537a62f/harnesse20758b已检查通过同SHA直推main。限定Launcher一次尝试、目录已就绪不启动、未知启动/停止保屏障、目录未达标但已停转局部协助；共用Transport和Web/CLI。92协议、3Rust、实际PF六上下文100传输、既有三回归108传输、另Node/worker/PF25传输、DOM/390浏览器通过。仅源码/隔离宿主，未部署/真机/场景；四个QA未知上下文保留。
 - [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，先列支持矩阵，不宣称单APK流程已覆盖。
 - [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
