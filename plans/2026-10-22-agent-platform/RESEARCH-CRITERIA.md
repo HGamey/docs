@@ -1,6 +1,6 @@
 # RESEARCH-05：版本化目标与条件性点值判断
 
-2026-10-25，实施合同。复用 RESULT-COMPARE 的明确选择、原件与描述关系；外部 Agent 决定解释和采纳。本批源码/隔离宿主/CI，不操作生产或手机。模块 ms 下降可以成为目标；画质可下降、功耗可选，不强制超过双线性。
+2026-10-25，已发布 harness d4bc398；五项必需 CI 成功后同 SHA 推 main 并核对远端。复用 RESULT-COMPARE 的明确选择、原件与描述关系；外部 Agent 决定解释和采纳。本批源码/隔离宿主/CI，不操作生产或手机。模块 ms 下降可以成为目标；画质可下降、功耗可选，不强制超过双线性。
 
 ## 保存目标
 
@@ -17,7 +17,7 @@ research.data 增加可选 `criteria`；未出现时不补键，保旧 operation
 
 comparison.context 保存范围、假设和有意干预；research.evidence_refs 保存作者依据，research audit 保存作者声明与revision。不据字段相同授予科学资格。
 
-判据必须能在候选结果尚未登记前冻结。保存时对comparison的不同result ID只读登记元数据：已存在者记录sequence/registered_at，尚不存在者记录declared_pending；不要求采样或先运行候选。同一comparison跨revision更新规则时沿用原绑定，不能把后来可见结果回填成当时已见。绑定存在observations并在research派生详情中可见，与原evidence_refs数组独立。已登记绑定若后来身份不符，assessment将该列标不可用；预声明ID可在后续查询解析到其首次不可变登记。缺值/未登记者不阻止其他轴或方向。
+判据必须能在候选结果尚未登记前冻结。保存时对comparison的不同result ID只读登记元数据：已存在者记录sequence/registered_at，尚不存在者记录declared_pending；不要求采样或先运行候选。同一comparison跨revision更新规则时沿用原绑定，不能把后来可见结果回填成当时已见。绑定存在observations并在research派生详情中可见，与原evidence_refs数组独立。已登记绑定若后来身份不符，assessment将该列标不可用；预声明ID可在后续查询解析到其首次不可变登记。缺值/未登记者不阻止其他轴或方向。declared_pending只说明保存时没有绑定到登记，两库读取不是跨库事务；它本身不证明候选登记严格晚于研究提交。
 
 ## 只读判断
 
@@ -46,3 +46,11 @@ comparison.context 保存范围、假设和有意干预；research.evidence_refs
 一条实际HTTP/CLI纵向：旧无criteria operation仍可原样找回；保存含预声明候选ID的目标，后来登记后按原revision判断；低ms/低PSNR在作者容忍范围、optional null功耗不抹掉ms，选入缺失power轴则Pareto未确定；新阈值不改旧revision/旧计划；原manifest与job不改写，显式pin/只读/单GET。
 
 一条390网页主链：从比较选择建立轴/容忍值→CAS保存→查看精确revision判断与Pareto→调整质量容忍保存新revision→读旧revision仍保旧规则；保草稿与原件入口。协议整轮一次，失败只续相关分支，不重跑Doom或旧研究/媒体矩阵。
+
+## 实际验证与范围
+
+单条实际 HTTP/CLI 0.608s、123 条完整协议 63.279s 首轮通过。后续静态审查发现共享比较器的大整数差值会在有限性检查抛 OverflowError，改为返回已有 arithmetic_overflow；只续比较与判据两条受影响回归，1.262s 通过，未重复本地整轮。最终提交由五项实际 CI 通过。
+
+390px 实际 NodeResearch 网页首轮通过：106B 合成原件、两份结果登记、研究 v1/v2 两次保存、三次精确 revision 判断（1→2→1），52 个 HTTP 请求（49 GET、3 POST，其中一个解锁）。质量容忍从3改为1，旧版仍保留3；缺功耗显示未知，加入 Pareto 时保持未确定；读旧版不覆盖未提交草稿。页面宽390、详情356，无溢出或页面异常，原件/比较链接保留。浏览器、fixture PID85911/端口61678已关闭；无设备、作业、生产操作。
+
+旧 criteria 缺席/null 的浏览器路径、pending body/迟到响应隔离、缺能力、文件导入及桌面深色仅静态检查；预声明跨登记与旧 operation 的兼容由协议覆盖。点值满足规则不代表实机性能、统计显著或科学资格。原始记录位于本机 qa/research-criteria-*，首轮与后续修复分开保存。

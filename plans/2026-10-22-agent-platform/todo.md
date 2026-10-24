@@ -26,6 +26,7 @@
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
+  - [ ] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
   - 已发布订阅生命周期修复 `phonefarm 591889e`；本批 LEASE-OBSERVE-01 增加每帧互斥与异常屏障。远程认证接入已由REMOTE-OWNERSHIP完成；真机观察开销仍未核，完整条目保持开放。
 - [x] BUG-02 修复服务重启后job取消失效（225cb5c）；独立worker持有命令进程组和实际子进程对象，flock确认所有权，不凭保存PID发信号。旧任务继续可读，无法确认所有权时明确不支持取消。
@@ -119,7 +120,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、真实重启/其他producer、暂停、预算或两执行节点验收。失败恢复子链已发布，不再作为未完成重复实现。当前完成M4的RESULT-03/RESEARCH-05，随后BASE-07外层结构化拒绝、CTRL-03截图绑定和BASE-04实际程序身份；真实设备阶段另列。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、真实重启/其他producer、暂停、预算或两执行节点验收。失败恢复子链已发布，不再作为未完成重复实现。M4的RESULT-03/RESEARCH-05已发布，当前BASE-07外层结构化拒绝、CTRL-03截图绑定和BASE-04实际程序身份；真实设备阶段另列。
 
 ## P1：结果发现、共享与研究状态
 
@@ -141,7 +142,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍�
 - [x] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。 fb9ecf1独立revision/CAS、同研究局部依赖核环与历史已交付；原operation及重启接续已验，无私有聊天导入。
 - [x] RESEARCH-03 按[RESEARCH-HARNESS](RESEARCH-HARNESS.md)交付参考prompt/skill与入口纠正：消费反馈、选择可行方向、提交、回收、更新证据和优先级；复用已有工具，不内置Agent。已发布harness de01858/PF af96ae6，3技能校验及一次实际离线PF/HTTPCLI接续通过；首次夹具准备失败保留，唯一实际分析无设备调用，required CI同SHA main。
 - [x] RESEARCH-04 按[RESEARCH-WATCH](RESEARCH-WATCH.md)交付研究元数据有界等待、绑定游标、Web显式监听/浏览位置及CLI JSON通知适配；无人可做时保存独立已处理位置，不无意义轮询。job/result事件与停止运行器的外部唤醒不由此流代替。已发布df7c4ec，2定向/121协议/390真实NodeResearch与五项actual CI同SHA main；界面隐藏为模拟，容量/源码边界见合同。
-- [ ] RESEARCH-05 按[RESEARCH-CRITERIA](RESEARCH-CRITERIA.md)交付版本化目标、预声明候选、原生基线/模块ms规则和条件性点值Pareto；复用RESULT-03，不以质量或未采功耗固定一票否决，不改原报告结论。
+- [x] RESEARCH-05 按[RESEARCH-CRITERIA](RESEARCH-CRITERIA.md)交付版本化目标、预声明候选、原生基线/模块ms规则和条件性点值Pareto；复用RESULT-03，不以质量或未采功耗固定一票否决，不改原报告结论。已发布d4bc398，1定向/123协议、溢出修复后2受影响回归、390实际NodeResearch及五项CI通过；精确范围见合同。
 
 ## P1：异步人类协作与基础接管
 
