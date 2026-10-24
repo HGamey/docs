@@ -1,0 +1,89 @@
+{
+ "scale": 0.7,
+ "sharp": 0.8,
+ "native": [
+  2141,
+  969
+ ],
+ "n": 3,
+ "summary": {
+  "bilinear": {
+   "ssim_mean": 0.9840790893604932,
+   "sharp_ratio_mean": 0.4462560867740503
+  },
+  "lanczos": {
+   "ssim_mean": 0.9890693981897275,
+   "sharp_ratio_mean": 0.5799101930084024
+  },
+  "selfsr": {
+   "ssim_mean": 0.9841360076894229,
+   "sharp_ratio_mean": 1.043335302066912
+  },
+  "selfsr_cr": {
+   "ssim_mean": 0.9839607149080717,
+   "sharp_ratio_mean": 1.0470578272960935
+  }
+ },
+ "rows": [
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A1.png",
+   "gt_sharp": 155.78966470406624,
+   "bilinear": {
+    "ssim": 0.9885097808518909,
+    "sharp": 70.43660203354628
+   },
+   "lanczos": {
+    "ssim": 0.9917622708235754,
+    "sharp": 91.47916191889259
+   },
+   "selfsr": {
+    "ssim": 0.9882561824909232,
+    "sharp": 139.45658959683865
+   },
+   "selfsr_cr": {
+    "ssim": 0.988006854495475,
+    "sharp": 139.7461950874655
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A2.png",
+   "gt_sharp": 181.47947994758331,
+   "bilinear": {
+    "ssim": 0.9821312569496152,
+    "sharp": 81.22245649813388
+   },
+   "lanczos": {
+    "ssim": 0.9879767226267974,
+    "sharp": 105.46143920613875
+   },
+   "selfsr": {
+    "ssim": 0.9823242934991838,
+    "sharp": 206.2813092553335
+   },
+   "selfsr_cr": {
+    "ssim": 0.982245489599023,
+    "sharp": 207.0024084730978
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A3.png",
+   "gt_sharp": 182.9940494717478,
+   "bilinear": {
+    "ssim": 0.9815962302799734,
+    "sharp": 80.34989279524056
+   },
+   "lanczos": {
+    "ssim": 0.9874692011188098,
+    "sharp": 104.56527285305444
+   },
+   "selfsr": {
+    "ssim": 0.9818275470781619,
+    "sharp": 200.96073722250875
+   },
+   "selfsr_cr": {
+    "ssim": 0.9816298006297172,
+    "sharp": 201.93704270690574
+   }
+  }
+ ]
+}

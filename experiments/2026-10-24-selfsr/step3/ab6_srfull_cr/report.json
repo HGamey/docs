@@ -1,0 +1,124 @@
+{
+ "pkg": "com.miHoYo.Yuanshen",
+ "a": "native",
+ "b": "sr:1:2688x1216:0.8",
+ "rounds": 6,
+ "valid_pairs": 6,
+ "dropped_arms": [],
+ "out_res": {
+  "A": [
+   [
+    2141,
+    969
+   ]
+  ],
+  "B": [
+   [
+    2688,
+    1216
+   ]
+  ]
+ },
+ "metrics": {
+  "display_fps": {
+   "a_mean": 29.6667,
+   "b_mean": 29.7133,
+   "diff_mean": 0.0467,
+   "diff_pct": 0.16,
+   "ci95": [
+    0.02,
+    0.0733
+   ],
+   "p": 0.125,
+   "n_pairs": 6
+  },
+  "game_fps": {
+   "a_mean": 29.4915,
+   "b_mean": 29.1462,
+   "diff_mean": -0.3453,
+   "diff_pct": -1.17,
+   "ci95": [
+    -0.5263,
+    -0.1515
+   ],
+   "p": 0.0625,
+   "n_pairs": 6
+  },
+  "game_frame_p95_ms": {
+   "a_mean": 36.6827,
+   "b_mean": 38.2985,
+   "diff_mean": 1.6159,
+   "diff_pct": 4.4,
+   "ci95": [
+    0.4134,
+    2.728
+   ],
+   "p": 0.0625,
+   "n_pairs": 6
+  },
+  "gpu_active_ms": {
+   "a_mean": 28.6862,
+   "b_mean": 29.8084,
+   "diff_mean": 1.1221,
+   "diff_pct": 3.91,
+   "ci95": [
+    -1.4278,
+    3.5144
+   ],
+   "p": 0.5,
+   "n_pairs": 6
+  },
+  "sharp_full": {
+   "a_mean": 92.4677,
+   "b_mean": 215.0387,
+   "diff_mean": 122.571,
+   "diff_pct": 132.56,
+   "ci95": [
+    96.7291,
+    148.3621
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_hud": {
+   "a_mean": 367.2717,
+   "b_mean": 721.8987,
+   "diff_mean": 354.627,
+   "diff_pct": 96.56,
+   "ci95": [
+    320.7445,
+    394.3095
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "ssim_vs_native_ref": {
+   "a_mean": 0.6317,
+   "b_mean": 0.5941,
+   "diff_mean": -0.0376,
+   "diff_pct": -5.95,
+   "ci95": [
+    -0.1602,
+    0.0301
+   ],
+   "p": 1.0,
+   "n_pairs": 6
+  },
+  "missed_frames": {
+   "a_mean": 0,
+   "b_mean": 3.1667,
+   "diff_mean": 3.1667,
+   "diff_pct": null,
+   "ci95": [
+    0.6667,
+    5.8333
+   ],
+   "p": 0.25,
+   "n_pairs": 6
+  },
+  "display_latency_p50_ms": {
+   "status": "not_measured"
+  }
+ },
+ "min_p_possible": 0.03125
+}
