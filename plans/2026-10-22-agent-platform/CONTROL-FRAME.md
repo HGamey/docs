@@ -31,3 +31,11 @@ Node 只透传 PF 图片/回执事实，tap/swipe 在旧 owner 缺新合同前�
 PF 只运行受影响 remote_control 单元与一条实际 PF/有界假传输链：缩小图对应原坐标、单次消费、新图/旋转或过期拒绝、已知不符不注入、原 ID 找回，未知沿原屏障。复用现已有方向解析与锁测试，不跑旧全部 producer。
 
 Node 一条实际 HTTP/CLI 链验证新字段、旧 owner 不支持与原回执保留，再按仓规完整协议一次。网页先冻结计划，单390流程验证缩放映射、失效保旧图、丢回包只查询。生产/真机、游戏内容变化判别、HDC/iOS与高帧率控制不由本批宣称。
+
+## 已发布证据与范围
+
+PF a746d73 / harness574c94b已通过实际required CI后同SHA直推main。6条Rust单元、7条Node API/CLI定向首过。完整Node协议初轮124条中123过、1条暴露已有部署恢复读取顺序竞态；改为先读job status再读资格用queue记录，仅重验4条相关部署/安装/初始化/场景链均通过，最终两Python版本CI全过。
+
+签名debug实际PF/假ADB链24次传输、2次输入，覆盖缩小图原坐标、单次消费、同ID找回、旋转变化已知拒绝和unknown持久屏障；验证图用独立verification-前缀，避免与合法截图ID冲突。25个已知PID退出，unknown上下文原件保留，不算恢复。release仍为旧cbc53e4。
+
+390px真实Chromium/合成HTTP与PNG完成86HTTP（80GET/6POST），3截图/2tap/1swipe，断回包后实际reload只查原ID。首轮QA用消息出现前的bbox断言tap坐标失败，保存原件、未重做该tap，仅续剩余流程；页面无溢出/pageerror。not_executed展示仅静态审查。当前范围为源码、隔离宿主和CI，没有生产部署/真机/真实游戏内容不变证明。证据索引为本机qa/control-frame-{validation,ui-validation,checks,publish}.json。

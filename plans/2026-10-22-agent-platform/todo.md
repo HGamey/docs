@@ -23,6 +23,7 @@
   - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；后续LEASE-IDENTITY/STRONG-LEASE-IDENTITY已验证强lease集成，逐设备去global串行仍待JOB-03。
 - [x] BASE-03 harness 12eda9a已回收并统一APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改。旧fetch_apk现在要求size/serial/SHA并共用节点缓存；legacy混合锁/设备恢复仍另列，未声称真机安装验证。
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；CLI和网页都可查询，客户端遇不兼容时解释具体差异。
+  - [ ] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
@@ -154,7 +155,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍�
 - [x] HUMAN-05 人的建议进入事件流，外部Agent记录采纳/暂缓理由；不静默覆盖预注册的旧实验方法。 fb9ecf1不可变反馈/事件与adopt/defer/reject理由已交付；新计划保留原research_revision，不改旧问题与旧方法。
 - [x] CTRL-01 将现有screen与基本点击/滑动/键输入接入node统一认证/API，网页设备页直接使用。 Android首批有限screen/live/tap/swipe/text/key/start/stop已统一operator认证与PF owner，见REMOTE-OWNERSHIP-REPAIR；高帧率/任意raw/HDC另列。
 - [ ] CTRL-02 人工接管/归还与Agent共用lease；有测量时先安全停止/还原并标记该轮状态，其他设备继续。
-- [ ] CTRL-03 按[CONTROL-FRAME](CONTROL-FRAME.md)补普通owner截图设备/方向/尺寸/采集时间/frame、原坐标绑定、单次消费与执行前几何校验；灰层已有能力复用，不重做接管。
+- [x] CTRL-03 按[CONTROL-FRAME](CONTROL-FRAME.md)补普通owner截图设备/方向/尺寸/采集时间/frame、原坐标绑定、单次消费与执行前几何校验；灰层已有能力复用，不重做接管。 PF a746d73/harness574c94b已发布，截图绑定/原坐标/单次消费/原ID回执及Web/CLI已验，见[CONTROL-FRAME](CONTROL-FRAME.md)；仅源码/隔离宿主范围，真机仍单列。
 - [x] CTRL-04 明确操作回执：已发出、传输失败、后端拒绝、可观测确认；退出码不冒充游戏已响应。 有限动作的accepted/started/completed/failed/unknown/not_executed和原ID找回已交付；completed只证明声明范围的命令/采集完成，应用响应未知不冒充确认。
 - [ ] CTRL-05 无人观看停采、断线释放触点/按键、测量时观察干扰控制；网页可见当前控制者与模式。
 
