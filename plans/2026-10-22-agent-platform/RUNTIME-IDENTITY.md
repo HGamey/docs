@@ -12,7 +12,7 @@ PF CI与update_node本地编译传选定源码声明。下载的build.json作为
 
 ## Node读取与刷新
 
-原service.revision/dirty保留但明确为启动时源码树观察，增加`source_kind:"startup_checkout_observation"`、`instance_id`、`observed_at`、`runtime:{entry_path,python_version,observed_at,build}`。实例启动一次生成，持久node_id不变。
+原service.revision/dirty保留但明确为启动时源码树观察，增加`source_kind:"startup_checkout_observation"`、`instance_id`、`observed_at`、`runtime:{entry_path,python_version,observed_at,build}`。实例启动一次生成，持久node_id不变；原revision/dirty仍是git对已跟踪源码的启动观察，不证明所有已载入字节。能力声明node.runtime-v1，Node/job observed_at均为epoch秒。
 
 `execution.programs`为按已配置phonefarm/game_opt_loop名称的对象；每项`state:"observed"|"stale"|"unknown"`、`resolved_path`、`observed_at`、`file:{dev,ino,size,mtime_ns,ctime_ns}|null`、`identity|null`、`reason|null`。启动时只查询这两个已配置程序的runtime-info，时间/输出有界，查询前后stat不同则不绑定。普通GET只看缓存并核廉价stat，改变后stale，旧声明只作历史观察，不宣称当前有效；不得执行上传exe或自动重试。旧程序不认识入口为unknown，不按git填身份。
 
@@ -27,3 +27,11 @@ PF CI与update_node本地编译传选定源码声明。下载的build.json作为
 ## 最小验证与展示
 
 网页节点/任务与CLI同读上述记录，显式区分启动源码观察、配置缓存、该job当时自报；没有身份不说失败，没有新版本不说不兼容。使用一个集中HTTP/CLI链：A自报、原路径换B缓存stale、旧job仍A、新job为B、无自报仍成功、旧meta不回填、显式刷新不产生job。一个实际PF/GOL只读入口及启动自报验证，不跑设备或旧producer全套。contained复用已有Linux CI无害工作负载验证，public contained仍不可用。协议完整本地一次，失败只重验受影响链；网页冻结后单390流程。
+
+## 已发布证据
+
+PF e51b09f / GOL aedf95d / harness0e1b7eb已通过全部七项actual required CI后同SHA直推main并核远端。PF/GOL缓存离线debug构建分别15.511s/9.942s，签名verify通过；各一次真实runtime-info及启动自报由同一Node reader核job/PID/identity，0设备调用。两份本地binary来源如实为前一HEAD加dirty:true，不把后续commit宣称为已经重建的二进制。
+
+集中HTTP/CLI三job链首轮2.510s通过，A→B替换后配置缓存stale、旧job为A、新job为B、未自报仍成功；只读拒绝刷新、原件和旧meta不回填均核。完整125协议64.370s首过；随后静态检查补worker丢失后的pending身份只读投影为unknown，只重验该集中链2.332s通过。保存的原记录不改写；最终两Python CI及两个Linux内核CI通过，既有真实contained固定worker链新增直接child自报断言。
+
+单390px浏览器首轮通过：28HTTP（27GET/1显式refresh POST），0job写/设备、无页面错误/溢出。刷新期间保旧观察，刷新后历史身份不变，远端仍标目录快照并回源；自有服务/浏览器已关闭。本机索引qa/runtime-identity-{validation,publish,checks,ui-validation}.json及builder-static.json。首轮rustfmt因PATH未找到的工具失败保留，没有产品失败；安装脚本仅静态，未执行真实升级。BASE-04/JOB-04的完整依赖/设备/协议兼容性仍待后续，不以本批替代生产或真机验收。

@@ -23,7 +23,7 @@
   - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；后续LEASE-IDENTITY/STRONG-LEASE-IDENTITY已验证强lease集成，逐设备去global串行仍待JOB-03。
 - [x] BASE-03 harness 12eda9a已回收并统一APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改。旧fetch_apk现在要求size/serial/SHA并共用节点缓存；legacy混合锁/设备恢复仍另列，未声称真机安装验证。
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；CLI和网页都可查询，客户端遇不兼容时解释具体差异。
-  - [ ] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。
+  - [x] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。PF e51b09f/GOLaedf95d/harness0e1b7eb已发布；125协议、两真实程序/三job链/390网页及七CI通过，完整范围见合同。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
