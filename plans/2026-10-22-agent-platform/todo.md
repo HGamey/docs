@@ -31,8 +31,10 @@
 - [x] BUG-02 修复服务重启后job取消失效（225cb5c）；独立worker持有命令进程组和实际子进程对象，flock确认所有权，不凭保存PID发信号。旧任务继续可读，无法确认所有权时明确不支持取消。
 - [x] BUG-03 只读状态查询不再创建job；超时节点不能静默消失，返回完整列表和分项错误（harness-ops `947a4b9`，模拟协议与浏览器验收；未部署运行节点）。
 - [x] BUG-04 修复原件只读授权缺口，覆盖元数据/日志/单文件/Range；验证访客不能开任务或访问配置凭据。
-- [ ] REMOTE-OWNERSHIP-01 **当前P1修复**：刚合入553fb16的live在held/blocked/unknown时仍raw screencap，空闲采集/别名/熄屏查询也未持观察lease；改为与既有强lease/测量共用实际所有权，忙或未知保留旧帧及采集时间，不用刷新传输冒充新采样。保留实时页面，编码器生命周期须有实际收尾证据。
-- [ ] REMOTE-OWNERSHIP-02 同批远程动作未结束时release/reaper不得提前放锁；动作串行与持久恢复屏障、原全局bridge/别名同域兼容，断联/超时不能凭宿主退出当设备完成。网页/API/CLI共用inflight/closing/unknown事实，审计据当前源码继续收口。
+- [x] REMOTE-OWNERSHIP-01 PF1ce29a1/harness58b21dd已检查成功直推main：live每帧复用强observation，busy/unknown保留旧时间，去除raw截图/别名/电源/视频旁路；无人观看停新采，Web原seq/图龄与状态分开。实际PF/HTTP/CLI及DOM/390px隔离浏览器通过；未部署/真机，高帧率编码器留REMOTE-VIDEO-01。
+- [x] REMOTE-OWNERSHIP-02 同批PF持久owner+guarded Transport、串行动作/持久屏障、固定ID与只读找回；release等待已started并取消未开始队列，unknown不重放。Web/API/pf-remote共用事实；启动退休保unknown不清lease。7个唯一Rust关键用例、103协议、实际正常/异常PF链与6项actual CI通过；首次两失败及两处QA恢复义务保留。限定close不声称游戏还原，见[合同与验收](REMOTE-OWNERSHIP-REPAIR.md)。
+- [ ] REMOTE-VIDEO-01 在逐帧观察稳定后恢复可监管的高帧率观看；编码器需本地/远端身份、有限停止和未知恢复，不能用新设备请求绕过测量租约。
+- [ ] REMOTE-ACTIONS-01 为shell、安装/卸载、push/pull/logcat、HDC分别补实际owner/有界输出/设备副作用与恢复合同；本批旧raw入口明确unsupported，保留功能需求，不用Android验收外推Harmony。
 - [ ] TEST-01 为harness-ops建立协议/故障回归：重复请求、同label、断网、重启、取消、缺原件、坏缓存、路径边界、auth。
 - [x] TEST-02 直接push流程的CI覆盖当前节点协议回归（Python3.11/3.14）及页面脚本检查；构建成功与真机验收分开记录，新模块继续补必要覆盖。
 - [ ] TEST-03 将长集成中的真实等待与快速回归分开；调查并行 confirmation_driver 的 deadline/heartbeat 偶发失败，不靠反复全套重跑掩盖。
@@ -66,6 +68,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] DIST-01 定义游戏bundle manifest：应用/引擎/包/资源/存档/场景/配置/来源/哈希/设备条件/空间/回执。
 - [ ] DIST-02 网页游戏目录与准备状态，CLI inspect/prepare；分别显示已下载、已安装、资源就绪、等待登录、场景就绪。
 - [ ] DIST-03 复用已有Doom样本建立第一个recipe；不重新下载现有大资源，不在规划阶段触碰手机。
+  - [ ] DIST-SCENE-01 **下一批**：Doom v73 render-demo小输入与既有部署证据、每attempt独立可写根、明确Java配置前提及有界launch/observe/stop；复用initialize生命周期，不写旧prefs/库，不复制PK4。历史demo原件与冷启消费仍未核，缺件/配置阻断仅该方向；先源码与宿主合同，真机另列。
 - [ ] DIST-04 节点直取文件、流式接收、断点续传、接收端hash、原子完成、内容缓存和空间预检。
   - [x] DIST-UPLOAD-01 [合同与验收](GAME-UPLOAD.md)：harness 02da7cd同一缓存分块接收/原ID接续/单资产worker校验，Web/CLI同批；本地88项协议及定向修复、DOM/实际浏览器替身通过，五项actual CI成功后同SHA直推main。未部署、未操作手机。
   - [ ] DIST-LARGEFILE-01 在有空间预算的隔离节点验证多GiB流式上传的内存/磁盘使用和断线接续；复用已授权素材或可控合成流，不在本Mac重复下载/复制旧Doom大文件。
