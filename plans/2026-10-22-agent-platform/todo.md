@@ -31,6 +31,8 @@
 - [x] BUG-02 修复服务重启后job取消失效（225cb5c）；独立worker持有命令进程组和实际子进程对象，flock确认所有权，不凭保存PID发信号。旧任务继续可读，无法确认所有权时明确不支持取消。
 - [x] BUG-03 只读状态查询不再创建job；超时节点不能静默消失，返回完整列表和分项错误（harness-ops `947a4b9`，模拟协议与浏览器验收；未部署运行节点）。
 - [x] BUG-04 修复原件只读授权缺口，覆盖元数据/日志/单文件/Range；验证访客不能开任务或访问配置凭据。
+- [ ] REMOTE-OWNERSHIP-01 **当前P1修复**：刚合入553fb16的live在held/blocked/unknown时仍raw screencap，空闲采集/别名/熄屏查询也未持观察lease；改为与既有强lease/测量共用实际所有权，忙或未知保留旧帧及采集时间，不用刷新传输冒充新采样。保留实时页面，编码器生命周期须有实际收尾证据。
+- [ ] REMOTE-OWNERSHIP-02 同批远程动作未结束时release/reaper不得提前放锁；动作串行与持久恢复屏障、原全局bridge/别名同域兼容，断联/超时不能凭宿主退出当设备完成。网页/API/CLI共用inflight/closing/unknown事实，审计据当前源码继续收口。
 - [ ] TEST-01 为harness-ops建立协议/故障回归：重复请求、同label、断网、重启、取消、缺原件、坏缓存、路径边界、auth。
 - [x] TEST-02 直接push流程的CI覆盖当前节点协议回归（Python3.11/3.14）及页面脚本检查；构建成功与真机验收分开记录，新模块继续补必要覆盖。
 - [ ] TEST-03 将长集成中的真实等待与快速回归分开；调查并行 confirmation_driver 的 deadline/heartbeat 偶发失败，不靠反复全套重跑掩盖。
@@ -68,7 +70,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
   - [x] DIST-UPLOAD-01 [合同与验收](GAME-UPLOAD.md)：harness 02da7cd同一缓存分块接收/原ID接续/单资产worker校验，Web/CLI同批；本地88项协议及定向修复、DOM/实际浏览器替身通过，五项actual CI成功后同SHA直推main。未部署、未操作手机。
   - [ ] DIST-LARGEFILE-01 在有空间预算的隔离节点验证多GiB流式上传的内存/磁盘使用和断线接续；复用已授权素材或可控合成流，不在本Mac重复下载/复制旧Doom大文件。
 - [ ] DIST-05 任务输入/输出改为显式工件引用和依赖清单；处理嵌套JSON/脚本路径，避免只有argv重写有效。
-  - [ ] DIST-INPUTS-01 **下一批**：同节点已完成宿主收尾的小工件引用，冻结到任务in，显式JSON pointer生成独立派生文件；CLI/API/网页共用。源原件保留，大APK/PK4不重复复制；未知收尾/缺失/变化在命令前拒绝。
+  - [x] DIST-INPUTS-01 [合同与验收](JOB-INPUTS.md)：harness dd00340经五项actual CI成功后同SHA直推main，保留维护者至553fb16全部提交。同节点已收尾小工件、独立JSON pointer派生、PF_JOB_IN/cwd及Web/CLI共用；原件保留，失败不启动/同ID不重放。94协议首轮93过，仅Mac测试路径别名修正，两项定向通过；DOM/390浏览器通过，系统剪贴板往返未核。无生产/手机/大素材复制，完整DIST-05继续开放。
 - [ ] DIST-06 资源包/OBB/loose文件/存档按目标平台受限路径安装；保存旧存档与恢复收据，检验游戏UID可访问性。
   - [x] DIST-DEPLOY-01 [限定资源部署合同与验收](GAME-DEPLOYMENT.md)，PF f9ba7a6、harness ddeaef7：Android user0 已安装精确匹配单APK引擎，选定资源部署到新独占子树；强lease/持久恢复、Node固定任务、Web/CLI同等入口。90协议、实际PF/fake ADB三上下文、真实HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过，同SHA直推main。未知传输保留屏障/负例，未操作真机或生产、未覆盖旧游戏数据。
   - [x] DIST-INSTALL-01 [合同与验收](GAME-INSTALLATION.md)：PF baef293/harness fd1ef8f已发布；明确缺席单APK新装、真实aapt2元数据、-R禁止替换、owned session已知失败abandon、未知commit保屏障，Web/CLI共用。91协议、CLI/HTTP、实际PF/SDK+模拟ADB六场景、另actual HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过。缺工具不禁已有恢复。未部署/真机安装；已有升级、存档替换、应用存储初始化和场景仍未完成。

@@ -551,3 +551,9 @@ PF `baef293` / harness `fd1ef8f`，六项actual CI全部success后同SHA直推ma
 ## 2026-10-25 DIST-INITIALIZE-01
 
 PF `537a62f` / harness `e20758b`，六项actual CI成功后同SHA直推main。新增显式Launcher初始化、目录已就绪不启动、有限停止义务与未知屏障；提取共用Transport，Web/CLI同批。92本地协议36.652秒、3相关Rust测试、实际PF六上下文100传输、旧三关键回归108传输、另HTTP/worker/PF25传输及DOM/390浏览器通过。首次Node fixture相对binary错误留原件，改为绝对路径后通过；无产品修复。四个synthetic未知context保留，全部已知PID退出。详见[GAME-INITIALIZATION](GAME-INITIALIZATION.md)。仅完成本子项，未部署/真机/场景；下一DIST-INPUTS-01，完整todo/plan和goal仍active。
+
+## 2026-10-25 DIST-INPUTS-01
+
+harness dd003401af2bdff6611e6d4baabef3350e75a150已检查成功后同SHA直推main；期间保留维护者e6b9bc4和553fb16新远程功能，发布门发现远端变化后重验最终SHA，没有force或PR。合同JOB-INPUTS；原件、负例和验证索引qa/job-inputs-validation.json留本机。94本地协议首轮93过，唯一新fixture Mac cwd别名错误定向修复，两项2.115秒通过；一轮DOM/390浏览器通过，真实系统剪贴板回读未核。无设备/生产/大素材复制。
+
+仅本子项完成，整体goal active。新合入remote/live审计确认测量占用仍raw截图、长动作release提前放锁两项P1，先修后续回同M2；Doom冷启/复位不能用历史已运行控制台playDemo结果冒充已验。
