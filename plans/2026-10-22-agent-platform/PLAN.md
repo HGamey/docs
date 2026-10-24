@@ -4,7 +4,7 @@
 
 ## 当前实施位置
 
-2026-10-24：M1多机目录子项已发布，Web/CLI共用持久登记、身份绑定及历史观测，合同与验收见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。M2首个 [GAME-DISTRIBUTION](GAME-DISTRIBUTION.md) 子项已发布harness 12eda9a：不可变游戏版本、持久宿主准备、内容缓存、Web/CLI及BASE-03旧APK增强统一；Doom只复用5项既有元数据。[DIST-UPLOAD-01](GAME-UPLOAD.md)已发布harness 02da7cd：Web/CLI从本机分块上传、断线/重启接续、单资源后台校验，共用原内容缓存与任务系统。[DIST-DEPLOY-01](GAME-DEPLOYMENT.md)已发布PF f9ba7a6/harness ddeaef7：强lease下新独占资源子树、限定恢复、Node固定任务和Web/CLI；源码与隔离实际PF/HTTP链验证通过。下一沿M2推进DIST-INSTALL-01明确缺席单APK新装，已有升级/存档/场景单列；不重下旧资源。完整设备实例能力、跨节点执行、失败恢复子链接续仍保留todo；生产部署、真实重启和手机验收单列。整体平台和goal仍未完成。
+2026-10-24：M1多机目录子项已发布，Web/CLI共用持久登记、身份绑定及历史观测，合同与验收见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。M2首个 [GAME-DISTRIBUTION](GAME-DISTRIBUTION.md) 子项已发布harness 12eda9a：不可变游戏版本、持久宿主准备、内容缓存、Web/CLI及BASE-03旧APK增强统一；Doom只复用5项既有元数据。[DIST-UPLOAD-01](GAME-UPLOAD.md)已发布harness 02da7cd：Web/CLI从本机分块上传、断线/重启接续、单资源后台校验，共用原内容缓存与任务系统。[DIST-DEPLOY-01](GAME-DEPLOYMENT.md)已发布PF f9ba7a6/harness ddeaef7：强lease下新独占资源子树、限定恢复、Node固定任务和Web/CLI；源码与隔离实际PF/HTTP链验证通过。[DIST-INSTALL-01](GAME-INSTALLATION.md)已发布PF baef293/harness fd1ef8f：明确缺席单APK、真实元数据、禁止替换与限定恢复，Web/CLI及隔离实际链通过。下一同M2补应用存储初始化缺口，再接明确场景输入；已有升级/存档/场景单列，不重下旧资源。完整设备实例能力、跨节点执行、失败恢复子链接续仍保留todo；生产部署、真实重启和手机验收单列。整体平台和goal仍未完成。
 
 ## 先解决什么问题
 

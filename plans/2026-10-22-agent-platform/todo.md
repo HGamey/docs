@@ -1,6 +1,6 @@
 # 开发待办
 
-更新：2026-10-24。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
+更新：2026-10-25。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
 ## 已完成的准备
 
@@ -70,7 +70,8 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] DIST-05 任务输入/输出改为显式工件引用和依赖清单；处理嵌套JSON/脚本路径，避免只有argv重写有效。
 - [ ] DIST-06 资源包/OBB/loose文件/存档按目标平台受限路径安装；保存旧存档与恢复收据，检验游戏UID可访问性。
   - [x] DIST-DEPLOY-01 [限定资源部署合同与验收](GAME-DEPLOYMENT.md)，PF f9ba7a6、harness ddeaef7：Android user0 已安装精确匹配单APK引擎，选定资源部署到新独占子树；强lease/持久恢复、Node固定任务、Web/CLI同等入口。90协议、实际PF/fake ADB三上下文、真实HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过，同SHA直推main。未知传输保留屏障/负例，未操作真机或生产、未覆盖旧游戏数据。
-  - [ ] DIST-INSTALL-01 下一子项：Android明确不存在的单APK新装；冻结可信离线APK元数据与禁止替换门、PackageInstaller session归属/已知失败撤销/未知结果保屏障合同；网页和CLI/API同等入口。已有安装升级、存档替换和场景启动继续单列，不靠install-r跳过。
+  - [x] DIST-INSTALL-01 [合同与验收](GAME-INSTALLATION.md)：PF baef293/harness fd1ef8f已发布；明确缺席单APK新装、真实aapt2元数据、-R禁止替换、owned session已知失败abandon、未知commit保屏障，Web/CLI共用。91协议、CLI/HTTP、实际PF/SDK+模拟ADB六场景、另actual HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过。缺工具不禁已有恢复。未部署/真机安装；已有升级、存档替换、应用存储初始化和场景仍未完成。
+  - [ ] DIST-INITIALIZE-01 补新装到资源部署的外部files父目录缺口：显式、限定应用初始化及结果观测；先确定启动/停止/UID和首次启动副作用边界，目录不存在不自动mkdir/chown假冒应用就绪，无法自动完成时转局部协助。场景仍独立核验，复用既有lease/传输/会话，避免逐操作复制整套引擎。
 - [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，先列支持矩阵，不宣称单APK流程已覆盖。
 - [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。

@@ -541,3 +541,8 @@ harness [12eda9a](https://github.com/HGamey/harness-ops/commit/12eda9ae41c72cfcd
 83项本地协议31.169秒一次通过，包括实际隔离HTTP/worker/CLI/cache；七项新增聚焦断传/坏缓存/不可变/权限/幂等/重定向。定向DOM和1440暗/390浅实际浏览器替身通过，一次POST 503后同ID找回，无二次提交；第一次DOM仅cwd错误未执行case，原件保留。code-only、protocol双版本和两个kernel检查actual全部success后推同SHA。无部署、真机或大文件下载；UI服务已退，tab关闭、viewport复位。
 
 审查修正：历史failed/verified进度原本可能掩盖当前缓存unknown，改为独立observation/progress。只关闭BASE-03与DIST-PREPARE-01宿主子项，完整DIST继续开放。下一DIST-UPLOAD-01本机大文件流式接收；另记录旧CLI隐式生产目标的迁移缺口FLEET-TARGET-01，不在本批切换后台或搬原件。goal仍active，未调用update_goal。证据与合同见[GAME-DISTRIBUTION](GAME-DISTRIBUTION.md)。
+
+
+## 2026-10-25 DIST-INSTALL-01
+
+PF `baef293` / harness `fd1ef8f`，六项actual CI全部success后同SHA直推main。限定新装、持久PackageInstaller归属/未知commit屏障、真实aapt2、固定Node队列与Web/CLI已交付；缺元数据工具仍可接续旧恢复。91本地协议35.446秒、真实CLI/HTTP1.469秒、真实PF/SDK+模拟ADB六场景、另Node/worker/PF链及DOM/1440与390浏览器通过。未签名807B fixture只验证元数据，模拟commit不证明真实验签；原未知负例与两次DOM断言失误保留。详细边界/证据见[GAME-INSTALLATION](GAME-INSTALLATION.md)。只勾安装子项，DIST-INITIALIZE-01及完整M2继续，goal保持active。
