@@ -138,8 +138,8 @@ JOB-01持久状态已交付；JOB-03/04/06/07/09/10仍分别缺并行资源域�
 - [x] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。 fb9ecf1已交付单节点目标/方向、结果引用与覆盖声明；预算/优先级由外部Agent使用，不是硬限额或调度器。
   - [x] RESEARCH-STATE-01 [合同与验收](RESEARCH-STATE.md)：harness fb9ecf1五项actual required CI成功后同SHA main；116协议54.941s、两HTTP/CLI链1.881s首过。390实际流程分3context接续，5次JS/6次HTTP，浏览器重传仍1回执；两QA偏差及未实点分支如实保留。四类对象/CAS/历史/局部依赖/文本协助/事件与Web/CLI已交付，不新建调度器。
 - [x] RESEARCH-02 多方向依赖图与乐观并发更新；不同Agent工具可接续，不导入其私有聊天历史。 fb9ecf1独立revision/CAS、同研究局部依赖核环与历史已交付；原operation及重启接续已验，无私有聊天导入。
-- [ ] RESEARCH-03 按[RESEARCH-HARNESS](RESEARCH-HARNESS.md)交付参考prompt/skill与入口纠正：消费反馈、选择可行方向、提交、回收、更新证据和优先级；复用已有工具，不内置Agent。
-- [ ] RESEARCH-04 事件游标/watch、客户端通知适配和无人可做时的可恢复空闲；不无意义轮询。
+- [x] RESEARCH-03 按[RESEARCH-HARNESS](RESEARCH-HARNESS.md)交付参考prompt/skill与入口纠正：消费反馈、选择可行方向、提交、回收、更新证据和优先级；复用已有工具，不内置Agent。已发布harness de01858/PF af96ae6，3技能校验及一次实际离线PF/HTTPCLI接续通过；首次夹具准备失败保留，唯一实际分析无设备调用，required CI同SHA main。
+- [ ] RESEARCH-04 按[RESEARCH-WATCH](RESEARCH-WATCH.md)交付研究元数据有界等待、绑定游标、Web显式监听/浏览位置及CLI JSON通知适配；无人可做时保存独立已处理位置，不无意义轮询。job/result事件与停止运行器的外部唤醒不由此流代替。
 - [ ] RESEARCH-05 目标配置支持性能/画质/功耗权衡、原生基线和模块ms收益，保留Pareto结果而非全局固定一票否决。
 
 ## P1：异步人类协作与基础接管
