@@ -1,0 +1,130 @@
+{
+ "pkg": "com.unity.megacity.metro",
+ "a": "native",
+ "b": "sr:1:2688x1216:0",
+ "rounds": 6,
+ "valid_pairs": 6,
+ "dropped_arms": [],
+ "out_res": {
+  "A": [
+   [
+    2068,
+    935
+   ]
+  ],
+  "B": [
+   [
+    2688,
+    1216
+   ]
+  ]
+ },
+ "metrics": {
+  "display_fps": {
+   "a_mean": 29.8367,
+   "b_mean": 28.4467,
+   "diff_mean": -1.39,
+   "diff_pct": -4.66,
+   "ci95": [
+    -2.7367,
+    -0.1417
+   ],
+   "p": 0.0625,
+   "n_pairs": 6
+  },
+  "display_fps_sc": {
+   "status": "not_measured"
+  },
+  "game_fps": {
+   "a_mean": 30.0125,
+   "b_mean": 28.6192,
+   "diff_mean": -1.3933,
+   "diff_pct": -4.64,
+   "ci95": [
+    -2.7635,
+    -0.1188
+   ],
+   "p": 0.09375,
+   "n_pairs": 6
+  },
+  "game_frame_p95_ms": {
+   "a_mean": 39.1777,
+   "b_mean": 44.9527,
+   "diff_mean": 5.7749,
+   "diff_pct": 14.74,
+   "ci95": [
+    -0.1076,
+    11.8183
+   ],
+   "p": 0.25,
+   "n_pairs": 6
+  },
+  "gpu_active_ms": {
+   "a_mean": 24.379,
+   "b_mean": 27.1282,
+   "diff_mean": 2.7492,
+   "diff_pct": 11.28,
+   "ci95": [
+    2.5786,
+    2.9697
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_full": {
+   "a_mean": 48.9641,
+   "b_mean": 71.4192,
+   "diff_mean": 22.4551,
+   "diff_pct": 45.86,
+   "ci95": [
+    21.3072,
+    23.5134
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_hud": {
+   "a_mean": 9.8688,
+   "b_mean": 20.4122,
+   "diff_mean": 10.5433,
+   "diff_pct": 106.83,
+   "ci95": [
+    7.1064,
+    17.148
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "ssim_vs_native_ref": {
+   "a_mean": 0.8975,
+   "b_mean": 0.8622,
+   "diff_mean": -0.0352,
+   "diff_pct": -3.93,
+   "ci95": [
+    -0.1008,
+    0.0252
+   ],
+   "p": 0.375,
+   "n_pairs": 6
+  },
+  "missed_frames": {
+   "a_mean": 2.3333,
+   "b_mean": 0,
+   "diff_mean": -2.3333,
+   "diff_pct": -100.0,
+   "ci95": [
+    -3.1667,
+    -1.5
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "display_latency_p50_ms": {
+   "status": "not_measured"
+  },
+  "displayed_per_s": {
+   "status": "not_measured"
+  }
+ },
+ "min_p_possible": 0.03125
+}
