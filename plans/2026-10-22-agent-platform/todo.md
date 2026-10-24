@@ -68,7 +68,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] DIST-01 定义游戏bundle manifest：应用/引擎/包/资源/存档/场景/配置/来源/哈希/设备条件/空间/回执。
 - [ ] DIST-02 网页游戏目录与准备状态，CLI inspect/prepare；分别显示已下载、已安装、资源就绪、等待登录、场景就绪。
 - [ ] DIST-03 复用已有Doom样本建立第一个recipe；不重新下载现有大资源，不在规划阶段触碰手机。
-  - [ ] DIST-SCENE-01 **下一批**：Doom v73 render-demo小输入与既有部署证据、每attempt独立可写根、明确Java配置前提及有界launch/observe/stop；复用initialize生命周期，不写旧prefs/库，不复制PK4。历史demo原件与冷启消费仍未核，缺件/配置阻断仅该方向；先源码与宿主合同，真机另列。
+  - [x] DIST-SCENE-01 [合同与验收](GAME-SCENE.md)：PF cbc53e4/harness58efc7f六项actual CI成功后同SHA直推main。旧部署证据+两小种子、新运行根、有界诊断与共用恢复，Web/CLI/API齐备。104协议、3Rust、actualPF三链117传输/242PID、旧initialize两回归43传输/49PID及DOM/390浏览器首次通过；未知QA屏障保留。仅源码/隔离宿主范围，未部署/真机，真实demo原件与冷启消费仍未核。
 - [ ] DIST-04 节点直取文件、流式接收、断点续传、接收端hash、原子完成、内容缓存和空间预检。
   - [x] DIST-UPLOAD-01 [合同与验收](GAME-UPLOAD.md)：harness 02da7cd同一缓存分块接收/原ID接续/单资产worker校验，Web/CLI同批；本地88项协议及定向修复、DOM/实际浏览器替身通过，五项actual CI成功后同SHA直推main。未部署、未操作手机。
   - [ ] DIST-LARGEFILE-01 在有空间预算的隔离节点验证多GiB流式上传的内存/磁盘使用和断线接续；复用已授权素材或可控合成流，不在本Mac重复下载/复制旧Doom大文件。

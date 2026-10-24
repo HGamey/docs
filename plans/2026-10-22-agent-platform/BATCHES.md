@@ -557,3 +557,10 @@ PF `537a62f` / harness `e20758b`，六项actual CI成功后同SHA直推main。�
 harness dd003401af2bdff6611e6d4baabef3350e75a150已检查成功后同SHA直推main；期间保留维护者e6b9bc4和553fb16新远程功能，发布门发现远端变化后重验最终SHA，没有force或PR。合同JOB-INPUTS；原件、负例和验证索引qa/job-inputs-validation.json留本机。94本地协议首轮93过，唯一新fixture Mac cwd别名错误定向修复，两项2.115秒通过；一轮DOM/390浏览器通过，真实系统剪贴板回读未核。无设备/生产/大素材复制。
 
 仅本子项完成，整体goal active。新合入remote/live审计确认测量占用仍raw截图、长动作release提前放锁两项P1，先修后续回同M2；Doom冷启/复位不能用历史已运行控制台playDemo结果冒充已验。
+
+
+## 2026-10-25 DIST-SCENE-01
+
+PF `cbc53e4` / harness `58efc7f`，六项actual CI成功后同SHA直推main并核远端。Doom v73场景请求沿原game-deploy队列，冻结原部署report+session与两个小种子，复用initialize唯一owner、有界启动/日志/截图/停止及未知恢复；Web/CLI/API同批。原资源只读、新runtime有意保留，配置或冷启/同状态未核仍unknown，不授予性能资格。
+
+104协议42.040秒、3Rust、实际PF三替身链117传输、旧initialize两相关回归43传输、DOM/390浏览器首次全过，291个已知PF/transport PID全退；浏览器和fixture亦退出。source-invalid和未知恢复零传输，两个unknown-launch负租约保留。未操作真机/生产或旧大文件。完整边界见[GAME-SCENE](GAME-SCENE.md)，证据qa/game-scene-{validation,publish,ui-validation}.json留本机。只勾本子项；下一FLEET-TARGET-01修复已确认的隐式后台和凭据串用，goal继续active。
