@@ -1,0 +1,130 @@
+{
+ "pkg": "com.miHoYo.Yuanshen",
+ "a": "native",
+ "b": "gfrc:111",
+ "rounds": 6,
+ "valid_pairs": 6,
+ "dropped_arms": [],
+ "out_res": {
+  "A": [
+   [
+    2141,
+    969
+   ]
+  ],
+  "B": [
+   [
+    3214,
+    1456
+   ]
+  ]
+ },
+ "metrics": {
+  "display_fps": {
+   "a_mean": 29.6783,
+   "b_mean": 118.3783,
+   "diff_mean": 88.7,
+   "diff_pct": 298.87,
+   "ci95": [
+    88.0867,
+    89.1617
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "display_fps_sc": {
+   "status": "not_measured"
+  },
+  "game_fps": {
+   "a_mean": 29.6075,
+   "b_mean": 57.1585,
+   "diff_mean": 27.551,
+   "diff_pct": 93.05,
+   "ci95": [
+    27.3497,
+    27.771
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "game_frame_p95_ms": {
+   "a_mean": 35.9495,
+   "b_mean": 22.8169,
+   "diff_mean": -13.1325,
+   "diff_pct": -36.53,
+   "ci95": [
+    -13.9121,
+    -12.2875
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "gpu_active_ms": {
+   "a_mean": 26.7236,
+   "b_mean": 11.9037,
+   "diff_mean": -14.8199,
+   "diff_pct": -55.46,
+   "ci95": [
+    -16.0118,
+    -13.6267
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_full": {
+   "a_mean": 94.6049,
+   "b_mean": 282.6119,
+   "diff_mean": 188.0069,
+   "diff_pct": 198.73,
+   "ci95": [
+    147.6488,
+    229.1734
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_hud": {
+   "a_mean": 334.306,
+   "b_mean": 820.8824,
+   "diff_mean": 486.5764,
+   "diff_pct": 145.55,
+   "ci95": [
+    439.3195,
+    530.5471
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "ssim_vs_native_ref": {
+   "a_mean": 0.5589,
+   "b_mean": 0.4385,
+   "diff_mean": -0.1204,
+   "diff_pct": -21.54,
+   "ci95": [
+    -0.2993,
+    -0.0108
+   ],
+   "p": 0.09375,
+   "n_pairs": 6
+  },
+  "missed_frames": {
+   "a_mean": 0,
+   "b_mean": 27,
+   "diff_mean": 27,
+   "diff_pct": null,
+   "ci95": [
+    19.1667,
+    40.3333
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "display_latency_p50_ms": {
+   "status": "not_measured"
+  },
+  "displayed_per_s": {
+   "status": "not_measured"
+  }
+ },
+ "min_p_possible": 0.03125
+}
