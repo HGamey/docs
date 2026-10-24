@@ -1,0 +1,121 @@
+{
+ "scale": 0.7,
+ "sharp": 0.8,
+ "native": [
+  2141,
+  969
+ ],
+ "n": 6,
+ "summary": {
+  "bilinear": {
+   "ssim_mean": 0.9846573656718064,
+   "sharp_ratio_mean": 0.4508078027185836
+  },
+  "lanczos": {
+   "ssim_mean": 0.9894137303693568,
+   "sharp_ratio_mean": 0.5845472446246459
+  },
+  "selfsr": {
+   "ssim_mean": 0.984726480324453,
+   "sharp_ratio_mean": 1.0074044157847022
+  }
+ },
+ "rows": [
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A1.png",
+   "gt_sharp": 155.78966470406624,
+   "bilinear": {
+    "ssim": 0.9885097808518909,
+    "sharp": 70.43660203354628
+   },
+   "lanczos": {
+    "ssim": 0.9917622708235754,
+    "sharp": 91.47916191889259
+   },
+   "selfsr": {
+    "ssim": 0.9882561824909232,
+    "sharp": 139.45658959683865
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A2.png",
+   "gt_sharp": 181.47947994758331,
+   "bilinear": {
+    "ssim": 0.9821312569496152,
+    "sharp": 81.22245649813388
+   },
+   "lanczos": {
+    "ssim": 0.9879767226267974,
+    "sharp": 105.46143920613875
+   },
+   "selfsr": {
+    "ssim": 0.9823242934991838,
+    "sharp": 206.2813092553335
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A3.png",
+   "gt_sharp": 182.9940494717478,
+   "bilinear": {
+    "ssim": 0.9815962302799734,
+    "sharp": 80.34989279524056
+   },
+   "lanczos": {
+    "ssim": 0.9874692011188098,
+    "sharp": 104.56527285305444
+   },
+   "selfsr": {
+    "ssim": 0.9818275470781619,
+    "sharp": 200.96073722250875
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A4.png",
+   "gt_sharp": 202.86899956175017,
+   "bilinear": {
+    "ssim": 0.9840545078090097,
+    "sharp": 93.62953480995023
+   },
+   "lanczos": {
+    "ssim": 0.9890899841077824,
+    "sharp": 120.60050288712713
+   },
+   "selfsr": {
+    "ssim": 0.9844288028160286,
+    "sharp": 204.73515105400065
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A5.png",
+   "gt_sharp": 187.20202868856612,
+   "bilinear": {
+    "ssim": 0.9842521904617629,
+    "sharp": 85.50814352480953
+   },
+   "lanczos": {
+    "ssim": 0.9891368750724324,
+    "sharp": 110.31574628329268
+   },
+   "selfsr": {
+    "ssim": 0.9843882120900128,
+    "sharp": 186.01062574393632
+   }
+  },
+  {
+   "shot": "/Users/yao/Desktop/code/agent/hgamey/_tmp/selfsr/step2/ab6/shots/A6.png",
+   "gt_sharp": 153.52588367046806,
+   "bilinear": {
+    "ssim": 0.9874002276785859,
+    "sharp": 68.74615269405831
+   },
+   "lanczos": {
+    "ssim": 0.9910473284667434,
+    "sharp": 89.62702658598006
+   },
+   "selfsr": {
+    "ssim": 0.9871338439724072,
+    "sharp": 139.9520539940409
+   }
+  }
+ ]
+}
