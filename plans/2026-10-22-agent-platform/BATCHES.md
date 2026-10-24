@@ -532,3 +532,12 @@ harness [1cbc7b1](https://github.com/HGamey/harness-ops/commit/1cbc7b1e43a6a9423
 76项本地协议25.107秒一次通过，包含两个隔离HTTP节点；定向DOM、390px和桌面浏览器通过。首轮CI只有旧restart fixture出现ready日志先于running落盘的竞态，失败原件保留，仅修测试等待已发布状态，定向1项通过。最终5项actual checks全部success后推同SHA。详见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。无部署/手机/迁移，旧Doom数据留本机。
 
 只勾目录子项，完整FLEET与总体goal仍开放。get_goal核实active，未调用update_goal；本批不关闭或暂停目标。下一批回收BASE-03 APK缓存成果并冻结游戏bundle/准备/分发合同，Web与CLI共同交付。
+
+
+## 2026-10-24 DIST-PREPARE-01：游戏版本目录与宿主资源准备
+
+harness [12eda9a](https://github.com/HGamey/harness-ops/commit/12eda9ae41c72cfcd5432d363cda4f64c40a99a9)已直推main并核远端。不可变版本清单、小型冻结输入和既有持久队列连接为同一流程；公开URL/已结束job产物流式进入SHA缓存，支持续传、校验、损坏隔离、空间预检和原子收据。Web与pf-node games共用目录、准备、原请求找回与报告；当前缓存资格和历史任务阶段分开，设备四状态仍未知。旧fetch_apk共用缓存并移除默认serial、隐式全权限与音量修改；Doom样本只复用5项历史元数据。
+
+83项本地协议31.169秒一次通过，包括实际隔离HTTP/worker/CLI/cache；七项新增聚焦断传/坏缓存/不可变/权限/幂等/重定向。定向DOM和1440暗/390浅实际浏览器替身通过，一次POST 503后同ID找回，无二次提交；第一次DOM仅cwd错误未执行case，原件保留。code-only、protocol双版本和两个kernel检查actual全部success后推同SHA。无部署、真机或大文件下载；UI服务已退，tab关闭、viewport复位。
+
+审查修正：历史failed/verified进度原本可能掩盖当前缓存unknown，改为独立observation/progress。只关闭BASE-03与DIST-PREPARE-01宿主子项，完整DIST继续开放。下一DIST-UPLOAD-01本机大文件流式接收；另记录旧CLI隐式生产目标的迁移缺口FLEET-TARGET-01，不在本批切换后台或搬原件。goal仍active，未调用update_goal。证据与合同见[GAME-DISTRIBUTION](GAME-DISTRIBUTION.md)。

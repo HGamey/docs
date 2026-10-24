@@ -1,6 +1,6 @@
 # 开发待办
 
-更新：2026-10-23。**勾选仅表示已完成，不表示计划已经实现。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
+更新：2026-10-24。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
 ## 已完成的准备
 
@@ -21,7 +21,7 @@
 - [ ] BASE-01 对照上游与本地分叉，列可回收提交/补丁、依赖、测试；保护phonefarm与GOL未提交修改。验收：每项有去向，不一把推历史分支。
 - [ ] BASE-02 回收job唯一锁名、raw adb/fetch_apk锁路由、fleet队列解析等既有增强；验证与现有强lease/bridge兼容。
   - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；旧global bridge之外的强lease集成仍待验收。
-- [ ] BASE-03 回收APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改等成果。
+- [x] BASE-03 harness 12eda9a已回收并统一APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改。旧fetch_apk现在要求size/serial/SHA并共用节点缓存；legacy混合锁/设备恢复仍另列，未声称真机安装验证。
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；CLI和网页都可查询，客户端遇不兼容时解释具体差异。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
@@ -45,6 +45,7 @@
 FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。完整设备身份/能力和跨节点执行仍开放；下一批按主线推进游戏分发，不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办。
 
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
+  - [ ] FLEET-TARGET-01 统一pf-node/pf-fleet/网页的显式目标选择；清点旧CLI的隐式生产URL与凭据fallback，给出迁移兼容策略。写入前让目标node_id和存储位置可核对，不因旧默认配置误投到另一后台。
 - [ ] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。
   - `/dash/fleet`与`pf-fleet --hub`已共用`/nodes`持久目录；显示所选远端身份、存储、设备/队列/lease/恢复快照及新鲜度。旧无hub模式兼容保留，跨节点任务代理与真实多机部署尚未完成。
 - [ ] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。
@@ -56,12 +57,15 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 
 ## P1：游戏与任务分发
 
-下一批先冻结DIST-01/02/04最小合同并回收BASE-03。旧增强源仍在本机 `tasks/phonefarm_node_migration_20261014/harness-ops/node/fetch_apk.sh`，已有显式serial、SHA内容缓存、partial隔离与取消隐式权限/音量修改。当前上游脚本仍使用默认serial和安装后音量修改；复用旧成果并接入服务/Web/CLI，不能继续并列另一份私有配置。Doom仅复用既有清单，不下载或操作手机。
+[游戏资源准备合同](GAME-DISTRIBUTION.md)首批已发布。当前节点可登记不可变版本，运行持久宿主准备，直接下载/导入并校验缓存，网页/CLI共用记录。旧APK增强已回收，不重下Doom大资源。完整安装、场景、流式上传和配额继续开放。
+
+- [x] DIST-PREPARE-01 harness 12eda9a：目录→宿主任务→SHA缓存/续传/隔离→Web/CLI找回；83本地协议31.169秒、实际隔离HTTP/worker/CLI、DOM与1440/390浏览器通过，五项actual CI成功后同SHA推main。当前缓存未知不被历史任务成功覆盖；只有宿主资源资格，未部署/手机/大文件验收。
 
 - [ ] DIST-01 定义游戏bundle manifest：应用/引擎/包/资源/存档/场景/配置/来源/哈希/设备条件/空间/回执。
 - [ ] DIST-02 网页游戏目录与准备状态，CLI inspect/prepare；分别显示已下载、已安装、资源就绪、等待登录、场景就绪。
 - [ ] DIST-03 复用已有Doom样本建立第一个recipe；不重新下载现有大资源，不在规划阶段触碰手机。
 - [ ] DIST-04 节点直取文件、流式接收、断点续传、接收端hash、原子完成、内容缓存和空间预检。
+  - [ ] DIST-UPLOAD-01 在同一内容缓存上增加本机大文件的流式接收与显式断点续传，客户端失败后按原上传身份/offset查询；不将大文件装入内存tar、不复制独立缓存、不要求先公开URL。网页与CLI共同交付。
 - [ ] DIST-05 任务输入/输出改为显式工件引用和依赖清单；处理嵌套JSON/脚本路径，避免只有argv重写有效。
 - [ ] DIST-06 资源包/OBB/loose文件/存档按目标平台受限路径安装；保存旧存档与恢复收据，检验游戏UID可访问性。
 - [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，先列支持矩阵，不宣称单APK流程已覆盖。
