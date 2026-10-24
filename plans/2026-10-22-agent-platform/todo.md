@@ -42,12 +42,13 @@
 
 ## P1：多机管理
 
-当前下一批回到FLEET-01/02：先沿已有node身份、pf-fleet登记配置和网页fleet梳理跨节点读写合同，再实现显式登记与同一节点目录；不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办，不无限增加同类宿主防御批次。
+当前实施FLEET-01/02，合同已冻结在[FLEET-DIRECTORY](FLEET-DIRECTORY.md)：服务端持久目录、只写凭据、身份绑定、Web/CLI同一API和只读缓存；不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办，不无限增加同类宿主防御批次。
 
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
 - [ ] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。
   - `/dash/fleet`、`pf-node fleet`和跨节点`pf-fleet status`已共用读取合同；网页目前只展示当前节点，跨节点注册与强lease/恢复态未完成。
 - [ ] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。
+  - [ ] FLEET-DIRECTORY-01 共享目录登记/更新/停用、旧配置显式导入、两节点隔离HTTP验收、网页窄屏交互；固定PF profile的fleet采样环境同步修复。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
 - [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。
