@@ -99,6 +99,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
 - [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；多设备并行锁域仍归JOB-03。
 - [ ] JOB-09 任务/研究预算、超时与磁盘上限；停止后可解释哪些动作发生、哪些没发生、哪些恢复待核。
+  - [x] JOB-TIME-BUDGET-01 按[JOB-TIME-BUDGET](JOB-TIME-BUDGET.md)已发布 harness4b7c75a：独立worker执行期限、原取消链、Web/CLI与原ID冻结；133本地协议首轮两夹具错后2定向通过、实际HTTP/worker重启链、390网页及五CI通过。研究预算、磁盘上限和通用暂停仍开放。
 - [ ] JOB-10 完成两节点故障注入验收，然后单列实际手机的准备、执行、还原验收。
 
 - [x] JOB-EXEC-01 [独立 worker 与重启后取消](JOB-EXECUTION.md)，网页/CLI同一回执；真实 HTTP 服务进程重启与无害子进程验证通过，225cb5c已发布，未部署。
