@@ -19,7 +19,7 @@
 - [x] UI-02 将同一设计/交互规范推广到节点、游戏、队列和人工协助页面，保留真实空态/错误态。 节点、游戏、队列、结果与研究协助已沿同一规范，保留空态/错误/未决；各批真实隔离浏览器证据见相应合同，研究页390px已验。
 
 - [ ] BASE-01 对照上游与本地分叉，列可回收提交/补丁、依赖、测试；保护phonefarm与GOL未提交修改。验收：每项有去向，不一把推历史分支。
-  - 已列锁/fleet/APK增强均有发布去向；正在定点核PF三处用户补丁、历史集合及GOL本地差异。确认Harmony供电过滤尚未回收，按[HARMONY-SUPPLY](HARMONY-SUPPLY.md)修正，不覆盖旧研究树。
+  - 已列锁/fleet/APK增强均有发布去向；正在定点核PF三处用户补丁、历史集合及GOL本地差异。Harmony供电过滤已由PF a03a6f9回收，见[HARMONY-SUPPLY](HARMONY-SUPPLY.md)；24相关测试/实际离线CLI/code-only通过，未动旧研究树。GOL和两helper去向继续核对。
 - [x] BASE-02 回收job唯一锁名、raw adb/fetch_apk锁路由、fleet队列解析等既有增强；验证与现有强lease/bridge兼容。 旧增强及强/嵌套/实例bridge宿主链已交付，见LEASE-IDENTITY；逐设备去全局串行仍归JOB-03，未部署旧运行节点。
   - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；后续LEASE-IDENTITY/STRONG-LEASE-IDENTITY已验证强lease集成，逐设备去global串行仍待JOB-03。
 - [x] BASE-03 harness 12eda9a已回收并统一APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改。旧fetch_apk现在要求size/serial/SHA并共用节点缓存；legacy混合锁/设备恢复仍另列，未声称真机安装验证。

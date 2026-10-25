@@ -15,3 +15,15 @@
 沿旧补丁的真实供电文本夹具，最少覆盖USB充电、缺字段、断电负电流，以及离线缺前/后报告和有效端点；在原offline测试保留FpsScope/frame_judge断言。一次相关Rust测试，必要一条小CSV实际CLI链，无手机/hdc/后台/大素材。不跑无关完整harness协议或已有测量恢复矩阵。
 
 旧用户README/规格修改转存docs的历史记录，不能复制到40行代码README或丢弃；旧研究工作树不提交、不reset、不重写。所有源补丁最终写入BASE-01映射表，是否采纳各自有明确去向。
+
+## 交付（2026-10-25）
+
+PF a03a6f912de70aaa0efa7a8ad7a1becbae2a48d4 经 code-only 成功后同SHA直推main并核对。
+一次24项perfsrc相关Rust测试全部通过（0.18秒，构建7.95秒）；一个签名debug实际CLI链
+依次验证缺报告→null、两端放电→4.0W、后端充电→null，原CSV未改。无hdc/真机/生产调用。
+构建自报基线316a3e0且dirty=true，不冒充提交后的干净binary；release未改。
+既有FPS口径断言保留，网页消费原PerfSnapshot不变，本批没有无关harness全套或浏览器复跑。
+
+旧README/SPEC的作者记录已归docs中SPEC_PERF_SOURCE第9节，明确历史自报与本轮离线验收边界。
+本机证据索引qa/harmony-supply-validation.json，原日志、CLI JSON和小输入同目录保留；
+原研究树三文件保持原样。BASE-01其他历史/GOL差异继续单列处理。
