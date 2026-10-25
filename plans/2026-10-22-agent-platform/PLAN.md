@@ -13,7 +13,7 @@
 - M4：结果登记、远端检索、同节点显式矩阵、研究状态/依赖/事件、预声明判据及异步人类反馈/媒体评价已交付。RESULT-CROSS-COMPARE-01的有界远端详情和逐列基线已发布16cdfd3；146协议、实际HTTP/CLI、单390及五项actual CI首轮通过。
 - M5：有限远程owner/观察/动作/截图坐标绑定已有宿主验收。高帧率视频、持续输入、多平台能力与方法工具继续按todo推进，未恢复Doom实验或迁移原件。
 
-BASE-01已交付[Harmony供电过滤](HARMONY-SUPPLY.md)和[GOL设备资格](GOL-DEVICE-ELIGIBILITY.md)，其余旧差异按[去向表](BASE-RECLAMATION.md)保留或映射。CAPTURE-POLICY-01、DOC-01、BASE-LAUNCH-01已交付；启动接续d0d9eb9经过149协议和五CI，继续BASE-05凭据更新目录/历史只读来源/缓存边界。业务兼容已完成147协议/PF runtime-info/390/六CI首轮验收。父项审计已消除“缺设备并行、缺宿主容量、缺事件revision”等过时描述，未覆盖入口和真机义务继续保留。所有QA未知恢复屏障保持原样；生产部署、后台选址和原始实验迁移仍暂存。整体平台和goal未完成，单批交付后继续现有待办。
+BASE-01已交付[Harmony供电过滤](HARMONY-SUPPLY.md)和[GOL设备资格](GOL-DEVICE-ELIGIBILITY.md)，其余旧差异按[去向表](BASE-RECLAMATION.md)保留或映射。CAPTURE-POLICY-01、DOC-01、BASE-LAUNCH-01、BASE-CONFIG-01已交付；启动接续d0d9eb9和凭据目录70b51ef分别经过149/150协议与五CI，继续BASE-05历史只读来源/缓存边界。业务兼容已完成147协议/PF runtime-info/390/六CI首轮验收。父项审计已消除“缺设备并行、缺宿主容量、缺事件revision”等过时描述，未覆盖入口和真机义务继续保留。所有QA未知恢复屏障保持原样；生产部署、后台选址和原始实验迁移仍暂存。整体平台和goal未完成，单批交付后继续现有待办。
 
 ## 先解决什么问题
 
