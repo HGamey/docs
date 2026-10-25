@@ -1,6 +1,6 @@
 # 节点启动配置与重启接续
 
-2026-10-25，BASE-05 的第一批子项 BASE-LAUNCH-01。当前是实施合同，验证与发布后补；不代表整体目录分离或生产部署完成。
+2026-10-25，BASE-05 的第一批子项 BASE-LAUNCH-01，已发布 harness-ops `d0d9eb9d9a9195b9fe66871bcdd73579fa0adb03`；不代表整体目录分离或生产部署完成。
 
 ## 要修复的路径
 
@@ -17,6 +17,12 @@
 
 ## 数据与可观察性
 
+例如把下列小配置存到安装目录之外，再运行 `run_node.sh --config /absolute/node-launch.json`。路径是示例，继续已有节点应填实际原数据根，不能照抄后把新 ID 当作旧实例。
+
+```json
+{"schema":"hgamey/node-launch@1","service_args":["--data-dir","/srv/hgamey data","--max-running","2"],"node_token_file":"/srv/hgamey-config/node.token"}
+```
+
 服务启动日志显示 entry、phonefarm、data_root、jobs_root、node_id；Web/CLI 继续复用现有 `/node` 的 runtime/storage 身份。同一数据根接续原节点 ID，首次选择新的数据根是新的实例，不能冒充迁移成功。
 
 省略 `--data-dir` 仍用 PF 根的 `_jobs`；显式使用则是 `D/jobs`，即使 D 等于原 PF 根也不同。本批不搬旧数据、不复制 ID、不联合扫描历史目录。旧 `_jobs` schema 可在原根读取，但完整服务会初始化队列，目录导出会写缓存，故不称严格只读历史挂载。
@@ -26,3 +32,7 @@
 以隔离 HOME/配置/安装副本做真实服务启动、版本更新和 HTTP restart，检查带空格参数、实例变化但 node_id/数据根/旧小任务不变；变更外置配置不影响已运行 launcher。另检查错误拒绝、直接参数和 legacy 默认。所有子进程有句柄并收尾，不连接设备、不读取生产凭据。按仓库规则运行本批唯一完整协议测试及必需 CI。
 
 BASE-05 继续开放：独立缓存策略、上传密码与 HG_CONFIG_DIR 一致性、严格只读历史来源及显式迁移尚未交付；data_root 内目录登记含远端 token，不能将整个目录当无凭据缓存分享。
+
+本批唯一完整本地协议测试149项首轮通过（90.458秒），包含两条新增测试：真实POSIX shell/HG_NODE_PYTHON/HTTP restart与原小证据接续，以及配置早拒/direct/legacy参数精确传递。HTTP测试只改安装副本与合成数据，PF为封闭替身；两次服务和serve替身均退出，未调用设备操作。网页和CLI现有四项身份展示静读确认齐全，无产品UI变更或重复浏览器链。
+
+`code-only`、两个Python协议版本、`cgroup-kernel`、`pf-shared-kernel`全部success后同SHA推main并核对。原始本机证据：`qa/node-launch-{protocol-1.log,validation.json,check-runs.json,publish.json}`及`qa/base-launch-ui-read.md`。此次更新验证是隔离安装副本+声明变更，不是生产updater部署验收；原data-dir布局和旧QA恢复义务保留。

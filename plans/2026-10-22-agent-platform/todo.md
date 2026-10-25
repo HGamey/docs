@@ -27,7 +27,10 @@
   - [x] BASE-BUSINESS-COMPAT-01 按[BUSINESS-COMPATIBILITY](BUSINESS-COMPATIBILITY.md)已发布PF316a3e0/harness69b9b43：唯一配置程序缓存、灰层新建门禁、明确差异和Web/CLI；147协议/actualHTTPCLI/PF runtime-info/390/六CI全首过。旧原ID/停止/恢复不挡，声明不授予owner动作。
   - [x] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。PF e51b09f/GOLaedf95d/harness0e1b7eb已发布；125协议、两真实程序/三job链/390网页及七CI通过，完整范围见合同。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
-  - [ ] BASE-LAUNCH-01 按[NODE-LAUNCH](NODE-LAUNCH.md)修默认入口丢参：外置配置、冻结参数、更新后同根重启；旧数据不搬、固定worker不自动重装。
+  - [x] BASE-LAUNCH-01 按[NODE-LAUNCH](NODE-LAUNCH.md)已发布d0d9eb9：外置配置、冻结参数、更新后同根重启；149协议首过与五CI成功，旧数据不搬、固定worker不自动重装。
+  - [ ] BASE-CONFIG-01 按[NODE-CONFIG-PATH](NODE-CONFIG-PATH.md)使上传更新的dash/steer凭据目录与HG_CONFIG_DIR一致，包含固定profile过滤环境的真实worker路径；不改动真实凭据。
+  - [ ] BASE-HISTORY-01 管理员显式登记旧_jobs只读来源，Web/CLI同级读取列表/详情/日志/单文件；身份含来源，不写旧根SQL/缓存、不按历史PID控制进程。
+  - [ ] BASE-CACHE-01 明确可丢重建缓存、断点partial、唯一原件和含凭据状态的布局/清理边界；独立缓存目录不隐式迁移原数据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
   - [x] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。PF c37df6b已发布，9单元/8调用宿主链/code-only首过；无设备，父BASE-07仍开放。
