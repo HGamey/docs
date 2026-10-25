@@ -1,6 +1,6 @@
 # 旧作业的显式只读来源
 
-2026-10-25，BASE-HISTORY-01 实施合同，尚未验收或发布。当前作业与历史来源分开寻址，不迁移旧数据。
+2026-10-25，BASE-HISTORY-01 已以 harness `92716a0` 发布。当前作业与历史来源分开寻址，不迁移旧数据。
 
 ## 管理员配置与身份
 
@@ -30,3 +30,8 @@ CLI在现jobs/status/log/artifacts/out只读命令增加 `--source SOURCE --sour
 隔离临时旧_jobs设为只读，真实HTTP和CLI读取两个同名job来源及原件；验证node/source/revision/cursor边界、坏meta/不可读来源、符号链接拒绝、修改入口拒绝、无SQL/身份/导出缓存写入。一次390宽网页链检查来源切换、原记录与单文件下载、错误保留及没有写请求。按规则本批唯一完整协议测试，失败仅定向修复；不读生产旧任务，不连接手机。
 
 此批仅旧作业目录适配，不导入当前结果索引，不恢复旧运行任务，不生成迁移成功收据，不解决累计缓存配额或原始实验迁移。BASE-05父项仍开放。
+
+
+## 交付记录
+
+152项协议首轮92.480秒通过；两条新增真实HTTP/CLI链覆盖同ID双来源、只读原件、权限、分页、Range与错误边界。唯一390px真实HTTP网页链已验证来源切换、原状态/退出码出处、日志/原meta、26字节单文件与503/409保选择；35 GET、0修改/设备/worker调用，原来源bytes/metadata及当前job不变。首次QA将原生下载计入page request事件失败，已保留并从服务请求日志与下载原件补证，没有重跑浏览器。五项actual required CI全部success，同SHA推main并核对。证据：本机qa/job-history-{validation,ui-validation,check-runs,publish}.json；fixture与browser已退。仅源码/隔离宿主，无生产迁移或真机。

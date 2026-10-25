@@ -29,8 +29,8 @@
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
   - [x] BASE-LAUNCH-01 按[NODE-LAUNCH](NODE-LAUNCH.md)已发布d0d9eb9：外置配置、冻结参数、更新后同根重启；149协议首过与五CI成功，旧数据不搬、固定worker不自动重装。
   - [x] BASE-CONFIG-01 按[NODE-CONFIG-PATH](NODE-CONFIG-PATH.md)已发布70b51ef：上传凭据目录与HG_CONFIG_DIR一致，固定profile过滤环境的真实worker链/默认/失败保输入通过；150协议首过与五CI成功，无真实凭据变更。
-  - [ ] BASE-HISTORY-01 按[JOB-HISTORY](JOB-HISTORY.md)管理员显式登记旧_jobs只读来源，Web/CLI同级读取列表/详情/日志/单文件；身份含来源revision，不写旧根SQL/缓存、不按历史PID控制进程。
-  - [ ] BASE-CACHE-01 明确可丢重建缓存、断点partial、唯一原件和含凭据状态的布局/清理边界；独立缓存目录不隐式迁移原数据。
+  - [x] BASE-HISTORY-01 按[JOB-HISTORY](JOB-HISTORY.md)已发布92716a0，旧_jobs显式只读来源及Web/CLI同级；152协议首过、唯一390实际HTTP与五CI通过。来源revision隔离，不写旧根、不推断PID；首次QA下载事件计数错误与补证保留。
+  - [ ] BASE-CACHE-01 按[EXPORT-CACHE-ROOT](EXPORT-CACHE-ROOT.md)外置当前job目录导出的派生缓存；明确资产partial/唯一原件/含凭据状态不得按cache名称清理，不隐式迁移原数据。累计保留/配额仍归DIST-09/JOB-09。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
   - [x] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。PF c37df6b已发布，9单元/8调用宿主链/code-only首过；无设备，父BASE-07仍开放。
