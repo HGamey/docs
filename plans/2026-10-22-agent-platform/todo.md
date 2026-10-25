@@ -86,6 +86,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，先列支持矩阵，不宣称单APK流程已覆盖。
 - [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
+  - [ ] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)统一URL/import/upload写前size、实际partial FD每块空间和短写计数；原续传/校验与WebCLI同级，累计GC独立。合同已冻，实施中。
 
 ## P1：任务队列与执行
 
@@ -101,7 +102,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
 - [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；多设备并行锁域仍归JOB-03。
 - [ ] JOB-09 任务/研究预算、超时与磁盘上限；停止后可解释哪些动作发生、哪些没发生、哪些恢复待核。
-  - [ ] JOB-EXPORT-LIMITS-01 按[目录导出生成边界](JOB-EXPORT-LIMITS.md)限制Node自身.outcache生成，补有界条目/载荷、实际压缩写入和余量/同job非阻塞builder锁，Web/CLI共用错误；合同已冻，尚未实现，累计缓存GC另列。
+  - [x] JOB-EXPORT-LIMITS-01 按[目录导出生成边界](JOB-EXPORT-LIMITS.md)已发布harnessdf79d69：有界树/实际压缩写入、空间与跨reader锁、Web显式准备及CLI错误保partial；142协议/390/五CI全部首过。累计缓存GC和producer硬限额另列。
   - [x] JOB-DISK-GUARD-01 按[运行期磁盘软保护](JOB-DISK-GUARD.md)已发布harness757d3ff：实际FD/1Hz观察、同owner停止、Web/CLI和固定cap；141协议、actual HTTP退出后仍触发/CLI124、390及五CI全部首过。未部署/真机，不代表任意输出硬配额。
   - [x] JOB-OWNER-RECORD-FAILURE-01 按[worker保存故障合同](JOB-OWNER-RECORD-FAILURE.md)已发布harness764c4bb：内存意图与原信号时钟、Web/CLI、实际普通组及Linux域保存故障验收；139协议首轮一真实升级来源缺失后1定向通过、390及五CI通过。永久最终保存失败仍未知，未部署/真机；运行期软阈值另批。
   - [x] JOB-INPUT-WRITE-LIMITS-01 按[输入写入合同](JOB-INPUT-WRITE-LIMITS.md)已发布harness68bd288：tar/引用/派生统一预算与空间预检、原ID与失败partial、Web/CLI同级。138协议初轮一方法两预期错后5定向通过；CI暴露tar解析入口兼容问题，窄修经3.12/3.14定向及最终五CI通过，390通过。运行期输出与研究总预算独立。

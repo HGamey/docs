@@ -1,6 +1,6 @@
 # JOB-EXPORT-LIMITS-01：目录下载缓存生成边界
 
-2026-10-25，下一批实施合同；尚未实现。归JOB-09，承接JOB-DISK-GUARD，约束Node自己执行的目录压缩写入；不改变job spec，不关闭累计缓存配额/任意producer输出硬限额。
+2026-10-25，已发布 harness df79d694f3e711688c48b9aca502161fa203a46d。归JOB-09，承接JOB-DISK-GUARD，约束Node自己执行的目录压缩写入；不改变job spec，不关闭累计缓存配额/任意producer输出硬限额。
 
 ## 范围与政策
 
@@ -27,3 +27,9 @@ CLI目录元数据/下载遇这些export错误直接显示原因，保已有本�
 ## 验收
 
 复用既有artifact_io协议：小目录→meta/Range/缓存命中，低测试限额覆盖载荷/条目/压缩输出与低空间/ENOSPC，核原件/旧cache不受损、tmp边界与无假成功；两个Jobs reader共享同job锁拒第二builder。只加必要合并用例，不扩归档格式矩阵、不下载大素材/扫描旧研究树。CLI新错误不重试，390px页面单次准备/失败/较小目录或原文件入口。每批一次完整协议，失败仅窄跑；源码/隔离宿主/CI，不部署/真机。
+
+## 已验证范围
+
+唯一一轮本地142协议79.306s全首过。复用实际只读HTTP/CLI归档链验证meta/Range/cache、跨Jobs reader稳定非阻塞锁、CLI元数据/分块busy不重试并保五字节partial；一新增合并方法覆盖真实短写、条目/载荷/压缩预算、低空间和写入一字节后的ENOSPC。源、旧cache/描述与本次tmp边界均过。
+
+单390实际浏览器+synthetic HTTP首过，16GET/0POST：0隐式meta、根目录一次413、小目录一次meta及150B native download。无pageerror/横溢；预期413 console诊断保留。fixture22994和browser23372已退、端口57516关闭，root目视prepared截图。五项actual required CI success后同SHA直推main并ls-remote核对。索引在本机qa/job-export-limits-{validation,checks,publish,ui-validation}.json；无部署/真机/迁移，不清理旧QA恢复义务。
