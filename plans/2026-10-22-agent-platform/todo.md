@@ -45,8 +45,8 @@
 - [x] MERGE-01 修复旧 PR 带入的 gray eval 循环资格阻断；未知 control 可采证但不能形成结论（`8dba439`）。
 - [x] MERGE-02 同步普通/动态灰层构建输入与 GOL 消费端，补 npuprobe.cpp；NDK实编、旧工件与跨仓合同验证通过，已发布 phonefarm `6cd1ac5`、GOL `1a8601e`。
 - [x] MERGE-03 按 [GRAY-MODE-ADMISSION](GRAY-MODE-ADMISSION.md) 完成已知copyprobe/upop CLI/公共mount/旧shell入口准入，155506f检查通过直推main。默认unsupported、自定义SO capability_unverified；构建/离线分析保留，未开放注入。自定义工件未来执行能力合同另定。
-- [ ] DOC-01 同步各仓AGENTS/README/组织入口的外部Agent定位与直接commit/push规则，保留代码仓文档边界。
-  - phonefarm、harness-ops、game_opt_loop、refbench 的 AGENTS/直接提交流程已同步；组织总入口与全部旧说明仍待梳理。
+- [x] DOC-01 同步各仓AGENTS/README/组织入口的外部Agent定位与直接commit/push规则，保留代码仓文档边界。
+  - [DOC-ENTRY-ALIGNMENT](DOC-ENTRY-ALIGNMENT.md)：组织、四活跃代码仓与docs入口已发布；历史/归档材料保留原范围，不全面重写旧报告。各仓实际必需检查与main核对完成。
 
 ## P1：多机管理
 
@@ -251,7 +251,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
             - [x] PRODUCER-RECOVERY-03B4C2D1 已发布bf56025并通过6case纯客户端验收，按 [GRAY-REFERENCE-CLIENT](GRAY-REFERENCE-CLIENT.md) 迁移REF_ARM=1 passdump参考客户端，复用既有会话与共享CLI组件；显式几何/供电政策/有限输入，不声称无层或同状态。
             - [x] PRODUCER-RECOVERY-03B4C2D2 PF4282d09与harness53bb414已检查成功直推main，三链宿主及网页模板定向检查通过；按[GRAY-REFBENCH-SESSION](GRAY-REFBENCH-SESSION.md)将test_loadop四臂迁入单Lease+现有Session，真实无层A/B后再安装C/D，保留字符串extras、八原件、自报与自然退出。
             - [x] PRODUCER-RECOVERY-03B4C2D3 PF f7b4012已检查成功直推main，4相关单测与11零设备拦截用例各一次通过；按[GRAY-LEGACY-MOUNT-RETIREMENT](GRAY-LEGACY-MOUNT-RETIREMENT.md)退役旧六挂层模式并移除裸写私链；keep-prop仅安装不启动不能直接alias。保留typed off/status/离线分析，shell off也改typed转发。
-  - [ ] CAPTURE-POLICY-01 旧Genshin step未消费mode/auto_choice，ready-only未命中会巡航；明确参数行为并修复，不把navigate声称为不推进剧情。当前恢复批不改策略，也不运行真机。
+  - [x] CAPTURE-POLICY-01 按[CAPTURE-POLICY](CAPTURE-POLICY.md)发布PF4eacd57：ready-only有限观察、新请求不强停、mode/auto_choice与BACK生效。4相关测试首过/code-only成功；无真机，旧session恢复政策不改，navigate不承诺零剧情推进。
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
 记录变更/提交、网页与API验收、离线测试、实际设备验证、未覆盖边界、迁移/恢复结果，以及下一批具体问题。实现条目只有达到相应验收才勾选；原实验失败记录保持不变。

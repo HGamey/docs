@@ -32,3 +32,13 @@ Worker.open只建主机状态，HID惰性创建；ready-only采集阶段不创�
 单轮相关参数与实际动作分派测试：有限观察用原capture流程+原PNG读取回调，fake QuestDevice的任何写入直接失败；
 命中/未就绪均零step，覆盖默认200造成的旧fallthrough。插件一个合并动作记录测试核各mode和BACK规则。
 不另造设备框架，不重跑完整harness或真机矩阵。帮助/skill同步，Web通用job仍使用相同参数与报告，无独立算法。
+
+## 交付（2026-10-25）
+
+PF 4eacd579cf34e8e4afb9dcc0e165e9921a42a868 经code-only成功后同SHA直推main并核对。
+唯一一次签名测试进程运行4项受影响测试，全部首过（测试5.17秒，进程5.65秒）；
+实际capture流程使用拒绝任何写入的QuestDevice与小合成原PNG，验证8次未就绪/一次命中均零step/BACK、
+正确退出和原字节保存。一个动作记录测试验证mode分派、navigate无盲X、auto_choice及BACK策略。
+参数覆盖普通默认、新ready-only默认/显式帧数和非法mode。没有设备、实际quest、生产或旧恢复矩阵重复。
+Worker/session恢复代码未改，旧session仍按原记录执行；本轮不新增真机分类/剧情或恢复保证。
+原始日志与发布收据见本机qa/capture-policy-validation.json及capture-policy-*。
