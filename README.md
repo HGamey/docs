@@ -1,6 +1,6 @@
 # HGamey 文档资料
 
-演示文稿、架构图等不属于代码的文档，统一放在这里。项目现状以 [STATUS.md](STATUS.md) 为准（每周更新）。实验的请求和报告放在 `experiments/`。
+HGamey 的产品决定、协议、验证记录与历史材料集中在这里。当前入口是[产品准则](plans/2026-10-22-agent-platform/PRODUCT-CHARTER.md)、[todo](plans/2026-10-22-agent-platform/todo.md)与[逐批记录](plans/2026-10-22-agent-platform/BATCHES.md)；目标能力、源码、隔离验收、指定设备实测及部署状态分开记录。实验的请求和报告放在 `experiments/`。
 
 ## 规则：代码仓库只放代码
 
@@ -27,8 +27,11 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 
 ## 目录
 
+较早的计划、演示与架构图按各自日期留档，不覆盖当前产品准则与逐批状态。网页与 CLI/API 的节点、任务、结果和异步研究入口见 [harness-ops](https://github.com/HGamey/harness-ops)。
+
 | 路径 | 内容 |
 |---|---|
+| [STATUS.md](STATUS.md) | 项目总览；与当前合同、待办和逐批验证一起阅读 |
 | `plans/2026-10-22-agent-platform/` | 外部 Agent 远程真机优化平台：已确认目的、项目地图、多机/分发/队列/结果计划、网页与CLI/API共同验收及完整待办 |
 | `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
 | `plans/2026-10-11-implementation-progress.md` | 本轮 draft PR、集成验证范围、剩余端到端接口与真机门槛 |
