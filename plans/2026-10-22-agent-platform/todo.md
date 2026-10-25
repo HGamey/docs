@@ -19,11 +19,12 @@
 - [x] UI-02 将同一设计/交互规范推广到节点、游戏、队列和人工协助页面，保留真实空态/错误态。 节点、游戏、队列、结果与研究协助已沿同一规范，保留空态/错误/未决；各批真实隔离浏览器证据见相应合同，研究页390px已验。
 
 - [ ] BASE-01 对照上游与本地分叉，列可回收提交/补丁、依赖、测试；保护phonefarm与GOL未提交修改。验收：每项有去向，不一把推历史分支。
+  - 已列锁/fleet/APK增强均有发布去向；正在定点核PF三处用户补丁、历史集合及GOL本地差异。确认Harmony供电过滤尚未回收，按[HARMONY-SUPPLY](HARMONY-SUPPLY.md)修正，不覆盖旧研究树。
 - [x] BASE-02 回收job唯一锁名、raw adb/fetch_apk锁路由、fleet队列解析等既有增强；验证与现有强lease/bridge兼容。 旧增强及强/嵌套/实例bridge宿主链已交付，见LEASE-IDENTITY；逐设备去全局串行仍归JOB-03，未部署旧运行节点。
   - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；后续LEASE-IDENTITY/STRONG-LEASE-IDENTITY已验证强lease集成，逐设备去global串行仍待JOB-03。
 - [x] BASE-03 harness 12eda9a已回收并统一APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改。旧fetch_apk现在要求size/serial/SHA并共用节点缓存；legacy混合锁/设备恢复仍另列，未声称真机安装验证。
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；源码/实际程序身份已由BASE-RUNTIME-01交付，剩余为真实跨仓业务协议的需求、实报与具体不匹配解释，复用现能力准入及Web/CLI。
-  - [ ] BASE-BUSINESS-COMPAT-01 按[BUSINESS-COMPATIBILITY](BUSINESS-COMPATIBILITY.md)补配置PF灰层业务声明、实际观察差异和新会话准入；旧原ID/停止/恢复保持可查，不从新程序声明给旧owner扩权。
+  - [x] BASE-BUSINESS-COMPAT-01 按[BUSINESS-COMPATIBILITY](BUSINESS-COMPATIBILITY.md)已发布PF316a3e0/harness69b9b43：唯一配置程序缓存、灰层新建门禁、明确差异和Web/CLI；147协议/actualHTTPCLI/PF runtime-info/390/六CI全首过。旧原ID/停止/恢复不挡，声明不授予owner动作。
   - [x] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。PF e51b09f/GOLaedf95d/harness0e1b7eb已发布；125协议、两真实程序/三job链/390网页及七CI通过，完整范围见合同。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
@@ -134,7 +135,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较已发布，当前补BASE-04具体业务协议差异；真实设备阶段另列。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较及灰层业务兼容已发布，当前回收BASE-01已确认用户补丁；真实设备阶段另列。
 
 ## P1：结果发现、共享与研究状态
 
