@@ -1,0 +1,122 @@
+{
+ "pkg": "com.miHoYo.Yuanshen",
+ "a": "gfrc:111",
+ "b": "srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000+gfrc:101",
+ "rounds": 6,
+ "valid_pairs": 6,
+ "dropped_arms": [],
+ "out_res": {
+  "A": [
+   [
+    3214,
+    1456
+   ]
+  ],
+  "B": []
+ },
+ "metrics": {
+  "display_fps": {
+   "a_mean": 116.1467,
+   "b_mean": 59.1467,
+   "diff_mean": -57.0,
+   "diff_pct": -49.08,
+   "ci95": [
+    -58.5033,
+    -55.535
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "display_fps_sc": {
+   "status": "not_measured"
+  },
+  "sc_added_delay_p50_ms": {
+   "status": "not_measured"
+  },
+  "sc_interval_p95_ms": {
+   "status": "not_measured"
+  },
+  "game_fps": {
+   "a_mean": 57.2397,
+   "b_mean": 54.7218,
+   "diff_mean": -2.5178,
+   "diff_pct": -4.4,
+   "ci95": [
+    -3.1698,
+    -1.9893
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "game_frame_p95_ms": {
+   "a_mean": 22.9894,
+   "b_mean": 28.0138,
+   "diff_mean": 5.0245,
+   "diff_pct": 21.86,
+   "ci95": [
+    3.4934,
+    6.3336
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "gpu_active_ms": {
+   "a_mean": 11.8646,
+   "b_mean": 15.2109,
+   "diff_mean": 3.3463,
+   "diff_pct": 28.2,
+   "ci95": [
+    3.0081,
+    3.6581
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_full": {
+   "a_mean": 244.7146,
+   "b_mean": 295.3862,
+   "diff_mean": 50.6716,
+   "diff_pct": 20.71,
+   "ci95": [
+    17.8061,
+    95.9488
+   ],
+   "p": 0.0625,
+   "n_pairs": 6
+  },
+  "sharp_hud": {
+   "a_mean": 803.2841,
+   "b_mean": 947.9164,
+   "diff_mean": 144.6324,
+   "diff_pct": 18.01,
+   "ci95": [
+    74.6776,
+    246.3537
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "ssim_vs_native_ref": {
+   "status": "not_measured"
+  },
+  "missed_frames": {
+   "a_mean": 59,
+   "b_mean": 567.1667,
+   "diff_mean": 508.1667,
+   "diff_pct": 861.3,
+   "ci95": [
+    480.3333,
+    536.1667
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "display_latency_p50_ms": {
+   "status": "not_measured"
+  },
+  "displayed_per_s": {
+   "status": "not_measured"
+  }
+ },
+ "min_p_possible": 0.03125
+}
