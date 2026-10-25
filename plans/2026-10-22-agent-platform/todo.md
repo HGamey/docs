@@ -22,7 +22,8 @@
 - [x] BASE-02 回收job唯一锁名、raw adb/fetch_apk锁路由、fleet队列解析等既有增强；验证与现有强lease/bridge兼容。 旧增强及强/嵌套/实例bridge宿主链已交付，见LEASE-IDENTITY；逐设备去全局串行仍归JOB-03，未部署旧运行节点。
   - 唯一 job owner 与 raw 命令锁路由已发布 `harness-ops 2b3c741`；只读 fleet 查询/队列显示也已发布 `947a4b9`；后续LEASE-IDENTITY/STRONG-LEASE-IDENTITY已验证强lease集成，逐设备去global串行仍待JOB-03。
 - [x] BASE-03 harness 12eda9a已回收并统一APK SHA缓存、partial验收/隔离、显式serial、取消隐式全权限/音量修改。旧fetch_apk现在要求size/serial/SHA并共用节点缓存；legacy混合锁/设备恢复仍另列，未声称真机安装验证。
-- [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；CLI和网页都可查询，客户端遇不兼容时解释具体差异。
+- [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；源码/实际程序身份已由BASE-RUNTIME-01交付，剩余为真实跨仓业务协议的需求、实报与具体不匹配解释，复用现能力准入及Web/CLI。
+  - [ ] BASE-BUSINESS-COMPAT-01 按[BUSINESS-COMPATIBILITY](BUSINESS-COMPATIBILITY.md)补配置PF灰层业务声明、实际观察差异和新会话准入；旧原ID/停止/恢复保持可查，不从新程序声明给旧owner扩权。
   - [x] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。PF e51b09f/GOLaedf95d/harness0e1b7eb已发布；125协议、两真实程序/三job链/390网页及七CI通过，完整范围见合同。
 - [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
@@ -48,9 +49,9 @@
 
 ## P1：多机管理
 
-FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)。完整设备身份/能力和跨节点执行仍开放；下一批按主线推进游戏分发，不重做已有队列/恢复链。JOB-SESSION-RECOVERY-02保留具体已知待办。
+FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY.md)和[DEVICE-IDENTITY](DEVICE-IDENTITY.md)。设备物理身份/epoch能力核验仍归FLEET-04，跨节点执行及真机验收归JOB-10；失败恢复子链已由SESSION-RECOVERY-CHAIN交付，不再重复实现。
 
-- [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
+- [x] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。FLEET-DIRECTORY与DEVICE-IDENTITY已覆盖人工声明登记、alias/CAS/历史和Web/CLI；撤销不取消远端任务，登记不证明物理同一性或实机能力。生产登记/设备核验仍独立。
   - [x] FLEET-DEVICE-IDENTITY-01 按[DEVICE-IDENTITY](DEVICE-IDENTITY.md)交付PF权威device_id/alias登记、版本CAS与Web/CLI/API；PF1ce93b8/harnessae3c7e0已发布，126协议/3Rust/实际PF链/390网页与六项CI通过。JOB03必需前置；仍全域执行，不宣称物理核验。
   - [x] JOB-DEVICE-DOMAIN-01 按[LEASE-DOMAIN](LEASE-DOMAIN.md)已发布PF2dbed4c/GOL3160e41/harness7998fa7；127协议、22PF+1GOL、实际签名PF、390显示及七CI通过，Linux新域/旧恢复185/317替身传输。首CI稀疏检出构建失败修复留档；仍global，现有QA恢复屏障不迁移。
   - [x] JOB-DEVICE-LANES-01 按[DEVICE-LANES](DEVICE-LANES.md)已发布PF dd27045/harness af93a5c：显式灰层绑定、设备ID锁、局部恢复与WebCLI同级；实际宿主A/B并行及alias/global/unknown排他。21PF回归、130协议首轮129通过后3项窄修通过、实际601替身传输/622PID全退、390网页和六项required CI均已验；未部署/真机。
@@ -94,13 +95,14 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
   - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
-  - 58fc0dc已完成SQLite原子领取、声明资源排队及宿主并发上限；本批2b4747e接入宿主lease屏障、恢复任务和独立阻断容量；DEVICE-LANES已补显式灰层的原子设备所有权/并发及局部恢复；全producer、主机CPU/GPU/磁盘预算与真机仍按后续项推进。
+  - 58fc0dc/2b4747e已完成原SQL原子领取、lease屏障及独立阻断容量；DEVICE-LANES已交付显式灰层按设备并行，JOB-HOST-CAPACITY已交付CPU/GPU/IO声明slots。剩余是旧PF/GOL、remote/observation及部署入口仍global的具体scope迁移；任意输出硬配额归JOB-09、真机并发归JOB-10，不重复开发已有队列或容量账本。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
+  - 输入引用、实际入口自报、显式灰层binding及日志/事件续读已交付。剩余为未覆盖producer/依赖工具的冻结身份与非scoped请求的设备身份边界；缺失身份继续显示unknown，不用当前版本回填历史。
   - [x] JOB-STATE-EVENTS-01 按[JOB-STATE-EVENTS](JOB-STATE-EVENTS.md)已发布harnessed133f8：原SQL同事务状态revision/增量events，Web/CLI/API同级，实时观察和日志offset独立；137协议、实际单job HTTP重启/原cursor接续、390与五CI全部首次通过。
 - [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
 - [ ] JOB-06 掉线、重启、超时、用户取消、失去lease后执行明确收尾；恢复失败占用独立屏障，不用exit0掩盖。
 - [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
-- [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；多设备并行锁域仍归JOB-03。
+- [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；显式灰层设备并行已交付，旧global入口迁移归JOB-03，真机并发归JOB-10。
 - [ ] JOB-09 任务/研究预算、超时与磁盘上限；停止后可解释哪些动作发生、哪些没发生、哪些恢复待核。
   - [x] JOB-EXPORT-LIMITS-01 按[目录导出生成边界](JOB-EXPORT-LIMITS.md)已发布harnessdf79d69：有界树/实际压缩写入、空间与跨reader锁、Web显式准备及CLI错误保partial；142协议/390/五CI全部首过。累计缓存GC和producer硬限额另列。
   - [x] JOB-DISK-GUARD-01 按[运行期磁盘软保护](JOB-DISK-GUARD.md)已发布harness757d3ff：实际FD/1Hz观察、同owner停止、Web/CLI和固定cap；141协议、actual HTTP退出后仍触发/CLI124、390及五CI全部首过。未部署/真机，不代表任意输出硬配额。
@@ -132,7 +134,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍分别缺并行资源域、身份贯通、真实重启/其他producer、暂停、预算或两执行节点验收。失败恢复子链已发布，不再作为未完成重复实现。M4的RESULT-03/RESEARCH-05已发布，BASE-07外层子项已发布，当前CTRL-03截图绑定，随后BASE-04实际程序身份；真实设备阶段另列。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较已发布，当前补BASE-04具体业务协议差异；真实设备阶段另列。
 
 ## P1：结果发现、共享与研究状态
 
@@ -141,7 +143,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10仍�
 - [x] RESULT-02 已交付选定目录节点的结果检索，元数据与原件位置分离、原件回源；没有隐式复制/迁移。范围为源码与隔离节点，不含生产可达性或持久离线缓存。
   - [x] RESULT-FEDERATION-01 [RESULT-FEDERATION](RESULT-FEDERATION.md)：harness42b2605五项actual CI成功后同SHA直推main，114协议/两源HTTPCLI/DOM390通过；复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
 - [x] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)交付同节点显式候选矩阵e9d0e12；已有检索/分页/下钻加2–4列精确metric_index对照，允许同报告多condition、原值差/部分失败/描述缺口、Web导出与深链、CLI单GET。1定向/122协议/390真实HTTP及五项actual CI通过；不宣称科学资格或完整跨节点候选比较。跨节点详情/混合比较待RESULT-CROSS-COMPARE-01。
-- [ ] RESULT-CROSS-COMPARE-01 复用已有远端索引和显式node身份，提供有界远端详情与候选比较；各节点基线/来源独立，不从同名指标自动拼同一实验。 合同已冻结为[RESULT-CROSS-COMPARE](RESULT-CROSS-COMPARE.md)，旧同节点schema与研究revision不变。
+- [x] RESULT-CROSS-COMPARE-01 按[RESULT-CROSS-COMPARE](RESULT-CROSS-COMPARE.md)已发布harness16cdfd3：共享有界远端详情、各列显式基线、部分失败及Web/CLI导出接续。146协议/实际HTTPCLI/单390/五CI全首过；旧本地schema及研究revision不变，原件回源，不自动拼同一实验。
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
 - [x] RESULT-06 统一指标schema及Web/CLI已交付：模块/窗口/单位/电源轨/分母/ROI/全帧/方法与null分开；未核来源不授予科学有效性，producer全链身份仍留RESULT-07。
