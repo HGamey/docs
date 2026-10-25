@@ -54,3 +54,15 @@ sh loop_v1/selfsr/repro.sh <serial> [配对数=6] [输出目录] [包名=com.miH
 ## 给游戏厂商的报告
 
 `VENDOR_REPORT.md`
+
+## 追加 (2026-10-25)：一键复现加了子图层插帧的两组
+
+`repro.sh` 缺省 SETS 改为 `1 … 9`，插帧缺省走子图层（`IP_TUNE=stamp=0,panel=120,backend=sc,lead_ns=25000000`）：
+- 第 8 组：`layer+gfrc:101` vs 子图层插帧 + G-FRC+ 101（第 4 步）
+- 第 9 组：`gfrc:111` vs 自研超分 + 子图层插帧 + G-FRC+ 101（第 5 步）
+
+红魔上 `SETS="8 9"`、1 对整条跑通（`step6/repro_groups89/summary.md`），收尾核对全部还原。
+子图层上屏 88.1 / 88.8，第 9 组图标区锐度比 G-FRC+ 111 高 16%，和 6 对正式结果一致。
+报告第一行改为「实际上屏帧率」（有子图层取子图层），两臂直接可比。
+
+换手机：同 SoC 的荣耀 AAP-AN00 坏了，农场里没有别的可 root 真机，**第二台手机的验证没有做**。
