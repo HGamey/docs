@@ -1,6 +1,6 @@
 # JOB-DISK-GUARD-01：运行期磁盘软保护
 
-2026-10-25，实施合同已冻结，尚未交付。前置为JOB-OWNER-RECORD-FAILURE；归JOB-09。只约束可观察的日志长度与文件系统余量，不是任意producer输出硬配额。
+2026-10-25，源码与隔离宿主/CI已交付（harness757d3ff），未部署/真机。前置为JOB-OWNER-RECORD-FAILURE；归JOB-09。只约束可观察的日志长度与文件系统余量，不是任意producer输出硬配额。
 
 ## 请求与兼容
 
@@ -29,3 +29,11 @@ observation初始null，已采样为{status:known|unknown,log_bytes:int|null,fil
 ## 验收
 
 一次完整本地协议，聚焦闭合声明、原ID和旧字段省略；一条实际小日志worker/HTTP服务退出链，保原日志和退出证据；少量受控statvfs/观测失败注入，不实际填盘。复用既有固定worker真实Linux链覆盖guard观察与新prefix能力，不额外新增长工作负载。390px Web核声明冻结、最近保存观察/unknown、阈值触发与真实退出分离。上一批记录I/O故障链已覆盖的部分不重做。无真机/生产部署/历史迁移；JOB-09任意输出硬限额继续开放。
+
+## 验证与发布
+
+源码757d3ff：唯一完整本地协议141项/79.393秒全部首过。新合并runtime用例以4个worker核日志路径替名后仍按producer同inode触发、预检低空间零child/无假exitcode、实际启动后EIO导致真实exit0但interrupted、自然结束最后空间观察低而不补迟到停止；7个已知PID全退出，无fixture强杀。API合并用例核prebody拒绝、旧canonical省略、原ID冻结、launch传递、可选event投影及固定cap正负。
+
+唯一actual HTTP/CLI链首过：真实--disk-guard提交，HTTP先退出，独立worker约1秒后log_limit、仅INT、真实child exit0、group absent；4234字节原log同inode完整，consumer一次。重启同data，原ID查回、CLI wait124；2服务+worker/child全退出。qa/job-disk-guard-host-20261025T105801185429/summary.json保原始HTTP、meta/launch/log及CLI stdout/stderr。
+
+单390context四项首过，35GET+1合成POST503，原ID/guard跨reload冻结、known/unknown/rejected/旧缺字段分开，pageerror0，仅预期503 console诊断。fixture20280/54720和browser20355退出，root目视unknown截图。Linux原固定worker5秒期限链加入guard大阈值已知观察/安装cap/最终无触发断言；不替换原期限动作，五项actual CI全部成功，同SHA main/lsremote核对。qa/job-disk-guard-{validation,checks,publish,ui-validation}.json为索引。MODULES不扩、旧prefix不热改，旧QA unknown义务保留。
