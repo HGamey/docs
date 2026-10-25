@@ -585,3 +585,10 @@ harness `78dcfbb` 五项actual required CI成功后同SHA直推main并核远端�
 harness `42b2605` 五项actual required CI成功后同SHA直推main并核远端。明确targets(name/node_id/revision)、4个服务级reader槽/8秒截止、源身份pin、逐源页/错误及Web/CLI回源；原件不复制。合同[RESULT-FEDERATION](RESULT-FEDERATION.md)。
 
 114协议52.856秒与两条实际HTTP/CLI链3.279秒首过；6个fixture server、reader槽全收尾。DOM/390页通过2远查/1源导航，无写入/设备/源API；两个QA替身/后置断言错误原件保留，只续相应分支，未重跑已过浏览器。page_errors未保存不声称零。PID69371与65113/65112及浏览器已关闭。qa/result-federation-{validation,publish,ui-validation}.json留本机。无生产/手机/大原件，旧unknown义务保留；下一RESEARCH-STATE-01，goal active。
+
+
+## 2026-10-25 阶段最后两批与收尾
+
+- BASE-HISTORY-01：harness92716a0，152协议首过/唯一390真实HTTP/五必需CI通过，同SHA main。管理员显式旧_jobs只读来源，来源revision/node/job隔离，原记录不推断PID或恢复；不迁移原数据。原生下载未进入browser page-request计数的首次QA断言失败保留，以原服务日志和实际下载补证，无重跑。
+- BASE-CACHE-01：harnessd5dfa3f，外置当前目录导出派生缓存，原builder锁/预算/源原件保留，不改asset cache和历史单文件边界。153协议首轮两旧断言修正后3受影响定向通过，新聚合链首过；唯一390真实HTTP与五必需CI通过，同SHA main。无生产/设备。
+- 用户明确收尾后暂停自动推进（整体不标完成），下一阶段按[STAGE-20261025](STAGE-20261025.md)和todo的DEPLOY-01至06验目标节点，先修实际阻断。另迁移开发工作区到rhodes1，Git与未入Git文件分别交接；复制工作区不等于部署服务，真实恢复屏障保留。

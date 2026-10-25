@@ -1,6 +1,6 @@
 # 目录导出缓存的独立位置
 
-2026-10-25，BASE-CACHE-01实施合同，尚未验收。只分离当前job目录导出的新派生文件，省略新参数保持原布局。
+2026-10-25，BASE-CACHE-01已以harness `d5dfa3f` 发布。只分离当前job目录导出的新派生文件，省略新参数保持原布局。
 
 ## 配置与实际位置
 
@@ -29,3 +29,8 @@
 ## 最小验收
 
 新增一个实际HTTP/CLI外置缓存链：同ID不同源隔离、重开服务命中、旧cache和源不改、单文件/目录下载、目的FD空间预算与不可用不fallback。复用现artifact测试的故障规则，不重跑旧设备矩阵。一次390网页仅验位置与错误反馈。按规则一次完整协议；如失败只定向修复。无手机、生产、真实大素材复制。
+
+
+## 交付记录
+
+一个新增聚合HTTP/CLI测试首过：同ID双源隔离、原cache与源不改、重开命中、原锁互斥、目的FD空间低的507和不可用不fallback、单文件仍可读。153协议首轮151通过，两个旧断言分别假设storage字段闭合及提前拒绝上传必能送达JSON；修为核自有字段、独立验证服务端拒绝与客户端不重放/原offset，两相关文件共3方法定向通过。未重跑完整本地协议。唯一390真实HTTP检查jobs/fleet同一不可用外置根、单次503反馈、无隐式重试/回退；26 GET、0修改/设备/worker，原件不变，无legacy cache，fixture/browser均退出。最终两个Python协议、code-only、cgroup-kernel、pf-shared-kernel全success后同SHA推main并核对。证据qa/export-cache-{validation,ui-validation,check-runs,publish}.json；原首轮失败日志保留。无生产/实机。

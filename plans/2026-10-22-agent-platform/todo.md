@@ -2,6 +2,17 @@
 
 更新：2026-10-25。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
+## 当前阶段：收口后先部署验证
+
+2026-10-25用户要求阶段收尾，并明确“暂停自动推进，部署验证后再继续（不标完成）”。本批代码收口/工作区交接完成后不继续开新功能。现状、固定源码与真实未验范围见[阶段总结](STAGE-20261025.md)。旧父项和历史失败记录保留，不为收尾清空勾选。
+
+- [ ] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。
+- [ ] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。
+- [ ] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。
+- [ ] DEPLOY-04 单台真实手机唯一owner的有限观察/动作/停止/恢复/review闭环，保存实际证据。
+- [ ] DEPLOY-05 单机通过后两节点/设备、alias冲突/独立并行、断线接续、异步人类依赖和结果分享。
+- [ ] DEPLOY-06 回写版本/条件/失败/未验范围，只关闭实际通过范围；优先修部署阻断，再恢复新增功能。
+
 ## 已完成的准备
 
 - [x] PREP-01 暂存Doom与后台排查；本机写入恢复交接和继续工作提示词，更新Doom todo入口。
@@ -26,13 +37,13 @@
 - [ ] BASE-04 固定三仓源码、运行二进制、协议版本关系；源码/实际程序身份已由BASE-RUNTIME-01交付，剩余为真实跨仓业务协议的需求、实报与具体不匹配解释，复用现能力准入及Web/CLI。
   - [x] BASE-BUSINESS-COMPAT-01 按[BUSINESS-COMPATIBILITY](BUSINESS-COMPATIBILITY.md)已发布PF316a3e0/harness69b9b43：唯一配置程序缓存、灰层新建门禁、明确差异和Web/CLI；147协议/actualHTTPCLI/PF runtime-info/390/六CI全首过。旧原ID/停止/恢复不挡，声明不授予owner动作。
   - [x] BASE-RUNTIME-01 按[RUNTIME-IDENTITY](RUNTIME-IDENTITY.md)区分启动源码观察、配置程序缓存和job实际入口自报；Web/CLI同级，历史缺失保持未知，不用当前版本回填。PF e51b09f/GOLaedf95d/harness0e1b7eb已发布；125协议、两真实程序/三job链/390网页及七CI通过，完整范围见合同。
-- [ ] BASE-05 分开安装代码、配置/凭据、运行数据、缓存；为旧目录提供读取/迁移适配，保持原始证据。
+- [ ] BASE-05 首批外置安装参数/配置/数据/导出缓存及旧jobs只读来源已由下列四子项交付；真实旧节点接续/迁移、全目录保留与清理仍未验，保持原始证据，按DEPLOY-01/03、FLEET-06、DIST-09继续。
   - [x] BASE-LAUNCH-01 按[NODE-LAUNCH](NODE-LAUNCH.md)已发布d0d9eb9：外置配置、冻结参数、更新后同根重启；149协议首过与五CI成功，旧数据不搬、固定worker不自动重装。
   - [x] BASE-CONFIG-01 按[NODE-CONFIG-PATH](NODE-CONFIG-PATH.md)已发布70b51ef：上传凭据目录与HG_CONFIG_DIR一致，固定profile过滤环境的真实worker链/默认/失败保输入通过；150协议首过与五CI成功，无真实凭据变更。
   - [x] BASE-HISTORY-01 按[JOB-HISTORY](JOB-HISTORY.md)已发布92716a0，旧_jobs显式只读来源及Web/CLI同级；152协议首过、唯一390实际HTTP与五CI通过。来源revision隔离，不写旧根、不推断PID；首次QA下载事件计数错误与补证保留。
-  - [ ] BASE-CACHE-01 按[EXPORT-CACHE-ROOT](EXPORT-CACHE-ROOT.md)外置当前job目录导出的派生缓存；明确资产partial/唯一原件/含凭据状态不得按cache名称清理，不隐式迁移原数据。累计保留/配额仍归DIST-09/JOB-09。
+  - [x] BASE-CACHE-01 按[EXPORT-CACHE-ROOT](EXPORT-CACHE-ROOT.md)已发布d5dfa3f，可选外置目录导出缓存；153协议首轮两旧断言修后3定向/唯一390/五CI均通过，原失败保留。不搬资产partial/唯一原件/含凭据状态，累计保留/配额仍归DIST-09/JOB-09。
 - [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
-- [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 capture恢复宿主验证再次确认devlock前置拒绝只有stderr、无JSON；统一处理外层gate，不在每个producer各造格式。
+- [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 旧devlock前置JSON拒绝已由BASE-GATE-JSON-01修复；其余producer与跨入口错误一致性仍待收口，不逐producer另造格式。
   - [x] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。PF c37df6b已发布，9单元/8调用宿主链/code-only首过；无设备，父BASE-07仍开放。
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
   - 已发布订阅生命周期修复 `phonefarm 591889e`；本批 LEASE-OBSERVE-01 增加每帧互斥与异常屏障。远程认证接入已由REMOTE-OWNERSHIP完成；真机观察开销仍未核，完整条目保持开放。
@@ -67,7 +78,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
-- [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。
+- [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。阶段核查确认updater仍固定~/node/旧PF组织地址，部分签名失败未阻断，多仓非整体事务；首次部署必须显式核固定源码/实际产物，不以更新exit0替代验收。
 - [ ] FLEET-07 CPU编译/分析与手机实验资源分开，能力标签不混成设备存在证明。
 
 ## P1：游戏与任务分发
@@ -139,7 +150,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较及灰层业务兼容已发布，当前回收BASE-01已确认用户补丁；真实设备阶段另列。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较及灰层业务兼容已发布，当前回收BASE-01已确认用户补丁；真实设备阶段另列。当前先按DEPLOY清单进行阶段验证。
 
 ## P1：结果发现、共享与研究状态
 
@@ -147,7 +158,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
   - [x] RESULT-INDEX-01 [RESULT-INDEX](RESULT-INDEX.md)：harness78dcfbb五项actual required CI成功后同SHA直推main；112协议/HTTP/CLI/真实12,498B Doom/DOM390验收通过。同节点不可变登记、固定ID找回、分页索引、Web/CLI与Doom/GOL显式小JSON导入。旧/失败/unknown可见；大原件留job/out，字节匹配不授予实验资格。跨节点索引另批，不提前勾RESULT-02/03。
 - [x] RESULT-02 已交付选定目录节点的结果检索，元数据与原件位置分离、原件回源；没有隐式复制/迁移。范围为源码与隔离节点，不含生产可达性或持久离线缓存。
   - [x] RESULT-FEDERATION-01 [RESULT-FEDERATION](RESULT-FEDERATION.md)：harness42b2605五项actual CI成功后同SHA直推main，114协议/两源HTTPCLI/DOM390通过；复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
-- [x] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)交付同节点显式候选矩阵e9d0e12；已有检索/分页/下钻加2–4列精确metric_index对照，允许同报告多condition、原值差/部分失败/描述缺口、Web导出与深链、CLI单GET。1定向/122协议/390真实HTTP及五项actual CI通过；不宣称科学资格或完整跨节点候选比较。跨节点详情/混合比较待RESULT-CROSS-COMPARE-01。
+- [x] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)交付同节点显式候选矩阵e9d0e12；已有检索/分页/下钻加2–4列精确metric_index对照，允许同报告多condition、原值差/部分失败/描述缺口、Web导出与深链、CLI单GET。1定向/122协议/390真实HTTP及五项actual CI通过；不宣称科学资格或完整跨节点候选比较。跨节点详情/混合比较已由RESULT-CROSS-COMPARE-01交付，真实实验资格仍独立。
 - [x] RESULT-CROSS-COMPARE-01 按[RESULT-CROSS-COMPARE](RESULT-CROSS-COMPARE.md)已发布harness16cdfd3：共享有界远端详情、各列显式基线、部分失败及Web/CLI导出接续。146协议/实际HTTPCLI/单390/五CI全首过；旧本地schema及研究revision不变，原件回源，不自动拼同一实验。
 - [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。

@@ -1,8 +1,10 @@
 # 开发计划
 
-2026-10-22。本文是实施依据；目的讨论和审计已完成，正在分批开发，计划项不等于已实现功能。产品准则见 [PRODUCT-CHARTER](PRODUCT-CHARTER.md)，逐项状态见 [todo](todo.md)。
+2026-10-25阶段收口。本文是实施依据；目的讨论和主干分批实现已形成可部署验证版本，计划项不等于全部已实现。产品准则见 [PRODUCT-CHARTER](PRODUCT-CHARTER.md)，逐项状态见 [todo](todo.md)。
 
 ## 当前实施位置
+
+用户已明确本阶段收口后暂停自动推进，先做部署验证，整体不标完成。先读[阶段总结与部署顺序](STAGE-20261025.md)，按todo的DEPLOY-01至06核目标节点；不再在本轮开启新功能。工作区迁往rhodes1的开发副本不等于部署服务或迁移生产数据。
 
 2026-10-25。状态与逐项验收以 [todo](todo.md) 及各合同为准，历史批次证据保留在合同和本机交接中，当前摘要不替代原始记录。
 
@@ -13,7 +15,7 @@
 - M4：结果登记、远端检索、同节点显式矩阵、研究状态/依赖/事件、预声明判据及异步人类反馈/媒体评价已交付。RESULT-CROSS-COMPARE-01的有界远端详情和逐列基线已发布16cdfd3；146协议、实际HTTP/CLI、单390及五项actual CI首轮通过。
 - M5：有限远程owner/观察/动作/截图坐标绑定已有宿主验收。高帧率视频、持续输入、多平台能力与方法工具继续按todo推进，未恢复Doom实验或迁移原件。
 
-BASE-01已交付[Harmony供电过滤](HARMONY-SUPPLY.md)和[GOL设备资格](GOL-DEVICE-ELIGIBILITY.md)，其余旧差异按[去向表](BASE-RECLAMATION.md)保留或映射。CAPTURE-POLICY-01、DOC-01、BASE-LAUNCH-01、BASE-CONFIG-01已交付；启动接续d0d9eb9和凭据目录70b51ef分别经过149/150协议与五CI，继续BASE-05历史只读来源/缓存边界。业务兼容已完成147协议/PF runtime-info/390/六CI首轮验收。父项审计已消除“缺设备并行、缺宿主容量、缺事件revision”等过时描述，未覆盖入口和真机义务继续保留。所有QA未知恢复屏障保持原样；生产部署、后台选址和原始实验迁移仍暂存。整体平台和goal未完成，单批交付后继续现有待办。
+BASE-01已交付[Harmony供电过滤](HARMONY-SUPPLY.md)和[GOL设备资格](GOL-DEVICE-ELIGIBILITY.md)，其余旧差异按[去向表](BASE-RECLAMATION.md)保留或映射。CAPTURE-POLICY-01、DOC-01、BASE-LAUNCH-01、BASE-CONFIG-01已交付；启动接续d0d9eb9和凭据目录70b51ef分别经过149/150协议与五CI，历史只读来源92716a0已交付，可选外置导出缓存d5dfa3f已按EXPORT-CACHE-ROOT交付，真实接续/迁移/清理仍独立。业务兼容已完成147协议/PF runtime-info/390/六CI首轮验收。父项审计已消除“缺设备并行、缺宿主容量、缺事件revision”等过时描述，未覆盖入口和真机义务继续保留。所有QA未知恢复屏障保持原样；下一阶段是选定节点的分阶段部署验证；后台选址和原始实验迁移仍暂存。整体平台与goal未完成，交接后暂停自动开发，部署结论回写后再继续现有待办。
 
 ## 先解决什么问题
 
