@@ -95,6 +95,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
   - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
   - 58fc0dc已完成SQLite原子领取、声明资源排队及宿主并发上限；本批2b4747e接入宿主lease屏障、恢复任务和独立阻断容量；DEVICE-LANES已补显式灰层的原子设备所有权/并发及局部恢复；全producer、主机CPU/GPU/磁盘预算与真机仍按后续项推进。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
+  - [x] JOB-STATE-EVENTS-01 按[JOB-STATE-EVENTS](JOB-STATE-EVENTS.md)已发布harnessed133f8：原SQL同事务状态revision/增量events，Web/CLI/API同级，实时观察和日志offset独立；137协议、实际单job HTTP重启/原cursor接续、390与五CI全部首次通过。
 - [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
 - [ ] JOB-06 掉线、重启、超时、用户取消、失去lease后执行明确收尾；恢复失败占用独立屏障，不用exit0掩盖。
 - [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
