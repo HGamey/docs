@@ -14,7 +14,7 @@ GET /requests/:id 只读找回原job，不存在404；不得用不确定结果�
 
 输入准备完成才进入queued。领取后先写starting记录，再启动上一批worker。launch.json的只发布一次标记存在时绝不再次执行：有活worker就接续读取；没worker且无终态则interrupted，不盲重试。标记尚未产生的claimed项可以继续启动，因为命令尚未发出。客户端断线和HTTP服务重启不删除队列。
 
-resources为独占字符串数组。未声明资源的phonefarm/GOL/adb/fetch_apk保守使用legacy-device，其余默认无独占资源；显式声明支持不同设备/宿主资源分开排队。调度按提交顺序寻找第一个满足容量与资源条件的任务，无关任务可越过忙的队首。max-running默认2，可由节点参数修改。后续JOB-EXEC-03批次改为只有claimed占执行容量，blocked只保留声明资源；恢复任务及lease约束见[JOB-RECOVERY](JOB-RECOVERY.md)。当前仍可能受旧global devlock串行限制，不能将宿主队列并行写成物理设备lease并行已完成。
+resources为独占字符串数组。未声明资源的phonefarm/GOL/adb/fetch_apk保守使用legacy-device，其余默认无独占资源；显式声明支持不同设备/宿主资源分开排队。调度按提交顺序寻找第一个满足容量与资源条件的任务，无关任务可越过忙的队首。max-running默认2，可由节点参数修改。后续JOB-EXEC-03批次改为只有claimed占执行容量，blocked只保留声明资源；恢复任务及lease约束见[JOB-RECOVERY](JOB-RECOVERY.md)。2026-10-25 DEVICE-LANES已允许显式登记绑定的灰层session按设备并发，SQL范围冲突与PF实际设备ID锁同时生效；旧入口仍global。实际宿主替身验证不代表物理设备已经验收。
 
 ## 取消、阻断和释放
 

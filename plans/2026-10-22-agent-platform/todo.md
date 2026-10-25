@@ -53,7 +53,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [ ] FLEET-01 稳定node/device身份、显式登记/撤销/更新；域名、执行host和数据位置独立。
   - [x] FLEET-DEVICE-IDENTITY-01 按[DEVICE-IDENTITY](DEVICE-IDENTITY.md)交付PF权威device_id/alias登记、版本CAS与Web/CLI/API；PF1ce93b8/harnessae3c7e0已发布，126协议/3Rust/实际PF链/390网页与六项CI通过。JOB03必需前置；仍全域执行，不宣称物理核验。
   - [x] JOB-DEVICE-DOMAIN-01 按[LEASE-DOMAIN](LEASE-DOMAIN.md)已发布PF2dbed4c/GOL3160e41/harness7998fa7；127协议、22PF+1GOL、实际签名PF、390显示及七CI通过，Linux新域/旧恢复185/317替身传输。首CI稀疏检出构建失败修复留档；仍global，现有QA恢复屏障不迁移。
-  - [ ] JOB-DEVICE-LANES-01 在版本化单根与登记身份上接显式会话作用域、Node排队及局部恢复；不同设备实际并发，同机别名/全域/未知记录仍排他。
+  - [x] JOB-DEVICE-LANES-01 按[DEVICE-LANES](DEVICE-LANES.md)已发布PF dd27045/harness af93a5c：显式灰层绑定、设备ID锁、局部恢复与WebCLI同级；实际宿主A/B并行及alias/global/unknown排他。21PF回归、130协议首轮129通过后3项窄修通过、实际601替身传输/622PID全退、390网页和六项required CI均已验；未部署/真机。
   - [x] FLEET-TARGET-01 [合同与验收](FLEET-TARGET.md)：harness548ca96五项actual CI成功后同SHA直推main。CLI/Web/API统一原node绑定，取消隐式后台/凭据fallback，legacy fleet不串token，部署restart同目标单次发送；110协议、实际HTTP/CLI与DOM/390浏览器通过。旧API无pin兼容边界明确，旧未绑定请求不自动续接。未部署/真机；legacy migrate缺SSH绑定暂unsupported，迁移仍留FUTURE-01。
 - [x] FLEET-02 网页节点/设备列表、CLI list/status/details共用API；显示运行版本、最近见到、当前任务/队列/lease/恢复态。 共享目录展示已交付，见FLEET-DIRECTORY与FLEET-TARGET；运行二进制身份完善仍归BASE-04，展示不是跨节点执行或生产部署。
   - `/dash/fleet`与`pf-fleet --hub`已共用`/nodes`持久目录；显示所选远端身份、存储、设备/队列/lease/恢复快照及新鲜度。旧无hub模式兼容保留，跨节点任务代理与真实多机部署尚未完成。
@@ -92,7 +92,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [x] JOB-01 持久作业状态机，区分准备/运行/采集/恢复/终态与等待原因；外部Agent提交立即拿ID。 持久准备/执行/采集/保存终态与独立恢复事实、即时job/request ID已交付，见JOB-QUEUE/EXECUTION/DURABILITY；恢复子链/暂停/预算仍由各具体项继续。
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
-  - 58fc0dc已完成SQLite原子领取、声明资源排队及宿主并发上限；本批2b4747e接入宿主lease屏障、恢复任务和独立阻断容量；原子设备所有权与旧global锁解除串行仍待做。
+  - 58fc0dc已完成SQLite原子领取、声明资源排队及宿主并发上限；本批2b4747e接入宿主lease屏障、恢复任务和独立阻断容量；DEVICE-LANES已补显式灰层的原子设备所有权/并发及局部恢复；全producer、主机CPU/GPU/磁盘预算与真机仍按后续项推进。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
 - [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
 - [ ] JOB-06 掉线、重启、超时、用户取消、失去lease后执行明确收尾；恢复失败占用独立屏障，不用exit0掩盖。
