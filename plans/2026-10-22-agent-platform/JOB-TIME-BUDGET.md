@@ -12,7 +12,7 @@ CLI `--max-runtime-seconds N [--timeout-action graceful|escalate]`：显式 N �
 
 独立 worker 从成功 Popen 后（contained 从 GO 门释放后）开始 monotonic 计时；上传、排队、输入准备不计入。HTTP/CLI 断开或重启不重置 worker 的期限；worker 丢失只沿现有 lost/blocked，不重放命令、不另造替代计时器。contained 复用同一机制，但公共 contained 能力继续不可用。
 
-worker 仅在目标执行仍被观察为活动时检查期限；观察到正常结束优先处理结束。到期首先持久保存预算触发事实，再通过原 request_cancel 发布 intent。graceful 只请求 SIGINT；escalate 复用现有升级：SIGINT 后 15 秒 SIGTERM，再 15 秒 SIGKILL；contained 的直接命令已退出但域仍有进程时沿原有域回收规则。它是停止请求期限，不保证到该时刻已结束或已恢复。已有人工请求和信号保留，升级只增不减，不重置既有升级时钟。
+worker 仅在目标执行仍被观察为活动时检查期限；观察到正常结束优先处理结束。到期先在当前owner内存锁存预算触发与停止意图，再尝试原记录发布；后续764c4bb修复记录I/O失败时丢监督，见[JOB-OWNER-RECORD-FAILURE](JOB-OWNER-RECORD-FAILURE.md)。成功写盘不再是发信号前提。graceful 只请求 SIGINT；escalate 复用现有升级：SIGINT 后 15 秒 SIGTERM，再 15 秒 SIGKILL；contained 的直接命令已退出但域仍有进程时沿原有域回收规则。它是停止请求期限，不保证到该时刻已结束或已恢复。已有人工请求和信号保留，升级只增不减，不重置既有升级时钟。
 
 首次 cancel/force record 可附 `source: execution_deadline`；人工旧记录保持原格式。`read_cancel` 将 force 的来源公开为 `escalation_source`（仅原 force 有 source 时）；预算触发记录始终独立存在，即使首次 cancel 原因是人工。实际信号仍只由现有 owner worker 发出。
 
