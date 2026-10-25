@@ -6,9 +6,9 @@
 
 2026-10-25用户要求阶段收尾，并明确“暂停自动推进，部署验证后再继续（不标完成）”。本批代码收口/工作区交接完成后不继续开新功能。现状、固定源码与真实未验范围见[阶段总结](STAGE-20261025.md)。旧父项和历史失败记录保留，不为收尾清空勾选。
 
-- [ ] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。
-- [ ] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。
-- [ ] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。
+- [x] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。 2026-10-25 rhodes1 盘点：六仓 HEAD 与冻结提交一致；全新环境（无 ~/node、无 hgamey 配置、无运行参与者、无本地锁域）；Mac 旧节点 SSH 不可达状态 unknown，4 项 QA unknown 与 Doom 还原义务原样保留；记录见当前任务 qa/deploy-01-inventory-20261025.md。
+- [x] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。 2026-10-25 rhodes1 全新安装 ~/node（harness d5dfa3f + PF 4eacd57 Linux release 构建）；node_id 8b6df6c7…；host job `phonefarm last --device-access none` succeeded exit0；admin-restart 后同 node/jobs 根、历史保留、instance 更新；Web 认证门 303/401。回环绑定（node_service 硬编码 127.0.0.1），对外暴露待定；GOL 未装、真机未触。记录见当前任务 qa/deploy-02-node-install-20261025.md。
+- [ ] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。 新节点无旧 history 来源；默认 `_jobs` 入口已由 /node 核实，显式 data-dir 与外置导出缓存未启用未验。
 - [ ] DEPLOY-04 单台真实手机唯一owner的有限观察/动作/停止/恢复/review闭环，保存实际证据。
 - [ ] DEPLOY-05 单机通过后两节点/设备、alias冲突/独立并行、断线接续、异步人类依赖和结果分享。
 - [ ] DEPLOY-06 回写版本/条件/失败/未验范围，只关闭实际通过范围；优先修部署阻断，再恢复新增功能。
