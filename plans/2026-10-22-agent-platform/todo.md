@@ -92,6 +92,7 @@ FLEET-01/02的共享目录子项已发布，见[FLEET-DIRECTORY](FLEET-DIRECTORY
 - [x] JOB-01 持久作业状态机，区分准备/运行/采集/恢复/终态与等待原因；外部Agent提交立即拿ID。 持久准备/执行/采集/保存终态与独立恢复事实、即时job/request ID已交付，见JOB-QUEUE/EXECUTION/DURABILITY；恢复子链/暂停/预算仍由各具体项继续。
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
+  - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
   - 58fc0dc已完成SQLite原子领取、声明资源排队及宿主并发上限；本批2b4747e接入宿主lease屏障、恢复任务和独立阻断容量；DEVICE-LANES已补显式灰层的原子设备所有权/并发及局部恢复；全producer、主机CPU/GPU/磁盘预算与真机仍按后续项推进。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
 - [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
