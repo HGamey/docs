@@ -645,3 +645,7 @@ PF7aa39c5/harness33b7aa8已main/stable；必需CI与云构建首轮通过。diag
 ## 2026-10-26 实验建议与作业优先级
 
 harness8d37abf已main/stable，必需CI40314940740首过。缺项建议不改旧判据/未知/方向；优先级不抢占，保原资源与global fence，同级FIFO。Web/CLI同级，旧请求不回填；generic恢复请求保原调度元数据。仅最小检查，无生产/设备。下一单job可再生成导出缓存查看/清理。
+
+## 2026-10-26 单任务导出缓存管理，交付后暂停
+
+harnessbe8279c已main/stable，code-only40317136127和node-tests40317136207全部成功；PF7aa39c5/GOL4bbc7c3保持。Web/API/CLI沿原锁显式查看和清理可再生成缓存，原件/历史/游戏数据保留；仅最小直接检查，无生产清理。主todo更新为160个勾选、67个未勾选（含父子项与部署义务，不是总体完成率）。按用户要求结束本批，增量同步rhodes1-lan后暂停自动开发，项目未完成。

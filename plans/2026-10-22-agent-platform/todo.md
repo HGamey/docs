@@ -1,18 +1,19 @@
 # 开发待办
 
-2026-10-26：用户恢复本机开发及subagent并行；此前暂停指示已撤销。DEPLOY各项保留实际验收边界，以下未完成项继续推进。
+2026-10-26本批交付后，用户要求暂停自动推进，并同步rhodes1-lan供远端接续。整体项目未完成；后续仍按下方未完成项推进，DEPLOY保留实际验收边界。
 
 更新：2026-10-26。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
 ## 先看这里：已交付、正在做、后续工作
 
-当前发布组合：**phonefarm 7aa39c5 / harness-ops 8d37abf / game_opt_loop 4bbc7c3**，均已推进stable；运行节点部署状态另列。精确SHA见[stable-current](stable-current.json)。
+当前发布组合：**phonefarm 7aa39c5 / harness-ops be8279c / game_opt_loop 4bbc7c3**，均已推进stable；运行节点部署状态另列。精确SHA见[stable-current](stable-current.json)。
 
 | 状态 | 内容 |
 |---|---|
 | 已交付 | 节点/设备目录、游戏分发、持久队列、结果索引、研究状态、异步人类反馈；网页与CLI/API共用平台状态。 |
 | 最近已交付 | 游戏/远控/看屏按设备并行，宿主计算槽位展示，远程日志与诊断，十条优化路线模板，缺项后的实验建议，作业优先级。 |
-| 正在收尾 | JOB-EXPORT-CACHE-GC-01：单任务导出缓存查看/清理，代码与最小检查完成，待提交及必需CI。 |
+| 本批已交付 | JOB-EXPORT-CACHE-GC-01：单任务导出缓存查看/清理，Web/CLI/API同级，必需CI通过，已main/stable。 |
+| 当前安排 | 暂停自动开发；将代码、计划、私有QA与交接同步rhodes1-lan，远端按现有TODO接续。源码同步不代表运行服务升级。 |
 | 后续开发 | 多点/持续输入与视频、更完整的平台能力与重连、剩余producer恢复、资源保留/配额、数据集与可选GOL方法工具。 |
 | 单列待验 | 生产部署、真机和真实多节点流程；见文末“部署验收”。这些未验项目不把已交付功能改回未完成。 |
 | 暂存 | Doom新增性能/功耗实验、后台选址与原始数据迁移。 |
@@ -121,7 +122,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] 通用持久协助/方向依赖/异步反馈及其他方向继续已有实现；复用RESEARCH/HUMAN，不重复开发。
   - [x] DIST-ASSISTED-RECHECK-01 harness0691a71已main：从游戏报告起草协助，Web/CLI同批；技能指引外部Agent回复后按原目标新check、保存证据并显式处理依赖，复用现有对象。真实登录/场景资格仍按具体游戏判断，见[GAME-INITIALIZATION](GAME-INITIALIZATION.md)。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
-  - [ ] JOB-EXPORT-CACHE-GC-01 当前job可再生成目录导出缓存的查看和显式清理，复用原导出锁，Web/CLI同级；不清理原件、游戏资源或历史源。实施中。
+  - [x] JOB-EXPORT-CACHE-GC-01 harness be8279c已main/stable：当前job可再生成目录导出缓存的查看和显式清理，复用原导出锁，Web/CLI同级；不清理原件、游戏资源或历史源。最小API/实际CLI与Web检查、必需CI通过；未清理生产数据。见[合同](JOB-EXPORT-CACHE-CLEANUP.md)。
   - [x] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)已发布harnesseb0c0a7：统一URL/import/upload写前size、实际FD空间和短写计数，Web/CLI同级；144协议/真实HTTPCLI507接续/390/五CI全部首过。累计GC仍独立。
 
 ## P1：任务队列与执行
