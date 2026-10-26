@@ -133,7 +133,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 
 - [x] JOB-01 持久作业状态机，区分准备/运行/采集/恢复/终态与等待原因；外部Agent提交立即拿ID。 持久准备/执行/采集/保存终态与独立恢复事实、即时job/request ID已交付，见JOB-QUEUE/EXECUTION/DURABILITY；恢复子链/暂停/预算仍由各具体项继续。
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
-- [ ] JOB-03 原子队列、lease联动、宿主slots及灰层/游戏/远控/看屏设备范围已交付；剩余：未迁移的旧global生产入口及真实多设备并行验证。
+- [ ] JOB-03 原子队列、lease联动、宿主slots及灰层/游戏/远控/看屏设备范围已交付；剩余：未迁移的旧global生产入口及真实多设备并行验证。 入口审计（2026-10-27，qa/job03-global-entries-audit-20261027.md）：global 仅剩"无 device_binding 的 phonefarm/game_opt_loop/adb/fetch_apk 任务"一类（scope 规则：binding→device、access none→none、其余→global）；迁移方向=设备系子命令强制 binding（binding 路径已全量交付），旧请求兼容期保持 global，需与 PF lease 语义跨仓组合。真机接入（DEPLOY-04/05）前无实际冲突面。
   - [x] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。PF90196fb/harnessdbd62fe已main/stable，局部回归与必需CI通过，真机部署另验。
   - [x] JOB-REMOTE-DEVICE-LANES-01 远控 acquire/owner/原会话恢复接入已有 device_binding，独立手机可同时操作；Web/CLI同级，复用原lease。PF6b19e37/harness099da48已main/stable；3条最小检查和必需CI通过。
   - [x] JOB-SCREEN-DEVICE-LANES-01 PFfc704e8/harness309d842已main/stable：显式绑定用于screen/live，Web与token CLI共用原采样/缓存；B可与A独立任务并行。最小检查和必需CI通过，无生产/真机。
