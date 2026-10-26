@@ -1,12 +1,12 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-cursor-follow",
-  "promoted_at": "2026-10-26T18:32:00+00:00",
+  "batch": "20261026-adb-missing-test-safety",
+  "promoted_at": "2026-10-26T20:31:00+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
       "repository": "https://github.com/HGamey/phonefarm",
-      "sha": "7aa39c5a5ebc401430c828b0c8d1d08d57e77e85"
+      "sha": "ef06f3bb2b232838a67038c10f266771819fb088"
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
