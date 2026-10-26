@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-result04-share-regression",
-  "promoted_at": "2026-10-26T12:26:00+00:00",
+  "batch": "20261026-cross-node-inputs",
+  "promoted_at": "2026-10-26T12:50:00+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,7 +10,7 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "9017b1abb293ba92bb2bbfdca3b64d99e58045a1"
+      "sha": "128681d3d9e14c118ddbc5c700d9b1b17601f193"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",

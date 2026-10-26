@@ -109,6 +109,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [ ] DIST-LARGEFILE-01 在有空间预算的隔离节点验证多GiB流式上传的内存/磁盘使用和断线接续；复用已授权素材或可控合成流，不在本Mac重复下载/复制旧Doom大文件。
 - [ ] DIST-05 任务输入/输出改为显式工件引用和依赖清单；处理嵌套JSON/脚本路径，避免只有argv重写有效。
   - [x] DIST-INPUTS-01 [合同与验收](JOB-INPUTS.md)：harness dd00340经五项actual CI成功后同SHA直推main，保留维护者至553fb16全部提交。同节点已收尾小工件、独立JSON pointer派生、PF_JOB_IN/cwd及Web/CLI共用；原件保留，失败不启动/同ID不重放。94协议首轮93过，仅Mac测试路径别名修正，两项定向通过；DOM/390浏览器通过，系统剪贴板往返未核。无生产/手机/大素材复制，完整DIST-05继续开放。
+  - [x] DIST-INPUTS-02 跨节点输入引用：harness 128681d经code-only+node-tests CI成功后同SHA直推main。source可选node=共享目录登记名，准备期单次有界抓取+SHA核验，凭据不出目录模块；失败沿未启动preparation_failed，本地收尾资格检查不变；jobs.cross-node-inputs-v1能力与CLI预检。两隔离节点实际HTTP/无害worker链及4负例（hash/size/缺entry/无凭据）通过；170项全量协议过。仍开放：运行中依赖等待、大文件复制、公开contained、生产部署与真机。合同见[JOB-INPUTS](JOB-INPUTS.md)。
 - [ ] DIST-06 资源包/OBB/loose文件/存档按目标平台受限路径安装；保存旧存档与恢复收据，检验游戏UID可访问性。
   - [x] DIST-DEPLOY-01 [限定资源部署合同与验收](GAME-DEPLOYMENT.md)，PF f9ba7a6、harness ddeaef7：Android user0 已安装精确匹配单APK引擎，选定资源部署到新独占子树；强lease/持久恢复、Node固定任务、Web/CLI同等入口。90协议、实际PF/fake ADB三上下文、真实HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过，同SHA直推main。未知传输保留屏障/负例，未操作真机或生产、未覆盖旧游戏数据。
   - [x] DIST-INSTALL-01 [合同与验收](GAME-INSTALLATION.md)：PF baef293/harness fd1ef8f已发布；明确缺席单APK新装、真实aapt2元数据、-R禁止替换、owned session已知失败abandon、未知commit保屏障，Web/CLI共用。91协议、CLI/HTTP、实际PF/SDK+模拟ADB六场景、另actual HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过。缺工具不禁已有恢复。未部署/真机安装；已有升级、存档替换、应用存储初始化和场景仍未完成。

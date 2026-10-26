@@ -10,6 +10,8 @@ spec可选 inputs：schema=phonefarm/job-inputs@1、node_id、files、bindings�
 
 files各项：name（受限标识）、target（任务in内相对新路径）、source={job_id,path,size,sha256}。来源只允许同节点输出；先检查源任务已完成宿主收尾和无活动worker，原进程组已确认absent或contained已交还输出。不能从raw finished或PID不活推断结束。设备恢复未完成的负结果可读取，但不宣称设备恢复。
 
+跨节点来源（harness 2026-10-26，DIST-INPUTS-02）：source可含可选node=共享目录登记名（1-64小写字母/数字/_/-，local保留）；声明时仍必须提供size/sha256。准备期由节点用该登记项的凭据对远端`GET /jobs/{id}/out?path=`做一次有界抓取（上限为声明size+1），逐字节核SHA；凭据只在目录模块内部使用，不进回执/日志/清单回显。远端不可达/凭据被拒/任务不存在/大小或SHA不匹配沿同一未启动preparation_failed终态，不重试不等待。能力`jobs.cross-node-inputs-v1`在节点配有共享目录时声明；CLI在清单含node来源而节点缺该能力时拒绝提交。不取消本地同节点收尾资格检查；远端任务状态不做本地推断，只按抓取与哈希结果判定。仍不支持运行中依赖等待、大文件复制与公开contained。
+
 绑定各项：source（files中的name，必须是JSON原件）、target（独立新输出路径）、values=[{pointer,input}]。显式JSON pointer必须命中已有字符串字段，input引用已声明files name；写入该任务内输入的绝对路径。保留源JSON字节不改，resolved JSON另存，回执说明派生映射，绝不沿用源SHA来声称派生内容相同。不得猜测替换脚本文字。脚本用PF_JOB_IN或cwd=input引用任务内相对路径。
 
 所有target互斥、无父子冲突、不覆盖tar上传或现有路径。固定小清单可完整预验证；源文件用SafeRoot/openat单FD流式读取，边复制边hash一次，比较size/SHA、前后stat；成功后持久化in与输入回执再queue.ready。缺失/变化/不匹配沿已有未启动preparation_failed终态，不偷偷等待或重放；显式新request_id可在修好后再次准备，同ID仍找回原终态。
