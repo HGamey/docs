@@ -71,8 +71,14 @@ launch、持久 owner 与 Node acquisition 保存原绑定；同 request_id 仍�
 
 PF6b19e37 / harness099da48已main/stable，必需CI40308894705与云构建40308807660通过。本地只做PF原scope测试扩展0.162秒、HTTP绑定/查询链0.856秒及客户端合成冒烟0.315秒。CLI新增devices-resolve，operator可从现远控入口取得绑定；无真机或生产操作。
 
-## 单设备观察接入（实施中）
+## 单设备观察接入（已发布）
 
 JOB-SCREEN-DEVICE-LANES-01把显式binding用于screen capture和live订阅，使用已有DeviceBinding及短时观察lease。新能力device_binding_v1明确公布；旧无字段请求与全量fleet观察仍global。工作者核原设备与原lease，失败沿原未知/恢复处理，不能由观看创建绕过测量的第二owner。
 
 Node复用scope门禁和原stream/cache生命周期；缓存身份包含冻结binding，不自动改alias或重新绑定。Web/CLI同级，用户明确选择。无人观看仍停止新采集；图像时间/seq与状态时间分开，A被测量时不采A，独立B可以继续。仅做一个关键PF行为、一个backend链和一个client检查；其余复用已有租约/生命周期验证。
+
+看屏的节点token入口为GET /live/status、/live/frame、/live/stream；与/dash/api/live复用同一处理、缓存和采样。沿现有只读token及显式node pin，无新增凭据体系；未配置看板则返回503。绑定JSON随serial传入，首次创建该绑定的流才核登记，单纯status不重新解析或创建流。无fleet快照时可展示“未知”的显式目标，不能据此称手机在线。
+
+PFfc704e8/harness309d842已main/stable，云构建40311166250与必需CI40312191036通过。最小检查为PF+fakeADB观察2.088秒、Node scope/token链1.481秒、Web合成冒烟0.018秒、CLI HTTP替身0.758秒。没有本地全套、生产或真机操作。
+
+CLI：`pf-node live status SERIAL`，`pf-node live frame SERIAL --output NEW.jpg`；可加`--device-binding 原resolve文件`，固定node pin、单次请求、不覆盖文件。Web可输入明确serial并选择登记设备范围；刷新/重连不偷偷切全域。状态与原帧seq/时间分别呈现。

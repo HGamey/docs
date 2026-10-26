@@ -20,4 +20,4 @@ Web/CLI复用同一服务默认，客户端无需新字段。最终提交 `f5a7e
 
 FLEET-07复用现有结构：/node.execution分别给出宿主bins/programs/host_capacity，devices.status=not_probed；/queue给当前容量占用；doctor为host-only，设备qualification=unknown。目录connection.ready只是协议可达；手机数量来自/fleet快照，未采样为null，并保留stale。既有device_access=none资源默认修复继续有效。
 
-当前补齐fleet网页和CLI详情的CPU/GPU/IO slots展示，直接读取已有host_capacity。这些是管理员声明的并发槽位，不能充当GPU硬件、手机在线或实机测量能力的证明。不新增后端schema或资格服务。
+harness309d842已main/stable，补齐fleet网页和CLI详情的CPU/GPU/IO slots展示，直接读取已有host_capacity。这些是管理员声明的并发槽位，不能充当GPU硬件、手机在线或实机测量能力的证明。不新增后端schema或资格服务。

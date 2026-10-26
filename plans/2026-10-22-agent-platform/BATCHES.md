@@ -633,3 +633,7 @@ PFceaa0cd / harnessfa3159e已main/stable。远控Web/CLI沿原owner读取单次l
 ## 2026-10-26 远控按设备并行与实验计划模板
 
 PF6b19e37 / harness099da48已main/stable。远控显式选择登记设备，原binding随会话/接管ID/恢复保留，不同设备不互相阻断；Web/CLI同级。探索/确认模板共用一个JSON，填入已有next_experiment草稿，支持按版本复用资格和限定模块收益。三个scope小检查、模板语法/CLI/原schema检查及必需CI全部通过；无本地全套、生产或真机操作。下一步收口宿主计算容量展示与Doom既有分发recipe。
+
+## 2026-10-26 单设备观察与宿主容量
+
+PFfc704e8/harness309d842已main/stable，必需CI与云构建首轮通过。看屏显式绑定登记设备，Web/CLI共用token/pin与原stream；fleet呈现宿主声明槽位。仅直接相关小检查，未操作生产/手机。下一批为单次诊断与共享优化路线库。

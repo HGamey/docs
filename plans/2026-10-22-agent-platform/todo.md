@@ -81,11 +81,12 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
+  - [ ] REMOTE-DIAGNOSTICS-01 沿现有远控owner读取单次Android基础/应用诊断，复用有界输出与回执，Web/CLI同级；不靠额外raw连接或root推断其他能力。实施中。
   - [x] FLEET-DOCTOR-01 [宿主诊断合同](NODE-DOCTOR.md)：API/CLI/网页同等入口，缓存身份、工具、签名、磁盘与权限；不探测设备。f78554a已发布，158协议首轮一个清理错误修后定向过、五CI成功；实际HTTP/CLI及合成UI通过，实际后端浏览器接线因工具不可用未验，父项设备诊断仍开放。
 - [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。旧固定路径、旧PF组织地址及忽略签名失败已由FLEET-UPDATE-01修复；仍为文件级overlay，专用网页/生产/跨参与者更新另验，不能以exit0替代真实部署验收。
   - [x] FLEET-UPDATE-01 [宿主安全更新合同](NODE-UPDATE.md)：固定安装路径、先stage/sign、原子文件替换、持久维护屏障与明确回滚。f78554a已发布，真实隔离worker发布/阻断/回滚链、失败取证及五CI通过；父项生产/跨参与者更新仍开放。
   - [x] FLEET-UPDATE-WEB-01 按[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)补专用网页更新/回滚与只读维护状态入口，复用原作业/请求ID和掌舵权限，不自动重启；实现随f5a7ea4发布，五CI与实际隔离HTTP/CLI通过；浏览器布局、生产/手机仍未验。
-- [ ] FLEET-07 CPU编译/分析与手机实验资源分开，能力标签不混成设备存在证明。
+- [x] FLEET-07 宿主程序/CPU/GPU/IO声明槽位与手机快照分开，Web/CLI补齐容量展示；harness309d842已main/stable。声明槽位不证明物理GPU或手机在线。
   - [x] FLEET-HOST-RESOURCES-01 修复显式device_access=none的PF/GOL宿主作业仍默认申请legacy-device；新请求不占设备资源，旧request完整内容匹配时找回原row且不改历史。Web/CLI沿同一服务默认；显式resources、写设备与恢复继承保持原语义。f5a7ea4已发布；实际隔离HTTP/CLI、最终五CI通过，详见[JOB-HOST-RESOURCES](JOB-HOST-RESOURCES.md)。
 
 ## P1：游戏与任务分发
@@ -125,7 +126,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
   - [x] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。PF90196fb/harnessdbd62fe已main/stable，局部回归与必需CI通过，真机部署另验。
   - [x] JOB-REMOTE-DEVICE-LANES-01 远控 acquire/owner/原会话恢复接入已有 device_binding，独立手机可同时操作；Web/CLI同级，复用原lease。PF6b19e37/harness099da48已main/stable；3条最小检查和必需CI通过。
-  - [ ] JOB-SCREEN-DEVICE-LANES-01 显式设备范围用于screen capture与单设备live观察，观看B不被A任务阻断；保留旧global和全量fleet范围，复用原worker/订阅/恢复机制。实施中。
+  - [x] JOB-SCREEN-DEVICE-LANES-01 PFfc704e8/harness309d842已main/stable：显式绑定用于screen/live，Web与token CLI共用原采样/缓存；B可与A独立任务并行。最小检查和必需CI通过，无生产/真机。
   - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
   - 58fc0dc/2b4747e已完成原SQL原子领取、lease屏障及独立阻断容量；DEVICE-LANES已交付显式灰层按设备并行，JOB-HOST-CAPACITY已交付CPU/GPU/IO声明slots。剩余是旧PF/GOL、remote/observation及部署入口仍global的具体scope迁移；任意输出硬配额归JOB-09、真机并发归JOB-10，不重复开发已有队列或容量账本。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
@@ -224,6 +225,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] METHOD-04 refbench已知答案与接口回归；原生LR/HR能力的host测试和真机资格分开。
   - [x] REFBENCH-OUTPUT-01 [宿主输出合同](REFBENCH-OUTPUT.md)：生产JSON动态转义、长路径不截断及compute NONE/schema对齐；6项定向首过，c04ec4b通过必需CI后同SHA main；只证明输出/文件接口，Vulkan与真机资格未验。
 - [ ] METHOD-05 黑盒/灰盒/白盒优化recipe库：分辨率、LOD、阴影、AA、合批/缓存、资源布局、CPU提交、NPU/GPU分工、帧节奏、系统旋钮。
+  - [ ] METHOD-RECIPES-01 复用共享实验模板提供可浏览、可填入草稿的路线库：明确前提、改动、收益范围与恢复，不增加自动执行器；Web/CLI同级。实施中。
 - [ ] METHOD-06 同状态数据集采集与清单：真实低清/合成低清、色域、相机/时间、运动/遮挡、训练/留出分组明确。
 - [ ] METHOD-07 功耗/能耗/显示与软件呈现来源能力账本；不能从固定schema字段推断设备支持。
 - [x] METHOD-08 [负结果与方向记忆](NEGATIVE-RESULT-MEMORY.md)：既有API/CLI/Web已支持 outcome组合过滤、no_gain/rejected理由、证据和不可变历史；2026-10-26只读复核已有实现与隔离证据，无重复API/测试。完成已知node/research范围，实际部署接续、跨节点研究复制/语义去重仍开放；重新开放的旧否决从history读取。
