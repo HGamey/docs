@@ -143,6 +143,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
 - [ ] JOB-06 掉线、重启、超时、用户取消、失去lease后执行明确收尾；恢复失败占用独立屏障，不用exit0掩盖。
 - [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
+  - [x] JOB-PAUSE-01 队列级暂停/恢复：harness 613e120经code-only+node-tests CI后同SHA直推main。jobs 表持久 paused 列，claim_next 跳过 paused 排队任务；POST /jobs/{id}/pause|resume 仅 queued 态（幂等），claimed/blocked/done 一律 409 pause_unsupported——运行中命令不可暂停只能 cancel，不提供假暂停；status controls 增 pause/resume_supported；pf-node pause/resume 同合同。SQL 级回归+实机 409 拒绝链验证；~/node 已同步。多步 producer 步骤间真安全点暂停仍归各会话合同；Web 任务页暂停按钮待 UI 批。
 - [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；显式灰层设备并行已交付，旧global入口迁移归JOB-03，真机并发归JOB-10。
 - [ ] JOB-09 任务/研究预算、超时与磁盘上限；停止后可解释哪些动作发生、哪些没发生、哪些恢复待核。
   - [x] JOB-EXPORT-LIMITS-01 按[目录导出生成边界](JOB-EXPORT-LIMITS.md)已发布harnessdf79d69：有界树/实际压缩写入、空间与跨reader锁、Web显式准备及CLI错误保partial；142协议/390/五CI全部首过。累计缓存GC和producer硬限额另列。
