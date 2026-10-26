@@ -8,6 +8,8 @@ git 获取、编译/预构建校验、Mach-O 签名及验证均先在 staging �
 
 实际发布及回滚持有现有 `.intake.lock`，只读队列检查其他 claimed/blocked/旧执行记录；只允许本次 claimed update_node 自身，queued 可以等候但不能在锁内启动。额外的持久 maintenance marker 在第一次替换前保存；中断后仍阻止普通任务，网页/CLI队列给出原 run 与原因。只有固定 updater 对该 run 的明确 rollback 可进入，其他原作业的取消/状态/恢复查询仍沿原接口处理。发布成功或所有旧文件恢复且终态已保存后才清除 marker。无法识别的状态/回执保守阻断，不能靠删除记录解除。
 
+2026-10-26后续CI暴露一个真实时序问题：启动/观察updater的dispatcher短暂持有intake，原非阻塞检查可能把自己的启动过程误判为更新失败。修复为发布锁准入最多等待5秒，先取得锁再核队列和发布；超时仍明确失败，安装级`.update.lock`继续立即拒绝并行更新。等待不重放任务、不重启服务、不放宽claimed/blocked门禁。定向真实worker夹具让父dispatcher持锁到子进程实际报告等待，确认期间文件未替换，再放锁完成发布/回滚；原CI失败日志保留。
+
 显式 `--rollback RUN_ID` 先核目标仍等于该更新写入或原先内容，拒绝覆盖后来的人为修改。自动还原失败或执行中断保留 `rollback_required` 和原件，之后只能接续原更新恢复。回执 `hgamey/node-update@1` 区分 preparing/staged/publishing/succeeded/restored/failed/rollback_required；stdout 为摘要及回执位置，构建日志在 stderr。无来源声明的上传不能沿用旧构建身份。
 
 作用域仅为共享这份安装/维护状态、经过此 Node 调度器的入口。独立旧服务、另一套安装、直接运行命令和设备内进程不在该保证里。更新前仍须确认实际参与者。真实掉电、生产更新、旧 Mac 节点、rhodes1 外部访问及真机回归另验。实际提交与证据见下文。

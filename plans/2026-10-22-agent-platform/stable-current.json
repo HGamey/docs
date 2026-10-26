@@ -1,0 +1,20 @@
+{
+  "schema": "hgamey/stable-set@1",
+  "batch": "20261026-baseline",
+  "promoted_at": "2026-10-26T08:56:28.989330+00:00",
+  "scope": "source refs and recorded acceptance; production deployment unverified",
+  "components": {
+    "phonefarm": {
+      "repository": "https://github.com/HGamey/phonefarm",
+      "sha": "3494bf2a97b6cbb1169362fc7565a42a3421025b"
+    },
+    "harness-ops": {
+      "repository": "https://github.com/HGamey/harness-ops",
+      "sha": "f5a7ea4d27cbb2f4882296e99fd9bd6a6f094673"
+    },
+    "game_opt_loop": {
+      "repository": "https://github.com/HGamey/game_opt_loop",
+      "sha": "36a46ad766408b00d8d133a495ca77d801b5e753"
+    }
+  }
+}

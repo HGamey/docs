@@ -138,3 +138,7 @@ BASE-01已交付[Harmony供电过滤](HARMONY-SUPPLY.md)和[GOL设备资格](GOL
 不改写同事历史、不force push；提交前核对远端并吸收并发变更。代码仓CI要覆盖push到main，尤其补harness-ops协议/故障测试，而不是只有文档检查。真机回归单独注明设备/状态/范围，不用构建成功代替。
 
 暂不以合仓、换语言、全量搬历史数据、重做展示站、内置新Agent或恢复旧平台为前置工作。允许大改实现，但每批须对上述可用流程产生可验证的改善。
+
+## stable发布节奏（2026-10-26用户确认）
+
+开发继续在main；每完成一批验收并通过对应SHA的CI后，推进stable。三个运行仓库保存配套SHA，phonefarm另等云端构建；用户维护实际节点stable自动更新脚本。分支成功不等于部署/真机成功，版本产物的来源与保留规则见[STABLE-RELEASE](STABLE-RELEASE.md)。

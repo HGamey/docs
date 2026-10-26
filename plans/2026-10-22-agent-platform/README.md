@@ -1,6 +1,6 @@
 # HGamey：面向外部 Agent 的远程真机优化平台
 
-2026-10-25。状态：**主干源码与隔离宿主验收已形成阶段版本，准备部署验证；完整真机流程尚未验收。交接后暂停自动开发，整体不标完成。** 先读[阶段总结与部署顺序](STAGE-20261025.md)，再按todo的DEPLOY清单推进。
+2026-10-26。状态：**用户已恢复本机并行开发；按todo分批实现，完整真机流程仍待验收。** 历史[阶段总结](STAGE-20261025.md)保留，当前以[todo](todo.md)、[逐批记录](BATCHES.md)与[stable发布](STABLE-RELEASE.md)为准。
 
 让外部 Agent 使用远程真机，系统性优化指定游戏/系统，探索多个方向，完成可复现实验并留下可审核结果。平台提供设备、分发、任务、证据和异步协作能力。harness 可以由 prompt 加这些系统功能构成，不要求另造一个内置 Agent。
 
@@ -43,3 +43,5 @@ Doom 实验与后台选址本轮暂存，现有数据保留本机。带本机路
 共享读取合同见[节点与设备状态读取](FLEET-API.md)与[跨节点目录](FLEET-DIRECTORY.md)。网页可显式选择已登记节点并查看缓存快照；目录可达不代表设备在线或可操作。跨节点调度、部署与真机验收范围以 [todo](todo.md) 和 [逐批记录](BATCHES.md) 为准。
 
 2026-10-26恢复本机开发：[宿主环境诊断](NODE-DOCTOR.md)、[宿主回归分层与失败证据](TEST-HOST-LANES.md)，[安全更新与回滚](NODE-UPDATE.md)已按宿主范围交付。
+
+当前发布入口：[stable规则与版本](STABLE-RELEASE.md)、[机器可读配套SHA](stable-current.json)、[节点维护网页](NODE-UPDATES-WEB.md)、[宿主资源](JOB-HOST-RESOURCES.md)、[GPU提交组能量估计](ENERGY-WINDOW.md)。

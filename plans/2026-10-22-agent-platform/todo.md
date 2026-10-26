@@ -44,7 +44,7 @@
   - [x] BASE-CONFIG-01 按[NODE-CONFIG-PATH](NODE-CONFIG-PATH.md)已发布70b51ef：上传凭据目录与HG_CONFIG_DIR一致，固定profile过滤环境的真实worker链/默认/失败保输入通过；150协议首过与五CI成功，无真实凭据变更。
   - [x] BASE-HISTORY-01 按[JOB-HISTORY](JOB-HISTORY.md)已发布92716a0，旧_jobs显式只读来源及Web/CLI同级；152协议首过、唯一390实际HTTP与五CI通过。来源revision隔离，不写旧根、不推断PID；首次QA下载事件计数错误与补证保留。
   - [x] BASE-CACHE-01 按[EXPORT-CACHE-ROOT](EXPORT-CACHE-ROOT.md)已发布d5dfa3f，可选外置目录导出缓存；153协议首轮两旧断言修后3定向/唯一390/五CI均通过，原失败保留。不搬资产partial/唯一原件/含凭据状态，累计保留/配额仍归DIST-09/JOB-09。
-- [ ] BASE-06 统一node/device/study/direction/experiment/job/artifact/human-request的ID和状态草案；测试版本化读写与并发更新。
+- [x] BASE-06 按[共享身份与状态](SHARED-ID-STATE.md)归并已有node/device/research/direction/job/result/协助身份、revision/CAS/幂等与状态证据。2026-10-26只读复核已有并发/重启验收；实验目前由冻结direction revision中的计划定位，无独立experiment实体/跨库绑定。设备物理epoch仍归FLEET-04/CONTROL-07，实际部署另验。
 - [ ] BASE-07 统一结构化错误、退出码、可重试性、缺能力/缺权限/离线/忙/恢复阻断；CLI文本与JSON语义一致。 旧devlock前置JSON拒绝已由BASE-GATE-JSON-01修复；其余producer与跨入口错误一致性仍待收口，不逐producer另造格式。
   - [x] BASE-GATE-JSON-01 按[GATE-ERRORS](GATE-ERRORS.md)补六类外层拒绝 JSON、稳定 code 和本次 command_started:false；不把放行后失败或恢复未知包装成未开始。PF c37df6b已发布，9单元/8调用宿主链/code-only首过；无设备，父BASE-07仍开放。
 - [ ] BUG-01 修复screen前端暂停/关页面仍在后台抓图；观察订阅和性能测量共享资源状态。无设备计数测试+后续真机开销检查。
@@ -83,8 +83,9 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] FLEET-DOCTOR-01 [宿主诊断合同](NODE-DOCTOR.md)：API/CLI/网页同等入口，缓存身份、工具、签名、磁盘与权限；不探测设备。f78554a已发布，158协议首轮一个清理错误修后定向过、五CI成功；实际HTTP/CLI及合成UI通过，实际后端浏览器接线因工具不可用未验，父项设备诊断仍开放。
 - [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。旧固定路径、旧PF组织地址及忽略签名失败已由FLEET-UPDATE-01修复；仍为文件级overlay，专用网页/生产/跨参与者更新另验，不能以exit0替代真实部署验收。
   - [x] FLEET-UPDATE-01 [宿主安全更新合同](NODE-UPDATE.md)：固定安装路径、先stage/sign、原子文件替换、持久维护屏障与明确回滚。f78554a已发布，真实隔离worker发布/阻断/回滚链、失败取证及五CI通过；父项生产/跨参与者更新仍开放。
-  - [ ] FLEET-UPDATE-WEB-01 按[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)补专用网页更新/回滚与只读维护状态入口，复用原作业/请求ID和掌舵权限，不自动重启；本批实施，不能据已有CLI/API标专用网页完成。
+  - [x] FLEET-UPDATE-WEB-01 按[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)补专用网页更新/回滚与只读维护状态入口，复用原作业/请求ID和掌舵权限，不自动重启；实现随f5a7ea4发布，五CI与实际隔离HTTP/CLI通过；浏览器布局、生产/手机仍未验。
 - [ ] FLEET-07 CPU编译/分析与手机实验资源分开，能力标签不混成设备存在证明。
+  - [x] FLEET-HOST-RESOURCES-01 修复显式device_access=none的PF/GOL宿主作业仍默认申请legacy-device；新请求不占设备资源，旧request完整内容匹配时找回原row且不改历史。Web/CLI沿同一服务默认；显式resources、写设备与恢复继承保持原语义。f5a7ea4已发布；实际隔离HTTP/CLI、最终五CI通过，详见[JOB-HOST-RESOURCES](JOB-HOST-RESOURCES.md)。
 
 ## P1：游戏与任务分发
 
@@ -105,7 +106,10 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] DIST-DEPLOY-01 [限定资源部署合同与验收](GAME-DEPLOYMENT.md)，PF f9ba7a6、harness ddeaef7：Android user0 已安装精确匹配单APK引擎，选定资源部署到新独占子树；强lease/持久恢复、Node固定任务、Web/CLI同等入口。90协议、实际PF/fake ADB三上下文、真实HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过，同SHA直推main。未知传输保留屏障/负例，未操作真机或生产、未覆盖旧游戏数据。
   - [x] DIST-INSTALL-01 [合同与验收](GAME-INSTALLATION.md)：PF baef293/harness fd1ef8f已发布；明确缺席单APK新装、真实aapt2元数据、-R禁止替换、owned session已知失败abandon、未知commit保屏障，Web/CLI共用。91协议、CLI/HTTP、实际PF/SDK+模拟ADB六场景、另actual HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过。缺工具不禁已有恢复。未部署/真机安装；已有升级、存档替换、应用存储初始化和场景仍未完成。
   - [x] DIST-INITIALIZE-01 [合同与验收](GAME-INITIALIZATION.md)：PF537a62f/harnesse20758b已检查通过同SHA直推main。限定Launcher一次尝试、目录已就绪不启动、未知启动/停止保屏障、目录未达标但已停转局部协助；共用Transport和Web/CLI。92协议、3Rust、实际PF六上下文100传输、既有三回归108传输、另Node/worker/PF25传输、DOM/390浏览器通过。仅源码/隔离宿主，未部署/真机/场景；四个QA未知上下文保留。
-- [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，先列支持矩阵，不宣称单APK流程已覆盖。
+- [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，不宣称单APK流程已覆盖。
+  - [x] DIST-FORMATS-01 已完成缓存/安装/恢复/实机证据支持矩阵；typed games只支持受限Android单APK，HAP/IPA等缓存字节不代表安装支持。源审计在qa/resume-local-20261026/distribution-formats/AUDIT.md。
+  - [ ] DIST-CTS-INSTALL-01 修复旧CTS自定义安装空/错误输出误报成功及只凭hash缓存跳过实际安装。
+  - [ ] DIST-CLIENT-PLATFORM-01 games Web/CLI新请求准入与后端Android范围一致，旧请求查询/恢复保持可用。
 - [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
   - [x] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)已发布harnesseb0c0a7：统一URL/import/upload写前size、实际FD空间和短写计数，Web/CLI同级；144协议/真实HTTPCLI507接续/390/五CI全部首过。累计GC仍独立。
@@ -169,7 +173,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
 - [x] RESULT-06 统一指标schema及Web/CLI已交付：模块/窗口/单位/电源轨/分母/ROI/全帧/方法与null分开；未核来源不授予科学有效性，producer全链身份仍留RESULT-07。
 - [ ] METRIC-OWNERSHIP-01 将当前场景trace的渲染线程/ctx与目标进程身份绑定，独立验证帧语义；不能从Unity默认comm或字符串筛选推断游戏FPS。03B4C2A先支持显式render_comm并保留未验证标记，没有筛选时帧指标为null、raw trace仍保留。复用已有render ownership能力，不为每个游戏另造过滤器。
-- [ ] ENERGY-WINDOW-01 复用trace parser导出完整GPU-submit分组对应的实际时间窗，对相同窗口电池积分后报告分组能耗估计；目标/显示语义未核时不能命名游戏每帧能耗。C2B2仅交capture窗口电池能量，energy_per_frame_mj保持null。
+- [x] ENERGY-WINDOW-01 [完整提交组能量估计](ENERGY-WINDOW.md)已按PF d9c7ad0/harness b42f798发布main；原parser同窗完整组、ENV+PWR积分及Web/CLI同批，4宿主/6DOM及必需CI通过。整机平均组能量，energy_per_frame_mj仍null，目标/显示语义、真实设备/浏览器/部署仍未验。
 - [ ] RESULT-07 source/runtime/game/device/scene/method/reader身份贯通；一个数字能定位原始证据和计算方法。
 - [x] RESULT-08 全部报告结论可筛选并同等展示，当前job恢复事实单列；旧/失败/unknown及GOL非kept记录验收通过。只覆盖索引展示，不替producer判定结果。
 - [x] RESEARCH-01 目标与方向持久状态、假设、优先级理由、前提、下一实验、结果和覆盖矩阵。 fb9ecf1已交付单节点目标/方向、结果引用与覆盖声明；预算/优先级由外部Agent使用，不是硬限额或调度器。
@@ -215,7 +219,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] METHOD-05 黑盒/灰盒/白盒优化recipe库：分辨率、LOD、阴影、AA、合批/缓存、资源布局、CPU提交、NPU/GPU分工、帧节奏、系统旋钮。
 - [ ] METHOD-06 同状态数据集采集与清单：真实低清/合成低清、色域、相机/时间、运动/遮挡、训练/留出分组明确。
 - [ ] METHOD-07 功耗/能耗/显示与软件呈现来源能力账本；不能从固定schema字段推断设备支持。
-- [ ] METHOD-08 负结果查询与已否决方向记忆，避免换Agent后重复同一失败路线。
+- [x] METHOD-08 [负结果与方向记忆](NEGATIVE-RESULT-MEMORY.md)：既有API/CLI/Web已支持 outcome组合过滤、no_gain/rejected理由、证据和不可变历史；2026-10-26只读复核已有实现与隔离证据，无重复API/测试。完成已知node/research范围，实际部署接续、跨节点研究复制/语义去重仍开放；重新开放的旧否决从history读取。
 - [ ] METHOD-09 无法比较/测不出时自动建议可做的下一种实验，而不是把未知填0或要求人立即出现。
 
 ## P3：想到但尚未做的方向
@@ -276,3 +280,10 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
   - [ ] RECOVERY-UX-01 为未知硬件写入/未完成部署补可审计的独立核验路径，统一通用恢复lease显示label（当前confirmation-reconcile）；不以改label或手动删除记录代替恢复证据。
 
 记录变更/提交、网页与API验收、离线测试、实际设备验证、未覆盖边界、迁移/恢复结果，以及下一批具体问题。实现条目只有达到相应验收才勾选；原实验失败记录保持不变。
+
+## 2026-10-26 stable发布
+
+- [x] RELEASE-STABLE-01 建立三个运行仓库stable基线，保留phonefarm旧分支历史，按[STABLE-RELEASE](STABLE-RELEASE.md)每批验收后推进。
+- [ ] RELEASE-ASSETS-01 修复mutable manifest和最近N次清理造成旧stable产物不可取的问题；按SHA解析及stable保留、实际CI产物验证。
+- [ ] RELEASE-DEPLOY-01 用户部署脚本接入后，读取真实运行版本并按DEPLOY逐层验证；当前未操作生产节点。
+- [ ] RELEASE-RETENTION-01 在明确部署/回滚引用后补可审查的云端构建清理政策；本轮取消固定N删除，不能以存储成本为由自动删仍被stable或节点引用的唯一版本。

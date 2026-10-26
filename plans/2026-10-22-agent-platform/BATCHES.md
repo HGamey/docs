@@ -592,3 +592,20 @@ harness `42b2605` 五项actual required CI成功后同SHA直推main并核远端�
 - BASE-HISTORY-01：harness92716a0，152协议首过/唯一390真实HTTP/五必需CI通过，同SHA main。管理员显式旧_jobs只读来源，来源revision/node/job隔离，原记录不推断PID或恢复；不迁移原数据。原生下载未进入browser page-request计数的首次QA断言失败保留，以原服务日志和实际下载补证，无重跑。
 - BASE-CACHE-01：harnessd5dfa3f，外置当前目录导出派生缓存，原builder锁/预算/源原件保留，不改asset cache和历史单文件边界。153协议首轮两旧断言修正后3受影响定向通过，新聚合链首过；唯一390真实HTTP与五必需CI通过，同SHA main。无生产/设备。
 - 用户明确收尾后暂停自动推进（整体不标完成），下一阶段按[STAGE-20261025](STAGE-20261025.md)和todo的DEPLOY-01至06验目标节点，先修实际阻断。另迁移开发工作区到rhodes1，Git与未入Git文件分别交接；复制工作区不等于部署服务，真实恢复屏障保留。
+
+## 2026-10-26 恢复本机开发与首批发布
+
+用户明确恢复本机并行开发。rhodes1源码仓与本机相同；接回DEPLOY-01/02记录以及同事docs改动，不覆盖远端服务/原件。目标保持active，实际部署与真机验收边界保留。
+
+- PF `3494bf2`：TEST-03 宿主回归入口、fixture admission、单调计时和失败原件。三个竞争/时序定向用例与runner冒烟通过，code-only 40282885216成功后同SHA main。
+- harness `f78554a`：FLEET-DOCTOR-01宿主诊断、FLEET-UPDATE-01固定路径安全更新/持久维护屏障/精确回滚、pf-node-deploy显式无设备访问。158协议首轮157过，唯一新fixture清理错误修后定向过；实际HTTP/CLI、真实隔离worker发布/阻断/回滚及最终五CI通过。合成UI可用，实际后端浏览器接线因工具故障未验，设备诊断/生产/跨参与者仍开放。
+- refbench `c04ec4b`：REFBENCH-OUTPUT-01生产JSON长字符串不截断、统一转义及compute NONE/schema一致。四新/两既有定向一次通过，code-only 40285600650成功后同SHA main；没有APK/真机/性能收益验收。
+- METHOD-08 只读复核既有结果过滤、方向理由/证据/CAS历史及Agent接续指引。关闭已知node/research范围的实现项，完整限制见[负结果与方向记忆](NEGATIVE-RESULT-MEMORY.md)；不造重复接口，不把未登记旧原件视为空研究。
+
+本地证据保留在恢复任务的 `qa/resume-local-20261026`，包括原始失败。继续网页维护入口和显式无设备任务的默认资源修复；不恢复Doom实验或移动历史原件。
+
+## 2026-10-26 节点维护网页、宿主资源与stable基线
+
+harness `f5a7ea4`已发布main：网页/API/CLI维护状态、原ID更新/回滚查回、跨标签页pending锁；修复CI揭露的updater父子intake锁竞态，并修复显式无设备宿主任务误占legacy-device。159协议首轮全过；后一资源改动160项首轮159过，旧restart fixture显式声明资源后定向过，负例全部保留。最终五CI全部成功。详见[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)、[JOB-HOST-RESOURCES](JOB-HOST-RESOURCES.md)。
+
+BASE-06已复核现有scoped身份/CAS和真实执行事实边界；METHOD-08负结果复用及DIST支持矩阵完成只读审计。未新造实验实体或把单APK外推其它格式。三个stable基线已核，用户选择每批验收后推进，用户维护部署脚本。新发现精确旧stable构建资产保留缺口列RELEASE-ASSETS-01。ENERGY-WINDOW实现提交正在verify；不把等待检查写成已发布。
