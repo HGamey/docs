@@ -1,0 +1,48 @@
+11:52:41 风扇 (红魔): 原值 enable=1 level=5, 本轮开到 1/5
+11:52:41 A=native B=srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off rounds=6 原 Game Mode=standard
+11:54:42 A1: 等降温 120s (电池 ≤ 40.0°C)
+11:57:16 A1 (native): 显示 29.8 fps @60Hz 游戏 28.951 fps p95 39.5232 ms 锐度 110.7 输出 [2141, 969]
+12:00:27 B1: 会话退出 0, 层已摘除 True {'so_present': False, 'debug.vulkan.layers': ''}
+12:00:28 B1 (srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off): 显示 60.0 fps @120Hz 游戏 59.401 fps p95 18.866 ms 锐度 516.4 输出 None 层帧数 4500 窗口上屏 {'span_s': 75.26, 'displayed_per_s': 46.97, 'real_per_s': 23.48, 'synth_per_s': 23.49, 'interval_p50_ms': 8.32, 'interval_max_ms': 83.15} 超分 4500 次 [2141, 969]→[2688, 1216]
+12:03:49 B2: 等降温 200s (电池 ≤ 40.0°C)
+12:07:02 B2: 会话退出 0, 层已摘除 True {'so_present': False, 'debug.vulkan.layers': ''}
+12:07:02 B2 (srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off): 显示 59.98 fps @120Hz 游戏 59.437 fps p95 18.7424 ms 锐度 243.7 输出 None 层帧数 4500 窗口上屏 {'span_s': 75.47, 'displayed_per_s': 46.97, 'real_per_s': 23.48, 'synth_per_s': 23.49, 'interval_p50_ms': 8.32, 'interval_max_ms': 83.15} 超分 4500 次 [2141, 969]→[2688, 1216]
+12:10:03 A2: 等降温 180s (电池 ≤ 40.0°C)
+12:12:36 A2 (native): 显示 29.82 fps @60Hz 游戏 29.768 fps p95 35.6325 ms 锐度 89.3 输出 [2141, 969]
+12:15:11 A3 (native): 显示 29.8 fps @60Hz 游戏 29.787 fps p95 36.2795 ms 锐度 87.6 输出 [2141, 969]
+12:18:27 B3: 会话退出 0, 层已摘除 True {'so_present': False, 'debug.vulkan.layers': ''}
+12:18:27 B3 (srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off): 显示 59.98 fps @120Hz 游戏 59.153 fps p95 19.0596 ms 锐度 227.3 输出 None 层帧数 4800 窗口上屏 {'span_s': 75.13, 'displayed_per_s': 46.97, 'real_per_s': 23.48, 'synth_per_s': 23.49, 'interval_p50_ms': 8.32, 'interval_max_ms': 83.15} 超分 4800 次 [2141, 969]→[2688, 1216]
+12:22:08 B4: 等降温 220s (电池 ≤ 40.0°C)
+12:27:51 B4: 会话退出 0, 层已摘除 True {'so_present': False, 'debug.vulkan.layers': ''}
+12:27:51 B4 (srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off): 显示 20.81 fps @60Hz 游戏 59.11 fps p95 19.8804 ms 锐度 449.2 输出 None 层帧数 4500 窗口上屏 {'span_s': 74.81, 'displayed_per_s': 46.96, 'real_per_s': 23.47, 'synth_per_s': 23.49, 'interval_p50_ms': 8.32, 'interval_max_ms': 83.15} 超分 4500 次 [2141, 969]→[2688, 1216]
+12:32:33 A4: 等降温 280s (电池 ≤ 40.0°C)
+12:35:07 A4 (native): 显示 29.82 fps @60Hz 游戏 29.374 fps p95 36.5705 ms 锐度 79.9 输出 [2141, 969]
+12:37:41 A5 (native): 显示 29.8 fps @60Hz 游戏 29.766 fps p95 35.8625 ms 锐度 85.8 输出 [2141, 969]
+12:40:54 B5: 会话退出 0, 层已摘除 True {'so_present': False, 'debug.vulkan.layers': ''}
+12:40:55 B5 (srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off): 显示 60.0 fps @120Hz 游戏 59.363 fps p95 18.9156 ms 锐度 238.5 输出 None 层帧数 4500 窗口上屏 {'span_s': 75.54, 'displayed_per_s': 46.96, 'real_per_s': 23.47, 'synth_per_s': 23.48, 'interval_p50_ms': 8.32, 'interval_max_ms': 83.15} 超分 4500 次 [2141, 969]→[2688, 1216]
+12:44:26 B6: 等降温 210s (电池 ≤ 40.0°C)
+12:47:40 B6: 会话退出 0, 层已摘除 True {'so_present': False, 'debug.vulkan.layers': ''}
+12:47:40 B6 (srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off): 显示 59.95 fps @120Hz 游戏 59.177 fps p95 18.98 ms 锐度 227.5 输出 None 层帧数 4500 窗口上屏 {'span_s': 75.24, 'displayed_per_s': 46.98, 'real_per_s': 23.48, 'synth_per_s': 23.5, 'interval_p50_ms': 8.32, 'interval_max_ms': 83.15} 超分 4500 次 [2141, 969]→[2688, 1216]
+12:51:01 A6: 等降温 200s (电池 ≤ 40.0°C)
+12:53:36 A6 (native): 显示 29.81 fps @60Hz 游戏 28.951 fps p95 39.4233 ms 锐度 106.2 输出 [2141, 969]
+12:53:37 收尾核对: Game Mode standard (原 standard), selfsr 属性 '', 层已不在 True, screen_off_timeout 还原为 1800000
+# native (A) vs srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off (B): com.miHoYo.Yuanshen
+
+每臂冷启动进大世界, 有效 6 对, 精确符号翻转检验 (最小可能 p = 0.03125)。游戏内设置未改。作废臂: 无。送显缓冲: {'A': [(2141, 969)], 'B': []}
+
+| 指标 | A | B | 差 (B-A) | 差% | 95% 区间 | p |
+|---|---|---|---|---|---|---|
+| 实际上屏帧率 (看到的画面: 有子图层取子图层) | 29.8083 | 108.7767 | +78.9683 | 264.92% | [59.39, 89.0433] | 0.0312 |
+| 游戏图层上屏帧率 | 29.8083 | 53.4533 | +23.645 | 79.32% | [10.5817, 30.19] | 0.0625 |
+| 子图层上屏帧率 (插帧 sc 后端) | - | - | - | - | - | 未测成 |
+| 插帧给真实帧加的排队延迟 p50 (ms) | - | - | - | - | - | 未测成 |
+| 子图层上屏间隔 p95 (ms) | - | - | - | - | - | 未测成 |
+| 游戏渲染帧率 (GPU 提交) | 29.4328 | 59.2735 | +29.8407 | 101.39% | [29.5552, 30.1515] | 0.0312 |
+| 游戏渲染 p95 帧时 (ms) | 37.2152 | 19.074 | -18.1412 | -48.75% | [-19.4231, -16.8946] | 0.0312 |
+| 每帧 GPU 忙碌 (ms, 均值) | 29.0162 | 13.5312 | -15.485 | -53.37% | [-16.413, -14.5013] | 0.0312 |
+| 锐度 (拉普拉斯方差) | 93.2553 | 317.0895 | +223.8342 | 240.02% | [138.4609, 315.5501] | 0.0312 |
+| 右上角固定图标区锐度 | 366.1441 | 952.7361 | +586.5921 | 160.21% | [515.5038, 664.1487] | 0.0312 |
+| 与第一张原生截图的 SSIM | 0.583 | 0.4058 | -0.1772 | -30.4% | [-0.3483, -0.0415] | 0.0312 |
+| SF 丢帧 / 窗口 | 0.3333 | 2.5 | +2.1667 | 650.0% | [-0.3333, 6] | 0.5000 |
+| 真实帧 present→上屏 p50 (ms) | - | - | - | - | - | 未测成 |
+| 层回读: 窗口内每秒实际上屏 (真实+合成) | - | - | - | - | - | 未测成 |
