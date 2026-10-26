@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-deploy-overlay-adoption-fix",
-  "promoted_at": "2026-10-26T16:47:00+00:00",
+  "batch": "20261026-deploy-coordination",
+  "promoted_at": "2026-10-26T17:03:00+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,7 +10,7 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "e0772a8610562aae9735d5b10fd50f37edb8059f"
+      "sha": "5b101b508a66b485893d8b00fc01eb5de0e5de3b"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",
