@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-doctor-device-ownership",
-  "promoted_at": "2026-10-26T13:11:00+00:00",
+  "batch": "20261026-cache-overview",
+  "promoted_at": "2026-10-26T14:55:00+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,7 +10,7 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "22de4eb06fd9b9337a8568dcddab0d5c978be79b"
+      "sha": "a199b6721a5071ad50244a833904d6f2176eef3a"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",
