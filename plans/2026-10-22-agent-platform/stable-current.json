@@ -1,12 +1,12 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-native-helper-linux-gate",
-  "promoted_at": "2026-10-26T21:00:00+00:00",
+  "batch": "20261026-bridge-retry",
+  "promoted_at": "2026-10-27T02:30:00+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
       "repository": "https://github.com/HGamey/phonefarm",
-      "sha": "e6fde012a52ac9087ab0bfff02d4c000a75c1ab8"
+      "sha": "00b4149020017e7feb196d4e0a886c8f78d43ada"
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
