@@ -229,7 +229,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [x] METHOD-01 [探索/确认计划模板](EXPERIMENT-PLAN-TEMPLATES.md)已实现Web/CLI共用草稿、已有资格按版本复用，不每轮重做全套；harness099da48已main/stable；复用原next_experiment/CAS，无新状态服务。
 - [ ] METHOD-02 GOL候选生成/编译/统计/确认/Pareto/模型工件暴露为可选工具，内置goal成为普通客户端。
 - [ ] METHOD-03 合并重复结果解析与报告代码的数据合同；多个页面可保留不同视图，不重复解释指标。
-- [ ] METHOD-04 refbench已知答案与接口回归；原生LR/HR能力的host测试和真机资格分开。
+- [x] METHOD-04 refbench已知答案与接口回归；原生LR/HR能力的host测试和真机资格分开。 2026-10-26 refbench d7e61cc 新增 host-tests 必需 CI：每次提交跑 tests/ 19 项宿主测试（output contract 已知答案、native pairs 序列质量/配对采集宿主逻辑、接口 fixture 编译），全部确定性 host fixture，无 GPU/APK/真机。宿主通过不外推设备收益；原生 LR/HR 真机资格仍单列未验（native capture 真机验收另行）。宿主测试本地 Linux 19 项 1.49s 通过（1 项按设计跳过：离线集成需现有 consumer 二进制）。
   - [x] REFBENCH-OUTPUT-01 [宿主输出合同](REFBENCH-OUTPUT.md)：生产JSON动态转义、长路径不截断及compute NONE/schema对齐；6项定向首过，c04ec4b通过必需CI后同SHA main；只证明输出/文件接口，Vulkan与真机资格未验。
 - [x] METHOD-05 [共享优化路线库](OPTIMIZATION-RECIPES.md)覆盖黑盒/灰盒/白盒十条路线的前提、改动、测量与恢复，Web/CLI直接生成现有计划草稿；具体游戏命令/能力需按任务补齐，不宣称通用自动执行。
   - [x] METHOD-RECIPES-01 harness33b7aa8已main/stable，复用同一JSON与next_experiment；离线CLI/JS最小检查和必需CI通过，没有新runner、状态服务或真机资格。
