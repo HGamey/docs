@@ -617,3 +617,7 @@ PF `d9c7ad0` / harness `b42f798` / GOL规则 `4bbc7c3`：必需CI成功后同SHA
 ## 2026-10-26 精确版本发布、CTS与客户端准入
 
 PF1a730dd / harness0f785c1已通过必需CI和PF云构建后推进stable，GOL4bbc7c3保持。交付完整SHA发布清单/资产保留、更新器精确读取、旧CTS安装误报修复和客户端Android准入。验证范围见STABLE-RELEASE、CTS-INSTALLATION、GAME-FORMATS；未操作生产或手机。下一批直接打通游戏报告的异步协助入口。
+
+## 2026-10-26 游戏报告协助入口
+
+harness0691a71已main/stable。游戏报告→原研究方向→协助草稿共用只读API，CLI直接输出既有request data；参考流程指导回复后的原目标新检查和显式依赖处理。本地仅一次HTTP/CLI小冒烟0.68秒与一次UI草稿冒烟，必需CI40302384025/40302383962通过。不重复本地全套或main全套CI。下一JOB-GAME-DEVICE-LANES-01接入已有设备范围以解除无关串行。

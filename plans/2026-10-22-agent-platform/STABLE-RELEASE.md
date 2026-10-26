@@ -10,6 +10,7 @@ phonefarm是设备执行/测量，harness-ops是节点后台/网页/CLI，game_o
 
 1. 一批代码、网页/CLI/API和相关行为验收完成；原始失败与未验范围保留。
 2. 将同一提交推verify分支，必需code-only与适用的node-tests通过后，非强制推main。变基产生新SHA需重新检查。
+   harness的node-tests只在verify、PR或手动触发时运行；同SHA推进main/stable复用已有结果，避免重复整套CI。直接main的新提交可手动补跑发布检查。
 3. phonefarm等待同SHA的node-build构建与发布成功。macOS/Android产物不能用来证明Linux宿主可运行。
 4. 核对既有stable是目标SHA的祖先；三个仓库按一组精确SHA记录并非强制快进。任何并发变化先核对，不强制覆盖。三个Git ref不存在跨仓原子事务，部署端应冻结并验证完整配套清单，遇不一致保留旧版本。
 5. 记录推送后远端实际ref与CI链接。远端运行程序、配置、数据目录、维护/恢复状态、服务重启和手机验收仍分别核对。
@@ -41,3 +42,7 @@ phonefarm从旧stable `537a62f`快进；另两仓补建，已逐一读回远端�
 ## 2026-10-26 完整提交组能量批
 
 PF `d9c7ad09c437c71b62fdb661a90e2f72664b0258`（node-build40296587424成功）、harness `b42f798307e78d5d1e00e237ac494df27f439c0f`、GOL `4bbc7c3a76e431fa93470702edc47295823d5648`的同SHA必需检查成功后已全部快进stable。规则实际放行并逐仓读回确认；完整验收范围见[ENERGY-WINDOW](ENERGY-WINDOW.md)。本批不修改生产服务。
+
+## 2026-10-26 游戏协助批
+
+harness stable推进到`0691a711e9b2c99642c4114c5c5277d8d2abdbc8`，code-only40302384025/node-tests40302383962通过，main复用同SHA检查。PF1a730dd/GOL4bbc7c3保持；生产部署仍由用户脚本推进。

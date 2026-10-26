@@ -111,9 +111,9 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] DIST-CTS-INSTALL-01 修复旧CTS自定义安装空/错误输出误报成功及只凭hash缓存跳过实际安装；acb396e实现、26CTS回归通过，最终1a730dd已main/stable，必需CI与云构建成功，见[CTS-INSTALLATION](CTS-INSTALLATION.md)。
   - [ ] DIST-CTS-RECOVERY-01 旧replace安装统一transport结果、持久pending屏障与显式核验/恢复；当前未知只落据/返回Err，不能当远端已停止或typed恢复完成。
   - [x] DIST-CLIENT-PLATFORM-01 harness e35dd33已main、五CI成功；Web/CLI新请求准入与后端Android范围一致，旧请求查询/恢复保持可用，4DOM/8实际CLI隔离HTTP场景通过，未验生产/真机。
-- [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。
+- [x] DIST-08 平台接线与参考流程已交付：协助挂到方向，回复后外部Agent沿原目标新检查、保存证据并决定解除；其他方向继续。具体游戏登录/授权是否完成以实际新证据为准。
   - [x] 通用持久协助/方向依赖/异步反馈及其他方向继续已有实现；复用RESEARCH/HUMAN，不重复开发。
-  - [ ] DIST-ASSISTED-RECHECK-01 从游戏报告起草协助，Web/CLI同批；外部Agent收到回复后按原目标新check、保存证据并显式处理依赖。正在实施，复用现有对象。
+  - [x] DIST-ASSISTED-RECHECK-01 harness0691a71已main：从游戏报告起草协助，Web/CLI同批；技能指引外部Agent回复后按原目标新check、保存证据并显式处理依赖，复用现有对象。真实登录/场景资格仍按具体游戏判断，见[GAME-INITIALIZATION](GAME-INITIALIZATION.md)。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
   - [x] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)已发布harnesseb0c0a7：统一URL/import/upload写前size、实际FD空间和短写计数，Web/CLI同级；144协议/真实HTTPCLI507接续/390/五CI全部首过。累计GC仍独立。
 
@@ -122,6 +122,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [x] JOB-01 持久作业状态机，区分准备/运行/采集/恢复/终态与等待原因；外部Agent提交立即拿ID。 持久准备/执行/采集/保存终态与独立恢复事实、即时job/request ID已交付，见JOB-QUEUE/EXECUTION/DURABILITY；恢复子链/暂停/预算仍由各具体项继续。
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
+  - [ ] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。本批开始实施。
   - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
   - 58fc0dc/2b4747e已完成原SQL原子领取、lease屏障及独立阻断容量；DEVICE-LANES已交付显式灰层按设备并行，JOB-HOST-CAPACITY已交付CPU/GPU/IO声明slots。剩余是旧PF/GOL、remote/observation及部署入口仍global的具体scope迁移；任意输出硬配额归JOB-09、真机并发归JOB-10，不重复开发已有队列或容量账本。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
@@ -291,3 +292,5 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] RELEASE-DEPLOY-01 用户部署脚本接入后，读取真实运行版本并按DEPLOY逐层验证；当前未操作生产节点。
 - [ ] RELEASE-RETENTION-01 在明确部署/回滚引用后补可审查的云端构建清理政策；本轮取消固定N删除，不能以存储成本为由自动删仍被stable或节点引用的唯一版本。
 - [ ] RELEASE-CI-RUNTIME-01 当前云构建实际提示checkout/cache/upload-artifact的Node20 action被强制在Node24运行；本批保持既有工作流语义，后续按官方兼容说明升级action并验收，不将提示误记为构建失败。
+
+- [x] TEST-CI-REUSE-01 随harness0691a71发布：同SHA验证通过后，main/stable复用检查，取消main重复整套node-tests；保留发布必需CI和手动入口。

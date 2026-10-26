@@ -42,3 +42,11 @@ check只读。apply目录已存在且shell可读写时不启动；否则必须�
 本机证据位于开发交接的`qa/game-initialization-validation.json`及其索引日志、原件和截图。四个本批synthetic未知上下文（初始化启动/停止、旧资源push、旧安装commit）故意保留；全部已知宿主PID退出，不能把保留的QA屏障当垃圾清除。
 
 本项解决初始化尝试和结果可见性，不保证任意游戏自动建目录，也不完成Doom Launcher配置或场景复位。下一同M2为DIST-INPUTS-01显式小工件引用与JSON绑定，再接场景配方；完整M2与整体goal继续。
+
+## 从报告请求异步协助
+
+游戏页的 needs_assistance 报告提供“起草协助”入口。在研究页选择现有研究和方向后，草稿带入原任务、游戏版本、设备、缺失事项及复核提示；仍使用原研究请求表单保存，需要局部阻断时另给方向添加依赖。
+
+CLI使用 `pf-node games assistance-draft JOB_ID --research RESEARCH_ID --direction DIRECTION_ID`，带显式节点身份，输出可直接交给 `research create request` 的data。对应只读接口为 `GET /jobs/JOB_ID/deployment/assistance-draft?research_id=...&direction_id=...`，网页使用同一接口的dash代理。草稿不创建任务或修改研究。
+
+人回复后，外部Agent按原节点、版本和设备提交适用的新检查，保存新job证据，再决定是否解除该方向依赖；其他方向继续。初始化检查只覆盖目录等实际可查前提，账号登录和场景是否就绪仍使用具体游戏方法。操作例子已写入hgamey-research技能。实现已随harness `0691a71`进入main；本地只做一条HTTP/CLI小冒烟（0.68秒）和一次网页草稿冒烟。同SHA code-only40302384025与node-tests40302383962通过，已推进stable。
