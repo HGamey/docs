@@ -1,0 +1,2967 @@
+Number of display frames : 64
+Display Frame 0
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315844
+Present delta:   0.000090
+Present delta % refreshrate:   0.000090
+		    Start time		|    End time		|    Present time
+Expected	|	     16.32	|	     26.63	|	     26.63
+Actual  	|	     16.41	|	     17.80	|	     26.63
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time :  16.761458
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	     26.63
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.475313
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     14.62	|	     26.63
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.475313
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	      0.00	|	     26.63
+    ----------------------------------------------------------------------------------------
+
+Display Frame 1 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315856
+Present delta:   8.315069
+Present delta % refreshrate:   8.315069
+		    Start time		|    End time		|    Present time
+Expected	|	     24.62	|	     34.95	|	     34.95
+Actual  	|	     24.72	|	     33.72	|	     43.27
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  16.816250
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     31.62	|	     43.27
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  16.816250
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     14.62	|	     43.27
+    ----------------------------------------------------------------------------------------
+
+Display Frame 2 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315860
+Present delta:   8.315255
+Present delta % refreshrate:   8.315255
+		    Start time		|    End time		|    Present time
+Expected	|	     32.93	|	     43.27	|	     43.27
+Actual  	|	     33.86	|	     38.20	|	     51.58
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  32.395260
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     14.62	|	     51.58
+    ----------------------------------------------------------------------------------------
+
+Display Frame 3
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315860
+Present delta:   0.000489
+Present delta % refreshrate:   0.000489
+		    Start time		|    End time		|    Present time
+Expected	|	     49.59	|	     59.90	|	     59.90
+Actual  	|	     49.72	|	     51.15	|	     59.90
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time :  50.064844
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	     59.90
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  32.395260
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     48.76	|	     59.90
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  37.155365
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     31.62	|	     59.90
+    ----------------------------------------------------------------------------------------
+
+Display Frame 4 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315854
+Present delta:   8.314318
+Present delta % refreshrate:   8.314318
+		    Start time		|    End time		|    Present time
+Expected	|	     57.88	|	     68.21	|	     68.21
+Actual  	|	     58.02	|	     64.57	|	     76.53
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  50.117552
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     63.05	|	     76.53
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  50.117552
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     48.76	|	     76.53
+    ----------------------------------------------------------------------------------------
+
+Display Frame 5 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315843
+Present delta:   8.314402
+Present delta % refreshrate:   8.314402
+		    Start time		|    End time		|    Present time
+Expected	|	     66.20	|	     76.53	|	     76.53
+Actual  	|	     66.32	|	     68.60	|	     84.84
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  63.436719
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     48.76	|	     84.84
+    ----------------------------------------------------------------------------------------
+
+Display Frame 6
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315843
+Present delta:   0.001370
+Present delta % refreshrate:   0.001370
+		    Start time		|    End time		|    Present time
+Expected	|	     82.85	|	     93.16	|	     93.16
+Actual  	|	     82.93	|	     84.35	|	     93.16
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time :  83.291563
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	     93.16
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  63.436719
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     79.58	|	     93.16
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  67.678906
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     63.05	|	     93.16
+    ----------------------------------------------------------------------------------------
+
+Display Frame 7 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315832
+Present delta:   8.315811
+Present delta % refreshrate:   8.315811
+		    Start time		|    End time		|    Present time
+Expected	|	     91.14	|	    101.48	|	    101.48
+Actual  	|	     91.39	|	     98.11	|	    109.79
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  83.347708
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     96.32	|	    109.79
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  83.347708
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     79.58	|	    109.79
+    ----------------------------------------------------------------------------------------
+
+Display Frame 8 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315810
+Present delta:   8.316125
+Present delta % refreshrate:   0.000315
+		    Start time		|    End time		|    Present time
+Expected	|	     99.46	|	    109.79	|	    109.79
+Actual  	|	     99.62	|	    104.81	|	    118.11
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 103.696198
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    118.11
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  96.924792
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     96.32	|	    118.11
+    ----------------------------------------------------------------------------------------
+
+Display Frame 9
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315810
+Present delta:   0.000551
+Present delta % refreshrate:   0.000551
+		    Start time		|    End time		|    Present time
+Expected	|	    116.11	|	    126.42	|	    126.42
+Actual  	|	    116.20	|	    117.54	|	    126.42
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:  96.924792
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    115.10	|	    126.42
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 103.778333
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	     96.32	|	    126.42
+    ----------------------------------------------------------------------------------------
+
+Display Frame 10 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315813
+Present delta:   8.315709
+Present delta % refreshrate:   8.315709
+		    Start time		|    End time		|    Present time
+Expected	|	    124.41	|	    134.74	|	    134.74
+Actual  	|	    124.48	|	    132.12	|	    143.06
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 116.617031
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    130.27	|	    143.06
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 116.617031
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    115.10	|	    143.06
+    ----------------------------------------------------------------------------------------
+
+Display Frame 11 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315813
+Present delta:   8.315104
+Present delta % refreshrate:   8.315104
+		    Start time		|    End time		|    Present time
+Expected	|	    132.72	|	    143.06	|	    143.06
+Actual  	|	    132.80	|	    135.84	|	    151.37
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 131.007760
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    115.10	|	    151.37
+    ----------------------------------------------------------------------------------------
+
+Display Frame 12
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315813
+Present delta:   0.000744
+Present delta % refreshrate:   0.000744
+		    Start time		|    End time		|    Present time
+Expected	|	    149.38	|	    159.69	|	    159.69
+Actual  	|	    149.50	|	    151.18	|	    159.69
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 149.920312
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    159.69
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 131.007760
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    147.63	|	    159.69
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 134.971562
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    130.27	|	    159.69
+    ----------------------------------------------------------------------------------------
+
+Display Frame 13 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315805
+Present delta:   8.314391
+Present delta % refreshrate:   8.314391
+		    Start time		|    End time		|    Present time
+Expected	|	    157.67	|	    168.00	|	    168.00
+Actual  	|	    157.79	|	    166.63	|	    176.32
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 149.979948
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    147.63	|	    176.32
+    ----------------------------------------------------------------------------------------
+
+Display Frame 14 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315772
+Present delta:   8.314158
+Present delta % refreshrate:   8.314158
+		    Start time		|    End time		|    Present time
+Expected	|	    165.99	|	    176.32	|	    176.32
+Actual  	|	    166.74	|	    168.10	|	    184.63
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 149.979948
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    165.32	|	    184.63
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 165.344687
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    147.63	|	    184.63
+    ----------------------------------------------------------------------------------------
+
+Display Frame 15
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315772
+Present delta:   0.001399
+Present delta % refreshrate:   0.001399
+		    Start time		|    End time		|    Present time
+Expected	|	    182.65	|	    192.95	|	    192.95
+Actual  	|	    182.77	|	    184.41	|	    192.95
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 183.188646
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    192.95
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 167.092344
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    182.25	|	    192.95
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 167.092344
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    165.32	|	    192.95
+    ----------------------------------------------------------------------------------------
+
+Display Frame 16 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315761
+Present delta:   8.314090
+Present delta % refreshrate:   8.314090
+		    Start time		|    End time		|    Present time
+Expected	|	    190.93	|	    201.27	|	    201.27
+Actual  	|	    191.17	|	    200.18	|	    209.58
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 183.249687
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    198.51	|	    209.58
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 183.249687
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    182.25	|	    209.58
+    ----------------------------------------------------------------------------------------
+
+Display Frame 17 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315736
+Present delta:   8.313931
+Present delta % refreshrate:   8.313931
+		    Start time		|    End time		|    Present time
+Expected	|	    207.56	|	    217.90	|	    217.90
+Actual  	|	    207.66	|	    216.68	|	    226.21
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 215.196510
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    226.21
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 198.989115
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    198.51	|	    226.21
+    ----------------------------------------------------------------------------------------
+
+Display Frame 18 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315721
+Present delta:   8.313404
+Present delta % refreshrate:   8.313404
+		    Start time		|    End time		|    Present time
+Expected	|	    215.88	|	    226.21	|	    226.21
+Actual  	|	    216.80	|	    218.08	|	    234.53
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 198.989115
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    215.42	|	    234.53
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 215.351146
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    198.51	|	    234.53
+    ----------------------------------------------------------------------------------------
+
+Display Frame 19
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315721
+Present delta:   0.002183
+Present delta % refreshrate:   0.002183
+		    Start time		|    End time		|    Present time
+Expected	|	    232.56	|	    242.84	|	    242.84
+Actual  	|	    232.71	|	    235.48	|	    242.84
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 234.233437
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    242.84
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 217.157969
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    233.25	|	    242.84
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 217.157969
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    215.42	|	    242.84
+    ----------------------------------------------------------------------------------------
+
+Display Frame 20 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315681
+Present delta:   8.313398
+Present delta % refreshrate:   8.313398
+		    Start time		|    End time		|    Present time
+Expected	|	    240.83	|	    251.16	|	    251.16
+Actual  	|	    240.94	|	    250.12	|	    259.47
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 234.289583
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    233.25	|	    259.47
+    ----------------------------------------------------------------------------------------
+
+Display Frame 21
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315662
+Present delta:   0.001101
+Present delta % refreshrate:   0.001101
+		    Start time		|    End time		|    Present time
+Expected	|	    257.46	|	    267.79	|	    267.79
+Actual  	|	    257.53	|	    258.68	|	    267.79
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 257.840521
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    267.79
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 234.289583
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    249.19	|	    267.79
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 248.599062
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    249.19	|	    267.79
+    ----------------------------------------------------------------------------------------
+
+Display Frame 22
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315662
+Present delta:   0.001190
+Present delta % refreshrate:   0.001190
+		    Start time		|    End time		|    Present time
+Expected	|	    265.77	|	    276.10	|	    276.10
+Actual  	|	    265.89	|	    267.32	|	    276.10
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 257.886146
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    264.58	|	    276.10
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 257.886146
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    249.19	|	    276.10
+    ----------------------------------------------------------------------------------------
+
+Display Frame 23 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315642
+Present delta:   8.314650
+Present delta % refreshrate:   8.314650
+		    Start time		|    End time		|    Present time
+Expected	|	    274.09	|	    284.42	|	    284.42
+Actual  	|	    274.16	|	    282.13	|	    292.73
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 266.252500
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    279.48	|	    292.73
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 266.252500
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    264.58	|	    292.73
+    ----------------------------------------------------------------------------------------
+
+Display Frame 24 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315607
+Present delta:   8.314320
+Present delta % refreshrate:   8.314320
+		    Start time		|    End time		|    Present time
+Expected	|	    282.40	|	    292.74	|	    292.74
+Actual  	|	    282.66	|	    284.59	|	    301.05
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 280.737396
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    264.58	|	    301.05
+    ----------------------------------------------------------------------------------------
+
+Display Frame 25
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315607
+Present delta:   0.000698
+Present delta % refreshrate:   0.000698
+		    Start time		|    End time		|    Present time
+Expected	|	    299.05	|	    309.37	|	    309.37
+Actual  	|	    299.16	|	    300.86	|	    309.37
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 299.632344
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    309.37
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 299.647656
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    309.37
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 280.737396
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    295.41	|	    309.37
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 283.730937
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    295.41	|	    309.37
+    ----------------------------------------------------------------------------------------
+
+Display Frame 26 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315593
+Present delta:   8.315683
+Present delta % refreshrate:   0.000090
+		    Start time		|    End time		|    Present time
+Expected	|	    307.35	|	    317.68	|	    317.68
+Actual  	|	    307.44	|	    315.37	|	    326.00
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 299.710052
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    312.93	|	    326.00
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 299.710052
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    295.41	|	    326.00
+    ----------------------------------------------------------------------------------------
+
+Display Frame 27 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315550
+Present delta:   8.315924
+Present delta % refreshrate:   0.000374
+		    Start time		|    End time		|    Present time
+Expected	|	    315.66	|	    326.00	|	    326.00
+Actual  	|	    315.78	|	    319.63	|	    334.31
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 314.207656
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    312.93	|	    334.31
+    ----------------------------------------------------------------------------------------
+
+Display Frame 28
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315550
+Present delta:   0.001097
+Present delta % refreshrate:   0.001097
+		    Start time		|    End time		|    Present time
+Expected	|	    332.32	|	    342.63	|	    342.63
+Actual  	|	    332.43	|	    334.17	|	    342.63
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 332.853437
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    342.63
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 314.207656
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    330.03	|	    342.63
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 318.529583
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    330.03	|	    342.63
+    ----------------------------------------------------------------------------------------
+
+Display Frame 29 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315536
+Present delta:   8.318050
+Present delta % refreshrate:   0.002514
+		    Start time		|    End time		|    Present time
+Expected	|	    340.61	|	    350.94	|	    350.94
+Actual  	|	    340.78	|	    350.58	|	    359.26
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 332.912344
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    348.73	|	    359.26
+    ----------------------------------------------------------------------------------------
+
+Display Frame 30 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315554
+Present delta:   8.317514
+Present delta % refreshrate:   0.001960
+		    Start time		|    End time		|    Present time
+Expected	|	    357.24	|	    367.57	|	    367.57
+Actual  	|	    357.46	|	    366.67	|	    375.89
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 365.081406
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    375.89
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 332.912344
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    348.73	|	    375.89
+    ----------------------------------------------------------------------------------------
+
+Display Frame 31 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315581
+Present delta:   8.318158
+Present delta % refreshrate:   0.002577
+		    Start time		|    End time		|    Present time
+Expected	|	    365.56	|	    375.89	|	    375.89
+Actual  	|	    366.78	|	    367.88	|	    384.21
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 348.786979
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    365.16	|	    384.21
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 365.140469
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    348.73	|	    384.21
+    ----------------------------------------------------------------------------------------
+
+Display Frame 32
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315581
+Present delta:   0.002644
+Present delta % refreshrate:   0.002644
+		    Start time		|    End time		|    Present time
+Expected	|	    382.21	|	    392.52	|	    392.52
+Actual  	|	    382.36	|	    384.04	|	    392.52
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 382.786042
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    392.52
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 367.082187
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    381.43	|	    392.52
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 367.082187
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    365.16	|	    392.52
+    ----------------------------------------------------------------------------------------
+
+Display Frame 33 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315603
+Present delta:   8.318942
+Present delta % refreshrate:   0.003339
+		    Start time		|    End time		|    Present time
+Expected	|	    390.50	|	    400.84	|	    400.84
+Actual  	|	    390.73	|	    399.89	|	    409.16
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 382.847604
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    381.43	|	    409.16
+    ----------------------------------------------------------------------------------------
+
+Display Frame 34 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315657
+Present delta:   8.319381
+Present delta % refreshrate:   0.003724
+		    Start time		|    End time		|    Present time
+Expected	|	    398.82	|	    409.15	|	    409.15
+Actual  	|	    400.03	|	    401.62	|	    417.47
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 382.847604
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    398.45	|	    417.47
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 398.366458
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    381.43	|	    417.47
+    ----------------------------------------------------------------------------------------
+
+Display Frame 35
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315657
+Present delta:   0.002953
+Present delta % refreshrate:   0.002953
+		    Start time		|    End time		|    Present time
+Expected	|	    415.48	|	    425.79	|	    425.79
+Actual  	|	    415.63	|	    417.26	|	    425.79
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 416.068802
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    425.79
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 400.384062
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    414.95	|	    425.79
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 400.384062
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    398.45	|	    425.79
+    ----------------------------------------------------------------------------------------
+
+Display Frame 36 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315693
+Present delta:   8.318241
+Present delta % refreshrate:   0.002548
+		    Start time		|    End time		|    Present time
+Expected	|	    423.77	|	    434.10	|	    434.10
+Actual  	|	    423.88	|	    432.69	|	    442.42
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 416.130625
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    414.95	|	    442.42
+    ----------------------------------------------------------------------------------------
+
+Display Frame 37 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315766
+Present delta:   8.319006
+Present delta % refreshrate:   0.003240
+		    Start time		|    End time		|    Present time
+Expected	|	    432.08	|	    442.42	|	    442.42
+Actual  	|	    432.82	|	    433.97	|	    450.74
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 416.130625
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    432.08	|	    450.74
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 431.583542
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    414.95	|	    450.74
+    ----------------------------------------------------------------------------------------
+
+Display Frame 38
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315766
+Present delta:   0.001600
+Present delta % refreshrate:   0.001600
+		    Start time		|    End time		|    Present time
+Expected	|	    448.74	|	    459.05	|	    459.05
+Actual  	|	    448.82	|	    450.43	|	    459.05
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 449.215104
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    459.05
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 433.149948
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    448.00	|	    459.05
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 433.149948
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    432.08	|	    459.05
+    ----------------------------------------------------------------------------------------
+
+Display Frame 39 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315799
+Present delta:   8.317076
+Present delta % refreshrate:   0.001277
+		    Start time		|    End time		|    Present time
+Expected	|	    457.03	|	    467.37	|	    467.37
+Actual  	|	    457.19	|	    466.36	|	    475.68
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 449.270208
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    463.99	|	    475.68
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 449.270208
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    448.00	|	    475.68
+    ----------------------------------------------------------------------------------------
+
+Display Frame 40 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315850
+Present delta:   8.316215
+Present delta % refreshrate:   0.000365
+		    Start time		|    End time		|    Present time
+Expected	|	    473.67	|	    484.00	|	    484.00
+Actual  	|	    473.83	|	    482.50	|	    492.32
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 481.340625
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    492.32
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 481.353021
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    492.32
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 464.913906
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    480.95	|	    492.32
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 464.913906
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    463.99	|	    492.32
+    ----------------------------------------------------------------------------------------
+
+Display Frame 41 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315870
+Present delta:   8.316354
+Present delta % refreshrate:   0.000484
+		    Start time		|    End time		|    Present time
+Expected	|	    481.98	|	    492.32	|	    492.32
+Actual  	|	    482.60	|	    485.64	|	    500.63
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 481.400208
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    483.83	|	    500.63
+    ----------------------------------------------------------------------------------------
+
+Display Frame 42 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315870
+Present delta:   8.316325
+Present delta % refreshrate:   0.000455
+		    Start time		|    End time		|    Present time
+Expected	|	    498.64	|	    508.95	|	    508.95
+Actual  	|	    498.75	|	    503.95	|	    517.26
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 502.326927
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    517.26
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 481.400208
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    480.95	|	    517.26
+    ----------------------------------------------------------------------------------------
+
+Display Frame 43 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315897
+Present delta:   8.317225
+Present delta % refreshrate:   0.001328
+		    Start time		|    End time		|    Present time
+Expected	|	    506.93	|	    517.26	|	    517.26
+Actual  	|	    507.13	|	    514.87	|	    525.58
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 502.401719
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    495.75	|	    525.58
+    ----------------------------------------------------------------------------------------
+
+Display Frame 44
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315897
+Present delta:   0.001091
+Present delta % refreshrate:   0.001091
+		    Start time		|    End time		|    Present time
+Expected	|	    523.59	|	    533.90	|	    533.90
+Actual  	|	    523.74	|	    525.16	|	    533.90
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 524.125156
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    533.90
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 484.260573
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    513.73	|	    533.90
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 513.726771
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    513.73	|	    533.90
+    ----------------------------------------------------------------------------------------
+
+Display Frame 45
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315911
+Present delta:   0.001413
+Present delta % refreshrate:   0.001413
+		    Start time		|    End time		|    Present time
+Expected	|	    531.88	|	    542.21	|	    542.21
+Actual  	|	    532.00	|	    533.74	|	    542.21
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 524.176719
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    530.23	|	    542.21
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 524.176719
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    513.73	|	    542.21
+    ----------------------------------------------------------------------------------------
+
+Display Frame 46 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315927
+Present delta:   8.317886
+Present delta % refreshrate:   0.001959
+		    Start time		|    End time		|    Present time
+Expected	|	    540.19	|	    550.53	|	    550.53
+Actual  	|	    540.45	|	    549.71	|	    558.85
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 532.467031
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    547.52	|	    558.85
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 532.467031
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    530.23	|	    558.85
+    ----------------------------------------------------------------------------------------
+
+Display Frame 47 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315949
+Present delta:   8.318216
+Present delta % refreshrate:   0.002267
+		    Start time		|    End time		|    Present time
+Expected	|	    556.83	|	    567.16	|	    567.16
+Actual  	|	    557.00	|	    565.98	|	    575.48
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 564.571146
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    575.48
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 548.230625
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    547.52	|	    575.48
+    ----------------------------------------------------------------------------------------
+
+Display Frame 48 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315968
+Present delta:   8.318204
+Present delta % refreshrate:   0.002236
+		    Start time		|    End time		|    Present time
+Expected	|	    565.14	|	    575.48	|	    575.48
+Actual  	|	    566.09	|	    567.20	|	    583.79
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 548.230625
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    564.82	|	    583.79
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 564.687708
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    547.52	|	    583.79
+    ----------------------------------------------------------------------------------------
+
+Display Frame 49
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.315968
+Present delta:   0.001950
+Present delta % refreshrate:   0.001950
+		    Start time		|    End time		|    Present time
+Expected	|	    581.80	|	    592.11	|	    592.11
+Actual  	|	    581.99	|	    585.11	|	    592.11
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 583.626979
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    592.11
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 566.425208
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    582.58	|	    592.11
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 566.425208
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    564.82	|	    592.11
+    ----------------------------------------------------------------------------------------
+
+Display Frame 50 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316009
+Present delta:   8.318326
+Present delta % refreshrate:   0.002317
+		    Start time		|    End time		|    Present time
+Expected	|	    590.09	|	    600.42	|	    600.42
+Actual  	|	    590.27	|	    599.32	|	    608.74
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 583.687552
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    582.58	|	    608.74
+    ----------------------------------------------------------------------------------------
+
+Display Frame 51
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316030
+Present delta:   0.001602
+Present delta % refreshrate:   0.001602
+		    Start time		|    End time		|    Present time
+Expected	|	    606.72	|	    617.06	|	    617.06
+Actual  	|	    606.82	|	    608.78	|	    617.06
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 607.366823
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    617.06
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 583.687552
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    598.02	|	    617.06
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 597.864166
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    598.02	|	    617.06
+    ----------------------------------------------------------------------------------------
+
+Display Frame 52
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316030
+Present delta:   0.001875
+Present delta % refreshrate:   0.001875
+		    Start time		|    End time		|    Present time
+Expected	|	    615.04	|	    625.37	|	    625.37
+Actual  	|	    615.32	|	    616.94	|	    625.37
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 607.426094
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    615.33	|	    625.37
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 607.426094
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    598.02	|	    625.37
+    ----------------------------------------------------------------------------------------
+
+Display Frame 53 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316043
+Present delta:   8.318175
+Present delta % refreshrate:   0.002132
+		    Start time		|    End time		|    Present time
+Expected	|	    623.36	|	    633.69	|	    633.69
+Actual  	|	    623.47	|	    632.44	|	    642.01
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 615.731562
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    615.33	|	    642.01
+    ----------------------------------------------------------------------------------------
+
+Display Frame 54 [*] 
+Prediction State : Valid
+Jank Type : Unknown jank
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316080
+Present delta:   8.317862
+Present delta % refreshrate:   0.001782
+		    Start time		|    End time		|    Present time
+Expected	|	    631.67	|	    642.01	|	    642.01
+Actual  	|	    632.55	|	    633.70	|	    650.32
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 615.731562
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    631.48	|	    650.32
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 631.197969
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    615.33	|	    650.32
+    ----------------------------------------------------------------------------------------
+
+Display Frame 55
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316080
+Present delta:   0.000197
+Present delta % refreshrate:   0.000197
+		    Start time		|    End time		|    Present time
+Expected	|	    648.33	|	    658.64	|	    658.64
+Actual  	|	    648.62	|	    651.98	|	    658.64
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 650.182500
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    658.64
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 632.877291
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    648.96	|	    658.64
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 632.877291
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    631.48	|	    658.64
+    ----------------------------------------------------------------------------------------
+
+Display Frame 56 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316128
+Present delta:   8.315263
+Present delta % refreshrate:   8.315263
+		    Start time		|    End time		|    Present time
+Expected	|	    656.62	|	    666.95	|	    666.95
+Actual  	|	    656.75	|	    666.18	|	    675.27
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 650.245729
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    648.96	|	    675.27
+    ----------------------------------------------------------------------------------------
+
+Display Frame 57
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316139
+Present delta:   0.001629
+Present delta % refreshrate:   0.001629
+		    Start time		|    End time		|    Present time
+Expected	|	    673.25	|	    683.59	|	    683.59
+Actual  	|	    673.33	|	    675.03	|	    683.59
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 673.760937
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    683.59
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 650.245729
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    665.22	|	    683.59
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 664.594635
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    665.22	|	    683.59
+    ----------------------------------------------------------------------------------------
+
+Display Frame 58
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316139
+Present delta:   0.001466
+Present delta % refreshrate:   0.001466
+		    Start time		|    End time		|    Present time
+Expected	|	    681.57	|	    691.90	|	    691.90
+Actual  	|	    681.76	|	    683.35	|	    691.90
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 673.821041
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    681.59	|	    691.90
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 673.821041
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    665.22	|	    691.90
+    ----------------------------------------------------------------------------------------
+
+Display Frame 59 [*] 
+Prediction State : Valid
+Jank Type : Display HAL
+Present Metadata : Late Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316133
+Present delta:   8.315908
+Present delta % refreshrate:   8.315908
+		    Start time		|    End time		|    Present time
+Expected	|	    689.89	|	    700.22	|	    700.22
+Actual  	|	    690.02	|	    699.16	|	    708.54
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 682.154479
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    681.59	|	    708.54
+    ----------------------------------------------------------------------------------------
+
+Display Frame 60
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316132
+Present delta:   0.000343
+Present delta % refreshrate:   0.000343
+		    Start time		|    End time		|    Present time
+Expected	|	    706.52	|	    716.85	|	    716.85
+Actual  	|	    706.75	|	    708.57	|	    716.85
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Dropped
+    Drop time : 707.168541
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time:   0.000000
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|		N/A	|	    716.85
+    ----------------------------------------------------------------------------------------
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 682.154479
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    697.96	|	    716.85
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 697.653541
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    697.96	|	    716.85
+    ----------------------------------------------------------------------------------------
+
+Display Frame 61
+Prediction State : Valid
+Jank Type : None
+Present Metadata : On Time Present
+Finish Metadata: On Time Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316132
+Present delta:   0.001607
+Present delta % refreshrate:   0.001607
+		    Start time		|    End time		|    Present time
+Expected	|	    714.83	|	    725.17	|	    725.17
+Actual  	|	    714.96	|	    716.42	|	    725.17
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 707.229896
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    714.97	|	    725.17
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 707.229896
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    697.96	|	    725.17
+    ----------------------------------------------------------------------------------------
+
+Display Frame 62
+Prediction State : Valid
+Jank Type : None
+Present Metadata : Unknown Present
+Finish Metadata: Unknown Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316135
+Present delta: 384077652.051692
+Present delta % refreshrate:   0.782102
+		    Start time		|    End time		|    Present time
+Expected	|	    723.15	|	    733.48	|	    733.48
+Actual  	|	    723.25	|	    732.17	|		N/A
+----------------------------------------------------------------------------------------
+
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 715.465416
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    714.97	|		N/A
+    ----------------------------------------------------------------------------------------
+
+Display Frame 63
+Prediction State : Valid
+Jank Type : None
+Present Metadata : Unknown Present
+Finish Metadata: Unknown Finish
+Start Metadata: Unknown Start
+Vsync Period:   8.316143
+Present delta: 384077660.367827
+Present delta % refreshrate:   5.531457
+		    Start time		|    End time		|    Present time
+Expected	|	    731.47	|	    741.80	|	    741.80
+Actual  	|	    732.33	|	    734.52	|		N/A
+----------------------------------------------------------------------------------------
+
+    Layer - TX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#50468
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50468
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 715.465416
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    732.98	|		N/A
+    ----------------------------------------------------------------------------------------
+    Layer - TX - selfsr_interp#50497
+    Token: -1
+    Is Buffer?: 1
+    Owner Pid : 14559
+    Scheduled rendering rate: 120 fps
+    Layer ID : 50497
+    Present State : Presented
+    Prediction State : None
+    Jank Type : None
+    Present Metadata : Unknown Present
+    Finish Metadata: Unknown Finish
+    Last latch time: 730.665416
+    		    Start time		|    End time		|    Present time
+    Actual  	|		N/A	|	    714.97	|		N/A
+    ----------------------------------------------------------------------------------------
+

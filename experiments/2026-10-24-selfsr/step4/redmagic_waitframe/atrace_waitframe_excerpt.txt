@@ -1,0 +1,222 @@
+  1012.74 B|1894|beginFrame 107512273 vsyncIn 10.17ms
+  1012.74 B|1894|expectedSignaledPresentFence
+  1012.74 I|1894|fence at idx: 4 expectedPresentTime in 1.84
+  1012.75 I|1894|fence at idx: 3 expectedPresentTime in -6.48
+  1012.75 I|1894|fence at idx: 3 is 6.46 before frame begin (wouldBackpressure=true)
+  1012.76 E|1894
+  1012.76 B|1894|isFencePending
+  1012.76 E|1894
+  1012.76 C|1894|PrevFramePending 4630947168392018835|0
+  1012.77 I|1894|LastSignaledFrameTime expectedPresentTime -6.50 ago, signalTime -6.51 ago
+  1012.77 C|1894|PrevFrameMissed 4630947168392018835|0
+  1012.77 C|1894|PrevHwcFrameMissed 4630947168392018835|0
+  1012.77 C|1894|PrevGpuFrameMissed 4630947168392018835|0
+  1012.78 E|1894
+  1012.79 B|1894|commit 107512273 2026-10-27 01:55:45.844
+  1012.80 G|1894|CriticalWorkload|Commit|30781199
+  1012.80 B|1894|setSfWakeUp
+  1012.81 E|1894
+  1012.81 C|1894|mTransactionFlags|16
+  1012.81 B|1894|updateLayerSnapshots
+  1012.81 G|1894|CriticalWorkload|Transaction Handling|30781200
+  1012.82 B|1894|TransactionHandler:flushTransactions
+  1012.85 B|1894|wait
+  1012.85 E|1894
+  1012.86 B|1894|fence unsignaled, frameNum: 5692
+  1012.86 E|1894
+  1012.86 B|1894|wait
+  1012.87 E|1894
+  1013.89 B|1894|wait
+  1013.90 E|1894
+  1014.92 B|1894|wait
+  1014.92 E|1894
+  1015.96 B|1894|wait
+  1015.97 E|1894
+  1016.99 B|1894|wait
+  1017.00 E|1894
+  1018.03 B|1894|wait
+  1018.04 E|1894
+  1019.07 B|1894|wait
+  1019.08 E|1894
+  1020.11 B|1894|wait
+  1020.12 E|1894
+  1020.15 B|1894|isVsyncValid uid: 10518 frameRate: 120.00 Hz
+  1020.16 C|1894|VSP-mode 4630947168392018835|0
+  1020.17 E|1894
+  1020.18 B|1894|wait
+  1020.18 E|1894
+  1020.21 B|1894|fence unsignaled try allowLatchUnsignaled 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#51273
+  1020.21 E|1894
+  1020.22 B|1894|isVsyncValid uid: 10518 frameRate: 120.00 Hz
+  1020.22 C|1894|VSP-mode 4630947168392018835|0
+  1020.23 E|1894
+  1020.23 B|1894|wait
+  1020.24 E|1894
+  1020.25 B|1894|not current desiredPresentTime: 387493234655858 expectedPresentTime: 387493233965597
+  1020.25 E|1894
+  1020.26 B|1894|fence unsignaled
+  1020.26 E|1894
+  1020.26 C|1894|TransactionQueue|4
+  1020.28 N|1894|CriticalWorkload|Layers: +0 -0 txns:1
+  1020.31 E|1894
+  1020.32 B|1894|LayerSnapshotBuilder:update
+  1020.43 B|1894|FastPath
+  1020.45 E|1894
+  1020.46 E|1894
+  1020.46 B|1894|DisplayCallbackAndStatsUpdates
+  1020.48 B|1894|setBuffer selfsr_interp#51299 - hasBuffer=true frameNumber 11452
+  1020.49 B|1894|selfsr_interp#51299 : 133655087284262
+  1020.49 E|1894
+  1020.49 I|1894|setBuffer selfsr_interp#51299 - 11452
+  1020.52 B|1894|setPostTime
+  1020.53 E|1894
+  1020.54 B|1894|createSurfaceFrameForToken
+  1020.54 E|1894
+  1020.55 E|1894
+  1062.57 B|1894|beginFrame 107512320 vsyncIn 10.24ms
+  1062.57 B|1894|expectedSignaledPresentFence
+  1062.57 I|1894|fence at idx: 4 expectedPresentTime in 1.91
+  1062.57 I|1894|fence at idx: 3 expectedPresentTime in -6.41
+  1062.57 I|1894|fence at idx: 3 is 6.40 before frame begin (wouldBackpressure=true)
+  1062.58 E|1894
+  1062.58 B|1894|isFencePending
+  1062.58 B|1894|wait
+  1062.58 E|1894
+  1062.58 E|1894
+  1062.59 C|1894|PrevFramePending 4630947168392018835|1
+  1062.59 C|1894|PrevFrameMissed 4630947168392018835|1
+  1062.59 C|1894|PrevHwcFrameMissed 4630947168392018835|1
+  1062.59 C|1894|PrevGpuFrameMissed 4630947168392018835|0
+  1062.59 E|1894
+  1062.60 B|1894|commit 107512320 2026-10-27 01:55:45.894
+  1062.60 B|1894|incrementMissedFrames
+  1062.60 E|1894
+  1062.61 B|1894|VSyncPredictor::onFrameMissed
+  1062.61 E|1894
+  1062.61 B|1894|scheduleFrame
+  1062.61 B|1894|VSyncDispatchTimerQueueEntry::schedule
+  1062.62 B|1894|nextAnticipatedVSyncTimeFrom
+  1062.62 C|1894|VSP-mode 4630947168392018835|0
+  1062.62 C|1894|VSP-mode 4630947168392018835|0
+  1062.62 B|1894|renderRate 120.00 Hz
+  1062.62 I|1894|vsync in 18.49ms
+  1062.63 E|1894
+  1062.63 E|1894
+  1062.63 I|1894|sf: wouldSkipAVsyncTarget=0 wouldSkipAWakeup=0
+  1062.63 E|1894
+  1062.63 E|1894
+  1062.63 E|1894
+  1062.63 B|1894|updateLastVsyncCostTime
+  1062.64 E|1894
+  1062.64 B|1894|onCommitNotComposited
+  1062.64 E|1894
+  1071.03 B|1894|beginFrame 107512328 vsyncIn 10.10ms
+  1071.04 B|1894|expectedSignaledPresentFence
+  1071.04 I|1894|fence at idx: 4 expectedPresentTime in -6.56
+  1071.04 I|1894|would not backpressure
+  1071.05 I|1894|fence at idx: 4 is 6.53 before frame begin (wouldBackpressure=false)
+  1071.05 E|1894
+  1071.05 B|1894|isFencePending
+  1071.06 B|1894|wait
+  1071.07 E|1894
+  1071.07 E|1894
+  1071.07 C|1894|PrevFramePending 4630947168392018835|1
+  1071.07 C|1894|PrevFrameMissed 4630947168392018835|1
+  1071.08 C|1894|PrevHwcFrameMissed 4630947168392018835|1
+  1071.08 C|1894|PrevGpuFrameMissed 4630947168392018835|0
+  1071.08 E|1894
+  1071.09 B|1894|commit 107512328 2026-10-27 01:55:45.902
+  1071.10 B|1894|incrementMissedFrames
+  1071.10 E|1894
+  1071.10 G|1894|CriticalWorkload|Commit|30781219
+  1071.11 B|1894|setSfWakeUp
+  1071.11 E|1894
+  1071.12 C|1894|mTransactionFlags|16
+  1071.12 B|1894|updateLayerSnapshots
+  1071.12 G|1894|CriticalWorkload|Transaction Handling|30781220
+  1071.13 B|1894|TransactionHandler:flushTransactions
+  1071.16 B|1894|wait
+  1071.17 E|1894
+  1071.18 B|1894|isVsyncValid uid: 10518 frameRate: 120.00 Hz
+  1071.18 C|1894|VSP-mode 4630947168392018835|0
+  1071.19 E|1894
+  1071.19 B|1894|wait
+  1071.19 E|1894
+  1071.20 B|1894|isVsyncValid uid: 10518 frameRate: 120.00 Hz
+  1071.21 C|1894|VSP-mode 4630947168392018835|0
+  1071.21 E|1894
+  1071.21 B|1894|wait
+  1071.22 E|1894
+  1071.22 B|1894|isVsyncValid uid: 10518 frameRate: 120.00 Hz
+  1071.23 C|1894|VSP-mode 4630947168392018835|0
+  1071.23 E|1894
+  1071.23 B|1894|wait
+  1071.23 E|1894
+  1071.24 B|1894|not current desiredPresentTime: 387493292423420 expectedPresentTime: 387493292187346
+  1071.24 E|1894
+  1071.24 C|1894|TransactionQueue|2
+  1071.25 N|1894|CriticalWorkload|Layers: +0 -0 txns:3
+  1071.27 E|1894
+  1071.28 B|1894|LayerSnapshotBuilder:update
+  1071.32 B|1894|FastPath
+  1071.33 E|1894
+  1071.33 B|1894|UpdateSnapshots
+  1071.51 E|1894
+  1071.51 E|1894
+  1071.51 B|1894|DisplayCallbackAndStatsUpdates
+  1071.52 B|1894|[lmt]onLmtRecv 0
+  1071.52 E|1894
+  1071.53 B|1894|[drawcall]onDrawCallFlagRecv 0x0
+  1071.53 E|1894
+  1071.53 B|1894|[vkCmdCount]onVKCmdCountFlagRecv 0x0
+  1071.53 E|1894
+  1071.54 B|1894|[lmt]onIFASRecv 1
+  1071.54 E|1894
+  1071.54 B|1894|onEnableWaitToReducePendingRecv 0
+  1071.54 E|1894
+  1071.55 B|1894|setBuffer 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#51273 - hasBuffer=true frameNumber 56
+  1071.55 B|1894|68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#51273 : 133655087284279
+  1071.55 E|1894
+  1071.56 I|1894|setBuffer 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#51273 - 5695
+  1071.58 B|1894|setPostTime
+  1071.59 E|1894
+  1071.59 B|1894|createSurfaceFrameForToken
+  1071.59 E|1894
+  1071.60 E|1894
+  1071.61 B|1894|setBuffer selfsr_interp#51299 - hasBuffer=true frameNumber 11458
+  1071.62 B|1894|selfsr_interp#51299 : 133655087284260
+  1071.62 E|1894
+  1071.62 I|1894|setBuffer selfsr_interp#51299 - 11458
+  1071.63 B|1894|setPostTime
+  1071.63 E|1894
+  1071.63 B|1894|createSurfaceFrameForToken
+  1071.64 E|1894
+  1071.64 E|1894
+  1071.65 B|1894|setBuffer selfsr_interp#51299 - hasBuffer=true frameNumber 11459
+  1071.65 B|1894|selfsr_interp#51299 : 133655087284261
+  1071.65 E|1894
+  1071.65 I|1894|setBuffer selfsr_interp#51299 - 11459
+  1071.66 B|1894|removeTimeRecord
+  1071.66 E|1894
+  1071.66 C|1894|BufferTX - selfsr_interp#51299|3
+  1071.66 B|1894|mPendingBufferCnt-dec:3
+  1071.67 E|1894
+  1071.67 B|1894|addSurfaceFrame
+  1071.67 E|1894
+  1071.68 B|1894|setPostTime
+  1071.68 E|1894
+  1071.68 B|1894|createSurfaceFrameForToken
+  1071.68 E|1894
+  1071.69 E|1894
+  1071.91 B|1894|[lmt]notify:30
+  1071.91 E|1894
+  1071.97 I|1894|latchBuffer 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#51273 - 5695
+  1071.98 B|1894|setAcquireFence
+  1071.98 E|1894
+  1071.98 B|1894|setLatchTime
+  1071.98 E|1894
+  1071.99 B|1894|addSurfaceFrame
+  1071.99 E|1894
+  1072.00 C|1894|BufferTX - 68b11cf SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)#51273|0
+  1072.00 B|1894|mPendingBufferCnt-dec:0
+  1072.00 E|1894

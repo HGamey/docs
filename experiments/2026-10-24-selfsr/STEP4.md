@@ -1,4 +1,4 @@
-# 自研超分+插帧 · 第 4 步：插帧（子图层方案在红魔上做成；上屏约 1.5 倍，已验收）
+# 自研超分+插帧 · 第 4 步：插帧（红魔原神上屏 60 → 约 120，见文末「89 帧的真正原因」）
 
 设备 RedMagic NX809J（RedMagicOS 11.0.23，Android 16），`com.miHoYo.Yuanshen` 7.1.0，2026-10-24。游戏内设置未改。
 层：phonefarm `knobs/gray/layer/interp*.cpp`。每次游戏 `vkQueuePresentKHR`，层在真实帧之前多送 m 张合成帧
@@ -113,9 +113,50 @@ SF 的时间戳显示合成帧在定的时刻之前就画完了（fence 早 4 ms
 程序自身帧率不变，给真实帧加的延迟 p50 +33.4 ms，画面和原生一致。详见 STEP6「荣耀上插帧 60 → 120 翻倍」。
 红魔上的 89 帧是厂商给游戏进程的 vsync 节拍限制，方法本身能做到翻倍。
 
-## 追加 (2026-10-26)：红魔 89 帧的根因
+## 追加 (2026-10-26)：红魔 89 帧的根因（**此节结论有误**，已由下一节更正）
 
 不是插帧本身的问题，也不是 AOSP 的帧率覆盖。SF atrace 里，原神 uid 的事务全部按 `isVsyncValid uid: 10518 frameRate: 60.00 Hz` 判定，共 1216 次，没有一次是 120。
 这是 ZTE 的 lmt / IFAS 逻辑：游戏每帧带 `IFAS=1` 给 SF。结果是同 uid 的子图层事务每隔一个 vsync 才放行，frametimeline 里 26% 的子图层帧被 Dropped，120 × 74% ≈ 89。
 游戏侧能改的都试过（清 `Limited Frame`、关 FpsControl 总开关、改 Ceiling、改窗口投票、加大提前量和间隔、定时唤醒 SF），都没突破。
 需要红魔系统组在 SF 里放开，见 `REDMAGIC_SF_ASK.md`。副产品：`unlimit` 修好后，不开 G-FRC+ 时原神渲染 55 → 59.6 帧。
+
+## 追加 (2026-10-26 下午)：89 帧的真正原因是 SF 的 waitframe，关掉后子图层上屏 119.9
+
+上一节说的 `isVsyncValid` 按 60 Hz 放行**不是**瓶颈。用 SF 后门（`service call SurfaceFlinger 1039 i32 10518 f 120`）把原神 uid 的帧率覆盖改成 120 后，
+`isVsyncValid` 全部按 120 Hz 判定，子图层还是 89.9 帧。再加上每 8.3 ms 叫醒一次 SF（`sc_kick_ns`）、把排的时刻对齐 vsync 网格（`sc_grid`），都还是 89。
+
+SF atrace（`step4/redmagic_waitframe/atrace_waitframe_excerpt.txt`）里看到的是：
+
+```
+commit 107512273
+  TransactionHandler:flushTransactions
+  fence unsignaled, frameNum: 5692        ← 游戏图层的缓冲, GPU 还没画完
+  wait  wait  wait  wait  wait  wait  wait ← 每 1 ms 轮询一次, 共约 7.5 ms
+  ...
+commit 107512320
+  PrevFramePending 1 / PrevFrameMissed 1  ← 上一帧合成晚了, present fence 没到
+  onCommitNotComposited                   ← 这个 vsync 整帧跳过
+```
+
+被跳过的那个 vsync 里排的子图层缓冲，下一次 commit 时和后一张一起就绪，前一张被 `releasePendingBuffer` 顶掉（3 秒 103 次，约 34/s，正好是 120 − 89 的差）。
+这个 1 ms 轮询是 ZTE 加的 **waitframe**（`ro.vendor.feature.zte_feature_fps_control_wait_frame=true`），SF 自带运行时开关：
+
+```
+adb shell su -c 'dumpsys SurfaceFlinger --fpsControl_waitframe_off'   # 关
+adb shell su -c 'dumpsys SurfaceFlinger --fpsControl_waitframe_on'    # 开 (出厂状态)
+```
+
+不改系统文件，重启或 `waitframe_on` 即恢复。A/B 脚本的 `sfwait=off` 在进世界后关、收尾时写回开。
+
+| 冒烟（各 1 臂，自研超分 + 子图层插帧，屏幕 120 Hz） | 子图层上屏 | 间隔 p95 | 真实帧加的延迟 p50 | 游戏渲染 |
+|---|---|---|---|---|
+| 原方案 | 89.9 | 16.6 ms | 33.5 ms | 59.3 |
+| + uid 帧率覆盖 120（`sfovr=120`） | 89.9 | 16.6 ms | 33.5 ms | 59.3 |
+| + 覆盖 + 每 8.3 ms 叫醒 SF（`sc_kick_ns`） | 89.1 | 16.6 ms | 33.5 ms | — |
+| + 覆盖 + 对齐 vsync 网格（`sc_grid`） | 89.2 | 16.6 ms | 46.1 ms | 59.4 |
+| + 覆盖 + 真实帧交给游戏 swapchain 前 CPU 等 GPU（`sc_real_wait`） | 25.6 | 49.9 ms | 47.4 ms | **22.2** |
+| **+ 关 waitframe（`sfwait=off`）+ 覆盖** | **119.2** | **8.3 ms** | 33.6 ms | 59.0 |
+| **只关 waitframe（`sfwait=off`）** | **119.9** | **8.3 ms** | 33.6 ms | 59.1 |
+
+只关 waitframe 就够，不需要帧率覆盖。各次原始记录在 `step4/redmagic_waitframe/probe*_arms.jsonl`。
+正式结果（6 对，原生 vs 自研超分 + 插帧 + 关 waitframe）：`step4/ab6_waitframe_off`，见下节。

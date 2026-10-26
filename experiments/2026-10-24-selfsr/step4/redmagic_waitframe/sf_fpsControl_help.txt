@@ -1,0 +1,65 @@
+enable feature:
+       adb shell dumpsys SurfaceFlinger --fpsControl_on
+disable feature:
+       adb shell dumpsys SurfaceFlinger --fpsControl_off
+
+enable replenishBuffer:
+       adb shell dumpsys SurfaceFlinger --replenishBuffer_on
+disable replenishBuffer:
+       adb shell dumpsys SurfaceFlinger --replenishBuffer_off
+set fpsDesired:
+       adb shell dumpsys SurfaceFlinger --fpsDesired 45
+enable fpsLimit:
+       adb shell dumpsys SurfaceFlinger --fpsLimit_on 45
+disable fpsLimit:
+       adb shell dumpsys SurfaceFlinger --fpsLimit_off
+show Layer fps history:
+       adb shell dumpsys SurfaceFlinger --appfps
+show eye fps history:
+       adb shell dumpsys SurfaceFlinger --eyefps
+
+enable trace:
+       adb shell dumpsys SurfaceFlinger --fpsControl_trace_on
+disable trace:
+       adb shell dumpsys SurfaceFlinger --fpsControl_trace_off
+enable log:
+       adb shell dumpsys SurfaceFlinger --fpsControl_log_on
+disable log:
+       adb shell dumpsys SurfaceFlinger --fpsControl_log_off
+enable waitframe:
+       adb shell dumpsys SurfaceFlinger --fpsControl_waitframe_on
+disable waitframe:
+       adb shell dumpsys SurfaceFlinger --fpsControl_waitframe_off
+set waitframe range factor(percent of Vsync. eg. 50(50 percent):
+       adb shell dumpsys SurfaceFlinger --fpsControl_set_waitframe_range_factor 50
+set test package:
+       adb shell dumpsys SurfaceFlinger --fpsControl_pkg_test <youpkgname>
+clear test package:
+       adb shell dumpsys SurfaceFlinger --fpsControl_pkg_test null-pkgName
+set continuous replenishing buffer max count, eg:
+       adb shell dumpsys SurfaceFlinger --fpsControl_set_continuous_count 3
+set fps min delta, eg:
+       adb shell dumpsys SurfaceFlinger --fpsControl_set_min_delta 4
+set replenish range factor, eg:
+       adb shell dumpsys SurfaceFlinger --fpsControl_set_replenish_range_factor 4
+set replenish to sysFps, eg:
+       adb shell dumpsys SurfaceFlinger --fpsControl_replenish_to_sysfps 1
+drawcall control:
+       adb shell dumpsys SurfaceFlinger --drawcall_flag <DEC>
+<DEC>: |--------------------------------------------------------------------- -
+| bit0 | bit1 | bit2 |........|    HEX   |    DEC   |         description     |
+|   0  |  1   |  1   |........|0x60000000|1610612736|enable drawcall,open log |
+|   0  |  1   |  0   |........|0x40000000|1073741824|enable drawcal,close log |
+|   0  |  0   |  0   |........|     0    |     0    |disable drawcal,close log|
+|------------------------------------------------------------------------------
+
+       adb shell dumpsys SurfaceFlinger --vkCmdCount_flag <DEC>
+   <DEC>:      |---------------------------------------------------------------
+| bit0 |bit1|bit2|...|    HEX   |    DEC   |         description              |
+|   0  |  1 | 1  |...|0x61000000|1627389952|enable vkCmdCount,open log        |
+|   0  |  1 | 0  |...|0x30000000|805306368 |enable vkCmdCount,close log       |
+|   0  |  0 | 0  |...|0x300000C8|805306568 |enable vkCmdCount,set cycle(200ms)|
+|   0  |  0 | 0  |...|     0    |     0    |disable vkCmdCount,close log      |
+|----------------------------------------------------------------------- ------
+
+show this help:
