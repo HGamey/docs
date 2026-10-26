@@ -649,3 +649,20 @@ harness8d37abf已main/stable，必需CI40314940740首过。缺项建议不改旧
 ## 2026-10-26 单任务导出缓存管理，交付后暂停
 
 harnessbe8279c已main/stable，code-only40317136127和node-tests40317136207全部成功；PF7aa39c5/GOL4bbc7c3保持。Web/API/CLI沿原锁显式查看和清理可再生成缓存，原件/历史/游戏数据保留；仅最小直接检查，无生产清理。主todo更新为160个勾选、67个未勾选（含父子项与部署义务，不是总体完成率）。按用户要求结束本批，增量同步rhodes1-lan后暂停自动开发，项目未完成。
+
+## 2026-10-26 rhodes1 部署验证批次（DEPLOY-03 与宿主侧增量，共 16 批）
+
+接手后按 DEPLOY 清单与 todo 剩余项推进，全部 code-only+node-tests（PF 另含 node-build）同 SHA 过必需 CI 直推 main；rhodes1 运行节点全程跟随 stable（node_id 不变、任务历史零丢失）。要点：
+
+- DEPLOY-03 完成：~/node 更新至 stable（含 GOL 首装），launch-config 启用外置导出缓存，export-cache 查看/清理/再生成闭环；显式 data-dir 与默认 `_jobs` 区分实证（qa/deploy-03-data-entries-20261026.md）。
+- RESULT-04 关闭（harness 9017b1a）：只读分享发现/下载、路径/符号链接边界、凭据不泄漏回归。
+- DIST-INPUTS-02（harness 128681d）：跨节点输入引用，共享目录凭据单次有界抓取+SHA 核验。
+- METHOD-04 关闭（refbench d7e61cc）：host-tests 必需 CI（19 项宿主已知答案/接口回归）。
+- FLEET-05 宿主部分（harness 22de4eb）：doctor 增 devices.lease 与分平台授权建议。
+- BASE-04 实报（qa/base04-live-trio-20261026.md）：构建出处 null 根因（HGAMEY_BUILD_*）定位并修复，实机三仓出处一致。
+- DIST-CACHE-OVERVIEW-01（harness a199b67）：聚合缓存视图 + regenerable-only 全量清理。
+- JOB-PAUSE-01 全栈（harness 613e120/b883de0/a3a48c1）：队列级暂停/恢复 API/CLI/UI；浏览器批次发现并修复 dash 路由 404 缺口；深色/390 截图补验。
+- FLEET-OVERLAY-01 及收尾（harness 5ef8b79/e0772a8/d6d7041/b17f351/3274f2d）：目录级原子部署（游标单步切换/冒烟门/回滚/保留）、activate 运行期准入（--jobs-root）、doctor deploy.overlay 检查、服务重启跟随游标修复；rhodes1 实机采用并双向回滚演练。
+- DIST-QUOTA-01/02（harness 4624480/725d1c7）：显式可审计配额 GC 与启动时配额逐出（审计报告落缓存根）。
+- 测试可用性：phonefarm ef06f3b（缺 adb 不杀测试进程）+ e6fde01（Linux 门控合成 helper 后端）——rhodes1 上 PF 全量 bin 套件 1017 项 130.4s 完整通过，Linux 部署宿主首次可完整运行。
+- 边界：真机/生产项（DEPLOY-04/05、设备业务实报、跨参与者协调的生产验证）仍开放；Mac 旧节点状态 unknown；lease 存储已在 rhodes1 显式配置（DEVLOCK_DIR=/data2/kamico/hgamey-node/devlock）。
