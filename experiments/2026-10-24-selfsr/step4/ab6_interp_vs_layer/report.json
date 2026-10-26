@@ -1,0 +1,134 @@
+{
+ "pkg": "com.miHoYo.Yuanshen",
+ "a": "layer:unlimit=1",
+ "b": "srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off",
+ "rounds": 6,
+ "valid_pairs": 6,
+ "dropped_arms": [],
+ "out_res": {
+  "A": [
+   [
+    2141,
+    969
+   ]
+  ],
+  "B": []
+ },
+ "metrics": {
+  "seen_fps": {
+   "a_mean": 59.985,
+   "b_mean": 118.21,
+   "diff_mean": 58.225,
+   "diff_pct": 97.07,
+   "ci95": [
+    57.38,
+    58.81
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "display_fps": {
+   "a_mean": 59.985,
+   "b_mean": 60.0017,
+   "diff_mean": 0.0167,
+   "diff_pct": 0.03,
+   "ci95": [
+    0.005,
+    0.0267
+   ],
+   "p": 0.09375,
+   "n_pairs": 6
+  },
+  "display_fps_sc": {
+   "status": "not_measured"
+  },
+  "sc_added_delay_p50_ms": {
+   "status": "not_measured"
+  },
+  "sc_interval_p95_ms": {
+   "status": "not_measured"
+  },
+  "game_fps": {
+   "a_mean": 59.7792,
+   "b_mean": 59.3443,
+   "diff_mean": -0.4348,
+   "diff_pct": -0.73,
+   "ci95": [
+    -0.5307,
+    -0.3488
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "game_frame_p95_ms": {
+   "a_mean": 19.1243,
+   "b_mean": 18.8738,
+   "diff_mean": -0.2505,
+   "diff_pct": -1.31,
+   "ci95": [
+    -0.6335,
+    0.1824
+   ],
+   "p": 0.28125,
+   "n_pairs": 6
+  },
+  "gpu_active_ms": {
+   "a_mean": 13.1905,
+   "b_mean": 13.5401,
+   "diff_mean": 0.3496,
+   "diff_pct": 2.65,
+   "ci95": [
+    0.1728,
+    0.5619
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_full": {
+   "a_mean": 94.324,
+   "b_mean": 344.0742,
+   "diff_mean": 249.7503,
+   "diff_pct": 264.78,
+   "ci95": [
+    177.2951,
+    322.5738
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "sharp_hud": {
+   "a_mean": 364.0001,
+   "b_mean": 916.3304,
+   "diff_mean": 552.3303,
+   "diff_pct": 151.74,
+   "ci95": [
+    451.5924,
+    667.7718
+   ],
+   "p": 0.03125,
+   "n_pairs": 6
+  },
+  "ssim_vs_native_ref": {
+   "status": "not_measured"
+  },
+  "missed_frames": {
+   "a_mean": 0,
+   "b_mean": 0.3333,
+   "diff_mean": 0.3333,
+   "diff_pct": null,
+   "ci95": [
+    0,
+    1
+   ],
+   "p": 1.0,
+   "n_pairs": 6
+  },
+  "display_latency_p50_ms": {
+   "status": "not_measured"
+  },
+  "displayed_per_s": {
+   "status": "not_measured"
+  }
+ },
+ "min_p_possible": 0.03125
+}
