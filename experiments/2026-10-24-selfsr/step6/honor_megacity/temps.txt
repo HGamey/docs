@@ -1,0 +1,6 @@
+1 native skin=34.986
+1 ip skin=34.986
+2 native skin=34.987
+2 ip skin=34.987
+3 native skin=34.999
+3 ip skin=34.999

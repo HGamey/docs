@@ -1,0 +1,12 @@
+1 native app_fps=59.9 sc_fps=- layer=none
+1 layer app_fps=45.1 sc_fps=- layer=True -
+1 sr app_fps=45.0 sc_fps=- layer=True -
+1 ip app_fps=30.6 sc_fps=35.7 layer=True -
+2 native app_fps=44.9 sc_fps=- layer=none
+2 layer app_fps=44.9 sc_fps=- layer=True -
+2 sr app_fps=39.4 sc_fps=- layer=True -
+2 ip app_fps=22.3 sc_fps=26.4 layer=True -
+3 native app_fps=32.2 sc_fps=- layer=none
+3 layer app_fps=32.2 sc_fps=- layer=True -
+3 sr app_fps=32.2 sc_fps=- layer=True -
+3 ip app_fps=22.3 sc_fps=26.1 layer=True -

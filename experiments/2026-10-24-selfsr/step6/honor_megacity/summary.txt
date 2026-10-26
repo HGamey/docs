@@ -1,0 +1,6 @@
+1 native game_fps=30.1 sc_fps=-
+1 ip game_fps=30.1 sc_fps=60.2
+2 native game_fps=30.1 sc_fps=-
+2 ip game_fps=30.1 sc_fps=60.2
+3 native game_fps=30.1 sc_fps=-
+3 ip game_fps=30.0 sc_fps=59.9
