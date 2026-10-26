@@ -85,7 +85,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [x] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。 最近尝试/成功、TTL、失败保留快照、设备null/空列表和身份重连已交付两隔离节点验证；见FLEET-DIRECTORY。
   - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
-- [ ] FLEET-05 宿主doctor与单次Android远控诊断已交付；剩余：将设备诊断汇入统一doctor，并补各平台授权/权限问题的可执行修复建议。
+- [ ] FLEET-05 宿主doctor与单次Android远控诊断已交付；剩余：将设备诊断汇入统一doctor，并补各平台授权/权限问题的可执行修复建议。 2026-10-26 harness 22de4eb：doctor 新增 devices.lease（缓存快照区分 clear/held/blocked/unknown 及对应建议）与分平台授权修复项（Android USB 调试授权/Harmony HDC/只读登记入口）；不执行程序不探测设备。真机侧诊断汇入与实测授权核验仍待设备工作流。
   - [x] REMOTE-DIAGNOSTICS-01 [单次Android诊断](REMOTE-DIAGNOSTICS.md)已随PF7aa39c5/harness33b7aa8发布main/stable，复用现owner和有界回执，Web/CLI同级。最小检查及必需CI通过，不推断root或场景资格。
   - [x] FLEET-DOCTOR-01 [宿主诊断合同](NODE-DOCTOR.md)：API/CLI/网页同等入口，缓存身份、工具、签名、磁盘与权限；不探测设备。f78554a已发布，158协议首轮一个清理错误修后定向过、五CI成功；实际HTTP/CLI及合成UI通过，实际后端浏览器接线因工具不可用未验，父项设备诊断仍开放。
 - [ ] FLEET-06 自检、受管更新/回滚、维护网页及运行期准入已交付；剩余：文件级overlay的原子部署方案、跨参与者更新协调与生产验证。
