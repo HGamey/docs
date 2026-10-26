@@ -609,3 +609,7 @@ harness `42b2605` 五项actual required CI成功后同SHA直推main并核远端�
 harness `f5a7ea4`已发布main：网页/API/CLI维护状态、原ID更新/回滚查回、跨标签页pending锁；修复CI揭露的updater父子intake锁竞态，并修复显式无设备宿主任务误占legacy-device。159协议首轮全过；后一资源改动160项首轮159过，旧restart fixture显式声明资源后定向过，负例全部保留。最终五CI全部成功。详见[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)、[JOB-HOST-RESOURCES](JOB-HOST-RESOURCES.md)。
 
 BASE-06已复核现有scoped身份/CAS和真实执行事实边界；METHOD-08负结果复用及DIST支持矩阵完成只读审计。未新造实验实体或把单APK外推其它格式。三个stable基线已核，用户选择每批验收后推进，用户维护部署脚本。新发现精确旧stable构建资产保留缺口列RELEASE-ASSETS-01。ENERGY-WINDOW实现提交正在verify；不把等待检查写成已发布。
+
+## 2026-10-26 ENERGY-WINDOW-01 与stable配套推进
+
+PF `d9c7ad0` / harness `b42f798` / GOL规则 `4bbc7c3`：必需CI成功后同SHA main，PF云端node-build40296587424成功后全部非强制推进stable并读回。4个宿主定向、6个DOM场景通过，修复旧ENV/PWR积分断层并增加完整组窗整机电池估计；游戏每帧能耗仍null。实际生产、浏览器布局、真机与目标/显示归属均未验。三个stable已设置独立CI/禁止强推删除规则；main原规则保留。

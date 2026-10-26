@@ -27,3 +27,7 @@ phonefarm从旧stable `537a62f`快进；另两仓补建，已逐一读回远端�
 当前node-build发布mutable build.json，SHA命名资产仅保留最近三次，git构建镜像仅保留八次。main继续前进后，旧stable可能无法从latest manifest取得匹配的摘要，最终资产也可能被清理。因此不能从mutable最新release猜stable产物，不能在摘要/版本不符时继续替换。本批正在修复按SHA发布manifest及当前stable保留规则，修复及云端实测完成前，此项保持待验。部署脚本应固定完整SHA、校验来源/平台/摘要，并遵守现有安全更新与维护屏障；不可通过直接覆盖正在运行的二进制跳过这些条件。
 
 不新增独立stable重复构建去争用同一个mutable release；验收使用main上已经成功的同SHA产物。既有定时或生产更新流程本次未操作。
+
+## 2026-10-26 完整提交组能量批
+
+PF `d9c7ad09c437c71b62fdb661a90e2f72664b0258`（node-build40296587424成功）、harness `b42f798307e78d5d1e00e237ac494df27f439c0f`、GOL `4bbc7c3a76e431fa93470702edc47295823d5648`的同SHA必需检查成功后已全部快进stable。规则实际放行并逐仓读回确认；完整验收范围见[ENERGY-WINDOW](ENERGY-WINDOW.md)。本批不修改生产服务。

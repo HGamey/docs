@@ -107,7 +107,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] DIST-INSTALL-01 [合同与验收](GAME-INSTALLATION.md)：PF baef293/harness fd1ef8f已发布；明确缺席单APK新装、真实aapt2元数据、-R禁止替换、owned session已知失败abandon、未知commit保屏障，Web/CLI共用。91协议、CLI/HTTP、实际PF/SDK+模拟ADB六场景、另actual HTTP→worker→PF链、DOM/1440与390浏览器及六项actual CI通过。缺工具不禁已有恢复。未部署/真机安装；已有升级、存档替换、应用存储初始化和场景仍未完成。
   - [x] DIST-INITIALIZE-01 [合同与验收](GAME-INITIALIZATION.md)：PF537a62f/harnesse20758b已检查通过同SHA直推main。限定Launcher一次尝试、目录已就绪不启动、未知启动/停止保屏障、目录未达标但已停转局部协助；共用Transport和Web/CLI。92协议、3Rust、实际PF六上下文100传输、既有三回归108传输、另Node/worker/PF25传输、DOM/390浏览器通过。仅源码/隔离宿主，未部署/真机/场景；四个QA未知上下文保留。
 - [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，不宣称单APK流程已覆盖。
-  - [x] DIST-FORMATS-01 已完成缓存/安装/恢复/实机证据支持矩阵；typed games只支持受限Android单APK，HAP/IPA等缓存字节不代表安装支持。源审计在qa/resume-local-20261026/distribution-formats/AUDIT.md。
+  - [x] DIST-FORMATS-01 已完成缓存/安装/恢复/实机证据支持矩阵；typed games只支持受限Android单APK，HAP/IPA等缓存字节不代表安装支持。完整范围见[GAME-FORMATS](GAME-FORMATS.md)，源审计在本机qa/resume-local-20261026/distribution-formats/AUDIT.md。
   - [ ] DIST-CTS-INSTALL-01 修复旧CTS自定义安装空/错误输出误报成功及只凭hash缓存跳过实际安装。
   - [ ] DIST-CLIENT-PLATFORM-01 games Web/CLI新请求准入与后端Android范围一致，旧请求查询/恢复保持可用。
 - [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。

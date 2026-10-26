@@ -16,6 +16,6 @@ ENERGY-WINDOW-01沿现有control sample原件增加三个指标：`gpu_submit_gr
 
 ## 验收
 
-phonefarm提交 `d9c7ad0`，harness提交 `b42f798`；同SHA必需CI通过后已发布main：PF code-only40295933822，harness code-only40295936090/node-tests40295936071全部成功；PF node-build40296587424等待完成，stable随后推进。四项针对性宿主测试首轮通过：分组裁边/相位、原parser golden、v2同序列积分/拒外推、实际control summarizer。后者合成窗106.25–108.75秒、4组，断言9.5J、3.8W、2375mJ/组；无筛选、错clock、loss或充电时新值为null。构建23.981秒、签名成功、测试0.157秒。既有测试清理保留，因此无单独留存run.json，不声称已有真实数据报告。
+phonefarm提交 `d9c7ad0`，harness提交 `b42f798`；同SHA必需CI通过后已发布main：PF code-only40295933822，harness code-only40295936090/node-tests40295936071全部成功；PF node-build40296587424成功；三仓已按本批配套SHA快进stable并读回核实。四项针对性宿主测试首轮通过：分组裁边/相位、原parser golden、v2同序列积分/拒外推、实际control summarizer。后者合成窗106.25–108.75秒、4组，断言9.5J、3.8W、2375mJ/组；无筛选、错clock、loss或充电时新值为null。构建23.981秒、签名成功、测试0.157秒。既有测试清理保留，因此无单独留存run.json，不声称已有真实数据报告。
 
 六项定向DOM fixture场景及语法检查通过，包含旧记录、不可用、零值、矛盾资格和不同筛选声明。没有真实浏览器布局、HTTP生产数据、设备采集、FPS/功耗收益或恢复验收。证据在本机 `qa/resume-local-20261026/energy-window/`。METRIC-OWNERSHIP-01和实际部署继续开放。
