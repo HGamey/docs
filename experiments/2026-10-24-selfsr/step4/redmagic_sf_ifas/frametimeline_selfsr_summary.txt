@@ -1,0 +1,2 @@
+selfsr_interp 子图层 (原神 uid 10518) frametimeline: {'Presented': 63, 'Dropped': 22} scheduled rendering rate: {'120': 85}
+display vsync period: 8.3 ms (120 Hz) in all 64 display frames

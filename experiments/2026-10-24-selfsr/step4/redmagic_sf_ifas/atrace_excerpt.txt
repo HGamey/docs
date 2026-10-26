@@ -1,0 +1,400 @@
+             app-2811    (   1894) [005] ..... 373374.545569: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [005] ..... 373374.545576: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545620: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545629: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545635: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545642: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545648: tracing_mark_write: B|1894|not current desiredPresentTime: 372931585129591 expectedPresentTime: 372931582451519
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545805: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545811: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [001] ..... 373374.545967: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [005] ..... 373374.562217: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [005] ..... 373374.562224: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562266: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562275: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562281: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562289: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562296: tracing_mark_write: B|1894|not current desiredPresentTime: 372931601265341 expectedPresentTime: 372931599090374
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562474: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [001] ..... 373374.562480: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [005] ..... 373374.578858: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [005] ..... 373374.578865: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.578907: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.578927: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.578932: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.578940: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.578947: tracing_mark_write: B|1894|not current desiredPresentTime: 372931617610088 expectedPresentTime: 372931615729229
+  surfaceflinger-1894    (   1894) [001] ..... 373374.579124: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [001] ..... 373374.579129: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [002] ..... 373374.595499: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [002] ..... 373374.595506: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595555: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595564: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595570: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595578: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595584: tracing_mark_write: B|1894|not current desiredPresentTime: 372931633676754 expectedPresentTime: 372931632367600
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595744: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595749: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [001] ..... 373374.595904: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [005] ..... 373374.612195: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [005] ..... 373374.612201: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612245: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612253: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612259: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612265: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612272: tracing_mark_write: B|1894|not current desiredPresentTime: 372931653047997 expectedPresentTime: 372931649005804
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612436: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612440: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.612609: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [005] ..... 373374.628763: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [005] ..... 373374.628769: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628808: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628818: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628824: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628831: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628838: tracing_mark_write: B|1894|not current desiredPresentTime: 372931669618997 expectedPresentTime: 372931665643699
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628985: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.628990: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [001] ..... 373374.645408: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [001] ..... 373374.645414: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645456: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645465: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645471: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645479: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645486: tracing_mark_write: B|1894|not current desiredPresentTime: 372931685685663 expectedPresentTime: 372931682281757
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645634: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.645639: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [004] ..... 373374.662071: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [004] ..... 373374.662080: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662136: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662147: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662153: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662162: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662169: tracing_mark_write: B|1894|not current desiredPresentTime: 372931701752329 expectedPresentTime: 372931698919701
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662336: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662341: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [005] ..... 373374.662517: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [001] ..... 373374.678684: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [001] ..... 373374.678693: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678754: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678764: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678770: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678779: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678786: tracing_mark_write: B|1894|not current desiredPresentTime: 372931717818995 expectedPresentTime: 372931715557570
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678946: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [002] ..... 373374.678952: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.679127: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [001] ..... 373374.695313: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [001] ..... 373374.695320: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695368: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695377: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695383: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695391: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695398: tracing_mark_write: B|1894|not current desiredPresentTime: 372931733885661 expectedPresentTime: 372931732195603
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695535: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.695540: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [001] ..... 373374.711959: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [001] ..... 373374.711966: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712013: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712024: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712031: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712040: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712048: tracing_mark_write: B|1894|not current desiredPresentTime: 372931751134872 expectedPresentTime: 372931748834241
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712190: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.712197: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.728602: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [000] ..... 373374.728609: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728670: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728682: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728691: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728702: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728710: tracing_mark_write: B|1894|not current desiredPresentTime: 372931767590664 expectedPresentTime: 372931765473385
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728862: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [002] ..... 373374.728869: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.729057: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.745264: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [000] ..... 373374.745275: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745347: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745362: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745373: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745386: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745398: tracing_mark_write: B|1894|not current desiredPresentTime: 372931786857164 expectedPresentTime: 372931782112933
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745674: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745684: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.745950: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [001] ..... 373374.761887: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.761936: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.761965: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.761972: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.761982: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.761990: tracing_mark_write: B|1894|not current desiredPresentTime: 372931803552433 expectedPresentTime: 372931798752374
+  surfaceflinger-1894    (   1894) [003] ..... 373374.762149: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.762156: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.778552: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778645: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778662: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778673: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778686: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778716: tracing_mark_write: B|1894|not current desiredPresentTime: 372931822882007 expectedPresentTime: 372931815392105
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778928: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.778939: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.795191: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795311: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795327: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795337: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795349: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795360: tracing_mark_write: B|1894|not current desiredPresentTime: 372931839778507 expectedPresentTime: 372931832031725
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795622: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795633: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [005] ..... 373374.795950: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.811851: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.811953: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.811973: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.811987: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.812005: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.812018: tracing_mark_write: B|1894|not current desiredPresentTime: 372931855845173 expectedPresentTime: 372931848671392
+  surfaceflinger-1894    (   1894) [002] ..... 373374.812340: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [002] ..... 373374.812352: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.812671: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.828472: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828562: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828579: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828591: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828606: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828619: tracing_mark_write: B|1894|not current desiredPresentTime: 372931871911839 expectedPresentTime: 372931865310836
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828844: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.828855: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.845117: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845189: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845204: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845215: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845231: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845248: tracing_mark_write: B|1894|not current desiredPresentTime: 372931887978505 expectedPresentTime: 372931881950443
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845516: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.845526: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.861765: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.861850: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.861865: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.861877: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.861891: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.861904: tracing_mark_write: B|1894|not current desiredPresentTime: 372931904045171 expectedPresentTime: 372931898590147
+  surfaceflinger-1894    (   1894) [002] ..... 373374.862111: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [002] ..... 373374.862121: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.862353: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.878401: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878506: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878523: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878534: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878549: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878562: tracing_mark_write: B|1894|not current desiredPresentTime: 372931920111837 expectedPresentTime: 372931915229586
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878836: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [002] ..... 373374.878847: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [002] ..... 373374.879106: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.895007: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895114: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895128: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895138: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895149: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895159: tracing_mark_write: B|1894|not current desiredPresentTime: 372931936178503 expectedPresentTime: 372931931868933
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895331: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.895340: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.911671: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.911763: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.911779: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.911790: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.911803: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.911816: tracing_mark_write: B|1894|not current desiredPresentTime: 372931952245169 expectedPresentTime: 372931948507978
+  surfaceflinger-1894    (   1894) [003] ..... 373374.912004: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.912015: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373374.928328: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928420: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928440: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928452: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928468: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928481: tracing_mark_write: B|1894|not current desiredPresentTime: 372931970356122 expectedPresentTime: 372931965146369
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928743: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373374.928754: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.929026: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.944966: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945055: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945071: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945083: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945097: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945109: tracing_mark_write: B|1894|not current desiredPresentTime: 372931986977320 expectedPresentTime: 372931981784522
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945328: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945339: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.945576: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373374.961587: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961671: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961708: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961719: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961734: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961746: tracing_mark_write: B|1894|not current desiredPresentTime: 372932003043986 expectedPresentTime: 372931998422593
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961969: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373374.961980: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [001] ..... 373374.978213: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978294: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978308: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978317: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978328: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978338: tracing_mark_write: B|1894|not current desiredPresentTime: 372932019110652 expectedPresentTime: 372932015060973
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978556: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [000] ..... 373374.978564: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [001] ..... 373374.994871: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373374.994997: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995093: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995112: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995134: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995150: tracing_mark_write: B|1894|not current desiredPresentTime: 372932035177318 expectedPresentTime: 372932031699540
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995395: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995409: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [001] ..... 373374.995682: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.011567: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011686: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011706: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011721: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011739: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011755: tracing_mark_write: B|1894|not current desiredPresentTime: 372932051243984 expectedPresentTime: 372932048338020
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011974: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [001] ..... 373375.011988: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [001] ..... 373375.012253: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.028119: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028239: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028253: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028262: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028273: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028283: tracing_mark_write: B|1894|not current desiredPresentTime: 372932067310650 expectedPresentTime: 372932064976776
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028454: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [001] ..... 373375.028462: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [005] ..... 373375.044740: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044785: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044811: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044817: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044825: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044832: tracing_mark_write: B|1894|not current desiredPresentTime: 372932083577740 expectedPresentTime: 372932081615550
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044981: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [001] ..... 373375.044986: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373375.061396: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061475: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061489: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061498: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061510: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061521: tracing_mark_write: B|1894|not current desiredPresentTime: 372932099644406 expectedPresentTime: 372932098254351
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061719: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061729: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [001] ..... 373375.061947: tracing_mark_write: B|1894|[lmt]notify:-1
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078289: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078312: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078324: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+             app-2811    (   1894) [001] ..... 373375.078338: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078340: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078356: tracing_mark_write: B|1894|not current desiredPresentTime: 372932118203622 expectedPresentTime: 372932114893283
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078585: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078595: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [005] ..... 373375.078862: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.094789: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.094860: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.094876: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.094916: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.094930: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.094941: tracing_mark_write: B|1894|not current desiredPresentTime: 372932135802841 expectedPresentTime: 372932131532222
+  surfaceflinger-1894    (   1894) [003] ..... 373375.095179: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.095189: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373375.111322: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111404: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111418: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111427: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111439: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111449: tracing_mark_write: B|1894|not current desiredPresentTime: 372932152361662 expectedPresentTime: 372932148171197
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111841: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.111851: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373375.128000: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128080: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128110: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128122: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128137: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128150: tracing_mark_write: B|1894|not current desiredPresentTime: 372932168428328 expectedPresentTime: 372932164810379
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128363: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128374: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.128610: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.144606: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144699: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144715: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144726: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144740: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144753: tracing_mark_write: B|1894|not current desiredPresentTime: 372932185998309 expectedPresentTime: 372932181449879
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144978: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373375.144989: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.145252: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.161241: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161379: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161397: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161409: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161423: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161435: tracing_mark_write: B|1894|not current desiredPresentTime: 372932202547810 expectedPresentTime: 372932198089392
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161645: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [005] ..... 373375.161655: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [001] ..... 373375.177912: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178205: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178223: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178235: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178251: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178265: tracing_mark_write: B|1894|not current desiredPresentTime: 372932218614476 expectedPresentTime: 372932214728861
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178504: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [000] ..... 373375.178515: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [001] ..... 373375.194524: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.194613: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.194628: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.194638: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.194651: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [000] ..... 373375.194662: tracing_mark_write: B|1894|not current desiredPresentTime: 372932234856070 expectedPresentTime: 372932231368297
+  surfaceflinger-1894    (   1894) [005] ..... 373375.195101: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [005] ..... 373375.195111: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [005] ..... 373375.195341: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.211232: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211341: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211363: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211377: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211395: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211412: tracing_mark_write: B|1894|not current desiredPresentTime: 372932251678986 expectedPresentTime: 372932248007303
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211821: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [005] ..... 373375.211835: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [005] ..... 373375.212128: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [002] ..... 373375.227832: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.227940: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.227955: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.227966: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.227981: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [005] ..... 373375.227994: tracing_mark_write: B|1894|not current desiredPresentTime: 372932269448674 expectedPresentTime: 372932264646245
+  surfaceflinger-1894    (   1894) [005] ..... 373375.228293: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [005] ..... 373375.228303: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373375.244424: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244483: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244495: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244502: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244511: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244519: tracing_mark_write: B|1894|not current desiredPresentTime: 372932285981843 expectedPresentTime: 372932281285002
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244696: tracing_mark_write: B|1894|[lmt]onLmtRecv -1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.244703: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+             app-2811    (   1894) [000] ..... 373375.261129: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261439: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261466: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261481: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261498: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261514: tracing_mark_write: B|1894|not current desiredPresentTime: 372932302048509 expectedPresentTime: 372932297923396
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261733: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373375.261746: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.262020: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.277716: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.277802: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.277817: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.277827: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.277841: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.277853: tracing_mark_write: B|1894|not current desiredPresentTime: 372932318651851 expectedPresentTime: 372932314561529
+  surfaceflinger-1894    (   1894) [003] ..... 373375.278082: tracing_mark_write: B|1894|[lmt]onLmtRecv 0
+  surfaceflinger-1894    (   1894) [003] ..... 373375.278092: tracing_mark_write: B|1894|[lmt]onIFASRecv 1
+  surfaceflinger-1894    (   1894) [003] ..... 373375.278477: tracing_mark_write: B|1894|[lmt]notify:-1
+             app-2811    (   1894) [000] ..... 373375.294360: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.294447: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.294463: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
+  surfaceflinger-1894    (   1894) [003] ..... 373375.294474: tracing_mark_write: B|1894|isVsyncValid uid: 10518 frameRate: 60.00 Hz
