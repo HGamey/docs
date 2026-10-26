@@ -637,3 +637,7 @@ PF6b19e37 / harness099da48已main/stable。远控显式选择登记设备，原b
 ## 2026-10-26 单设备观察与宿主容量
 
 PFfc704e8/harness309d842已main/stable，必需CI与云构建首轮通过。看屏显式绑定登记设备，Web/CLI共用token/pin与原stream；fleet呈现宿主声明槽位。仅直接相关小检查，未操作生产/手机。下一批为单次诊断与共享优化路线库。
+
+## 2026-10-26 远控诊断与优化路线库
+
+PF7aa39c5/harness33b7aa8已main/stable；必需CI与云构建首轮通过。diagnostics沿原owner，Web/CLI返回有限Android基础/应用事实。十条优化路线共用计划草稿，无新执行器。各项只做直接相关小检查；无生产/真机。下一METHOD-09与队列优先级。

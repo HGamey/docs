@@ -4,4 +4,4 @@ REMOTE-DIAGNOSTICS-01复用原Android远控owner和动作回执，新增diagnost
 
 Web复用包名框和原回执显示；CLI为`pf-remote action SERIAL diagnostics --session-id ID --request-id ID [--package PACKAGE]`，也支持原params。旧owner未声明能力则禁用新动作，原请求回执仍可查询。诊断保留原截图身份和原图龄，不重新授予点击资格。没有新增通道、身份数据库或自动修复。
 
-源码已完成，正在提交发布。最小检查：PF既有typed边界一项0.143秒、后端HTTP替身0.543秒、客户端合成链0.031秒。未做本地全套、真机或生产验收。完整跨平台doctor与能力epoch继续按FLEET-05/04推进。
+PF7aa39c5/harness33b7aa8已main/stable，云构建40313267125与必需CI40313270663通过。最小检查：PF既有typed边界一项0.143秒、后端HTTP替身0.543秒、客户端合成链0.031秒。未做本地全套、真机或生产验收。完整跨平台doctor与能力epoch继续按FLEET-05/04推进。

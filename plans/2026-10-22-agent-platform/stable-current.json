@@ -1,16 +1,16 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-screen-host-capacity",
-  "promoted_at": "2026-10-26T11:11:30.635914+00:00",
+  "batch": "20261026-diagnostics-recipes",
+  "promoted_at": "2026-10-26T11:20:53.305054+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
       "repository": "https://github.com/HGamey/phonefarm",
-      "sha": "fc704e8fab30acf5ba6b381eb782b309ed32811c"
+      "sha": "7aa39c5a5ebc401430c828b0c8d1d08d57e77e85"
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "309d842f2cc3dd77bbb2b9379900ae61aec6e6de"
+      "sha": "33b7aa8dbf79bb974d6e447e99d263d05c94f1e8"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",

@@ -7,7 +7,7 @@
 
 ## 当前实施位置
 
-最新 stable：PFfc704e8 / harness309d842 / GOL4bbc7c3（单设备观察与宿主容量展示）。当前实施：REMOTE-DIAGNOSTICS-01单次远控诊断与METHOD-RECIPES-01共享路线库。继续最小相关检查。
+最新 stable：PF7aa39c5 / harness33b7aa8 / GOL4bbc7c3（远控诊断与共享优化路线库）。当前实施：METHOD-09缺项后的实验建议与JOB-PRIORITY-01队列优先级。继续最小相关检查。
 
 用户于2026-10-26恢复本机并行开发，当前已交付宿主诊断/安全更新及网页、能量窗口统计、精确版本发布和CTS安装修复。最新stable组合见stable-current.json。游戏报告协助和游戏按设备并行已main/stable；手动远程日志入口及回执竞态修复已main/stable。实际生产与真机验收仍单列，不重复已有宿主验证。
 

@@ -81,7 +81,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
-  - [ ] REMOTE-DIAGNOSTICS-01 沿现有远控owner读取单次Android基础/应用诊断，复用有界输出与回执，Web/CLI同级；不靠额外raw连接或root推断其他能力。实施中。
+  - [x] REMOTE-DIAGNOSTICS-01 [单次Android诊断](REMOTE-DIAGNOSTICS.md)已随PF7aa39c5/harness33b7aa8发布main/stable，复用现owner和有界回执，Web/CLI同级。最小检查及必需CI通过，不推断root或场景资格。
   - [x] FLEET-DOCTOR-01 [宿主诊断合同](NODE-DOCTOR.md)：API/CLI/网页同等入口，缓存身份、工具、签名、磁盘与权限；不探测设备。f78554a已发布，158协议首轮一个清理错误修后定向过、五CI成功；实际HTTP/CLI及合成UI通过，实际后端浏览器接线因工具不可用未验，父项设备诊断仍开放。
 - [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。旧固定路径、旧PF组织地址及忽略签名失败已由FLEET-UPDATE-01修复；仍为文件级overlay，专用网页/生产/跨参与者更新另验，不能以exit0替代真实部署验收。
   - [x] FLEET-UPDATE-01 [宿主安全更新合同](NODE-UPDATE.md)：固定安装路径、先stage/sign、原子文件替换、持久维护屏障与明确回滚。f78554a已发布，真实隔离worker发布/阻断/回滚链、失败取证及五CI通过；父项生产/跨参与者更新仍开放。
@@ -224,8 +224,8 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] METHOD-03 合并重复结果解析与报告代码的数据合同；多个页面可保留不同视图，不重复解释指标。
 - [ ] METHOD-04 refbench已知答案与接口回归；原生LR/HR能力的host测试和真机资格分开。
   - [x] REFBENCH-OUTPUT-01 [宿主输出合同](REFBENCH-OUTPUT.md)：生产JSON动态转义、长路径不截断及compute NONE/schema对齐；6项定向首过，c04ec4b通过必需CI后同SHA main；只证明输出/文件接口，Vulkan与真机资格未验。
-- [ ] METHOD-05 黑盒/灰盒/白盒优化recipe库：分辨率、LOD、阴影、AA、合批/缓存、资源布局、CPU提交、NPU/GPU分工、帧节奏、系统旋钮。
-  - [ ] METHOD-RECIPES-01 复用共享实验模板提供可浏览、可填入草稿的路线库：明确前提、改动、收益范围与恢复，不增加自动执行器；Web/CLI同级。实施中。
+- [x] METHOD-05 [共享优化路线库](OPTIMIZATION-RECIPES.md)覆盖黑盒/灰盒/白盒十条路线的前提、改动、测量与恢复，Web/CLI直接生成现有计划草稿；具体游戏命令/能力需按任务补齐，不宣称通用自动执行。
+  - [x] METHOD-RECIPES-01 harness33b7aa8已main/stable，复用同一JSON与next_experiment；离线CLI/JS最小检查和必需CI通过，没有新runner、状态服务或真机资格。
 - [ ] METHOD-06 同状态数据集采集与清单：真实低清/合成低清、色域、相机/时间、运动/遮挡、训练/留出分组明确。
 - [ ] METHOD-07 功耗/能耗/显示与软件呈现来源能力账本；不能从固定schema字段推断设备支持。
 - [x] METHOD-08 [负结果与方向记忆](NEGATIVE-RESULT-MEMORY.md)：既有API/CLI/Web已支持 outcome组合过滤、no_gain/rejected理由、证据和不可变历史；2026-10-26只读复核已有实现与隔离证据，无重复API/测试。完成已知node/research范围，实际部署接续、跨节点研究复制/语义去重仍开放；重新开放的旧否决从history读取。
@@ -240,6 +240,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] FUTURE-05 节点安装/升级打包、跨OS发行、版本兼容矩阵、doctor一键修复可恢复问题。
 - [ ] FUTURE-06 按实际使用成本决定合仓、裁撤重复页面/旧入口；不先做全语言重写。
 - [ ] FUTURE-07 调度公平性、优先级、成本估算、队列可预期等待时间与资源利用率。
+  - [ ] JOB-PRIORITY-01 新任务显式优先级、同级FIFO且保留资源/lease准入；Web/CLI同级，不抢占已有执行。复杂公平性与预计等待另列。实施中。
 - [ ] FUTURE-08 数据集/模型工件注册、训练作业分发、实验复现环境与可选SBOM。
 - [ ] FUTURE-09 人类主观评价的重复一致性、多人偏好与置信度；避免少量评价被包装成普遍质量结论。
 - [ ] FUTURE-10 完整用户旅程演练：换一台工作站/换一个Agent，仅凭平台状态接续研究。
