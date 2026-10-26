@@ -621,3 +621,7 @@ PF1a730dd / harness0f785c1已通过必需CI和PF云构建后推进stable，GOL4b
 ## 2026-10-26 游戏报告协助入口
 
 harness0691a71已main/stable。游戏报告→原研究方向→协助草稿共用只读API，CLI直接输出既有request data；参考流程指导回复后的原目标新检查和显式依赖处理。本地仅一次HTTP/CLI小冒烟0.68秒与一次UI草稿冒烟，必需CI40302384025/40302383962通过。不重复本地全套或main全套CI。下一JOB-GAME-DEVICE-LANES-01接入已有设备范围以解除无关串行。
+
+## 2026-10-26 游戏准备按设备并行
+
+PF90196fb / harnessdbd62fe已main/stable。游戏四类准备任务可显式使用已有设备binding，不同手机不再被同游戏资源串行化；同机互斥、旧global和原恢复绑定保留。三条最小相关检查与必需CI通过，PF云构建40304712761、harness CI40304661294成功。未触生产/真机。下一小批复用remote owner增加手动logcat读取。

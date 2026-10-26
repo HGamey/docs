@@ -56,6 +56,7 @@
 - [x] REMOTE-OWNERSHIP-02 同批PF持久owner+guarded Transport、串行动作/持久屏障、固定ID与只读找回；release等待已started并取消未开始队列，unknown不重放。Web/API/pf-remote共用事实；启动退休保unknown不清lease。7个唯一Rust关键用例、103协议、实际正常/异常PF链与6项actual CI通过；首次两失败及两处QA恢复义务保留。限定close不声称游戏还原，见[合同与验收](REMOTE-OWNERSHIP-REPAIR.md)。
 - [ ] REMOTE-VIDEO-01 在逐帧观察稳定后恢复可监管的高帧率观看；编码器需本地/远端身份、有限停止和未知恢复，不能用新设备请求绕过测量租约。
 - [ ] REMOTE-ACTIONS-01 为shell、安装/卸载、push/pull/logcat、HDC分别补实际owner/有界输出/设备副作用与恢复合同；本批旧raw入口明确unsupported，保留功能需求，不用Android验收外推Harmony。
+  - [ ] REMOTE-LOGCAT-01 复用现有远程owner读取有限条Android logcat，Web/CLI同级，明确输出截断；不新开设备会话、不清日志。等待上一批CI期间实施。
 - [x] TEST-01 为harness-ops建立协议/故障回归：重复请求、同label、断网、重启、取消、缺原件、坏缓存、路径边界、auth。 指定故障已进入协议及隔离宿主回归，见JOB-QUEUE/EXECUTION、LEASE-IDENTITY、GAME-DISTRIBUTION、JOB-INPUTS/RESULT-INDEX；真实断电/设备和长集成时序另列。
 - [x] TEST-02 直接push流程的CI覆盖当前节点协议回归（Python3.11/3.14）及页面脚本检查；构建成功与真机验收分开记录，新模块继续补必要覆盖。
 - [x] TEST-03 [显式宿主回归入口与取证](TEST-HOST-LANES.md)已发布3494bf2：fast/driver/单integration入口、fixture admission、失败原件与单调耗时；3-thread定向3/3及runner冒烟过，必需CI同SHA main。旧失败具体底层延迟因原件曾删除无法追溯，不宣称根因已完全证明；生产阈值和默认覆盖不变。
@@ -122,7 +123,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [x] JOB-01 持久作业状态机，区分准备/运行/采集/恢复/终态与等待原因；外部Agent提交立即拿ID。 持久准备/执行/采集/保存终态与独立恢复事实、即时job/request ID已交付，见JOB-QUEUE/EXECUTION/DURABILITY；恢复子链/暂停/预算仍由各具体项继续。
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
-  - [ ] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。本批开始实施。
+  - [x] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。PF90196fb/harnessdbd62fe已main/stable，局部回归与必需CI通过，真机部署另验。
   - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
   - 58fc0dc/2b4747e已完成原SQL原子领取、lease屏障及独立阻断容量；DEVICE-LANES已交付显式灰层按设备并行，JOB-HOST-CAPACITY已交付CPU/GPU/IO声明slots。剩余是旧PF/GOL、remote/observation及部署入口仍global的具体scope迁移；任意输出硬配额归JOB-09、真机并发归JOB-10，不重复开发已有队列或容量账本。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。

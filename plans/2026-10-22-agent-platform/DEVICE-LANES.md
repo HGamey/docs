@@ -50,3 +50,13 @@ Node完整协议仅跑一轮：130项中129通过，旧全域恢复等待原因�
 本地证据索引为qa/job-device-lanes-validation.json、job-device-lanes-ui-validation.json；首失败、原始状态和旧QA未知恢复义务都保留。本批debug构建未传显式构建revision/dirty声明，runtime-info如实为null；验证二进制不冒充最终发布SHA。release程序未替换。Linux既有shared与recovery链另由required CI验收，不等同逐设备真机或生产升级。
 
 发布证据：qa/job-device-lanes-checks.json 与 job-device-lanes-publish.json。Linux protocol 3.11/3.14、cgroup-kernel、实际PF shared/recovery及两仓code-only全部成功；现有GOL3160e41无需改动，读取配置PF给出的queue目录并继续使用全域执行。
+
+## 游戏准备接入（已发布）
+
+JOB-GAME-DEVICE-LANES-01把已有设备范围用于typed games的deploy/install/initialize/scene及其恢复。Web显式选择登记设备范围；CLI传入devices-resolve取得的binding。Node声明games.device-lanes-v1的前提是配置的PF声明device_binding_v1。
+
+新绑定任务仅占用对应设备资源，不再用游戏版本资源把不同手机串行化。同设备别名仍使用同一登记device_id；旧无绑定任务保持global，仍与设备任务互斥。恢复沿原session绑定，不从新的登记或页面选择改设备。历史游戏列表从原冻结manifest识别新任务所属游戏，既有任务不改写。
+
+沿用原队列、lease与恢复机制，不新建调度器；真实多手机并行仍待部署阶段验证。
+
+PF `90196fb` / harness `dbd62fe`已main/stable；必需CI与云构建通过。仅做直接相关的PF scope回归（1.33秒）、HTTP/worker并行回归（2.83秒）及Web/CLI小冒烟，没有本地全套或真机测试。
