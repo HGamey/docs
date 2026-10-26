@@ -124,7 +124,8 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] 通用持久协助/方向依赖/异步反馈及其他方向继续已有实现；复用RESEARCH/HUMAN，不重复开发。
   - [x] DIST-ASSISTED-RECHECK-01 harness0691a71已main：从游戏报告起草协助，Web/CLI同批；技能指引外部Agent回复后按原目标新check、保存证据并显式处理依赖，复用现有对象。真实登录/场景资格仍按具体游戏判断，见[GAME-INITIALIZATION](GAME-INITIALIZATION.md)。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
-  - [x] DIST-CACHE-OVERVIEW-01 聚合导出缓存视图与全量清理：harness a199b67经code-only+node-tests CI后同SHA直推main。GET /export-caches 枚举缓存命名空间任务条目（上限512，不依赖队列）；POST /export-caches/clear 需管理员写授权+显式 regenerable-only 确认体，逐任务沿 export_lock 清理，busy/存储错误保留为逐任务行；pf-node export-caches [--clear] 同合同。只动 CACHE_FILE 匹配文件，原件/游戏资源/非任务命名空间不动（测试断言）。累计GC/配额/引用计数仍开放。
+  - [x] DIST-CACHE-OVERVIEW-01 聚合导出缓存视图与全量清理：harness a199b67经code-only+node-tests CI后同SHA直推main。GET /export-caches 枚举缓存命名空间任务条目（上限512，不依赖队列）；POST /export-caches/clear 需管理员写授权+显式 regenerable-only 确认体，逐任务沿 export_lock 清理，busy/存储错误保留为逐任务行；pf-node export-caches [--clear] 同合同。只动 CACHE_FILE 匹配文件，原件/游戏资源/非任务命名空间不动（测试断言）。
+  - [x] DIST-QUOTA-01 显式可审计配额 GC：harness 4624480经code-only+node-tests CI后同SHA直推main。POST /export-caches/enforce-quota（管理员写授权 + phonefarm/export-cache-quota@1 确认体）按字节配额 mtime 最旧先逐出，报告 before/after/evicted/kept/errors；busy/存储错误逐条目记录；原件不动；仅外部缓存根可用。pf-node export-caches --enforce-quota BYTES 同合同（errors 非空退出 2）。逐任务测试含 RO 拒绝/足额保留/极小配额全逐出/原件不变。自动 GC 触发与累计引用计数仍开放。
   - [x] JOB-EXPORT-CACHE-GC-01 harness be8279c已main/stable：当前job可再生成目录导出缓存的查看和显式清理，复用原导出锁，Web/CLI同级；不清理原件、游戏资源或历史源。最小API/实际CLI与Web检查、必需CI通过；未清理生产数据。见[合同](JOB-EXPORT-CACHE-CLEANUP.md)。
   - [x] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)已发布harnesseb0c0a7：统一URL/import/upload写前size、实际FD空间和短写计数，Web/CLI同级；144协议/真实HTTPCLI507接续/390/五CI全部首过。累计GC仍独立。
 
