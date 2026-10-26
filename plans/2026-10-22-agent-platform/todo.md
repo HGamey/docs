@@ -183,7 +183,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
   - [x] RESULT-FEDERATION-01 [RESULT-FEDERATION](RESULT-FEDERATION.md)：harness42b2605五项actual CI成功后同SHA直推main，114协议/两源HTTPCLI/DOM390通过；复用持久节点目录和显式目标，按选定节点检索原结果索引，逐项保留离线/错误与各自分页；Web/CLI深链源详情，凭据不进入链接、不集中复制原件。
 - [x] RESULT-03 按[RESULT-COMPARE](RESULT-COMPARE.md)交付同节点显式候选矩阵e9d0e12；已有检索/分页/下钻加2–4列精确metric_index对照，允许同报告多condition、原值差/部分失败/描述缺口、Web导出与深链、CLI单GET。1定向/122协议/390真实HTTP及五项actual CI通过；不宣称科学资格或完整跨节点候选比较。跨节点详情/混合比较已由RESULT-CROSS-COMPARE-01交付，真实实验资格仍独立。
 - [x] RESULT-CROSS-COMPARE-01 按[RESULT-CROSS-COMPARE](RESULT-CROSS-COMPARE.md)已发布harness16cdfd3：共享有界远端详情、各列显式基线、部分失败及Web/CLI导出接续。146协议/实际HTTPCLI/单390/五CI全首过；旧本地schema及研究revision不变，原件回源，不自动拼同一实验。
-- [ ] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。
+- [x] RESULT-04 只读分享可发现、查看和下载注册原件；路径/符号链接边界与凭据/日志脱敏回归。 2026-10-26 harness 9017b1a 补端到端回归关闭：只读 token 可列表发现→详情→下载注册原件（200/206 Range）；越界相对路径登记校验 400 invalid_result，job/out 符号链接来源 unavailable/unverified、下载 404/409 不泄漏外部字节；管理/只读 token 不出现在结果响应。分享/发现/下载链沿用 RESULT-01/02/FEDERATION 已交付能力，范围为源码+隔离宿主；跨节点生产分享仍沿 RESULT-FEDERATION 已验范围。
 - [x] RESULT-05 已交付明确Doom LR4-026与GOL optimize_report@1适配：原文本不可变，GOL全archive与父层失败保留，不重算统计或重跑实验；其他schema明确不支持。
 - [x] RESULT-06 统一指标schema及Web/CLI已交付：模块/窗口/单位/电源轨/分母/ROI/全帧/方法与null分开；未核来源不授予科学有效性，producer全链身份仍留RESULT-07。
 - [ ] METRIC-OWNERSHIP-01 将当前场景trace的渲染线程/ctx与目标进程身份绑定，独立验证帧语义；不能从Unity默认comm或字符串筛选推断游戏FPS。03B4C2A先支持显式render_comm并保留未验证标记，没有筛选时帧指标为null、raw trace仍保留。复用已有render ownership能力，不为每个游戏另造过滤器。
