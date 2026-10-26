@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-diagnostics-recipes",
-  "promoted_at": "2026-10-26T11:20:53.305054+00:00",
+  "batch": "20261026-priority-next-steps",
+  "promoted_at": "2026-10-26T11:30:52.092142+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,7 +10,7 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "33b7aa8dbf79bb974d6e447e99d263d05c94f1e8"
+      "sha": "8d37abf17c648e17f047ecd560fd50803c1acf60"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",

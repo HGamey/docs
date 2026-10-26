@@ -641,3 +641,7 @@ PFfc704e8/harness309d842已main/stable，必需CI与云构建首轮通过。看�
 ## 2026-10-26 远控诊断与优化路线库
 
 PF7aa39c5/harness33b7aa8已main/stable；必需CI与云构建首轮通过。diagnostics沿原owner，Web/CLI返回有限Android基础/应用事实。十条优化路线共用计划草稿，无新执行器。各项只做直接相关小检查；无生产/真机。下一METHOD-09与队列优先级。
+
+## 2026-10-26 实验建议与作业优先级
+
+harness8d37abf已main/stable，必需CI40314940740首过。缺项建议不改旧判据/未知/方向；优先级不抢占，保原资源与global fence，同级FIFO。Web/CLI同级，旧请求不回填；generic恢复请求保原调度元数据。仅最小检查，无生产/设备。下一单job可再生成导出缓存查看/清理。

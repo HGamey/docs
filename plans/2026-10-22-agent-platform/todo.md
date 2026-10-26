@@ -4,16 +4,20 @@
 
 更新：2026-10-26。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
-## 当前阶段：本机开发恢复，保留部署验收义务
+## 先看这里：已交付、正在做、后续工作
 
-2026-10-25已完成阶段收尾，2026-10-26用户恢复本机开发并明确subagent并行。rhodes1已完成的宿主安装/接续记录已接回；外部入口、设备和真实多节点仍未验。按以下未完成项推进，旧父项和历史失败原样保留。
+当前发布组合：**phonefarm 7aa39c5 / harness-ops 8d37abf / game_opt_loop 4bbc7c3**，均已推进stable；运行节点部署状态另列。精确SHA见[stable-current](stable-current.json)。
 
-- [x] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。 2026-10-25 rhodes1 盘点：六仓 HEAD 与冻结提交一致；全新环境（无 ~/node、无 hgamey 配置、无运行参与者、无本地锁域）；Mac 旧节点 SSH 不可达状态 unknown，4 项 QA unknown 与 Doom 还原义务原样保留；记录见当前任务 qa/deploy-01-inventory-20261025.md。
-- [x] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。 2026-10-25 rhodes1 全新安装 ~/node（harness d5dfa3f + PF 4eacd57 Linux release 构建）；node_id 8b6df6c7…；host job `phonefarm last --device-access none` succeeded exit0；admin-restart 后同 node/jobs 根、历史保留、instance 更新；Web 认证门 303/401。回环绑定（node_service 硬编码 127.0.0.1），对外暴露待定；GOL 未装、真机未触。记录见当前任务 qa/deploy-02-node-install-20261025.md。
-- [ ] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。 新节点无旧 history 来源；默认 `_jobs` 入口已由 /node 核实，显式 data-dir 与外置导出缓存未启用未验。
-- [ ] DEPLOY-04 单台真实手机唯一owner的有限观察/动作/停止/恢复/review闭环，保存实际证据。
-- [ ] DEPLOY-05 单机通过后两节点/设备、alias冲突/独立并行、断线接续、异步人类依赖和结果分享。
-- [ ] DEPLOY-06 回写版本/条件/失败/未验范围，只关闭实际通过范围；优先修部署阻断，再恢复新增功能。
+| 状态 | 内容 |
+|---|---|
+| 已交付 | 节点/设备目录、游戏分发、持久队列、结果索引、研究状态、异步人类反馈；网页与CLI/API共用平台状态。 |
+| 最近已交付 | 游戏/远控/看屏按设备并行，宿主计算槽位展示，远程日志与诊断，十条优化路线模板，缺项后的实验建议，作业优先级。 |
+| 正在收尾 | JOB-EXPORT-CACHE-GC-01：单任务导出缓存查看/清理，代码与最小检查完成，待提交及必需CI。 |
+| 后续开发 | 多点/持续输入与视频、更完整的平台能力与重连、剩余producer恢复、资源保留/配额、数据集与可选GOL方法工具。 |
+| 单列待验 | 生产部署、真机和真实多节点流程；见文末“部署验收”。这些未验项目不把已交付功能改回未完成。 |
+| 暂存 | Doom新增性能/功耗实验、后台选址与原始数据迁移。 |
+
+阅读约定：下方**未勾选父项可能已有已完成子项**，父项描述列出剩余范围；具体交付以子项和提交记录为准。条目包含父子关系，不把勾选比例当作总体工程完成度。各批简要变化见[BATCHES](BATCHES.md)。
 
 ## 已完成的准备
 
@@ -80,10 +84,10 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [x] FLEET-03 状态缓存、TTL、新鲜度与连接恢复；设备缺席不误报整个节点离线。 最近尝试/成功、TTL、失败保留快照、设备null/空列表和身份重连已交付两隔离节点验证；见FLEET-DIRECTORY。
   - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
-- [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
+- [ ] FLEET-05 宿主doctor与单次Android远控诊断已交付；剩余：将设备诊断汇入统一doctor，并补各平台授权/权限问题的可执行修复建议。
   - [x] REMOTE-DIAGNOSTICS-01 [单次Android诊断](REMOTE-DIAGNOSTICS.md)已随PF7aa39c5/harness33b7aa8发布main/stable，复用现owner和有界回执，Web/CLI同级。最小检查及必需CI通过，不推断root或场景资格。
   - [x] FLEET-DOCTOR-01 [宿主诊断合同](NODE-DOCTOR.md)：API/CLI/网页同等入口，缓存身份、工具、签名、磁盘与权限；不探测设备。f78554a已发布，158协议首轮一个清理错误修后定向过、五CI成功；实际HTTP/CLI及合成UI通过，实际后端浏览器接线因工具不可用未验，父项设备诊断仍开放。
-- [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。旧固定路径、旧PF组织地址及忽略签名失败已由FLEET-UPDATE-01修复；仍为文件级overlay，专用网页/生产/跨参与者更新另验，不能以exit0替代真实部署验收。
+- [ ] FLEET-06 自检、受管更新/回滚、维护网页及运行期准入已交付；剩余：文件级overlay的原子部署方案、跨参与者更新协调与生产验证。
   - [x] FLEET-UPDATE-01 [宿主安全更新合同](NODE-UPDATE.md)：固定安装路径、先stage/sign、原子文件替换、持久维护屏障与明确回滚。f78554a已发布，真实隔离worker发布/阻断/回滚链、失败取证及五CI通过；父项生产/跨参与者更新仍开放。
   - [x] FLEET-UPDATE-WEB-01 按[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)补专用网页更新/回滚与只读维护状态入口，复用原作业/请求ID和掌舵权限，不自动重启；实现随f5a7ea4发布，五CI与实际隔离HTTP/CLI通过；浏览器布局、生产/手机仍未验。
 - [x] FLEET-07 宿主程序/CPU/GPU/IO声明槽位与手机快照分开，Web/CLI补齐容量展示；harness309d842已main/stable。声明槽位不证明物理GPU或手机在线。
@@ -117,13 +121,14 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] 通用持久协助/方向依赖/异步反馈及其他方向继续已有实现；复用RESEARCH/HUMAN，不重复开发。
   - [x] DIST-ASSISTED-RECHECK-01 harness0691a71已main：从游戏报告起草协助，Web/CLI同批；技能指引外部Agent回复后按原目标新check、保存证据并显式处理依赖，复用现有对象。真实登录/场景资格仍按具体游戏判断，见[GAME-INITIALIZATION](GAME-INITIALIZATION.md)。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
+  - [ ] JOB-EXPORT-CACHE-GC-01 当前job可再生成目录导出缓存的查看和显式清理，复用原导出锁，Web/CLI同级；不清理原件、游戏资源或历史源。实施中。
   - [x] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)已发布harnesseb0c0a7：统一URL/import/upload写前size、实际FD空间和短写计数，Web/CLI同级；144协议/真实HTTPCLI507接续/390/五CI全部首过。累计GC仍独立。
 
 ## P1：任务队列与执行
 
 - [x] JOB-01 持久作业状态机，区分准备/运行/采集/恢复/终态与等待原因；外部Agent提交立即拿ID。 持久准备/执行/采集/保存终态与独立恢复事实、即时job/request ID已交付，见JOB-QUEUE/EXECUTION/DURABILITY；恢复子链/暂停/预算仍由各具体项继续。
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
-- [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
+- [ ] JOB-03 原子队列、lease联动、宿主slots及灰层/游戏/远控/看屏设备范围已交付；剩余：未迁移的旧global生产入口及真实多设备并行验证。
   - [x] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。PF90196fb/harnessdbd62fe已main/stable，局部回归与必需CI通过，真机部署另验。
   - [x] JOB-REMOTE-DEVICE-LANES-01 远控 acquire/owner/原会话恢复接入已有 device_binding，独立手机可同时操作；Web/CLI同级，复用原lease。PF6b19e37/harness099da48已main/stable；3条最小检查和必需CI通过。
   - [x] JOB-SCREEN-DEVICE-LANES-01 PFfc704e8/harness309d842已main/stable：显式绑定用于screen/live，Web与token CLI共用原采样/缓存；B可与A独立任务并行。最小检查和必需CI通过，无生产/真机。
@@ -229,7 +234,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] METHOD-06 同状态数据集采集与清单：真实低清/合成低清、色域、相机/时间、运动/遮挡、训练/留出分组明确。
 - [ ] METHOD-07 功耗/能耗/显示与软件呈现来源能力账本；不能从固定schema字段推断设备支持。
 - [x] METHOD-08 [负结果与方向记忆](NEGATIVE-RESULT-MEMORY.md)：既有API/CLI/Web已支持 outcome组合过滤、no_gain/rejected理由、证据和不可变历史；2026-10-26只读复核已有实现与隔离证据，无重复API/测试。完成已知node/research范围，实际部署接续、跨节点研究复制/语义去重仍开放；重新开放的旧否决从history读取。
-- [ ] METHOD-09 无法比较/测不出时自动建议可做的下一种实验，而不是把未知填0或要求人立即出现。
+- [x] METHOD-09 [缺项后的下一实验建议](ASSESSMENT-NEXT-STEPS.md)已随8d37abf发布main/stable；按已有原因提供选项，不替Agent排序/解阻，不改未知数值。
 
 ## P3：想到但尚未做的方向
 
@@ -240,10 +245,21 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] FUTURE-05 节点安装/升级打包、跨OS发行、版本兼容矩阵、doctor一键修复可恢复问题。
 - [ ] FUTURE-06 按实际使用成本决定合仓、裁撤重复页面/旧入口；不先做全语言重写。
 - [ ] FUTURE-07 调度公平性、优先级、成本估算、队列可预期等待时间与资源利用率。
-  - [ ] JOB-PRIORITY-01 新任务显式优先级、同级FIFO且保留资源/lease准入；Web/CLI同级，不抢占已有执行。复杂公平性与预计等待另列。实施中。
+  - [x] JOB-PRIORITY-01 新任务显式优先级、同级FIFO且保留资源/lease准入；Web/CLI同级，不抢占已有执行。复杂公平性与预计等待另列。harness8d37abf已main/stable，最小检查和必需CI40314940740通过。
 - [ ] FUTURE-08 数据集/模型工件注册、训练作业分发、实验复现环境与可选SBOM。
 - [ ] FUTURE-09 人类主观评价的重复一致性、多人偏好与置信度；避免少量评价被包装成普遍质量结论。
 - [ ] FUTURE-10 完整用户旅程演练：换一台工作站/换一个Agent，仅凭平台状态接续研究。
+
+## 部署验收（独立于已交付的开发功能）
+
+2026-10-25已完成阶段收尾，2026-10-26用户恢复本机开发并明确subagent并行。rhodes1已完成的宿主安装/接续记录已接回；外部入口、设备和真实多节点仍未验。以下仅追踪部署验证；开发功能的交付状态见前文各条，历史失败保留。
+
+- [x] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。 2026-10-25 rhodes1 盘点：六仓 HEAD 与冻结提交一致；全新环境（无 ~/node、无 hgamey 配置、无运行参与者、无本地锁域）；Mac 旧节点 SSH 不可达状态 unknown，4 项 QA unknown 与 Doom 还原义务原样保留；记录见当前任务 qa/deploy-01-inventory-20261025.md。
+- [x] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。 2026-10-25 rhodes1 全新安装 ~/node（harness d5dfa3f + PF 4eacd57 Linux release 构建）；node_id 8b6df6c7…；host job `phonefarm last --device-access none` succeeded exit0；admin-restart 后同 node/jobs 根、历史保留、instance 更新；Web 认证门 303/401。回环绑定（node_service 硬编码 127.0.0.1），对外暴露待定；GOL 未装、真机未触。记录见当前任务 qa/deploy-02-node-install-20261025.md。
+- [ ] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。 新节点无旧 history 来源；默认 `_jobs` 入口已由 /node 核实，显式 data-dir 与外置导出缓存未启用未验。
+- [ ] DEPLOY-04 单台真实手机唯一owner的有限观察/动作/停止/恢复/review闭环，保存实际证据。
+- [ ] DEPLOY-05 单机通过后两节点/设备、alias冲突/独立并行、断线接续、异步人类依赖和结果分享。
+- [ ] DEPLOY-06 回写版本/条件/失败/未验范围，只关闭实际通过范围；优先修部署阻断，再恢复新增功能。
 
 ## 明确暂存
 
@@ -256,7 +272,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 
 - [x] LEASE-STORAGE-01 按 LEASE-STORAGE 统一 Rust、devlock、node/fleet、GOL 路径，显式 init 与旧域退休屏障；网页和 CLI 同状态。PF588b1c1、harness336eaaf、GOL29514d8已检查通过直推main；仅宿主验证，未部署。
 - [x] LEASE-OBSERVE-01 按 OBSERVATION-OWNERSHIP.md 完成fleet/只读preflight/每帧screen同域强lease与有界worker；网页保留成功时间和暂缓原因。2026-10-23宿主/API/网页验收通过，PF da3d2f5、harness f5e101a、GOL d2d1840实际检查通过直推main。未部署/未真机，完整JOB-EXEC-03仍未完成。
-- [ ] LEASE-STORAGE-02 后续：统一 hwcond 恢复状态目录，取消失败时临时回退；清点 raw adb/旧 carrier 脚本是否经过同一 ownership，普通旧 owner 超时接管与完整恢复义务分别处理。
+- [ ] LEASE-STORAGE-02 hwcond路径、bench/capture和已支持gray入口恢复已分批交付；剩余：raw adb/旧carrier脚本的ownership收口、旧owner超时接管和未覆盖producer恢复。
   - [x] LEASE-IDENTITY-01 按[LEASE-IDENTITY](LEASE-IDENTITY.md)完成PF/devlock/GOL实例与宿主进程身份、nested显式引用和Web事实显示；8dce700/30a0921/cc47f0e必需检查成功后直推main。5PF单测、3脚本、GOL Guard和18宿主命令/4身份拒绝通过；无真实设备或部署。旧/损坏记录不自动删除，完整JOB-EXEC-03保持未完成。
   - [x] LEASE-STORAGE-02A 按 [HWCOND-RECOVERY](HWCOND-RECOVERY.md) 统一持久路径、拒绝覆盖遗留快照、明确损坏/读取/恢复错误；修复bench恢复失败仍继续。28hwcond/3storage单测、6实际CLI/fake ADB通过；e06e1ff实际code-only成功并直推main。仅宿主验证，未部署；producer全局恢复收据另批处理。
   - [x] PRODUCER-RECOVERY-01 按 [BENCH-RECOVERY](BENCH-RECOVERY.md) 完成bench实际hold、本地命令门控、远端负载收尾、独立恢复证据及同context续接；2f5f11d检查通过后直推main。43相关单测、3 shell宿主fixture、9实际CLI/fakeADB通过，仅宿主验证。硬件写入未知和未完成部署保留屏障，不能自动complete；不是整个job或真机恢复验收。

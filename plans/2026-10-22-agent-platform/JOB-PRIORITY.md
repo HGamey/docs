@@ -4,4 +4,4 @@ JOB-PRIORITY-01为新任务增加可选priority整数-10..10，值越大越先�
 
 只对本轮可调度候选排序，同级按提交次序。高优先级缺资源时，其他可行任务仍可运行。该机制不抢占、不自动估算完成时间，也不保证低优先级不会长期等待；复杂公平性仍归FUTURE-07。
 
-API公布jobs.priority-v1，Web提交表和CLI `pf-node --priority 5 --detach PROGRAM ...`发送相同字段。旧未决请求不自动回填新字段；队列与详情展示声明值和默认语义。当前实现中，只做直接相关排序/客户端小检查和一批必需CI。
+API公布jobs.priority-v1，Web提交表和CLI `pf-node --priority 5 --detach PROGRAM ...`发送相同字段。旧未决请求不自动回填新字段；队列与详情展示声明值和默认语义。harness8d37abf已main/stable，必需CI40314940740通过。本地只做一个排序/幂等检查、恢复字段兼容小调用，以及CLI/Web小冒烟，没有全套或设备操作。generic /jobs恢复请求可显式声明priority；专用恢复API仍沿原空body流程。
