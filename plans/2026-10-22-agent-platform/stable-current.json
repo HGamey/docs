@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-export-auto-gc",
-  "promoted_at": "2026-10-26T17:25:00+00:00",
+  "batch": "20261026-cursor-follow",
+  "promoted_at": "2026-10-26T18:32:00+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,7 +10,7 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "725d1c791a564b94243e05d32a3b7f72425220d1"
+      "sha": "3274f2d783d74c66e2d90bd88478c1a14f9d0e46"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",
