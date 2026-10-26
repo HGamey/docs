@@ -89,3 +89,11 @@ Node协议103项40.173秒通过；PF共7个唯一关键测试通过（包含新�
 CLI已受理后响应正文断线仍保原ID/unknown且仅一次POST；无首帧断开订阅在一次有限等待后退出，之后解除忙态零新增采集，定向实际HTTP验证通过。DOM与脚本syntax通过；CUA工具两次超时原件保留。随后使用已有Playwright1.60+匹配headless Chromium1223，独立390px context实测控制流程通过：acquire/screenshot/tap/release各一次写，原ID接续、未知不重放、closing不冒充closed、状态错误禁操作，7状态无横向溢出，pageerror为0。5张截图和HTTP收据留qa；browser/context关闭、fixture56538退出、56717端口关闭。live seq/年龄/隐藏仍由DOM覆盖，不冒充实际OS隐藏测量。
 
 证据索引：本机qa/remote-ownership-validation.json、remote-ownership-ui-validation.json、remote-ownership-publish.json。当前仅Android有限动作和逐帧观看；高帧率视频、复杂动作/HDC另列todo。
+
+## 手动读取近期 Android 日志
+
+REMOTE-LOGCAT-01沿现有owner增加logcat动作，Web远控页和pf-remote均可显式读取一次快照。默认200行，支持1–2000行及可选PID；命令固定为logcat -d，20秒预算。结果保留原回执的stdout，并用stdout_truncated说明8192字符展示是否被截断，原transport证据沿既有路径保存。
+
+CLI：`pf-remote action SERIAL logcat --session-id SESSION --request-id REQUEST --lines 200`，可加`--pid PID`，节点和凭据仍使用原全局参数。结果不明时查询原请求。读取不创建额外owner、不清日志、不持续采集，也不改变截图原有效期。新owner保存自己的动作列表，旧owner继续按其原能力工作。
+
+实现PF ceaa0cd；harness bc92b16增加logcat，fa3159e修复CI揭露的既有只读权限归还竞态。只读session-status在共享目录归还node私有身份的期间使用正常Unix访问，不应用过期的写权限策略；动作发布仍使用原共享策略，无自动重试。仅运行直接相关的动作、HTTP映射、客户端和竞态小检查，未操作真机。PF云构建40306147545及harness必需CI40307636941均通过，PFceaa0cd/harnessfa3159e已main/stable。首CI失败及窄修证据保留在remote-logcat QA。

@@ -1,16 +1,16 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-game-device-lanes",
-  "promoted_at": "2026-10-26T10:12:11.303966+00:00",
+  "batch": "20261026-remote-logcat",
+  "promoted_at": "2026-10-26T10:35:14.793372+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
       "repository": "https://github.com/HGamey/phonefarm",
-      "sha": "90196fb965eaf0e9649324d90c2b55ba0cb90eca"
+      "sha": "ceaa0cda60e34ee8f583835a39135733931d709b"
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "dbd62fec5c2ec5f7026d2fb72794cc0b4b86f02c"
+      "sha": "fa3159e4d3d866c5d711bfa332750e5a141701ec"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",
