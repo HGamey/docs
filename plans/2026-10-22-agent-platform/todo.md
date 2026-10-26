@@ -1,10 +1,12 @@
 # 开发待办
 
-更新：2026-10-25。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
+2026-10-26：用户恢复本机开发及subagent并行；此前暂停指示已撤销。DEPLOY各项保留实际验收边界，以下未完成项继续推进。
 
-## 当前阶段：收口后先部署验证
+更新：2026-10-26。**勾选仅表示条目注明的范围已完成，不能外推整个平台已可用。** P0是第一批必要基础/已知缺陷；P1是第一条完整流程；P2/P3是后续增强或研究候选。网页与CLI/API对同一条目共同验收。
 
-2026-10-25用户要求阶段收尾，并明确“暂停自动推进，部署验证后再继续（不标完成）”。本批代码收口/工作区交接完成后不继续开新功能。现状、固定源码与真实未验范围见[阶段总结](STAGE-20261025.md)。旧父项和历史失败记录保留，不为收尾清空勾选。
+## 当前阶段：本机开发恢复，保留部署验收义务
+
+2026-10-25已完成阶段收尾，2026-10-26用户恢复本机开发并明确subagent并行。rhodes1已完成的宿主安装/接续记录已接回；外部入口、设备和真实多节点仍未验。按以下未完成项推进，旧父项和历史失败原样保留。
 
 - [x] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。 2026-10-25 rhodes1 盘点：六仓 HEAD 与冻结提交一致；全新环境（无 ~/node、无 hgamey 配置、无运行参与者、无本地锁域）；Mac 旧节点 SSH 不可达状态 unknown，4 项 QA unknown 与 Doom 还原义务原样保留；记录见当前任务 qa/deploy-01-inventory-20261025.md。
 - [x] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。 2026-10-25 rhodes1 全新安装 ~/node（harness d5dfa3f + PF 4eacd57 Linux release 构建）；node_id 8b6df6c7…；host job `phonefarm last --device-access none` succeeded exit0；admin-restart 后同 node/jobs 根、历史保留、instance 更新；Web 认证门 303/401。回环绑定（node_service 硬编码 127.0.0.1），对外暴露待定；GOL 未装、真机未触。记录见当前任务 qa/deploy-02-node-install-20261025.md。
@@ -56,7 +58,7 @@
 - [ ] REMOTE-ACTIONS-01 为shell、安装/卸载、push/pull/logcat、HDC分别补实际owner/有界输出/设备副作用与恢复合同；本批旧raw入口明确unsupported，保留功能需求，不用Android验收外推Harmony。
 - [x] TEST-01 为harness-ops建立协议/故障回归：重复请求、同label、断网、重启、取消、缺原件、坏缓存、路径边界、auth。 指定故障已进入协议及隔离宿主回归，见JOB-QUEUE/EXECUTION、LEASE-IDENTITY、GAME-DISTRIBUTION、JOB-INPUTS/RESULT-INDEX；真实断电/设备和长集成时序另列。
 - [x] TEST-02 直接push流程的CI覆盖当前节点协议回归（Python3.11/3.14）及页面脚本检查；构建成功与真机验收分开记录，新模块继续补必要覆盖。
-- [ ] TEST-03 将长集成中的真实等待与快速回归分开；调查并行 confirmation_driver 的 deadline/heartbeat 偶发失败，不靠反复全套重跑掩盖。
+- [x] TEST-03 [显式宿主回归入口与取证](TEST-HOST-LANES.md)已发布3494bf2：fast/driver/单integration入口、fixture admission、失败原件与单调耗时；3-thread定向3/3及runner冒烟过，必需CI同SHA main。旧失败具体底层延迟因原件曾删除无法追溯，不宣称根因已完全证明；生产阈值和默认覆盖不变。
 - [x] MERGE-01 修复旧 PR 带入的 gray eval 循环资格阻断；未知 control 可采证但不能形成结论（`8dba439`）。
 - [x] MERGE-02 同步普通/动态灰层构建输入与 GOL 消费端，补 npuprobe.cpp；NDK实编、旧工件与跨仓合同验证通过，已发布 phonefarm `6cd1ac5`、GOL `1a8601e`。
 - [x] MERGE-03 按 [GRAY-MODE-ADMISSION](GRAY-MODE-ADMISSION.md) 完成已知copyprobe/upop CLI/公共mount/旧shell入口准入，155506f检查通过直推main。默认unsupported、自定义SO capability_unverified；构建/离线分析保留，未开放注入。自定义工件未来执行能力合同另定。
@@ -78,7 +80,10 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] FLEET-DIRECTORY-01 harness 1cbc7b1（功能ff18e96）已直推main：共享目录登记/更新/停用、旧配置显式导入、只写凭据/身份绑定、离线保留、明确设备采样；固定PF profile环境已同步。76本地协议与两节点隔离HTTP、DOM和390px浏览器通过，最终5项actual CI全部success。首次Py3.11旧restart测试竞态保留，修为等待已保存running，定向1项通过。完整设备实例身份/跨节点执行和生产验收仍分开。
 - [ ] FLEET-04 能力按设备实例/epoch记录，区分代码支持、离线验收、实机验收及条件；Android root/nonroot、Harmony、iOS分别呈现。
 - [ ] FLEET-05 一条doctor路径检查连接、工具、签名、版本、磁盘、设备授权和权限，输出可执行修复项；不反复全量onboarding。
-- [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。阶段核查确认updater仍固定~/node/旧PF组织地址，部分签名失败未阻断，多仓非整体事务；首次部署必须显式核固定源码/实际产物，不以更新exit0替代验收。
+  - [x] FLEET-DOCTOR-01 [宿主诊断合同](NODE-DOCTOR.md)：API/CLI/网页同等入口，缓存身份、工具、签名、磁盘与权限；不探测设备。f78554a已发布，158协议首轮一个清理错误修后定向过、五CI成功；实际HTTP/CLI及合成UI通过，实际后端浏览器接线因工具不可用未验，父项设备诊断仍开放。
+- [ ] FLEET-06 节点端自检与安全更新、原子替换、回滚版本；有实验运行时更新语义明确。旧固定路径、旧PF组织地址及忽略签名失败已由FLEET-UPDATE-01修复；仍为文件级overlay，专用网页/生产/跨参与者更新另验，不能以exit0替代真实部署验收。
+  - [x] FLEET-UPDATE-01 [宿主安全更新合同](NODE-UPDATE.md)：固定安装路径、先stage/sign、原子文件替换、持久维护屏障与明确回滚。f78554a已发布，真实隔离worker发布/阻断/回滚链、失败取证及五CI通过；父项生产/跨参与者更新仍开放。
+  - [ ] FLEET-UPDATE-WEB-01 按[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)补专用网页更新/回滚与只读维护状态入口，复用原作业/请求ID和掌舵权限，不自动重启；本批实施，不能据已有CLI/API标专用网页完成。
 - [ ] FLEET-07 CPU编译/分析与手机实验资源分开，能力标签不混成设备存在证明。
 
 ## P1：游戏与任务分发
@@ -150,7 +155,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
     - [x] JOB-CONTAINMENT-02B3 源码/隔离Linux范围完成并发布harness c61dae9：固定入口按job ID异步核查失联域/交还输出、持久身份复用门禁，Web/CLI同合同。真实失联→普通核查→force回收→旧输出拒读通过，22PID全退；跨boot仅判定模型，物理重启/生产部署/设备恢复仍不在本项完成范围。
     - [x] JOB-SESSION-RECOVERY-02 按[SESSION-RECOVERY-CHAIN](SESSION-RECOVERY-CHAIN.md)接续灰层恢复：恢复作业自身失败并保留资源时，typed入口与网页可沿明确恢复子链继续接续原session；不能要求先清除未完成的设备屏障，也不能让新请求作为同级任务永远排在失败恢复任务后。保留每次attempt，复用已有recovery_for祖先借用规则，不重写失败历史。已发布f692972，4定向/119协议、Linux真实PF与390替身原ID接续通过；五项actual CI同SHA main，生产/真机/公共contained仍单列。
 
-JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较及灰层业务兼容已发布，当前回收BASE-01已确认用户补丁；真实设备阶段另列。当前先按DEPLOY清单进行阶段验证。
+JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分别保留旧global入口迁移、未覆盖身份、真实重启/其他producer、安全暂停、研究预算/硬配额及两执行节点验收。失败恢复子链、截图绑定和实际程序身份已发布，不再作为下一批重复实现。跨节点结果比较及灰层业务兼容已发布，当前回收BASE-01已确认用户补丁；真实设备阶段另列。DEPLOY清单的未验项保留，按用户2026-10-26指示同时恢复独立开发。
 
 ## P1：结果发现、共享与研究状态
 
@@ -206,6 +211,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 - [ ] METHOD-02 GOL候选生成/编译/统计/确认/Pareto/模型工件暴露为可选工具，内置goal成为普通客户端。
 - [ ] METHOD-03 合并重复结果解析与报告代码的数据合同；多个页面可保留不同视图，不重复解释指标。
 - [ ] METHOD-04 refbench已知答案与接口回归；原生LR/HR能力的host测试和真机资格分开。
+  - [x] REFBENCH-OUTPUT-01 [宿主输出合同](REFBENCH-OUTPUT.md)：生产JSON动态转义、长路径不截断及compute NONE/schema对齐；6项定向首过，c04ec4b通过必需CI后同SHA main；只证明输出/文件接口，Vulkan与真机资格未验。
 - [ ] METHOD-05 黑盒/灰盒/白盒优化recipe库：分辨率、LOD、阴影、AA、合批/缓存、资源布局、CPU提交、NPU/GPU分工、帧节奏、系统旋钮。
 - [ ] METHOD-06 同状态数据集采集与清单：真实低清/合成低清、色域、相机/时间、运动/遮挡、训练/留出分组明确。
 - [ ] METHOD-07 功耗/能耗/显示与软件呈现来源能力账本；不能从固定schema字段推断设备支持。
