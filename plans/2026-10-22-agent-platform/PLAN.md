@@ -7,7 +7,7 @@
 
 ## 当前实施位置
 
-最新 stable：PFceaa0cd / harnessfa3159e / GOL4bbc7c3（远程日志与回执竞态修复）。当前实施：JOB-REMOTE-DEVICE-LANES-01与METHOD-01，继续最小相关检查。
+最新 stable：PF6b19e37 / harness099da48 / GOL4bbc7c3（远控按设备并行与实验计划模板）。当前实施：FLEET-07宿主容量展示与JOB-SCREEN-DEVICE-LANES-01；DIST-03已复用既有Doom recipe，继续最小相关检查。
 
 用户于2026-10-26恢复本机并行开发，当前已交付宿主诊断/安全更新及网页、能量窗口统计、精确版本发布和CTS安装修复。最新stable组合见stable-current.json。游戏报告协助和游戏按设备并行已main/stable；手动远程日志入口及回执竞态修复已main/stable。实际生产与真机验收仍单列，不重复已有宿主验证。
 

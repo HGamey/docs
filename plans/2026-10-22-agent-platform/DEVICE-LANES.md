@@ -61,10 +61,18 @@ JOB-GAME-DEVICE-LANES-01把已有设备范围用于typed games的deploy/install/
 
 PF `90196fb` / harness `dbd62fe`已main/stable；必需CI与云构建通过。仅做直接相关的PF scope回归（1.33秒）、HTTP/worker并行回归（2.83秒）及Web/CLI小冒烟，没有本地全套或真机测试。
 
-## 远控接入（实施中）
+## 远控接入（已发布）
 
 JOB-REMOTE-DEVICE-LANES-01：远控 acquire 显式选择已登记设备范围，复用同一 device_binding 与 PF lease。PF owner 新增可选 --device-binding JSON，Node 接收相同字段，CLI 读取 devices-resolve 文件，网页提供同等选择；省略字段保持旧 global 请求。PF capabilities 声明 device_binding_v1 后才允许新绑定。
 
 launch、持久 owner 与 Node acquisition 保存原绑定；同 request_id 仍优先找回原请求，不能用同 ID 更换设备。独立设备可同时远控，同 device_id 的别名互斥，global 与全部设备互斥。列表显示实际设备范围。恢复只沿原绑定，不重新解析当前登记或接受覆盖。原启动未知、人工核验与恢复义务保持现有语义。
 
 只迁移远控 owner；无绑定旧入口和观察订阅的范围不借本条宣称完成。验证限定一个 PF scope 关键行为、一个后端链和一个客户端小检查；必要 CI 一次，不另做本地全套或真机矩阵。
+
+PF6b19e37 / harness099da48已main/stable，必需CI40308894705与云构建40308807660通过。本地只做PF原scope测试扩展0.162秒、HTTP绑定/查询链0.856秒及客户端合成冒烟0.315秒。CLI新增devices-resolve，operator可从现远控入口取得绑定；无真机或生产操作。
+
+## 单设备观察接入（实施中）
+
+JOB-SCREEN-DEVICE-LANES-01把显式binding用于screen capture和live订阅，使用已有DeviceBinding及短时观察lease。新能力device_binding_v1明确公布；旧无字段请求与全量fleet观察仍global。工作者核原设备与原lease，失败沿原未知/恢复处理，不能由观看创建绕过测量的第二owner。
+
+Node复用scope门禁和原stream/cache生命周期；缓存身份包含冻结binding，不自动改alias或重新绑定。Web/CLI同级，用户明确选择。无人观看仍停止新采集；图像时间/seq与状态时间分开，A被测量时不采A，独立B可以继续。仅做一个关键PF行为、一个backend链和一个client检查；其余复用已有租约/生命周期验证。

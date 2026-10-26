@@ -15,3 +15,9 @@ FLEET-HOST-RESOURCES-01 修复提交入口的实际阻断：CLI与网页选择 `
 一条聚合真实隔离HTTP与pf-node CLI回归在修复前复现错误默认；修复后通过：11次HTTP提交、3次CLI调用只保留8个job，旧行不变、冲突不重准备，新宿主任务可越过保留的设备资源且仍受CPU2容量约束。设备blocked及host已释放是测试设置的前提，未运行真实worker或手机，不宣称完成设备恢复/跨节点调度。
 
 Web/CLI复用同一服务默认，客户端无需新字段。最终提交 `f5a7ea4` 已发布main。160项本地协议首轮159通过；唯一旧restart fixture依赖none隐式设备串行，改为显式声明同一资源后，原超时/取消/重启断言定向通过。原失败保留，未反复全量重跑。最终code-only 40293859867和node-tests 40293859441五项CI全部成功。FLEET-04的能力epoch、JOB-03未覆盖的设备scope、JOB-10与DEPLOY实机验收继续开放。
+
+## 宿主能力与手机事实（2026-10-26）
+
+FLEET-07复用现有结构：/node.execution分别给出宿主bins/programs/host_capacity，devices.status=not_probed；/queue给当前容量占用；doctor为host-only，设备qualification=unknown。目录connection.ready只是协议可达；手机数量来自/fleet快照，未采样为null，并保留stale。既有device_access=none资源默认修复继续有效。
+
+当前补齐fleet网页和CLI详情的CPU/GPU/IO slots展示，直接读取已有host_capacity。这些是管理员声明的并发槽位，不能充当GPU硬件、手机在线或实机测量能力的证明。不新增后端schema或资格服务。

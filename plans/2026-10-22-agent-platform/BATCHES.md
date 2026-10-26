@@ -629,3 +629,7 @@ PF90196fb / harnessdbd62fe已main/stable。游戏四类准备任务可显式使�
 ## 2026-10-26 手动远程日志与停止回执修复
 
 PFceaa0cd / harnessfa3159e已main/stable。远控Web/CLI沿原owner读取单次logcat快照，支持行数与PID，保留截图资格并显示输出截断。首CI暴露现有只读查询与contained输出归还的权限竞态，已窄修且保留失败；必需CI40307636941与PF云构建40306147545通过。没有本地全套或真机操作。下一批为远控设备范围与探索/确认计划模板。
+
+## 2026-10-26 远控按设备并行与实验计划模板
+
+PF6b19e37 / harness099da48已main/stable。远控显式选择登记设备，原binding随会话/接管ID/恢复保留，不同设备不互相阻断；Web/CLI同级。探索/确认模板共用一个JSON，填入已有next_experiment草稿，支持按版本复用资格和限定模块收益。三个scope小检查、模板语法/CLI/原schema检查及必需CI全部通过；无本地全套、生产或真机操作。下一步收口宿主计算容量展示与Doom既有分发recipe。

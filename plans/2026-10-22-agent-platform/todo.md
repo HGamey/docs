@@ -96,7 +96,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 
 - [x] DIST-01 定义游戏bundle manifest：应用/引擎/包/资源/存档/场景/配置/来源/哈希/设备条件/空间/回执。 manifest与受限install/deploy/initialize/scene recipe、空间及分项回执已定义并发布；存档覆盖/其他格式执行器仍归DIST-06/07。
 - [x] DIST-02 网页游戏目录与准备状态，CLI inspect/prepare；分别显示已下载、已安装、资源就绪、等待登录、场景就绪。 目录、准备与各typed回执已Web/CLI同级显示；login/scene无证据保持unknown，实际场景资格与协助接线仍留DIST-03/08。
-- [ ] DIST-03 复用已有Doom样本建立第一个recipe；不重新下载现有大资源，不在规划阶段触碰手机。
+- [x] DIST-03 [Doom首个recipe](DOOM-RECIPE.md)复用已有initialize/scene两份约10KiB清单，当前格式与历史身份一致；不另造manifest或重下资源。PK4/脚本/真实demo来源仍需供给，真机准备/场景资格独立，未触手机。
   - [x] DIST-SCENE-01 [合同与验收](GAME-SCENE.md)：PF cbc53e4/harness58efc7f六项actual CI成功后同SHA直推main。旧部署证据+两小种子、新运行根、有界诊断与共用恢复，Web/CLI/API齐备。104协议、3Rust、actualPF三链117传输/242PID、旧initialize两回归43传输/49PID及DOM/390浏览器首次通过；未知QA屏障保留。仅源码/隔离宿主范围，未部署/真机，真实demo原件与冷启消费仍未核。
 - [x] DIST-04 节点直取、流式接收、断点续传、接收端hash、原子缓存与空间预检的源码流程已由12eda9a/02da7cd交付；下列DIST-LARGEFILE-01多GiB资源使用验收仍独立开放，不代表该负载已验。
   - [x] DIST-UPLOAD-01 [合同与验收](GAME-UPLOAD.md)：harness 02da7cd同一缓存分块接收/原ID接续/单资产worker校验，Web/CLI同批；本地88项协议及定向修复、DOM/实际浏览器替身通过，五项actual CI成功后同SHA直推main。未部署、未操作手机。
@@ -124,7 +124,8 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
 - [x] JOB-02 请求幂等和重复提交去重（58fc0dc）；同ID同内容返回原job，不同内容409，CLI/API/网页可找回；刷新后重填保留原ID。旧客户端未提供ID时不具备跨请求去重。
 - [ ] JOB-03 资源队列原子领取、设备lease联动、主机资源预算；多设备并发不被无关全局锁意外串行。
   - [x] JOB-GAME-DEVICE-LANES-01 将typed games准备/安装/初始化/场景及原恢复接入已有显式device_binding，独立设备可并行；保留无绑定旧请求与历史查询，不新建调度器。PF90196fb/harnessdbd62fe已main/stable，局部回归与必需CI通过，真机部署另验。
-  - [ ] JOB-REMOTE-DEVICE-LANES-01 远控 acquire/owner/原会话恢复接入已有 device_binding，独立手机可同时操作；Web/CLI同级，复用原lease，不新建调度器。正在实施。
+  - [x] JOB-REMOTE-DEVICE-LANES-01 远控 acquire/owner/原会话恢复接入已有 device_binding，独立手机可同时操作；Web/CLI同级，复用原lease。PF6b19e37/harness099da48已main/stable；3条最小检查和必需CI通过。
+  - [ ] JOB-SCREEN-DEVICE-LANES-01 显式设备范围用于screen capture与单设备live观察，观看B不被A任务阻断；保留旧global和全量fleet范围，复用原worker/订阅/恢复机制。实施中。
   - [x] JOB-HOST-CAPACITY-01 按[JOB-HOST-CAPACITY](JOB-HOST-CAPACITY.md)已发布harness1dd4e68：CPU/GPU/IO声明slots、原SQL原子领取/持久归还，未知host占位、设备恢复独立；Web/CLI同级。136本地协议首两旧夹具错后2定向过，实际组/fsync链、390网页和五CI通过。
   - 58fc0dc/2b4747e已完成原SQL原子领取、lease屏障及独立阻断容量；DEVICE-LANES已交付显式灰层按设备并行，JOB-HOST-CAPACITY已交付CPU/GPU/IO声明slots。剩余是旧PF/GOL、remote/observation及部署入口仍global的具体scope迁移；任意输出硬配额归JOB-09、真机并发归JOB-10，不重复开发已有队列或容量账本。
 - [ ] JOB-04 冻结作业输入、程序/版本/设备身份；日志与事件可增量续读，状态更新有revision。
@@ -217,7 +218,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 
 ## P2：优化方法与测量易用性
 
-- [ ] METHOD-01 [探索/确认计划模板](EXPERIMENT-PLAN-TEMPLATES.md)已实现Web/CLI共用草稿、已有资格按版本复用，不每轮重做全套；随远控设备范围批次发布中。
+- [x] METHOD-01 [探索/确认计划模板](EXPERIMENT-PLAN-TEMPLATES.md)已实现Web/CLI共用草稿、已有资格按版本复用，不每轮重做全套；harness099da48已main/stable；复用原next_experiment/CAS，无新状态服务。
 - [ ] METHOD-02 GOL候选生成/编译/统计/确认/Pareto/模型工件暴露为可选工具，内置goal成为普通客户端。
 - [ ] METHOD-03 合并重复结果解析与报告代码的数据合同；多个页面可保留不同视图，不重复解释指标。
 - [ ] METHOD-04 refbench已知答案与接口回归；原生LR/HR能力的host测试和真机资格分开。
