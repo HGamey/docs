@@ -257,7 +257,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 
 - [x] DEPLOY-01 冻结源码/产物来源，盘点目标节点身份、安装/数据/锁根、活跃参与者与真实恢复义务。 2026-10-25 rhodes1 盘点：六仓 HEAD 与冻结提交一致；全新环境（无 ~/node、无 hgamey 配置、无运行参与者、无本地锁域）；Mac 旧节点 SSH 不可达状态 unknown，4 项 QA unknown 与 Doom 还原义务原样保留；记录见当前任务 qa/deploy-01-inventory-20261025.md。
 - [x] DEPLOY-02 固定版本单节点宿主安装，核实际程序身份；小host job、原ID/日志/原件及HTTP重启同根接续，网页与CLI同验。 2026-10-25 rhodes1 全新安装 ~/node（harness d5dfa3f + PF 4eacd57 Linux release 构建）；node_id 8b6df6c7…；host job `phonefarm last --device-access none` succeeded exit0；admin-restart 后同 node/jobs 根、历史保留、instance 更新；Web 认证门 303/401。回环绑定（node_service 硬编码 127.0.0.1），对外暴露待定；GOL 未装、真机未触。记录见当前任务 qa/deploy-02-node-install-20261025.md。
-- [ ] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。 新节点无旧 history 来源；默认 `_jobs` 入口已由 /node 核实，显式 data-dir 与外置导出缓存未启用未验。
+- [x] DEPLOY-03 按需验证历史只读来源/外置导出缓存与只读原件入口；不搬唯一原件或隐式切数据根。 2026-10-26 rhodes1 ~/node 更新至 20261026 stable 后完成：外置导出缓存经 launch-config 启用，node_id 不变；export-cache 查看/清理/再生成闭环通过，清理后原件回源下载不受影响；显式 data-dir 临时实例实证 `D/jobs` 与不同 node_id，主 `_jobs` 无扰动；新节点无旧 history 可验对象（保持未启用）。记录见当前任务 qa/deploy-03-data-entries-20261026.md。
 - [ ] DEPLOY-04 单台真实手机唯一owner的有限观察/动作/停止/恢复/review闭环，保存实际证据。
 - [ ] DEPLOY-05 单机通过后两节点/设备、alias冲突/独立并行、断线接续、异步人类依赖和结果分享。
 - [ ] DEPLOY-06 回写版本/条件/失败/未验范围，只关闭实际通过范围；优先修部署阻断，再恢复新增功能。
