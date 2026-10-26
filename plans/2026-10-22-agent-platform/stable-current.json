@@ -1,16 +1,16 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261026-energy-window",
-  "promoted_at": "2026-10-26T09:08:48.644725+00:00",
+  "batch": "20261026-exact-artifacts-cts",
+  "promoted_at": "2026-10-26T09:41:04.507483+00:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
       "repository": "https://github.com/HGamey/phonefarm",
-      "sha": "d9c7ad09c437c71b62fdb661a90e2f72664b0258"
+      "sha": "1a730dd86a402d63c1b866422b7df8f9a2425556"
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "b42f798307e78d5d1e00e237ac494df27f439c0f"
+      "sha": "0f785c1f14b0de29cf6197d6d30193d2813696e6"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",

@@ -108,9 +108,12 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] DIST-INITIALIZE-01 [合同与验收](GAME-INITIALIZATION.md)：PF537a62f/harnesse20758b已检查通过同SHA直推main。限定Launcher一次尝试、目录已就绪不启动、未知启动/停止保屏障、目录未达标但已停转局部协助；共用Transport和Web/CLI。92协议、3Rust、实际PF六上下文100传输、既有三回归108传输、另Node/worker/PF25传输、DOM/390浏览器通过。仅源码/隔离宿主，未部署/真机/场景；四个QA未知上下文保留。
 - [ ] DIST-07 split APK/XAPK/HAP等格式按实际需求追加适配，不宣称单APK流程已覆盖。
   - [x] DIST-FORMATS-01 已完成缓存/安装/恢复/实机证据支持矩阵；typed games只支持受限Android单APK，HAP/IPA等缓存字节不代表安装支持。完整范围见[GAME-FORMATS](GAME-FORMATS.md)，源审计在本机qa/resume-local-20261026/distribution-formats/AUDIT.md。
-  - [ ] DIST-CTS-INSTALL-01 修复旧CTS自定义安装空/错误输出误报成功及只凭hash缓存跳过实际安装。
-  - [ ] DIST-CLIENT-PLATFORM-01 games Web/CLI新请求准入与后端Android范围一致，旧请求查询/恢复保持可用。
+  - [x] DIST-CTS-INSTALL-01 修复旧CTS自定义安装空/错误输出误报成功及只凭hash缓存跳过实际安装；acb396e实现、26CTS回归通过，最终1a730dd已main/stable，必需CI与云构建成功，见[CTS-INSTALLATION](CTS-INSTALLATION.md)。
+  - [ ] DIST-CTS-RECOVERY-01 旧replace安装统一transport结果、持久pending屏障与显式核验/恢复；当前未知只落据/返回Err，不能当远端已停止或typed恢复完成。
+  - [x] DIST-CLIENT-PLATFORM-01 harness e35dd33已main、五CI成功；Web/CLI新请求准入与后端Android范围一致，旧请求查询/恢复保持可用，4DOM/8实际CLI隔离HTTP场景通过，未验生产/真机。
 - [ ] DIST-08 登录/授权/资源采集的人工任务挂到方向；完成后重新验证游戏状态，其他方向继续。
+  - [x] 通用持久协助/方向依赖/异步反馈及其他方向继续已有实现；复用RESEARCH/HUMAN，不重复开发。
+  - [ ] DIST-ASSISTED-RECHECK-01 从游戏报告起草协助，Web/CLI同批；外部Agent收到回复后按原目标新check、保存证据并显式处理依赖。正在实施，复用现有对象。
 - [ ] DIST-09 缓存去重、配额、引用计数/保留策略、可审查清理；默认不删除唯一原始证据。
   - [x] DIST-ASSET-WRITE-01 按[资源受控写入边界](ASSET-WRITE-LIMITS.md)已发布harnesseb0c0a7：统一URL/import/upload写前size、实际FD空间和短写计数，Web/CLI同级；144协议/真实HTTPCLI507接续/390/五CI全部首过。累计GC仍独立。
 
@@ -284,6 +287,7 @@ JOB-01/05/08已按上述源码与隔离范围交付；JOB-03/04/06/07/09/10分�
 ## 2026-10-26 stable发布
 
 - [x] RELEASE-STABLE-01 建立三个运行仓库stable基线，保留phonefarm旧分支历史，按[STABLE-RELEASE](STABLE-RELEASE.md)每批验收后推进。
-- [ ] RELEASE-ASSETS-01 修复mutable manifest和最近N次清理造成旧stable产物不可取的问题；按SHA解析及stable保留、实际CI产物验证。
+- [x] RELEASE-ASSETS-01 PF1a730dd/harness0f785c1已main/stable：完整SHA清单/资产、停止固定N清理、更新器精确读取。实际云构建成功；已读清单并核GitHub资产元数据和mirror清单，不代表生产已部署。
 - [ ] RELEASE-DEPLOY-01 用户部署脚本接入后，读取真实运行版本并按DEPLOY逐层验证；当前未操作生产节点。
 - [ ] RELEASE-RETENTION-01 在明确部署/回滚引用后补可审查的云端构建清理政策；本轮取消固定N删除，不能以存储成本为由自动删仍被stable或节点引用的唯一版本。
+- [ ] RELEASE-CI-RUNTIME-01 当前云构建实际提示checkout/cache/upload-artifact的Node20 action被强制在Node24运行；本批保持既有工作流语义，后续按官方兼容说明升级action并验收，不将提示误记为构建失败。

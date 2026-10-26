@@ -21,4 +21,6 @@ git 获取、编译/预构建校验、Mach-O 签名及验证均先在 staging �
 
 CLI `pf-node-deploy [--restart] [组件@ref...]` 现在明确走 device-access none；它不要求手机已授权，但实际发布仍检查队列及持久维护屏障。也可 `pf-node --device-access none update_node --git phonefarm@REF`；原run回滚使用 `pf-node --device-access none update_node --rollback RUN_ID`。更新完成不自动重新启动，只有显式--restart才使用原admin-restart接口；未知响应不重发。
 
-Web队列已展示更新未完成/原run或维护状态未知，原有 `/dash/api/jobs` 可提交固定更新作业。专用网页更新/回滚操作和只读维护状态页仍列FLEET-UPDATE-WEB-01，不能说整个网页维护流程已交付。QA：`qa/resume-local-20261026/node-update-agent-summary.json`、`node-protocol-first.*`、`node-protocol-targeted.*`、`deploy-helper-targeted.*`、`update-waiting-ui.*`。原件留本机，未操作真实部署服务或设备。
+Web队列已展示更新未完成/原run或维护状态未知，原有 `/dash/api/jobs` 可提交固定更新作业。专用网页更新/回滚及只读维护状态随后由FLEET-UPDATE-WEB-01交付，见[NODE-UPDATES-WEB](NODE-UPDATES-WEB.md)；实际浏览器布局与生产仍未验。QA：`qa/resume-local-20261026/node-update-agent-summary.json`、`node-protocol-first.*`、`node-protocol-targeted.*`、`deploy-helper-targeted.*`、`update-waiting-ui.*`。原件留本机，未操作真实部署服务或设备。
+
+精确SHA产物的查找、不可变发布与保留规则见[STABLE-RELEASE](STABLE-RELEASE.md)。更新默认ref仍为origin/main，stable部署必须显式选择origin/stable或冻结完整SHA，不由下载失败擅自改选版本。

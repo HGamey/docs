@@ -613,3 +613,7 @@ BASE-06已复核现有scoped身份/CAS和真实执行事实边界；METHOD-08负
 ## 2026-10-26 ENERGY-WINDOW-01 与stable配套推进
 
 PF `d9c7ad0` / harness `b42f798` / GOL规则 `4bbc7c3`：必需CI成功后同SHA main，PF云端node-build40296587424成功后全部非强制推进stable并读回。4个宿主定向、6个DOM场景通过，修复旧ENV/PWR积分断层并增加完整组窗整机电池估计；游戏每帧能耗仍null。实际生产、浏览器布局、真机与目标/显示归属均未验。三个stable已设置独立CI/禁止强推删除规则；main原规则保留。
+
+## 2026-10-26 精确版本发布、CTS与客户端准入
+
+PF1a730dd / harness0f785c1已通过必需CI和PF云构建后推进stable，GOL4bbc7c3保持。交付完整SHA发布清单/资产保留、更新器精确读取、旧CTS安装误报修复和客户端Android准入。验证范围见STABLE-RELEASE、CTS-INSTALLATION、GAME-FORMATS；未操作生产或手机。下一批直接打通游戏报告的异步协助入口。

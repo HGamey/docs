@@ -2,6 +2,10 @@
 
 用户于2026-10-26确认：开发继续在main，每完成一批验收后推进stable。用户负责实际部署节点的自动更新脚本；开发者维护分支、配套版本和验收记录。分支推进不等于服务已更新或手机能力已验收。
 
+## 三个分支的含义
+
+phonefarm是设备执行/测量，harness-ops是节点后台/网页/CLI，game_opt_loop是可选优化编排客户端。三个stable分别属于这三个代码仓库，是一组配套源码版本；核心节点部署用前两个，只有使用GOL时才需要部署第三个。未安装GOL不是节点故障，也不要求部署三套平台。
+
 ## 推进流程
 
 1. 一批代码、网页/CLI/API和相关行为验收完成；原始失败与未验范围保留。
@@ -22,11 +26,17 @@
 
 phonefarm从旧stable `537a62f`快进；另两仓补建，已逐一读回远端确认。基线只表示源码/隔离验证的可部署候选。原件为本机 `qa/resume-local-20261026/stable-release/baseline-promotion.json`。
 
-## 精确构建产物的已发现缺口
+## 精确构建产物
 
-当前node-build发布mutable build.json，SHA命名资产仅保留最近三次，git构建镜像仅保留八次。main继续前进后，旧stable可能无法从latest manifest取得匹配的摘要，最终资产也可能被清理。因此不能从mutable最新release猜stable产物，不能在摘要/版本不符时继续替换。本批正在修复按SHA发布manifest及当前stable保留规则，修复及云端实测完成前，此项保持待验。部署脚本应固定完整SHA、校验来源/平台/摘要，并遵守现有安全更新与维护屏障；不可通过直接覆盖正在运行的二进制跳过这些条件。
+原先仅mutable build.json、最近3次SHA资产与8次mirror清理，可能让旧stable取不到摘要或产物。修复实现于PF `a99366d`，最终PF候选`1a730dd`；配套harness `0f785c1`的五项CI通过，PF云构建[40299712131](https://github.com/HGamey/phonefarm/actions/runs/40299712131)成功；两仓已推进stable，GOL仍为4bbc7c3。精确manifest已读取，三个资产的GitHub大小/摘要与清单一致，mirror清单一致；未下载执行这些二进制，不表示实际节点已部署。
 
-不新增独立stable重复构建去争用同一个mutable release；验收使用main上已经成功的同SHA产物。既有定时或生产更新流程本次未操作。
+新资产使用完整40位源码SHA：`SHA-phonefarm`、`SHA-libVkLayer_refknobs.so`、`SHA-VkLayer_refknobs.json`，最后发布`SHA-build.json`。同SHA重新构建须与已有manifest及实际文件大小/摘要一致，否则失败而不覆盖。完整SHA mirror也仅核验复用，不强制更新。停止固定N份清理，以免与stable推进竞态误删版本；后续可审查保留/GC仍为待办，不能无限增长或随意删引用版本。
+
+更新器优先读取精确manifest，仅明确HTTP404允许旧mutable manifest兼容，兼容时也必须完整SHA匹配。每个产物一并核size/摘要，不把下载失败换成latest/main。旧stable若没有版本manifest仍可走已有完整SHA mirror；历史已删除产物无法保证找回。保留原选定源码构建fallback：预编译仅macOS arm64与Android灰层，Linux宿主需按所选源码本地构建，不把Mac二进制当Linux发行。
+
+兼容裸名/build.json仅在compare明确ahead/identical时更新，unknown/diverged/older保留原pointer。多文件上传不是原子事务；精确SHA消费者始终绑定清单和摘要。main仍是唯一构建发布入口，stable复用已验同SHA产物，避免两个分支争写mutable别名。
+
+43个封闭隔离命令16.3447秒首过，包含7个预设负分支，执行实际发布脚本与下载函数，独立只读复核无阻断发现。无真实网络上传/设备/部署；真实GitHub构建和资产随后单列。部署脚本应固定[配套SHA](stable-current.json)、验证平台/来源，并沿原安全更新与维护屏障，不直接覆盖运行文件。
 
 ## 2026-10-26 完整提交组能量批
 

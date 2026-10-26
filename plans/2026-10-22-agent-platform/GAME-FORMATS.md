@@ -20,6 +20,6 @@
 
 ## 已发现的入口差异
 
-正式games后端已在新请求拒绝非Android目标；客户端原先仍允许提交而收到400。harness e35dd33使Web/CLI提前使用同一serial规则，旧request/事务读取和基于原回执的恢复保持可用。四个整脚本DOM场景、实际pf-node加隔离HTTP八个场景通过，真实浏览器/设备仍未验；最终CI发布随后记录。
+正式games后端已在新请求拒绝非Android目标；客户端原先仍允许提交而收到400。harness e35dd33使Web/CLI提前使用同一serial规则，旧request/事务读取和基于原回执的恢复保持可用。四个整脚本DOM场景、实际pf-node加隔离HTTP八个场景通过，真实浏览器/设备仍未验；五项必需CI通过，e35dd33已main并包含在本批stable 0f785c1中。
 
-旧CTS的独立自定义安装存在丢退出状态、空输出误报成功及仅凭传输hash跳过安装的实际问题，DIST-CTS-INSTALL-01单独修复。不能借typed games的SDK/PackageInstaller证据为其背书。Doom现有单APK/PK4路径不要求先扩充全部容器格式；后续适配按明确输入需求推进。
+旧CTS的独立自定义安装存在丢退出状态、空输出误报成功及仅凭传输hash跳过安装的实际问题，已在PF1a730dd main/stable修复，见[CTS-INSTALLATION](CTS-INSTALLATION.md)。不能借typed games的SDK/PackageInstaller证据为其背书。Doom现有单APK/PK4路径不要求先扩充全部容器格式；后续适配按明确输入需求推进。
