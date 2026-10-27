@@ -695,7 +695,343 @@ sh loop_v1/selfsr/repro_noroot.sh &lt;serial&gt;   # 未 root 手机：测试程
   </ul>
 </section>
 
-<!--DIAGRAMS--><!--CODE-->
+<!--DIAGRAMS-->
+<section id="code">
+  <style>
+    .cd-fig { margin: 12px 0 28px; }
+    .cd-fig pre { margin: 0; }
+    .cd-fig figcaption { margin-top: 6px; font-size: 13px; color: var(--muted); }
+    .cd-fig figcaption code { font-size: 12px; }
+    .cd-list { margin: 0; padding-left: 1.2em; }
+    .cd-list li { margin: 2px 0; }
+    .cd-num { text-align: right; font-variant-numeric: tabular-nums; }
+  </style>
+  <div class="stack">
+    <div class="eyebrow">代码级说明</div>
+    <h2>代码里是怎么实现的</h2>
+    <p class="muted">代码在 <code>HGamey/phonefarm</code> 仓库的 <code>feat/selfsr</code> 分支。层的源码在 <code>knobs/gray/layer/</code>，测试脚本在 <code>loop_v1/selfsr/</code>。下面的代码片段都摘自源码，只删了日志和部分注释，删掉的地方用 <code>// …</code> 标出。</p>
+  </div>
+
+  <h3>1. 层怎么被加载、怎么拦截调用</h3>
+  <p>层是一个 <code>libVkLayer_refknobs.so</code>，层名 <code>VK_LAYER_refknobs_readonly</code>。Android 的 Vulkan 加载器不读 JSON 清单（<code>VkLayer_refknobs.json</code> 只给桌面加载器用）。它在应用自己的 native 库目录里找 .so，用 dlsym 取 4 个枚举函数和 <code>vkNegotiateLoaderLayerInterfaceVersion</code>，缺一个就丢掉这个层。</p>
+  <p>上机用的是 root 路线：把 .so 拷进游戏的 <code>nativeLibraryDir</code>（<code>/data/app/…/lib/arm64</code>），再 <code>setprop debug.vulkan.layers VK_LAYER_refknobs_readonly</code>。这个属性是全局的，会影响别的 Vulkan 应用，所以测试会话在游戏加载完层之后立刻把它清空（<code>src/gray_session.rs</code>）。不 root 的标准做法是 <code>settings put global enable_gpu_debug_layers / gpu_debug_app / gpu_debug_layers</code>，但系统只对可调试应用生效：对原神这类不可调试的商业游戏无效；在第二台手机上，用可调试的测试程序和重打包成可调试版的 Megacity，不 root 也成功加载了层（插帧 60→119.9、30→60.1）。</p>
+  <p>加载器通过协商拿到我们的 <code>GetInstanceProcAddr</code> / <code>GetDeviceProcAddr</code>。游戏每查一个函数，先问超分、插帧、抓帧三个模块要不要接（没开的模块恒返回空），再查本层的钩子表，都不要就原样转给下一层。正式测试实际接管的入口：</p>
+  <ul class="cd-list">
+    <li>实例级：<code>vkCreateInstance</code>、<code>vkDestroyInstance</code>、<code>vkCreateDevice</code>（加 <code>VK_GOOGLE_display_timing</code> 和 AHardwareBuffer 导入扩展）、<code>vkEnumerateDeviceExtensionProperties</code>（只转发）、<code>vkCreateAndroidSurfaceKHR</code>（插帧开时才接，用来拿游戏窗口）。</li>
+    <li>设备级：<code>vkQueuePresentKHR</code>、<code>vkCreateSwapchainKHR</code>、<code>vkDestroySwapchainKHR</code>、<code>vkDestroyDevice</code>、<code>vkGetDeviceQueue</code> / <code>vkGetDeviceQueue2</code>（记队列族）、<code>vkGetPastPresentationTimingGOOGLE</code>。</li>
+    <li>另有 render pass、draw、提交等观测用钩子，只在 <code>passdump</code> / <code>frameaudit</code> 等属性打开时才挂，正式测试不挂。</li>
+  </ul>
+  <figure class="cd-fig">
+<pre><code>extern "C" RK_EXPORT VkResult VKAPI_CALL vkNegotiateLoaderLayerInterfaceVersion(RkNegotiate* v) {
+    if (v-&gt;loaderLayerInterfaceVersion &gt; 2) v-&gt;loaderLayerInterfaceVersion = 2;
+    v-&gt;pfnGetInstanceProcAddr = dispatch_instance;
+    v-&gt;pfnGetDeviceProcAddr = dispatch_device;
+    v-&gt;pfnGetPhysicalDeviceProcAddr = nullptr;
+    return VK_SUCCESS;
+}
+
+static PFN_vkVoidFunction dispatch_device(VkDevice dev, const char* name) {
+    RK_HOOK("vkGetDeviceProcAddr", dispatch_device);
+    if (PFN_vkVoidFunction p = sr_hook(name)) return p;   // selfsr 没开时恒为空
+    if (PFN_vkVoidFunction p = ip_hook(name)) return p;   // interp 没开时恒为空
+    if (PFN_vkVoidFunction p = fd_hook(name)) return p;   // framedump 没开时恒为空
+    RK_HOOK("vkDestroyDevice", rk_DestroyDevice);
+    RK_HOOK("vkQueuePresentKHR", rk_QueuePresentKHR);
+    RK_HOOK("vkCreateSwapchainKHR", rk_CreateSwapchainKHR);
+    // … render pass 钩子; passdump / frameaudit 开时才挂的观测钩子
+    DevDisp d;
+    { std::lock_guard&lt;std::mutex&gt; lk(g_mtx); auto it = g_dev.find(key(dev)); if (it == g_dev.end()) return nullptr; d = it-&gt;second; }
+    // …
+    return d.gdpa ? d.gdpa(dev, name) : nullptr;
+}</code></pre>
+    <figcaption><code>vk_layer_refknobs.cpp: vkNegotiateLoaderLayerInterfaceVersion / dispatch_device</code></figcaption>
+  </figure>
+
+  <h3>2. 改交换链</h3>
+  <p>游戏建交换链时，超分模块把 <code>imageExtent</code> 换成屏幕分辨率，并加上拷贝用的用途位。游戏的帧缓冲还是原来的小尺寸（帧缓冲允许比图像小），所以它只画在每张图的左上角。插帧模块在同一个调用里多要几张图（缺省多 2 张），加用途位，并强制 FIFO。改过的参数建不成，就退回游戏的原参数，画面照常，只是不超分不插帧。</p>
+  <p>交换链建好后，超分模块再建三张自己的图：T（游戏尺寸，采样读）、O 和 P（屏幕尺寸，计算着色器写），以及每张交换链图一个信号量。子图层路线的插帧帧不放在交换链里，而是放在另外一组共享缓冲里，见第 6 节。</p>
+  <figure class="cd-fig">
+<pre><code>// selfsr.cpp: sr_patch_swapchain_ci
+    if (ci-&gt;imageExtent.width == g_want_w &amp;&amp; ci-&gt;imageExtent.height == g_want_h) return false;   // 游戏本来就要这个尺寸
+    // … 只接受 RGBA8; 查 surface 能力: 用途位、最大最小尺寸
+    ci-&gt;imageExtent = {g_want_w, g_want_h};
+    ci-&gt;imageUsage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+
+// interp.cpp: ip_patch_swapchain_ci
+    uint32_t want = ci-&gt;minImageCount + (uint32_t)g_extra_images;
+    if (have_caps &amp;&amp; caps.maxImageCount &amp;&amp; want &gt; caps.maxImageCount) want = caps.maxImageCount;
+    ci-&gt;minImageCount = want;
+    ci-&gt;imageUsage |= need;
+    if (ci-&gt;presentMode != VK_PRESENT_MODE_FIFO_KHR &amp;&amp; ci-&gt;presentMode != VK_PRESENT_MODE_FIFO_RELAXED_KHR)
+        ci-&gt;presentMode = VK_PRESENT_MODE_FIFO_KHR;
+
+// vk_layer_refknobs.cpp: rk_CreateSwapchainKHR
+        if (ip_on()) ip_patched = ip_patch_swapchain_ci(dev, &amp;mod_ci);
+        if (sr_on()) sr_patched = sr_patch_swapchain_ci(dev, &amp;mod_ci);
+        bool patched = fd_usage || ip_patched || sr_patched;
+        r = d.CreateSwapchainKHR(dev, patched ? &amp;mod_ci : ci, a, out);
+        if (r != VK_SUCCESS &amp;&amp; patched) {
+            // … 记日志, 退回原参数
+            r = d.CreateSwapchainKHR(dev, ci, a, out);
+        }</code></pre>
+    <figcaption><code>selfsr.cpp: sr_patch_swapchain_ci / interp.cpp: ip_patch_swapchain_ci / vk_layer_refknobs.cpp: rk_CreateSwapchainKHR</code></figcaption>
+  </figure>
+
+  <h3>3. <code>vkQueuePresentKHR</code> 主流程</h3>
+  <p>游戏每送显一次，层先解开限帧（第 8 节），然后串起两个模块：超分模块录一批命令，等游戏的信号量，做完发出自己的信号量；它不直接送显，而是把「改成等这个信号量」的送显请求交给插帧模块。插帧模块再录一批命令（插帧、拷真实帧、存历史帧），等超分的信号量，提交后导出一个同步 fd，把两张缓冲交给子图层，最后把游戏原来的送显转下去，让它等插帧的信号量。</p>
+  <p>CPU 全程不等 GPU：子图层靠同步 fd 自己等。任何一步失败都走 <code>bail()</code>，按游戏的原参数送显，并把原因计数写进日志文件。</p>
+  <figure class="cd-fig">
+<pre><code>// vk_layer_refknobs.cpp: rk_QueuePresentKHR
+    if (g_unlimit) unlimit_on_present();
+    // …
+    if (sr_on() &amp;&amp; ip_on()) {   // 超分 + 插帧
+        tl_present_next = d.QueuePresentKHR; tl_present_frame = f;
+        return sr_on_present(q, pi, rk_present_via_interp, f);   // 超分做完调 ip_on_present
+    }
+
+// interp.cpp: ip_on_present (子图层分支, 节选)
+        sub.waitSemaphoreCount = pi-&gt;waitSemaphoreCount; sub.pWaitSemaphores = pi-&gt;pWaitSemaphores;
+        sub.commandBufferCount = 1; sub.pCommandBuffers = &amp;sl.cb;
+        sub.signalSemaphoreCount = 1; sub.pSignalSemaphores = &amp;S.sems[idxN];
+        if (D-&gt;QueueSubmit(q, 1, &amp;sub, sl.fence) != VK_SUCCESS) { g_fb["submit_fail"]++; return bail("sc_submit"); }
+        int fence_fd = sc_export_fence(D-&gt;dev, q);   // 拿不到才退回 CPU 等 (最多 50 ms)
+        // … 排上屏时刻 (第 7 节)
+        VkSemaphore semN = S.sems[idxN];
+        lk.unlock();
+        sc_show(D-&gt;dev, show, S.w, S.h, S.pre, fence_fd);
+        VkPresentInfoKHR pn = *pi;
+        pn.waitSemaphoreCount = 1; pn.pWaitSemaphores = &amp;semN;
+        return next(q, &amp;pn);   // 游戏自己的送显照常, 被子图层盖在下面</code></pre>
+    <figcaption><code>vk_layer_refknobs.cpp: rk_QueuePresentKHR / interp.cpp: ip_on_present（子图层分支）</code></figcaption>
+  </figure>
+
+  <h3>4. 超分调度</h3>
+  <p>超分一共一次计算调度。先把游戏画的左上角拷进 T，再绑定描述符集：binding 0 是 T（带采样器，Catmull-Rom 要用硬件双线性），binding 1 是输出图 O（storage image）。推送常量 32 字节：输入尺寸、输出尺寸、锐化强度、算法编号。工作组 16×16，按输出尺寸向上取整。</p>
+  <p>着色器里每个工作组先把 18×18 的放大结果（多一圈邻居）算进共享内存，Catmull-Rom 用 9 次双线性取样代替 16 次取点。然后直接在共享内存上做 RCAS 锐化写出，省掉一整张中间图的写出和读回。最后 O 拷回交换链图。</p>
+  <figure class="cd-fig">
+<pre><code>// selfsr.cpp: sr_on_present
+    D-&gt;CmdCopyImage(cb, N, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, S.T, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &amp;rg);
+    struct { int32_t iw, ih, ow, oh; float sharp; int32_t algo; int32_t pad[2]; } pc{(int32_t)S.in_w, (int32_t)S.in_h,
+        (int32_t)S.out_w, (int32_t)S.out_h, g_sharp, g_algo, {0, 0}};
+    D-&gt;CmdBindPipeline(cb, VK_PIPELINE_BIND_POINT_COMPUTE, D-&gt;pipe);
+    D-&gt;CmdBindDescriptorSets(cb, VK_PIPELINE_BIND_POINT_COMPUTE, D-&gt;pl, 0, 1, &amp;S.set, 0, nullptr);
+    D-&gt;CmdPushConstants(cb, D-&gt;pl, VK_SHADER_STAGE_COMPUTE_BIT, 0, sizeof pc, &amp;pc);
+    D-&gt;CmdDispatch(cb, (S.out_w + 15) / 16, (S.out_h + 15) / 16, 1);
+
+// selfsr_fused.comp: main
+    for (uint k = lid; k &lt; 18u * 18u; k += 256u) {
+        ivec2 t = ivec2(int(k % 18u), int(k / 18u));
+        ivec2 q = clamp(base + t, ivec2(0), pc.out_size - 1);
+        tile[t.y][t.x] = pc.algo == 1 ? upscale_cr(q) : upscale(q);
+    }
+    barrier();
+    // … c = 中心, n/s/w/e = 上下左右 (都从 tile 取)
+    vec3 mn = min(min(min(n, s), min(w, e)), c);
+    vec3 mx = max(max(max(n, s), max(w, e)), c);
+    vec3 hit_min = mn / (4.0 * mx + 1e-5);
+    vec3 hit_max = (1.0 - mx) / (4.0 * mn - 4.0 + 1e-5);
+    vec3 l3 = max(-hit_min, hit_max);
+    float lobe = clamp(max(l3.r, max(l3.g, l3.b)), -0.1875, 0.0) * pc.sharp;
+    vec3 r = (lobe * (n + s + w + e) + c) / (4.0 * lobe + 1.0);</code></pre>
+    <figcaption><code>selfsr.cpp: sr_on_present / selfsr_fused.comp: main</code></figcaption>
+  </figure>
+
+  <h3>5. 块匹配着色器</h3>
+  <p>块匹配在 1/4 分辨率的亮度图上做。一个工作组 256 个线程负责一个 8×8 块：先把这块和后一帧里周围 ±16 的窗口（40×40）读进共享内存，再让 256 个线程分摊 33×33 = 1089 个候选位移，每个候选算 64 个像素的绝对差之和（SAD）。</p>
+  <p>比较用三元组（SAD，|dx|+|dy|，扫描序号）：SAD 相同就取位移小的，再相同取扫描序靠前的。这样平坦区域不会总落到搜索窗的角上。最后用共享内存做 8 轮归约，选出全组最小者，写出这块的 (dx, dy)。在 <code>interp_bm.cpp: synth_bm</code> 里它是 4 步中的第 2 步：亮度 → 块匹配 → 平滑 → 合成。</p>
+  <figure class="cd-fig">
+<pre><code>    barrier();
+    uvec3 best = uvec3(0xFFFFFFFFu);
+    for (uint c = lid; c &lt; uint(NC); c += 256u) {
+        int dy = int(c) / (2 * R + 1) - R, dx = int(c) % (2 * R + 1) - R;
+        uint sad = 0u;
+        for (int y = 0; y &lt; BS; y++) {
+            int rb = (y + dy + R) * WIN + dx + R;
+            for (int x = 0; x &lt; BS; x++) {
+                uint a = sA[y * BS + x], b = sB[rb + x];
+                sad += a &gt; b ? a - b : b - a;
+            }
+        }
+        uvec3 key = uvec3(sad, uint(abs(dx) + abs(dy)), c);
+        if (less3(key, best)) best = key;
+    }
+    sBest[lid] = best;
+    barrier();
+    for (uint s = 128u; s &gt; 0u; s &gt;&gt;= 1u) {
+        if (lid &lt; s &amp;&amp; less3(sBest[lid + s], sBest[lid])) sBest[lid] = sBest[lid + s];
+        barrier();
+    }
+    if (lid == 0u) {
+        int c = int(sBest[0].z);
+        // … 写出 mv: (c % 33 - 16, c / 33 - 16)
+    }</code></pre>
+    <figcaption><code>interp_b_bm.comp: main</code></figcaption>
+  </figure>
+
+  <h3>6. 子图层</h3>
+  <p>插帧开着时，层接管 <code>vkCreateAndroidSurfaceKHR</code>，记下游戏的 <code>ANativeWindow</code>。第一次送显时用 <code>ASurfaceControl_createFromWindow</code> 在这个窗口下建一个子图层（名字 <code>selfsr_interp</code>）。相关函数都从 <code>libandroid.so</code> 里 dlsym 取，不加链接依赖。</p>
+  <p>送显缓冲是层自己分配的 <code>AHardwareBuffer</code>（环形 8 张），通过 <code>VK_ANDROID_external_memory_android_hardware_buffer</code> 导入成 <code>VkImage</code>，GPU 直接往里写。每张缓冲一个 <code>ASurfaceTransaction</code>：<code>setBuffer</code>（带同步 fd）、<code>setDesiredPresentTime</code>、<code>apply</code>。第一次还要设几何和变换（跟随游戏的预旋转）、z 序 1（盖在游戏图层上面）、120 Hz 帧率票，并声明不透明。不声明不透明的话，合成器会把下面的游戏图层混进来，HUD 出现双影。</p>
+  <figure class="cd-fig">
+<pre><code>// sc_ready
+        D-&gt;sc = g_api.createFromWindow(g_window, "selfsr_interp");
+// make_buf: AHardwareBuffer → VkImage
+    desc.usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE | AHARDWAREBUFFER_USAGE_GPU_COLOR_OUTPUT |
+                 AHARDWAREBUFFER_USAGE_COMPOSER_OVERLAY;
+    if (g_api.ahbAlloc(&amp;desc, &amp;b.ahb) != 0 || !b.ahb) { g_reason = "ahb_allocate"; return false; }
+    // … VkImageCreateInfo 挂 VkExternalMemoryImageCreateInfo (ANDROID_HARDWARE_BUFFER)
+    VkImportAndroidHardwareBufferInfoANDROID imp{VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID, &amp;ded, b.ahb};
+    VkMemoryAllocateInfo mai{VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO, &amp;imp, pp.allocationSize, mt};
+// sc_show: 第一次设几何, 之后每张缓冲一个事务
+            g_api.setGeometry(t, D-&gt;sc, &amp;src, &amp;dst, xf);   // xf = 游戏 preTransform 的反向
+            g_api.setVisibility(t, D-&gt;sc, 1);
+            if (g_api.setZOrder) g_api.setZOrder(t, D-&gt;sc, 1);
+            // … 投 120 Hz 帧率票
+            if (g_api.setTransparency) g_api.setTransparency(t, D-&gt;sc, 2 /* ..._TRANSPARENCY_OPAQUE */);
+        // …
+        int fd = fence_fd &lt; 0 ? -1 : (i + 1 == frames.size() ? fence_fd : dup(fence_fd));
+        g_api.setBuffer(t, D-&gt;sc, static_cast&lt;AHardwareBuffer*&gt;(frames[i].first-&gt;ahb), fd);
+        if (frames[i].second &gt; 0) g_api.setDesiredPresentTime(t, frames[i].second);
+        g_api.txnApply(t);
+        g_api.txnDelete(t);</code></pre>
+    <figcaption><code>interp_sc.cpp: sc_ready / make_buf / sc_show</code></figcaption>
+  </figure>
+
+  <h3>7. 上屏时刻排程</h3>
+  <p>每个游戏帧送两张：先中间帧，后真实帧。第一张的期望时刻 <code>t0</code> = 现在 + 提前量（正式测试 25 ms），真实帧再晚 <code>step</code>，即半个游戏周期（游戏送显间隔的滑动平均除以 2）。</p>
+  <p><code>slot()</code> 保证相邻两张至少隔 <code>gap</code> = 一个刷新周期减 0.3 ms（120 Hz 时约 8.03 ms）。太近的话两张会落进同一个刷新周期，合成器只显示后一张。如果之前排的已经积压超过一个游戏周期，这一帧就不插中间帧，只送真实帧，避免延迟越滚越大。</p>
+  <figure class="cd-fig">
+<pre><code>        uint64_t period = S.ema_ns &gt; 0 ? (uint64_t)S.ema_ns : 2 * R;
+        uint64_t step = period / (uint64_t)(m + 1);
+        if (step &lt; 2000000ull) step = 2000000ull;
+        const uint64_t t0 = now_ns() + (g_lead_ns &gt;= 0 ? (uint64_t)g_lead_ns : R);
+        // …
+        const uint64_t gap = grid ? gP / 2 : g_sc_gap_ns &gt; 0 ? (uint64_t)g_sc_gap_ns
+                           : 1000000000ull / (uint64_t)(g_fps_vote &gt; 0 ? g_fps_vote : 120) - 300000ull;
+        auto slot = [&amp;](uint64_t want) {
+            uint64_t d = (g_sc_last &amp;&amp; want &lt; g_sc_last + gap) ? g_sc_last + gap : want;
+            // … interp_sc_grid=1 时对齐刷新网格 (缺省关)
+            g_sc_last = d; return d;
+        };
+        std::vector&lt;std::pair&lt;ScBuf*, int64_t&gt;&gt; show;
+        int shown_synth = 0;
+        uint64_t real_at = 0;
+        const bool backlog = g_sc_last &amp;&amp; g_sc_last + gap &gt; t0 + period;
+        if (backlog) g_sc_skip++;
+        for (int k = 0; k &lt; m &amp;&amp; synth_any &amp;&amp; done &amp;&amp; !backlog; k++) { show.push_back({bufs[k], (int64_t)slot(t0 + (uint64_t)k * step)}); shown_synth++; }
+        if (done) { real_at = slot(t0 + (uint64_t)shown_synth * step); show.push_back({rb, (int64_t)real_at}); }</code></pre>
+    <figcaption><code>interp.cpp: ip_on_present</code></figcaption>
+  </figure>
+
+  <h3>8. 解开进程内限帧</h3>
+  <p>系统图形库里有一份进程内的限帧配置，游戏每次送显时会按它补睡眠，把帧率压到系统给的目标（发热时是 30）。层在 <code>vkCreateInstance</code> 时找到读这份配置的函数 <code>getGlobalConfig</code>：先试 <code>dlopen</code>；不 root 加载时应用的链接器命名空间看不到系统内部库，就用 <code>dl_iterate_phdr</code> 找到这个库在进程里的装载基址，再从磁盘读它 ELF 的 <code>.dynsym</code>，查到符号偏移，加上基址就是函数地址。</p>
+  <p>之后每次送显前调一次这个函数拿到配置指针，把偏移 0x60 处的限帧值清零，并计数。这个偏移只对实测的系统版本成立；找不到符号或指针为空时什么都不做，原因写进日志文件。</p>
+  <figure class="cd-fig">
+<pre><code>static void* sym_from_loaded(const char* lib, const char* sym) {
+    LoadedLib L{lib};
+    dl_iterate_phdr(find_loaded_cb, &amp;L);   // 按文件名找已加载的库, 记 dlpi_addr
+    // … 打开 L.path, 读 ELF 头和节头表
+            for (auto&amp; s : sh) {
+                if (s.sh_type != SHT_DYNSYM || s.sh_link &gt;= sh.size()) continue;
+                // … 读 .dynsym 和它的字符串表
+                for (auto&amp; y : syms)
+                    if (y.st_value &amp;&amp; y.st_name &lt; strs.size() &amp;&amp; !strcmp(&amp;strs[y.st_name], sym)) { found = reinterpret_cast&lt;void*&gt;(L.base + y.st_value); break; }
+                break;
+            }
+    // …
+}
+
+static void unlimit_init() {
+    g_unlimit = read_bool_prop("debug.knobs.unlimit");
+    if (!g_unlimit) return;
+    // … dlopen(系统图形库) 取 "…getGlobalConfig…", 拿不到再走 sym_from_loaded
+}
+static void unlimit_on_present() {
+    char* cfg = static_cast&lt;char*&gt;(g_fps_cfg_get());   // … 函数或指针为空时直接返回
+    int* lim = reinterpret_cast&lt;int*&gt;(cfg + 0x60);
+    int v = *lim;
+    if (v != 0) { g_unlimit_seen = v; *lim = 0; g_unlimit_cleared++; }
+}</code></pre>
+    <figcaption><code>vk_layer_refknobs.cpp: sym_from_loaded / unlimit_init / unlimit_on_present</code></figcaption>
+  </figure>
+
+  <h3>9. 一键开关与还原</h3>
+  <p>层的所有行为都由 <code>debug.knobs.*</code> 系统属性控制，在 <code>vkCreateInstance</code> 时读一次。属性为空就是关：模块不接任何调用、不改交换链，层只做透传。开关都不改游戏的文件和设置，也不需要重新打包游戏。</p>
+  <p>测试脚本收尾（包括 Ctrl-C）走 <code>restore</code>：结束游戏，还原 Game Mode，清空所有 <code>debug.knobs.*</code>，写回厂商超分插帧设置的原值。<code>restore_panel</code> 删掉合成器后门里给游戏 uid 下的帧率覆盖，把合成器的「等游戏帧」写回开，屏幕刷新率和帧节奏属性按开跑前记下的原值写回。最后核对游戏 lib 目录里没有 .so、<code>debug.vulkan.layers</code> 为空，结果写进 <code>restore.json</code>。</p>
+  <figure class="cd-fig">
+<pre><code>// selfsr.cpp: sr_init_from_props
+    __system_property_get("debug.knobs.selfsr", v);
+    int n = sscanf(v, "%ux%u:%f", &amp;w, &amp;h, &amp;sharp);
+    if (n &gt;= 2 &amp;&amp; w &gt;= 64 &amp;&amp; h &gt;= 64 &amp;&amp; w &lt;= 4096 &amp;&amp; h &lt;= 4096) {
+        g_on = true; g_want_w = w; g_want_h = h;
+        // …
+    }
+    return g_on;
+
+# selfsr_ab.py: restore_panel
+def restore_panel(dev):
+    dump = dev.su("dumpsys SurfaceFlinger | grep -A8 '^FrameRateOverrides'")
+    back = dump.split("Backdoor=", 1)[1] if "Backdoor=" in dump else ""
+    for uid in re.findall(r"\{(\d+), [0-9.]+ Hz\}", back.split("\n\n", 1)[0]):
+        set_sfovr(dev, uid, 0)   # service call SurfaceFlinger 1039 i32 &lt;uid&gt; f 0
+    SFOVR_UID["uid"] = None
+    if SFWAIT_OFF["on"] or dev.prop(…) == "true":   # 有这个开关的机器上一律写回开
+        dev.su("dumpsys SurfaceFlinger --fpsControl_waitframe_on &gt;/dev/null")
+        SFWAIT_OFF["on"] = False
+    # … 读 panel_orig.json, 写回刷新率相关 settings 和帧节奏属性</code></pre>
+    <figcaption><code>selfsr.cpp: sr_init_from_props / selfsr_ab.py: restore_panel</code></figcaption>
+  </figure>
+
+  <h3>10. 测试脚本入口</h3>
+  <p><code>repro.sh</code> 一条命令跑完全部对照组，每组调 <code>selfsr_ab.py run --a &lt;臂&gt; --b &lt;臂&gt;</code>，冷启动 ABBA 交替。臂的写法：<code>native</code>（不挂层）、<code>layer</code>（只挂透传层）、<code>sr:&lt;降分辨率比例&gt;:&lt;宽&gt;x&lt;高&gt;:&lt;锐化&gt;</code>、<code>ip:&lt;合成方式&gt;:&lt;帧率&gt;:键=值,…</code>、<code>srip:…</code>（超分 + 插帧）。</p>
+  <p><code>measure()</code> 在同一个时间窗口里并行采：合成器 timestats（游戏图层的上屏帧率、丢帧）、<code>dumpsys SurfaceFlinger --latency selfsr_interp#N</code>（子图层的实际上屏时刻，timestats 不收子图层）、ftrace 解析出的游戏 GPU 提交（游戏渲染帧率、p95 帧时、GPU 忙碌时间），以及一张截图（锐度）。</p>
+  <figure class="cd-fig">
+<pre><code># repro.sh: 第 7 组, 超分 + 插帧对原生
+    7) run 7_sr_interp native "srip:1:$SR_FULL:$IP_MODE:$IP_FPS:$IP_TUNE" ;;
+# 缺省: SR_FULL=&lt;屏幕宽x高&gt;:1.0  IP_MODE=bm  IP_FPS=120
+#       IP_TUNE=stamp=0,panel=120,backend=sc,lead_ns=25000000 (需要时另加 ,unlimit=1,sfwait=off)
+
+# selfsr_ab.py: measure (返回值节选)
+    return {"in_game": a.pkg in fg,
+            "display_fps": round(ts["layer_frames"] / span, 2) if ts.get("layer_frames") else None,
+            "display_fps_sc": sc.get("fps") or …,          # 子图层, SF --latency
+            "seen_fps": sc.get("fps") or …,                # 看到的画面: 有子图层取子图层
+            "game_fps": game.get("fps_mean"), "game_frame_p95_ms": game.get("frame_p95"),
+            "gpu_active_ms": game.get("gpu_active_mean"),  # ftrace → phonefarm parse-trace
+            "out_res": src, "sharp_full": sharpness(shot), "sharp_hud": sharpness(shot, HUD_BOX), "shot": shot}</code></pre>
+    <figcaption><code>repro.sh（第 7 组）/ selfsr_ab.py: measure</code></figcaption>
+  </figure>
+
+  <h3>文件 → 行数 → 作用</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>文件</th><th class="cd-num">行数</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td><code>knobs/gray/layer/vk_layer_refknobs.cpp</code></td><td class="cd-num">4408</td><td>层入口：加载器协商、函数分发、建实例/设备（加扩展）、交换链和送显钩子、解开限帧、日志文件</td></tr>
+        <tr><td><code>knobs/gray/layer/selfsr.cpp</code></td><td class="cd-num">599</td><td>超分：改交换链尺寸、建 T/O/P 图和管线、每帧录制并提交超分命令</td></tr>
+        <tr><td><code>knobs/gray/layer/selfsr.h</code></td><td class="cd-num">35</td><td>超分模块接口和开关说明</td></tr>
+        <tr><td><code>knobs/gray/layer/selfsr_fused.comp</code></td><td class="cd-num">98</td><td>超分着色器：Catmull-Rom（或 Lanczos2）放大 + RCAS 锐化，一次调度</td></tr>
+        <tr><td><code>knobs/gray/layer/interp.cpp</code></td><td class="cd-num">1102</td><td>插帧框架：交换链多要图、送显时录制提交、上屏时刻排程、统计</td></tr>
+        <tr><td><code>knobs/gray/layer/interp.h</code></td><td class="cd-num">83</td><td>插帧模块接口、合成方式注册接口</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_bm.cpp</code></td><td class="cd-num">311</td><td>块匹配插帧：建 4 个计算管线并按顺序调度</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_luma.comp</code></td><td class="cd-num">27</td><td>第 1 步：1/4 分辨率亮度图</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_bm.comp</code></td><td class="cd-num">61</td><td>第 2 步：8×8 块 ±16 全搜索块匹配</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_smooth.comp</code></td><td class="cd-num">39</td><td>第 3 步：运动向量平滑</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_compose.comp</code></td><td class="cd-num">49</td><td>第 4 步：按运动向量合成中间帧</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_common.glsl</code></td><td class="cd-num">83</td><td>插帧着色器共用函数</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_sc.cpp</code></td><td class="cd-num">646</td><td>子图层：建 ASurfaceControl、AHardwareBuffer 缓冲环、导出同步 fd、提交事务</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_sc.h</code></td><td class="cd-num">49</td><td>子图层接口</td></tr>
+        <tr><td><code>knobs/gray/layer/VkLayer_refknobs.json</code></td><td class="cd-num">14</td><td>层清单（桌面加载器用，Android 不读）</td></tr>
+        <tr><td><code>knobs/gray/build/build_layer.sh</code></td><td class="cd-num">124</td><td>编译层和着色器</td></tr>
+        <tr><td><code>src/gray_session.rs</code></td><td class="cd-num">1332</td><td>测试会话：装 .so、设 / 收窄 debug.vulkan.layers、摘层</td></tr>
+        <tr><td><code>loop_v1/selfsr/selfsr_ab.py</code></td><td class="cd-num">796</td><td>两臂 ABBA：设属性、冷启动进游戏、测量、收尾还原、统计</td></tr>
+        <tr><td><code>loop_v1/selfsr/repro.sh</code></td><td class="cd-num">92</td><td>一条命令复现全部对照组并汇总报告</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">行数是 <code>wc -l</code> 在 2026-10-27 的结果。</p>
+</section>
+
+
 <section id="method">
   <div class="stack">
     <div class="eyebrow">测试方法与条件</div>
