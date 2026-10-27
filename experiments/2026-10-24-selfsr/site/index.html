@@ -163,7 +163,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
   <div class="eyebrow">HGamey · 自研超分 + 插帧 · 截至 2026-10-27</div>
   <h1>原神上帧率接近翻倍，画质高于原生和厂商方案</h1>
   <p class="lede">由 agent 在真机测试平台上自主优化完成：3 天，253 次冷启动测量，26 份对比报告。</p>
-  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>；更细的内容见 <a href="#diagrams">算法图解</a>、<a href="#code">代码级说明</a>、<a href="#method">测试方法与条件</a>、<a href="#data">每一步的全部数据</a>。</p>
+  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#video">视频</a>、<a href="#charts">数据图表</a>、<a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>；更细的内容见 <a href="#diagrams">算法图解</a>、<a href="#code">代码级说明</a>、<a href="#method">测试方法与条件</a>、<a href="#data">每一步的全部数据</a>。</p>
 </header>
 
 <section aria-label="核心数字">
@@ -172,6 +172,22 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
     <div class="fig lead"><span class="k">固定图标区锐度</span><span class="v num">+160%</span><span class="d">原生 366 → 953</span></div>
     <div class="fig"><span class="k">对比厂商方案 GFRC+ 的画质</span><span class="v num">+18%</span><span class="d">图标区锐度 948 对 803</span></div>
     <div class="fig"><span class="k">代价：真实帧延迟</span><span class="v num">+33.5<small>ms</small></span><span class="d">层内记录的排队时间（下限）</span></div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="stack">
+    <div class="eyebrow">视频</div>
+    <h2>真机录屏：不插帧 60 帧 对 插帧约 120 帧</h2>
+    <p>主测手机上用系统录屏录的，录屏时自动左右滑动转动镜头。不插帧那段 12 秒 719 帧（60 帧/秒），插帧那段 12 秒 1430 帧（约 119 帧/秒）。账号 UID 已打码。</p>
+  </div>
+  <figure>
+    <video src="vid/compare_slow4x.mp4" controls muted loop playsinline preload="metadata" width="1344" height="1216" style="width:100%;height:auto;border-radius:6px;border:1px solid var(--line)"></video>
+    <figcaption><b>最直观的一段：4 倍慢放对比。</b>上面不插帧，画面每两格才变一次，转镜头时一顿一顿；下面插帧，每格都有新画面，运动连续。也能看到插帧的代价：转镜头时界面文字和小地图标签有重影。</figcaption>
+  </figure>
+  <div class="shots">
+    <figure><video src="vid/native_60fps.mp4" poster="vid/native_poster.jpg" controls muted loop playsinline preload="metadata" width="1344" height="608" style="width:100%;height:auto;border-radius:6px;border:1px solid var(--line)"></video><figcaption>原速：不插帧（60 帧/秒）</figcaption></figure>
+    <figure><video src="vid/interp_120fps.mp4" poster="vid/interp_poster.jpg" controls muted loop playsinline preload="metadata" width="1344" height="608" style="width:100%;height:auto;border-radius:6px;border:1px solid var(--line)"></video><figcaption>原速：超分 + 插帧（约 119 帧/秒）。要在 120 Hz 屏幕上才能看出区别，普通 60 Hz 显示器会丢一半帧，请看上面的慢放。</figcaption></figure>
   </div>
 </section>
 
@@ -416,7 +432,7 @@ lobe = lobe × 强度
     <li><b>平滑运动场</b>：先做 3×3 中值滤波去掉个别错配的块，再做 5×5 平滑，让相邻块的运动连续，减少画面撕裂。</li>
     <li><b>合成中间帧</b>：每个像素按运动场，从前一帧往前挪半步取色、从后一帧往回挪半步取色，两者取平均。</li>
   </ol>
-  <p class="muted">已知局限：块匹配对快速转身、大面积遮挡估不准，物体边缘会有拖影；静止和慢速画面干净。</p>
+  <p class="muted">已知局限：镜头转动时，插出来的中间帧里<b>界面文字、小地图标签会有明显重影</b>（见下面的慢放视频）：界面不跟场景一起运动，块匹配却按场景的运动去挪它。代码里有「界面区域直接取最近真实帧」的保护，但默认关闭、还没调好，这是下一步要做的。物体边缘也有块匹配常见的拖影。静止和慢速画面干净。</p>
 </section>
 
 <section>
@@ -571,6 +587,76 @@ lobe = lobe × 强度
   <p class="muted">「原生」被系统按温度限在约 30 帧；我们的层先解开这个限制（约 60 帧），再插帧到 118。GFRC+ 的数字来自另一轮测试，没有和我们放在同一轮里直接对比。</p>
 </section>
 
+<style>
+.ch-svg { display: block; min-width: 360px; max-width: 720px; height: auto; }
+.ch-svg text { font-family: var(--font-body); font-size: 13px; }
+.ch-svg .ch-n, .ch-svg .ch-v { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+.ch-svg .ch-n { font-size: 12px; }
+.ch-svg .ch-v { font-size: 11px; }
+.ch-svg .ch-s { font-size: 11.5px; }
+.ch-charts figure { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 12px; }
+.ch-shots figure img { aspect-ratio: 2688 / 1216; object-fit: cover; }
+details.ch-more > summary { cursor: pointer; font-weight: 700; }
+details.ch-more[open] > summary { margin-bottom: 12px; }
+</style>
+<section id="charts">
+<div class="stack"><div class="eyebrow">数据图表</div><h2>用图看结果</h2><p>下面每张图都直接从原始记录算出。「对比 n」是第 n 对冷启动，A、B 两臂交替跑。</p></div>
+<div class="stack ch-charts">
+<h3>1 · 实际看到的帧率，逐对</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对实际看到的帧率：透传层对超分加插帧" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">透传层（不插帧）</text><rect x="210" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="226" y="16" class="ch-t" fill="var(--muted)">超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="210.6" y2="210.6" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="214.6" class="ch-n" text-anchor="end" fill="var(--muted)">20</text><line x1="52" x2="508" y1="181.1" y2="181.1" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="185.1" class="ch-n" text-anchor="end" fill="var(--muted)">40</text><line x1="52" x2="508" y1="151.7" y2="151.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="155.7" class="ch-n" text-anchor="end" fill="var(--muted)">60</text><line x1="52" x2="508" y1="122.3" y2="122.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="126.3" class="ch-n" text-anchor="end" fill="var(--muted)">80</text><line x1="52" x2="508" y1="92.9" y2="92.9" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="96.9" class="ch-n" text-anchor="end" fill="var(--muted)">100</text><line x1="52" x2="508" y1="63.4" y2="63.4" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="67.4" class="ch-n" text-anchor="end" fill="var(--muted)">120</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">140</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">帧/秒</text><rect x="59.8" y="151.7" width="26.2" height="88.3" fill="var(--base)" stroke="none"/><text x="72.9" y="147.7" class="ch-v" text-anchor="middle" fill="var(--ink)">60.0</text><rect x="94.0" y="65.3" width="26.2" height="174.7" fill="var(--ours)" stroke="none"/><text x="107.1" y="61.3" class="ch-v" text-anchor="middle" fill="var(--ink)">118.7</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="151.7" width="26.2" height="88.3" fill="var(--base)" stroke="none"/><text x="148.9" y="147.7" class="ch-v" text-anchor="middle" fill="var(--ink)">60.0</text><rect x="170.0" y="64.8" width="26.2" height="175.2" fill="var(--ours)" stroke="none"/><text x="183.1" y="60.8" class="ch-v" text-anchor="middle" fill="var(--ink)">119.1</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="151.7" width="26.2" height="88.3" fill="var(--base)" stroke="none"/><text x="224.9" y="147.7" class="ch-v" text-anchor="middle" fill="var(--ink)">60.0</text><rect x="246.0" y="66.3" width="26.2" height="173.7" fill="var(--ours)" stroke="none"/><text x="259.1" y="62.3" class="ch-v" text-anchor="middle" fill="var(--ink)">118.1</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="151.8" width="26.2" height="88.2" fill="var(--base)" stroke="none"/><text x="300.9" y="147.8" class="ch-v" text-anchor="middle" fill="var(--ink)">60.0</text><rect x="322.0" y="65.8" width="26.2" height="174.2" fill="var(--ours)" stroke="none"/><text x="335.1" y="61.8" class="ch-v" text-anchor="middle" fill="var(--ink)">118.4</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="151.7" width="26.2" height="88.3" fill="var(--base)" stroke="none"/><text x="376.9" y="147.7" class="ch-v" text-anchor="middle" fill="var(--ink)">60.0</text><rect x="398.0" y="65.3" width="26.2" height="174.7" fill="var(--ours)" stroke="none"/><text x="411.1" y="61.3" class="ch-v" text-anchor="middle" fill="var(--ink)">118.7</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="151.7" width="26.2" height="88.3" fill="var(--base)" stroke="none"/><text x="452.9" y="147.7" class="ch-v" text-anchor="middle" fill="var(--ink)">60.0</text><rect x="474.0" y="69.0" width="26.2" height="171.0" fill="var(--ours)" stroke="none"/><text x="487.1" y="65.0" class="ch-v" text-anchor="middle" fill="var(--ink)">116.2</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>只看插帧：6 对里每一对 B 都约翻倍，6/6 一致。均值 59.98 → 118.21 帧。有插帧的臂取子图层上屏帧率。数据：<code>step4/ab6_interp_vs_layer/arms.jsonl</code>（seen_fps）</figcaption></figure>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对实际看到的帧率：原生对超分加插帧" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">原生（系统限帧）</text><rect x="210" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="226" y="16" class="ch-t" fill="var(--muted)">超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="210.6" y2="210.6" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="214.6" class="ch-n" text-anchor="end" fill="var(--muted)">20</text><line x1="52" x2="508" y1="181.1" y2="181.1" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="185.1" class="ch-n" text-anchor="end" fill="var(--muted)">40</text><line x1="52" x2="508" y1="151.7" y2="151.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="155.7" class="ch-n" text-anchor="end" fill="var(--muted)">60</text><line x1="52" x2="508" y1="122.3" y2="122.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="126.3" class="ch-n" text-anchor="end" fill="var(--muted)">80</text><line x1="52" x2="508" y1="92.9" y2="92.9" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="96.9" class="ch-n" text-anchor="end" fill="var(--muted)">100</text><line x1="52" x2="508" y1="63.4" y2="63.4" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="67.4" class="ch-n" text-anchor="end" fill="var(--muted)">120</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">140</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">帧/秒</text><rect x="59.8" y="196.2" width="26.2" height="43.8" fill="var(--base)" stroke="none"/><text x="72.9" y="192.2" class="ch-v" text-anchor="middle" fill="var(--ink)">29.8</text><rect x="94.0" y="67.2" width="26.2" height="172.8" fill="var(--ours)" stroke="none"/><text x="107.1" y="63.2" class="ch-v" text-anchor="middle" fill="var(--ink)">117.4</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="196.1" width="26.2" height="43.9" fill="var(--base)" stroke="none"/><text x="148.9" y="192.1" class="ch-v" text-anchor="middle" fill="var(--ink)">29.8</text><rect x="170.0" y="65.8" width="26.2" height="174.2" fill="var(--ours)" stroke="none"/><text x="183.1" y="61.8" class="ch-v" text-anchor="middle" fill="var(--ink)">118.4</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="196.2" width="26.2" height="43.8" fill="var(--base)" stroke="none"/><text x="224.9" y="192.2" class="ch-v" text-anchor="middle" fill="var(--ink)">29.8</text><rect x="246.0" y="64.6" width="26.2" height="175.4" fill="var(--ours)" stroke="none"/><text x="259.1" y="60.6" class="ch-v" text-anchor="middle" fill="var(--ink)">119.2</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="196.1" width="26.2" height="43.9" fill="var(--base)" stroke="none"/><text x="300.9" y="192.1" class="ch-v" text-anchor="middle" fill="var(--ink)">29.8</text><rect x="322.0" y="151.6" width="26.2" height="88.4" fill="var(--ours)" stroke="none"/><text x="335.1" y="147.6" class="ch-v" text-anchor="middle" fill="var(--ink)">60.1</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><text x="318.0" y="274" class="ch-t" text-anchor="middle" fill="var(--warn-ink)">面板 60 Hz</text><rect x="363.8" y="196.2" width="26.2" height="43.8" fill="var(--base)" stroke="none"/><text x="376.9" y="192.2" class="ch-v" text-anchor="middle" fill="var(--ink)">29.8</text><rect x="398.0" y="65.0" width="26.2" height="175.0" fill="var(--ours)" stroke="none"/><text x="411.1" y="61.0" class="ch-v" text-anchor="middle" fill="var(--ink)">118.9</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="196.1" width="26.2" height="43.9" fill="var(--base)" stroke="none"/><text x="452.9" y="192.1" class="ch-v" text-anchor="middle" fill="var(--ink)">29.8</text><rect x="474.0" y="65.5" width="26.2" height="174.5" fill="var(--ours)" stroke="none"/><text x="487.1" y="61.5" class="ch-v" text-anchor="middle" fill="var(--ink)">118.6</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>对比原生：6/6 对都是 B 高。对比 4 的 B 臂面板掉到 60 Hz，只有 60.1 帧，仍高于原生。数据：<code>step4/ab6_waitframe_off/arms.jsonl</code>（seen_fps、display_hz）</figcaption></figure>
+<h3>2 · 关掉合成器 waitframe 前后，子图层上屏间隔</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 270" width="100%" role="img" aria-label="子图层上屏间隔分布：waitframe 开与关" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">waitframe 开（542 个间隔）</text><rect x="289.0" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="305.0" y="16" class="ch-t" fill="var(--muted)">waitframe 关（725 个间隔）</text><line x1="52" x2="508" y1="226.0" y2="226.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="230.0" class="ch-n" text-anchor="end" fill="var(--muted)">0%</text><line x1="52" x2="508" y1="187.6" y2="187.6" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="191.6" class="ch-n" text-anchor="end" fill="var(--muted)">20%</text><line x1="52" x2="508" y1="149.2" y2="149.2" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="153.2" class="ch-n" text-anchor="end" fill="var(--muted)">40%</text><line x1="52" x2="508" y1="110.8" y2="110.8" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="114.8" class="ch-n" text-anchor="end" fill="var(--muted)">60%</text><line x1="52" x2="508" y1="72.4" y2="72.4" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="76.4" class="ch-n" text-anchor="end" fill="var(--muted)">80%</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">100%</text><rect x="150.2" y="98.8" width="15.3" height="127.2" fill="var(--base)" stroke="none"/><text x="157.9" y="94.8" class="ch-v" text-anchor="middle" fill="var(--ink)">66%</text><rect x="410.8" y="161.2" width="15.3" height="64.8" fill="var(--base)" stroke="none"/><text x="418.4" y="157.2" class="ch-v" text-anchor="middle" fill="var(--ink)">34%</text><rect x="166.5" y="35.6" width="15.3" height="190.4" fill="var(--ours)" stroke="none"/><text x="174.1" y="31.6" class="ch-v" text-anchor="middle" fill="var(--ink)">99%</text><rect x="427.1" y="224.4" width="15.3" height="1.6" fill="var(--ours)" stroke="none"/><line x1="52" x2="508" y1="226.0" y2="226.0" stroke="var(--muted)" stroke-width="1" fill="none"/><line x1="52.0" x2="52.0" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="52.0" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">5</text><line x1="117.1" x2="117.1" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="117.1" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">7</text><line x1="182.3" x2="182.3" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="182.3" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">9</text><line x1="247.4" x2="247.4" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="247.4" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">11</text><line x1="312.6" x2="312.6" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="312.6" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">13</text><line x1="377.7" x2="377.7" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="377.7" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">15</text><line x1="442.9" x2="442.9" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="442.9" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">17</text><line x1="508.0" x2="508.0" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="508.0" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">19</text><text x="508" y="264" class="ch-t" text-anchor="end" fill="var(--muted)">相邻两次上屏的间隔（ms）</text></svg></div><figcaption>屏幕 120 Hz，一格 8.3 ms。waitframe 开时 34% 的间隔是 16.7 ms，约每三个间隔就跳过一次刷新，子图层只有 89.9 帧；关掉后 99% 落在 8.3 ms，119.2 帧。两臂都开了 120 帧覆盖，只差 waitframe 开关。按 1 ms 分箱。数据：<code>sfpatch/probe4</code>（A1）与 <code>sfpatch/probe9</code>（A1）的 <code>traces/A1_sclat.txt</code></figcaption></figure>
+<h3>3 · 正式对比中，插帧臂的上屏间隔</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 270" width="100%" role="img" aria-label="正式插帧臂子图层上屏间隔分布" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">6 个插帧臂合并（4309 个间隔）</text><line x1="52" x2="508" y1="226.0" y2="226.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="230.0" class="ch-n" text-anchor="end" fill="var(--muted)">0%</text><line x1="52" x2="508" y1="187.6" y2="187.6" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="191.6" class="ch-n" text-anchor="end" fill="var(--muted)">20%</text><line x1="52" x2="508" y1="149.2" y2="149.2" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="153.2" class="ch-n" text-anchor="end" fill="var(--muted)">40%</text><line x1="52" x2="508" y1="110.8" y2="110.8" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="114.8" class="ch-n" text-anchor="end" fill="var(--muted)">60%</text><line x1="52" x2="508" y1="72.4" y2="72.4" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="76.4" class="ch-n" text-anchor="end" fill="var(--muted)">80%</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">100%</text><rect x="150.2" y="37.3" width="31.6" height="188.7" fill="var(--ours)" stroke="none"/><text x="166.0" y="33.3" class="ch-v" text-anchor="middle" fill="var(--ink)">98%</text><rect x="410.8" y="222.7" width="31.6" height="3.3" fill="var(--ours)" stroke="none"/><text x="426.6" y="218.7" class="ch-v" text-anchor="middle" fill="var(--ink)">2%</text><line x1="52" x2="508" y1="226.0" y2="226.0" stroke="var(--muted)" stroke-width="1" fill="none"/><line x1="52.0" x2="52.0" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="52.0" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">5</text><line x1="117.1" x2="117.1" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="117.1" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">7</text><line x1="182.3" x2="182.3" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="182.3" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">9</text><line x1="247.4" x2="247.4" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="247.4" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">11</text><line x1="312.6" x2="312.6" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="312.6" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">13</text><line x1="377.7" x2="377.7" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="377.7" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">15</text><line x1="442.9" x2="442.9" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="442.9" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">17</text><line x1="508.0" x2="508.0" y1="226.0" y2="230.0" stroke="var(--muted)" stroke-width="1" fill="none"/><text x="508.0" y="243.0" class="ch-n" text-anchor="middle" fill="var(--muted)">19</text><text x="508" y="264" class="ch-t" text-anchor="end" fill="var(--muted)">相邻两次上屏的间隔（ms）</text></svg></div><figcaption>98.3% 的间隔是一个刷新（8.3 ms），1.7% 是两个刷新（16.7 ms），没有更长的。数据：<code>step4/ab6_interp_vs_layer/traces/B1–B6_sclat.txt</code></figcaption></figure>
+<h3>4 · 超分算子的 GPU 耗时，一路迭代下来</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 298" width="100%" role="img" aria-label="超分算子迭代的层自身 GPU 耗时" xmlns="http://www.w3.org/2000/svg"><rect x="150" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="166" y="16" class="ch-t" fill="var(--muted)">p50</text><rect x="206.5" y="7" width="11" height="11" rx="2" fill="var(--ours-soft)" stroke="none"/><text x="222.5" y="16" class="ch-t" fill="var(--muted)">p95</text><line x1="150.0" x2="150.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="150.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">0</text><line x1="209.0" x2="209.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="209.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">2</text><line x1="268.0" x2="268.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="268.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">4</text><line x1="327.0" x2="327.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="327.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">6</text><line x1="386.0" x2="386.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="386.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">8</text><line x1="445.0" x2="445.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="445.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">10</text><line x1="504.0" x2="504.0" y1="34" y2="264" stroke="var(--line)" stroke-width="1" fill="none"/><text x="504.0" y="280" class="ch-n" text-anchor="middle" fill="var(--muted)">12</text><text x="504" y="294" class="ch-t" text-anchor="end" fill="var(--muted)">层自身 GPU 耗时（ms / 帧）</text><text x="142" y="55" class="ch-t" text-anchor="end" fill="var(--ink)">Lanczos2 + RCAS</text><text x="142" y="71" class="ch-s" text-anchor="end" fill="var(--muted)">输出 2141×969 · 2 臂</text><rect x="150" y="46.0" width="268.6" height="26" fill="var(--ours-soft)" stroke="var(--ours)" stroke-width="1"/><rect x="150" y="46.0" width="128.5" height="26" fill="var(--ours)" stroke="none"/><text x="424.6" y="64" class="ch-v" text-anchor="start" fill="var(--ink)">4.36 / 9.11</text><text x="142" y="101" class="ch-t" text-anchor="end" fill="var(--ink)">Catmull-Rom + RCAS</text><text x="142" y="117" class="ch-s" text-anchor="end" fill="var(--muted)">输出 2141×969 · 2 臂</text><rect x="150" y="92.0" width="111.2" height="26" fill="var(--ours-soft)" stroke="var(--ours)" stroke-width="1"/><rect x="150" y="92.0" width="65.1" height="26" fill="var(--ours)" stroke="none"/><text x="267.2" y="110" class="ch-v" text-anchor="start" fill="var(--ink)">2.21 / 3.77</text><text x="142" y="147" class="ch-t" text-anchor="end" fill="var(--ink)">同上，直写交换链</text><text x="142" y="163" class="ch-s" text-anchor="end" fill="var(--muted)">输出 2141×969 · 2 臂</text><rect x="150" y="138.0" width="104.2" height="26" fill="var(--ours-soft)" stroke="var(--ours)" stroke-width="1"/><rect x="150" y="138.0" width="60.4" height="26" fill="var(--ours)" stroke="none"/><text x="260.2" y="156" class="ch-v" text-anchor="start" fill="var(--ink)">2.05 / 3.53</text><text x="142" y="193" class="ch-t" text-anchor="end" fill="var(--ink)">Catmull-Rom + RCAS</text><text x="142" y="209" class="ch-s" text-anchor="end" fill="var(--muted)">输出 2688×1216 · 6 臂</text><rect x="150" y="184.0" width="160.1" height="26" fill="var(--ours-soft)" stroke="var(--ours)" stroke-width="1"/><rect x="150" y="184.0" width="73.2" height="26" fill="var(--ours)" stroke="none"/><text x="316.1" y="202" class="ch-v" text-anchor="start" fill="var(--ink)">2.48 / 5.43</text><text x="142" y="239" class="ch-t" text-anchor="end" fill="var(--ink)">单趟融合，直写（正式）</text><text x="142" y="255" class="ch-s" text-anchor="end" fill="var(--muted)">输出 2688×1216 · 6 臂</text><rect x="150" y="230.0" width="32.0" height="26" fill="var(--ours-soft)" stroke="var(--ours)" stroke-width="1"/><rect x="150" y="230.0" width="31.0" height="26" fill="var(--ours)" stroke="none"/><text x="188.0" y="248" class="ch-v" text-anchor="start" fill="var(--ink)">1.05 / 1.09</text><line x1="150" x2="150" y1="34" y2="264" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>层在自己的命令前后写 GPU 时间戳。深色是 p50，浅色到 p95，右侧数字是 p50 / p95（ms），取各臂的平均。正式版在更大的输出尺寸上只要 1.05 ms。数据：<code>step3/cost_lz_vs_cr</code>、<code>step3/cost_cr_direct</code>、<code>step3/ab6_srfull_cr</code>、<code>step4/ab6_interp_vs_layer</code> 的 arms.jsonl（selfsr.gpu_us_p50 / p95）</figcaption></figure>
+<h3>5 · 画质：右上角固定图标区锐度，逐对</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对图标区锐度：透传层对超分加插帧" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">透传层（不插帧）</text><rect x="210" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="226" y="16" class="ch-t" fill="var(--muted)">超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="205.7" y2="205.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="209.7" class="ch-n" text-anchor="end" fill="var(--muted)">200</text><line x1="52" x2="508" y1="171.3" y2="171.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="175.3" class="ch-n" text-anchor="end" fill="var(--muted)">400</text><line x1="52" x2="508" y1="137.0" y2="137.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="141.0" class="ch-n" text-anchor="end" fill="var(--muted)">600</text><line x1="52" x2="508" y1="102.7" y2="102.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="106.7" class="ch-n" text-anchor="end" fill="var(--muted)">800</text><line x1="52" x2="508" y1="68.3" y2="68.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="72.3" class="ch-n" text-anchor="end" fill="var(--muted)">1000</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">1200</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">锐度</text><rect x="59.8" y="190.6" width="26.2" height="49.4" fill="var(--base)" stroke="none"/><text x="72.9" y="186.6" class="ch-v" text-anchor="middle" fill="var(--ink)">288</text><rect x="94.0" y="57.1" width="26.2" height="182.9" fill="var(--ours)" stroke="none"/><text x="107.1" y="53.1" class="ch-v" text-anchor="middle" fill="var(--ink)">1065</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="165.0" width="26.2" height="75.0" fill="var(--base)" stroke="none"/><text x="148.9" y="161.0" class="ch-v" text-anchor="middle" fill="var(--ink)">437</text><rect x="170.0" y="88.6" width="26.2" height="151.4" fill="var(--ours)" stroke="none"/><text x="183.1" y="84.6" class="ch-v" text-anchor="middle" fill="var(--ink)">882</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="164.3" width="26.2" height="75.7" fill="var(--base)" stroke="none"/><text x="224.9" y="160.3" class="ch-v" text-anchor="middle" fill="var(--ink)">441</text><rect x="246.0" y="88.3" width="26.2" height="151.7" fill="var(--ours)" stroke="none"/><text x="259.1" y="84.3" class="ch-v" text-anchor="middle" fill="var(--ink)">884</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="187.8" width="26.2" height="52.2" fill="var(--base)" stroke="none"/><text x="300.9" y="183.8" class="ch-v" text-anchor="middle" fill="var(--ink)">304</text><rect x="322.0" y="73.0" width="26.2" height="167.0" fill="var(--ours)" stroke="none"/><text x="335.1" y="69.0" class="ch-v" text-anchor="middle" fill="var(--ink)">973</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="181.1" width="26.2" height="58.9" fill="var(--base)" stroke="none"/><text x="376.9" y="177.1" class="ch-v" text-anchor="middle" fill="var(--ink)">343</text><rect x="398.0" y="81.4" width="26.2" height="158.6" fill="var(--ours)" stroke="none"/><text x="411.1" y="77.4" class="ch-v" text-anchor="middle" fill="var(--ink)">924</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="176.3" width="26.2" height="63.7" fill="var(--base)" stroke="none"/><text x="452.9" y="172.3" class="ch-v" text-anchor="middle" fill="var(--ink)">371</text><rect x="474.0" y="107.8" width="26.2" height="132.2" fill="var(--ours)" stroke="none"/><text x="487.1" y="103.8" class="ch-v" text-anchor="middle" fill="var(--ink)">770</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>6/6 对 B 更清楚。均值 364 → 916。锐度是图标区拉普拉斯方差，越大越清楚。数据：<code>step4/ab6_interp_vs_layer/arms.jsonl</code>（sharp_hud）</figcaption></figure>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对图标区锐度：原生对超分加插帧" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">原生（系统限帧）</text><rect x="210" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="226" y="16" class="ch-t" fill="var(--muted)">超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="205.7" y2="205.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="209.7" class="ch-n" text-anchor="end" fill="var(--muted)">200</text><line x1="52" x2="508" y1="171.3" y2="171.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="175.3" class="ch-n" text-anchor="end" fill="var(--muted)">400</text><line x1="52" x2="508" y1="137.0" y2="137.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="141.0" class="ch-n" text-anchor="end" fill="var(--muted)">600</text><line x1="52" x2="508" y1="102.7" y2="102.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="106.7" class="ch-n" text-anchor="end" fill="var(--muted)">800</text><line x1="52" x2="508" y1="68.3" y2="68.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="72.3" class="ch-n" text-anchor="end" fill="var(--muted)">1000</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">1200</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">锐度</text><rect x="59.8" y="190.6" width="26.2" height="49.4" fill="var(--base)" stroke="none"/><text x="72.9" y="186.6" class="ch-v" text-anchor="middle" fill="var(--ink)">288</text><rect x="94.0" y="76.9" width="26.2" height="163.1" fill="var(--ours)" stroke="none"/><text x="107.1" y="72.9" class="ch-v" text-anchor="middle" fill="var(--ink)">950</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="163.1" width="26.2" height="76.9" fill="var(--base)" stroke="none"/><text x="148.9" y="159.1" class="ch-v" text-anchor="middle" fill="var(--ink)">448</text><rect x="170.0" y="76.5" width="26.2" height="163.5" fill="var(--ours)" stroke="none"/><text x="183.1" y="72.5" class="ch-v" text-anchor="middle" fill="var(--ink)">953</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="162.3" width="26.2" height="77.7" fill="var(--base)" stroke="none"/><text x="224.9" y="158.3" class="ch-v" text-anchor="middle" fill="var(--ink)">453</text><rect x="246.0" y="70.6" width="26.2" height="169.4" fill="var(--ours)" stroke="none"/><text x="259.1" y="66.6" class="ch-v" text-anchor="middle" fill="var(--ink)">987</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="182.4" width="26.2" height="57.6" fill="var(--base)" stroke="none"/><text x="300.9" y="178.4" class="ch-v" text-anchor="middle" fill="var(--ink)">336</text><rect x="322.0" y="80.4" width="26.2" height="159.6" fill="var(--ours)" stroke="none"/><text x="335.1" y="76.4" class="ch-v" text-anchor="middle" fill="var(--ink)">930</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="168.5" width="26.2" height="71.5" fill="var(--base)" stroke="none"/><text x="376.9" y="164.5" class="ch-v" text-anchor="middle" fill="var(--ink)">417</text><rect x="398.0" y="86.4" width="26.2" height="153.6" fill="var(--ours)" stroke="none"/><text x="411.1" y="82.4" class="ch-v" text-anchor="middle" fill="var(--ink)">895</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="196.0" width="26.2" height="44.0" fill="var(--base)" stroke="none"/><text x="452.9" y="192.0" class="ch-v" text-anchor="middle" fill="var(--ink)">256</text><rect x="474.0" y="67.9" width="26.2" height="172.1" fill="var(--ours)" stroke="none"/><text x="487.1" y="63.9" class="ch-v" text-anchor="middle" fill="var(--ink)">1003</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>6/6 对 B 更清楚。均值 366 → 953。数据：<code>step4/ab6_waitframe_off/arms.jsonl</code>（sharp_hud）</figcaption></figure>
+<h3>6 · 插帧不吃游戏自己的帧</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对游戏渲染帧率" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">透传层（不插帧）</text><rect x="210" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="226" y="16" class="ch-t" fill="var(--muted)">超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="210.6" y2="210.6" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="214.6" class="ch-n" text-anchor="end" fill="var(--muted)">10</text><line x1="52" x2="508" y1="181.1" y2="181.1" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="185.1" class="ch-n" text-anchor="end" fill="var(--muted)">20</text><line x1="52" x2="508" y1="151.7" y2="151.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="155.7" class="ch-n" text-anchor="end" fill="var(--muted)">30</text><line x1="52" x2="508" y1="122.3" y2="122.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="126.3" class="ch-n" text-anchor="end" fill="var(--muted)">40</text><line x1="52" x2="508" y1="92.9" y2="92.9" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="96.9" class="ch-n" text-anchor="end" fill="var(--muted)">50</text><line x1="52" x2="508" y1="63.4" y2="63.4" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="67.4" class="ch-n" text-anchor="end" fill="var(--muted)">60</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">70</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">帧/秒</text><rect x="59.8" y="64.0" width="26.2" height="176.0" fill="var(--base)" stroke="none"/><text x="72.9" y="60.0" class="ch-v" text-anchor="middle" fill="var(--ink)">59.8</text><rect x="94.0" y="65.4" width="26.2" height="174.6" fill="var(--ours)" stroke="none"/><text x="107.1" y="61.4" class="ch-v" text-anchor="middle" fill="var(--ink)">59.3</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="63.8" width="26.2" height="176.2" fill="var(--base)" stroke="none"/><text x="148.9" y="59.8" class="ch-v" text-anchor="middle" fill="var(--ink)">59.9</text><rect x="170.0" y="65.7" width="26.2" height="174.3" fill="var(--ours)" stroke="none"/><text x="183.1" y="61.7" class="ch-v" text-anchor="middle" fill="var(--ink)">59.2</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="63.8" width="26.2" height="176.2" fill="var(--base)" stroke="none"/><text x="224.9" y="59.8" class="ch-v" text-anchor="middle" fill="var(--ink)">59.9</text><rect x="246.0" y="65.0" width="26.2" height="175.0" fill="var(--ours)" stroke="none"/><text x="259.1" y="61.0" class="ch-v" text-anchor="middle" fill="var(--ink)">59.5</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="64.3" width="26.2" height="175.7" fill="var(--base)" stroke="none"/><text x="300.9" y="60.3" class="ch-v" text-anchor="middle" fill="var(--ink)">59.7</text><rect x="322.0" y="65.1" width="26.2" height="174.9" fill="var(--ours)" stroke="none"/><text x="335.1" y="61.1" class="ch-v" text-anchor="middle" fill="var(--ink)">59.4</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="64.3" width="26.2" height="175.7" fill="var(--base)" stroke="none"/><text x="376.9" y="60.3" class="ch-v" text-anchor="middle" fill="var(--ink)">59.7</text><rect x="398.0" y="65.6" width="26.2" height="174.4" fill="var(--ours)" stroke="none"/><text x="411.1" y="61.6" class="ch-v" text-anchor="middle" fill="var(--ink)">59.3</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="64.3" width="26.2" height="175.7" fill="var(--base)" stroke="none"/><text x="452.9" y="60.3" class="ch-v" text-anchor="middle" fill="var(--ink)">59.7</text><rect x="474.0" y="65.3" width="26.2" height="174.7" fill="var(--ours)" stroke="none"/><text x="487.1" y="61.3" class="ch-v" text-anchor="middle" fill="var(--ink)">59.4</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>游戏自己渲染的帧率（GPU 提交）。均值 59.78 → 59.34，少了 0.7%（p = 0.031）。数据：<code>step4/ab6_interp_vs_layer/arms.jsonl</code>（game_fps）</figcaption></figure>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对游戏 p95 帧时" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">透传层（不插帧）</text><rect x="210" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="226" y="16" class="ch-t" fill="var(--muted)">超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="198.8" y2="198.8" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="202.8" class="ch-n" text-anchor="end" fill="var(--muted)">5</text><line x1="52" x2="508" y1="157.6" y2="157.6" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="161.6" class="ch-n" text-anchor="end" fill="var(--muted)">10</text><line x1="52" x2="508" y1="116.4" y2="116.4" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="120.4" class="ch-n" text-anchor="end" fill="var(--muted)">15</text><line x1="52" x2="508" y1="75.2" y2="75.2" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="79.2" class="ch-n" text-anchor="end" fill="var(--muted)">20</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">25</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">ms</text><rect x="59.8" y="82.2" width="26.2" height="157.8" fill="var(--base)" stroke="none"/><text x="72.9" y="78.2" class="ch-v" text-anchor="middle" fill="var(--ink)">19.1</text><rect x="94.0" y="83.5" width="26.2" height="156.5" fill="var(--ours)" stroke="none"/><text x="107.1" y="79.5" class="ch-v" text-anchor="middle" fill="var(--ink)">19.0</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="82.6" width="26.2" height="157.4" fill="var(--base)" stroke="none"/><text x="148.9" y="78.6" class="ch-v" text-anchor="middle" fill="var(--ink)">19.1</text><rect x="170.0" y="83.1" width="26.2" height="156.9" fill="var(--ours)" stroke="none"/><text x="183.1" y="79.1" class="ch-v" text-anchor="middle" fill="var(--ink)">19.0</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="79.0" width="26.2" height="161.0" fill="var(--base)" stroke="none"/><text x="224.9" y="75.0" class="ch-v" text-anchor="middle" fill="var(--ink)">19.5</text><rect x="246.0" y="86.1" width="26.2" height="153.9" fill="var(--ours)" stroke="none"/><text x="259.1" y="82.1" class="ch-v" text-anchor="middle" fill="var(--ink)">18.7</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="79.2" width="26.2" height="160.8" fill="var(--base)" stroke="none"/><text x="300.9" y="75.2" class="ch-v" text-anchor="middle" fill="var(--ink)">19.5</text><rect x="322.0" y="85.9" width="26.2" height="154.1" fill="var(--ours)" stroke="none"/><text x="335.1" y="81.9" class="ch-v" text-anchor="middle" fill="var(--ink)">18.7</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="80.5" width="26.2" height="159.5" fill="var(--base)" stroke="none"/><text x="376.9" y="76.5" class="ch-v" text-anchor="middle" fill="var(--ink)">19.4</text><rect x="398.0" y="83.0" width="26.2" height="157.0" fill="var(--ours)" stroke="none"/><text x="411.1" y="79.0" class="ch-v" text-anchor="middle" fill="var(--ink)">19.1</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="91.0" width="26.2" height="149.0" fill="var(--base)" stroke="none"/><text x="452.9" y="87.0" class="ch-v" text-anchor="middle" fill="var(--ink)">18.1</text><rect x="474.0" y="85.3" width="26.2" height="154.7" fill="var(--ours)" stroke="none"/><text x="487.1" y="81.3" class="ch-v" text-anchor="middle" fill="var(--ink)">18.8</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>游戏帧时的 p95，越低越稳。均值 19.1 → 18.9 ms，差别不显著（p = 0.28）。数据：<code>step4/ab6_interp_vs_layer/arms.jsonl</code>（game_frame_p95_ms）</figcaption></figure>
+<h3>7 · 只开超分，以及和 GFRC+ 比</h3>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对图标区锐度：原生对只开超分" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--base)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">原生</text><rect x="132" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="148" y="16" class="ch-t" fill="var(--muted)">自研超分（满分辨率）</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="205.7" y2="205.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="209.7" class="ch-n" text-anchor="end" fill="var(--muted)">200</text><line x1="52" x2="508" y1="171.3" y2="171.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="175.3" class="ch-n" text-anchor="end" fill="var(--muted)">400</text><line x1="52" x2="508" y1="137.0" y2="137.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="141.0" class="ch-n" text-anchor="end" fill="var(--muted)">600</text><line x1="52" x2="508" y1="102.7" y2="102.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="106.7" class="ch-n" text-anchor="end" fill="var(--muted)">800</text><line x1="52" x2="508" y1="68.3" y2="68.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="72.3" class="ch-n" text-anchor="end" fill="var(--muted)">1000</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">1200</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">锐度</text><rect x="59.8" y="168.1" width="26.2" height="71.9" fill="var(--base)" stroke="none"/><text x="72.9" y="164.1" class="ch-v" text-anchor="middle" fill="var(--ink)">419</text><rect x="94.0" y="105.6" width="26.2" height="134.4" fill="var(--ours)" stroke="none"/><text x="107.1" y="101.6" class="ch-v" text-anchor="middle" fill="var(--ink)">783</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="162.2" width="26.2" height="77.8" fill="var(--base)" stroke="none"/><text x="148.9" y="158.2" class="ch-v" text-anchor="middle" fill="var(--ink)">453</text><rect x="170.0" y="107.6" width="26.2" height="132.4" fill="var(--ours)" stroke="none"/><text x="183.1" y="103.6" class="ch-v" text-anchor="middle" fill="var(--ink)">771</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="161.3" width="26.2" height="78.7" fill="var(--base)" stroke="none"/><text x="224.9" y="157.3" class="ch-v" text-anchor="middle" fill="var(--ink)">458</text><rect x="246.0" y="109.6" width="26.2" height="130.4" fill="var(--ours)" stroke="none"/><text x="259.1" y="105.6" class="ch-v" text-anchor="middle" fill="var(--ink)">760</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="192.9" width="26.2" height="47.1" fill="var(--base)" stroke="none"/><text x="300.9" y="188.9" class="ch-v" text-anchor="middle" fill="var(--ink)">275</text><rect x="322.0" y="136.4" width="26.2" height="103.6" fill="var(--ours)" stroke="none"/><text x="335.1" y="132.4" class="ch-v" text-anchor="middle" fill="var(--ink)">604</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="187.7" width="26.2" height="52.3" fill="var(--base)" stroke="none"/><text x="376.9" y="183.7" class="ch-v" text-anchor="middle" fill="var(--ink)">305</text><rect x="398.0" y="111.8" width="26.2" height="128.2" fill="var(--ours)" stroke="none"/><text x="411.1" y="107.8" class="ch-v" text-anchor="middle" fill="var(--ink)">747</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="189.5" width="26.2" height="50.5" fill="var(--base)" stroke="none"/><text x="452.9" y="185.5" class="ch-v" text-anchor="middle" fill="var(--ink)">294</text><rect x="474.0" y="125.6" width="26.2" height="114.4" fill="var(--ours)" stroke="none"/><text x="487.1" y="121.6" class="ch-v" text-anchor="middle" fill="var(--ink)">667</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>只开超分（Catmull-Rom + RCAS 0.8，输出 2688×1216，不插帧）：6/6 对更清楚，均值 367 → 722。数据：<code>step3/ab6_srfull_cr/arms.jsonl</code>（sharp_hud）</figcaption></figure>
+<figure><div style="overflow-x:auto"><svg class="ch-svg" viewBox="0 0 520 280" width="100%" role="img" aria-label="逐对图标区锐度：GFRC+ 对自研" xmlns="http://www.w3.org/2000/svg"><rect x="72" y="7" width="11" height="11" rx="2" fill="var(--vendor)" stroke="none"/><text x="88" y="16" class="ch-t" fill="var(--muted)">GFRC+ 超分 + 插帧</text><rect x="225.5" y="7" width="11" height="11" rx="2" fill="var(--ours)" stroke="none"/><text x="241.5" y="16" class="ch-t" fill="var(--muted)">自研超分 + 插帧</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="244.0" class="ch-n" text-anchor="end" fill="var(--muted)">0</text><line x1="52" x2="508" y1="205.7" y2="205.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="209.7" class="ch-n" text-anchor="end" fill="var(--muted)">200</text><line x1="52" x2="508" y1="171.3" y2="171.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="175.3" class="ch-n" text-anchor="end" fill="var(--muted)">400</text><line x1="52" x2="508" y1="137.0" y2="137.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="141.0" class="ch-n" text-anchor="end" fill="var(--muted)">600</text><line x1="52" x2="508" y1="102.7" y2="102.7" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="106.7" class="ch-n" text-anchor="end" fill="var(--muted)">800</text><line x1="52" x2="508" y1="68.3" y2="68.3" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="72.3" class="ch-n" text-anchor="end" fill="var(--muted)">1000</text><line x1="52" x2="508" y1="34.0" y2="34.0" stroke="var(--line)" stroke-width="1" fill="none"/><text x="46" y="38.0" class="ch-n" text-anchor="end" fill="var(--muted)">1200</text><text x="46" y="20" class="ch-n" text-anchor="end" fill="var(--muted)">锐度</text><rect x="59.8" y="97.7" width="26.2" height="142.3" fill="var(--vendor)" stroke="none"/><text x="72.9" y="93.7" class="ch-v" text-anchor="middle" fill="var(--ink)">829</text><rect x="94.0" y="88.2" width="26.2" height="151.8" fill="var(--ours)" stroke="none"/><text x="107.1" y="84.2" class="ch-v" text-anchor="middle" fill="var(--ink)">884</text><text x="90.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 1</text><rect x="135.8" y="107.0" width="26.2" height="133.0" fill="var(--vendor)" stroke="none"/><text x="148.9" y="103.0" class="ch-v" text-anchor="middle" fill="var(--ink)">775</text><rect x="170.0" y="92.3" width="26.2" height="147.7" fill="var(--ours)" stroke="none"/><text x="183.1" y="88.3" class="ch-v" text-anchor="middle" fill="var(--ink)">860</text><text x="166.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 2</text><rect x="211.8" y="113.7" width="26.2" height="126.3" fill="var(--vendor)" stroke="none"/><text x="224.9" y="109.7" class="ch-v" text-anchor="middle" fill="var(--ink)">735</text><rect x="246.0" y="47.1" width="26.2" height="192.9" fill="var(--ours)" stroke="none"/><text x="259.1" y="43.1" class="ch-v" text-anchor="middle" fill="var(--ink)">1124</text><text x="242.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 3</text><rect x="287.8" y="96.7" width="26.2" height="143.3" fill="var(--vendor)" stroke="none"/><text x="300.9" y="92.7" class="ch-v" text-anchor="middle" fill="var(--ink)">835</text><rect x="322.0" y="68.9" width="26.2" height="171.1" fill="var(--ours)" stroke="none"/><text x="335.1" y="64.9" class="ch-v" text-anchor="middle" fill="var(--ink)">997</text><text x="318.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 4</text><rect x="363.8" y="100.5" width="26.2" height="139.5" fill="var(--vendor)" stroke="none"/><text x="376.9" y="96.5" class="ch-v" text-anchor="middle" fill="var(--ink)">813</text><rect x="398.0" y="89.2" width="26.2" height="150.8" fill="var(--ours)" stroke="none"/><text x="411.1" y="85.2" class="ch-v" text-anchor="middle" fill="var(--ink)">879</text><text x="394.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 5</text><rect x="439.8" y="97.0" width="26.2" height="143.0" fill="var(--vendor)" stroke="none"/><text x="452.9" y="93.0" class="ch-v" text-anchor="middle" fill="var(--ink)">833</text><rect x="474.0" y="77.9" width="26.2" height="162.1" fill="var(--ours)" stroke="none"/><text x="487.1" y="73.9" class="ch-v" text-anchor="middle" fill="var(--ink)">944</text><text x="470.0" y="258" class="ch-t" text-anchor="middle" fill="var(--muted)">对比 6</text><line x1="52" x2="508" y1="240.0" y2="240.0" stroke="var(--muted)" stroke-width="1" fill="none"/></svg></div><figcaption>主测手机上，GFRC+ 111 对自研超分 + 插帧（同开 GFRC+ 101 放开限帧）：6/6 对自研更清楚，均值 803 → 948。这一轮自研臂上屏只有约 59 帧，帧率不在这里比。数据：<code>step5/ab6_gfrc111_vs_srip_sc/arms.jsonl</code>（sharp_hud）</figcaption></figure>
+</div>
+</section>
+<section id="shots-all">
+<div class="stack"><div class="eyebrow">全部截图</div><h2>正式对比每一臂的截图</h2><p>每一臂都是单独一次冷启动，进世界的时辰、天气和镜头都会不同，所以整屏不能逐像素比。画质看右上角那排固定图标。</p></div>
+<details class="ch-more" open><summary>只看插帧：透传层 对 超分 + 插帧（step4/ab6_interp_vs_layer）</summary>
+<div class="shots ch-shots">
+<figure><img src="img/s4_iv_A1.jpg" alt="对比 1 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 288" width="960" height="434" loading="lazy"><figcaption>对比 1 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 288</figcaption></figure>
+<figure><img src="img/s4_iv_B1.jpg" alt="对比 1 · 超分 + 插帧 · 118.72 帧 / 图标区锐度 1065" width="960" height="434" loading="lazy"><figcaption>对比 1 · 超分 + 插帧 · 118.72 帧 / 图标区锐度 1065</figcaption></figure>
+<figure><img src="img/s4_iv_A2.jpg" alt="对比 2 · 透传层（不插帧） · 59.98 帧 / 图标区锐度 437" width="960" height="434" loading="lazy"><figcaption>对比 2 · 透传层（不插帧） · 59.98 帧 / 图标区锐度 437</figcaption></figure>
+<figure><img src="img/s4_iv_B2.jpg" alt="对比 2 · 超分 + 插帧 · 119.08 帧 / 图标区锐度 882" width="960" height="434" loading="lazy"><figcaption>对比 2 · 超分 + 插帧 · 119.08 帧 / 图标区锐度 882</figcaption></figure>
+<figure><img src="img/s4_iv_A3.jpg" alt="对比 3 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 441" width="960" height="434" loading="lazy"><figcaption>对比 3 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 441</figcaption></figure>
+<figure><img src="img/s4_iv_B3.jpg" alt="对比 3 · 超分 + 插帧 · 118.08 帧 / 图标区锐度 884" width="960" height="434" loading="lazy"><figcaption>对比 3 · 超分 + 插帧 · 118.08 帧 / 图标区锐度 884</figcaption></figure>
+<figure><img src="img/s4_iv_A4.jpg" alt="对比 4 · 透传层（不插帧） · 59.97 帧 / 图标区锐度 304" width="960" height="434" loading="lazy"><figcaption>对比 4 · 透传层（不插帧） · 59.97 帧 / 图标区锐度 304</figcaption></figure>
+<figure><img src="img/s4_iv_B4.jpg" alt="对比 4 · 超分 + 插帧 · 118.42 帧 / 图标区锐度 973" width="960" height="434" loading="lazy"><figcaption>对比 4 · 超分 + 插帧 · 118.42 帧 / 图标区锐度 973</figcaption></figure>
+<figure><img src="img/s4_iv_A5.jpg" alt="对比 5 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 343" width="960" height="434" loading="lazy"><figcaption>对比 5 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 343</figcaption></figure>
+<figure><img src="img/s4_iv_B5.jpg" alt="对比 5 · 超分 + 插帧 · 118.73 帧 / 图标区锐度 924" width="960" height="434" loading="lazy"><figcaption>对比 5 · 超分 + 插帧 · 118.73 帧 / 图标区锐度 924</figcaption></figure>
+<figure><img src="img/s4_iv_A6.jpg" alt="对比 6 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 371" width="960" height="434" loading="lazy"><figcaption>对比 6 · 透传层（不插帧） · 59.99 帧 / 图标区锐度 371</figcaption></figure>
+<figure><img src="img/s4_iv_B6.jpg" alt="对比 6 · 超分 + 插帧 · 116.23 帧 / 图标区锐度 770" width="960" height="434" loading="lazy"><figcaption>对比 6 · 超分 + 插帧 · 116.23 帧 / 图标区锐度 770</figcaption></figure>
+</div></details>
+<details class="ch-more" open><summary>对比原生：原生 对 超分 + 插帧（step4/ab6_waitframe_off）</summary>
+<div class="shots ch-shots">
+<figure><img src="img/s4_wf_A1.jpg" alt="对比 1 · 原生（系统限帧） · 29.80 帧 / 图标区锐度 288" width="960" height="434" loading="lazy"><figcaption>对比 1 · 原生（系统限帧） · 29.80 帧 / 图标区锐度 288</figcaption></figure>
+<figure><img src="img/s4_wf_B1.jpg" alt="对比 1 · 超分 + 插帧 · 117.42 帧 / 图标区锐度 950" width="960" height="434" loading="lazy"><figcaption>对比 1 · 超分 + 插帧 · 117.42 帧 / 图标区锐度 950</figcaption></figure>
+<figure><img src="img/s4_wf_A2.jpg" alt="对比 2 · 原生（系统限帧） · 29.82 帧 / 图标区锐度 448" width="960" height="434" loading="lazy"><figcaption>对比 2 · 原生（系统限帧） · 29.82 帧 / 图标区锐度 448</figcaption></figure>
+<figure><img src="img/s4_wf_B2.jpg" alt="对比 2 · 超分 + 插帧 · 118.42 帧 / 图标区锐度 953" width="960" height="434" loading="lazy"><figcaption>对比 2 · 超分 + 插帧 · 118.42 帧 / 图标区锐度 953</figcaption></figure>
+<figure><img src="img/s4_wf_A3.jpg" alt="对比 3 · 原生（系统限帧） · 29.80 帧 / 图标区锐度 453" width="960" height="434" loading="lazy"><figcaption>对比 3 · 原生（系统限帧） · 29.80 帧 / 图标区锐度 453</figcaption></figure>
+<figure><img src="img/s4_wf_B3.jpg" alt="对比 3 · 超分 + 插帧 · 119.23 帧 / 图标区锐度 987" width="960" height="434" loading="lazy"><figcaption>对比 3 · 超分 + 插帧 · 119.23 帧 / 图标区锐度 987</figcaption></figure>
+<figure><img src="img/s4_wf_A4.jpg" alt="对比 4 · 原生（系统限帧） · 29.82 帧 / 图标区锐度 336" width="960" height="434" loading="lazy"><figcaption>对比 4 · 原生（系统限帧） · 29.82 帧 / 图标区锐度 336</figcaption></figure>
+<figure><img src="img/s4_wf_B4.jpg" alt="对比 4 · 超分 + 插帧 · 60.10 帧，面板 60 Hz / 图标区锐度 930" width="960" height="434" loading="lazy"><figcaption>对比 4 · 超分 + 插帧 · 60.10 帧，面板 60 Hz / 图标区锐度 930</figcaption></figure>
+<figure><img src="img/s4_wf_A5.jpg" alt="对比 5 · 原生（系统限帧） · 29.80 帧 / 图标区锐度 417" width="960" height="434" loading="lazy"><figcaption>对比 5 · 原生（系统限帧） · 29.80 帧 / 图标区锐度 417</figcaption></figure>
+<figure><img src="img/s4_wf_B5.jpg" alt="对比 5 · 超分 + 插帧 · 118.90 帧 / 图标区锐度 895" width="960" height="434" loading="lazy"><figcaption>对比 5 · 超分 + 插帧 · 118.90 帧 / 图标区锐度 895</figcaption></figure>
+<figure><img src="img/s4_wf_A6.jpg" alt="对比 6 · 原生（系统限帧） · 29.81 帧 / 图标区锐度 256" width="960" height="434" loading="lazy"><figcaption>对比 6 · 原生（系统限帧） · 29.81 帧 / 图标区锐度 256</figcaption></figure>
+<figure><img src="img/s4_wf_B6.jpg" alt="对比 6 · 超分 + 插帧 · 118.59 帧 / 图标区锐度 1003" width="960" height="434" loading="lazy"><figcaption>对比 6 · 超分 + 插帧 · 118.59 帧 / 图标区锐度 1003</figcaption></figure>
+</div></details>
+</section>
+
+
 <section>
   <div class="stack">
     <div class="eyebrow">逐项增益</div>
@@ -673,7 +759,7 @@ lobe = lobe × 强度
   </div>
   <ul class="clean">
     <li>延迟 +33.5 ms 是层内记录的排队时间，是下限，还没有用外部高速相机测端到端的操作延迟。</li>
-    <li>重影：静止和慢动作画面干净，快速转身时物体边缘有块匹配插帧常见的拖影。</li>
+    <li>重影：镜头转动时，插出来的中间帧里<b>界面文字、小地图标签会有明显重影</b>（见下面的慢放视频）：界面不跟场景一起运动，块匹配却按场景的运动去挪它。代码里有「界面区域直接取最近真实帧」的保护，但默认关闭、还没调好，这是下一步要做的。物体边缘也有块匹配常见的拖影。静止和慢速画面干净。</li>
     <li>每款游戏只测了一个静置场景。</li>
     <li>原神只在主测手机上测过，第二台手机上没有跑原神。</li>
   </ul>
@@ -760,340 +846,7 @@ sh loop_v1/selfsr/repro_noroot.sh &lt;serial&gt;   # 未 root 手机：测试程
 </section>
 
 
-<section id="code">
-  <style>
-    .cd-fig { margin: 12px 0 28px; }
-    .cd-fig pre { margin: 0; }
-    .cd-fig figcaption { margin-top: 6px; font-size: 13px; color: var(--muted); }
-    .cd-fig figcaption code { font-size: 12px; }
-    .cd-list { margin: 0; padding-left: 1.2em; }
-    .cd-list li { margin: 2px 0; }
-    .cd-num { text-align: right; font-variant-numeric: tabular-nums; }
-  </style>
-  <div class="stack">
-    <div class="eyebrow">代码级说明</div>
-    <h2>代码里是怎么实现的</h2>
-    <p class="muted">代码在 <code>HGamey/phonefarm</code> 仓库的 <code>feat/selfsr</code> 分支。层的源码在 <code>knobs/gray/layer/</code>，测试脚本在 <code>loop_v1/selfsr/</code>。下面的代码片段都摘自源码，只删了日志和部分注释，删掉的地方用 <code>// …</code> 标出。</p>
-  </div>
 
-  <h3>1. 层怎么被加载、怎么拦截调用</h3>
-  <p>层是一个 <code>libVkLayer_refknobs.so</code>，层名 <code>VK_LAYER_refknobs_readonly</code>。Android 的 Vulkan 加载器不读 JSON 清单（<code>VkLayer_refknobs.json</code> 只给桌面加载器用）。它在应用自己的 native 库目录里找 .so，用 dlsym 取 4 个枚举函数和 <code>vkNegotiateLoaderLayerInterfaceVersion</code>，缺一个就丢掉这个层。</p>
-  <p>上机用的是 root 路线：把 .so 拷进游戏的 <code>nativeLibraryDir</code>（<code>/data/app/…/lib/arm64</code>），再 <code>setprop debug.vulkan.layers VK_LAYER_refknobs_readonly</code>。这个属性是全局的，会影响别的 Vulkan 应用，所以测试会话在游戏加载完层之后立刻把它清空（<code>src/gray_session.rs</code>）。不 root 的标准做法是 <code>settings put global enable_gpu_debug_layers / gpu_debug_app / gpu_debug_layers</code>，但系统只对可调试应用生效：对原神这类不可调试的商业游戏无效；在第二台手机上，用可调试的测试程序和重打包成可调试版的 Megacity，不 root 也成功加载了层（插帧 60→119.9、30→60.1）。</p>
-  <p>加载器通过协商拿到我们的 <code>GetInstanceProcAddr</code> / <code>GetDeviceProcAddr</code>。游戏每查一个函数，先问超分、插帧、抓帧三个模块要不要接（没开的模块恒返回空），再查本层的钩子表，都不要就原样转给下一层。正式测试实际接管的入口：</p>
-  <ul class="cd-list">
-    <li>实例级：<code>vkCreateInstance</code>、<code>vkDestroyInstance</code>、<code>vkCreateDevice</code>（加 <code>VK_GOOGLE_display_timing</code> 和 AHardwareBuffer 导入扩展）、<code>vkEnumerateDeviceExtensionProperties</code>（只转发）、<code>vkCreateAndroidSurfaceKHR</code>（插帧开时才接，用来拿游戏窗口）。</li>
-    <li>设备级：<code>vkQueuePresentKHR</code>、<code>vkCreateSwapchainKHR</code>、<code>vkDestroySwapchainKHR</code>、<code>vkDestroyDevice</code>、<code>vkGetDeviceQueue</code> / <code>vkGetDeviceQueue2</code>（记队列族）、<code>vkGetPastPresentationTimingGOOGLE</code>。</li>
-    <li>另有 render pass、draw、提交等观测用钩子，只在 <code>passdump</code> / <code>frameaudit</code> 等属性打开时才挂，正式测试不挂。</li>
-  </ul>
-  <figure class="cd-fig">
-<pre><code>extern "C" RK_EXPORT VkResult VKAPI_CALL vkNegotiateLoaderLayerInterfaceVersion(RkNegotiate* v) {
-    if (v-&gt;loaderLayerInterfaceVersion &gt; 2) v-&gt;loaderLayerInterfaceVersion = 2;
-    v-&gt;pfnGetInstanceProcAddr = dispatch_instance;
-    v-&gt;pfnGetDeviceProcAddr = dispatch_device;
-    v-&gt;pfnGetPhysicalDeviceProcAddr = nullptr;
-    return VK_SUCCESS;
-}
-
-static PFN_vkVoidFunction dispatch_device(VkDevice dev, const char* name) {
-    RK_HOOK("vkGetDeviceProcAddr", dispatch_device);
-    if (PFN_vkVoidFunction p = sr_hook(name)) return p;   // selfsr 没开时恒为空
-    if (PFN_vkVoidFunction p = ip_hook(name)) return p;   // interp 没开时恒为空
-    if (PFN_vkVoidFunction p = fd_hook(name)) return p;   // framedump 没开时恒为空
-    RK_HOOK("vkDestroyDevice", rk_DestroyDevice);
-    RK_HOOK("vkQueuePresentKHR", rk_QueuePresentKHR);
-    RK_HOOK("vkCreateSwapchainKHR", rk_CreateSwapchainKHR);
-    // … render pass 钩子; passdump / frameaudit 开时才挂的观测钩子
-    DevDisp d;
-    { std::lock_guard&lt;std::mutex&gt; lk(g_mtx); auto it = g_dev.find(key(dev)); if (it == g_dev.end()) return nullptr; d = it-&gt;second; }
-    // …
-    return d.gdpa ? d.gdpa(dev, name) : nullptr;
-}</code></pre>
-    <figcaption><code>vk_layer_refknobs.cpp: vkNegotiateLoaderLayerInterfaceVersion / dispatch_device</code></figcaption>
-  </figure>
-
-  <h3>2. 改交换链</h3>
-  <p>游戏建交换链时，超分模块把 <code>imageExtent</code> 换成屏幕分辨率，并加上拷贝用的用途位。游戏的帧缓冲还是原来的小尺寸（帧缓冲允许比图像小），所以它只画在每张图的左上角。插帧模块在同一个调用里多要几张图（缺省多 2 张），加用途位，并强制 FIFO。改过的参数建不成，就退回游戏的原参数，画面照常，只是不超分不插帧。</p>
-  <p>交换链建好后，超分模块再建三张自己的图：T（游戏尺寸，采样读）、O 和 P（屏幕尺寸，计算着色器写），以及每张交换链图一个信号量。子图层路线的插帧帧不放在交换链里，而是放在另外一组共享缓冲里，见第 6 节。</p>
-  <figure class="cd-fig">
-<pre><code>// selfsr.cpp: sr_patch_swapchain_ci
-    if (ci-&gt;imageExtent.width == g_want_w &amp;&amp; ci-&gt;imageExtent.height == g_want_h) return false;   // 游戏本来就要这个尺寸
-    // … 只接受 RGBA8; 查 surface 能力: 用途位、最大最小尺寸
-    ci-&gt;imageExtent = {g_want_w, g_want_h};
-    ci-&gt;imageUsage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
-
-// interp.cpp: ip_patch_swapchain_ci
-    uint32_t want = ci-&gt;minImageCount + (uint32_t)g_extra_images;
-    if (have_caps &amp;&amp; caps.maxImageCount &amp;&amp; want &gt; caps.maxImageCount) want = caps.maxImageCount;
-    ci-&gt;minImageCount = want;
-    ci-&gt;imageUsage |= need;
-    if (ci-&gt;presentMode != VK_PRESENT_MODE_FIFO_KHR &amp;&amp; ci-&gt;presentMode != VK_PRESENT_MODE_FIFO_RELAXED_KHR)
-        ci-&gt;presentMode = VK_PRESENT_MODE_FIFO_KHR;
-
-// vk_layer_refknobs.cpp: rk_CreateSwapchainKHR
-        if (ip_on()) ip_patched = ip_patch_swapchain_ci(dev, &amp;mod_ci);
-        if (sr_on()) sr_patched = sr_patch_swapchain_ci(dev, &amp;mod_ci);
-        bool patched = fd_usage || ip_patched || sr_patched;
-        r = d.CreateSwapchainKHR(dev, patched ? &amp;mod_ci : ci, a, out);
-        if (r != VK_SUCCESS &amp;&amp; patched) {
-            // … 记日志, 退回原参数
-            r = d.CreateSwapchainKHR(dev, ci, a, out);
-        }</code></pre>
-    <figcaption><code>selfsr.cpp: sr_patch_swapchain_ci / interp.cpp: ip_patch_swapchain_ci / vk_layer_refknobs.cpp: rk_CreateSwapchainKHR</code></figcaption>
-  </figure>
-
-  <h3>3. <code>vkQueuePresentKHR</code> 主流程</h3>
-  <p>游戏每送显一次，层先解开限帧（第 8 节），然后串起两个模块：超分模块录一批命令，等游戏的信号量，做完发出自己的信号量；它不直接送显，而是把「改成等这个信号量」的送显请求交给插帧模块。插帧模块再录一批命令（插帧、拷真实帧、存历史帧），等超分的信号量，提交后导出一个同步 fd，把两张缓冲交给子图层，最后把游戏原来的送显转下去，让它等插帧的信号量。</p>
-  <p>CPU 全程不等 GPU：子图层靠同步 fd 自己等。任何一步失败都走 <code>bail()</code>，按游戏的原参数送显，并把原因计数写进日志文件。</p>
-  <figure class="cd-fig">
-<pre><code>// vk_layer_refknobs.cpp: rk_QueuePresentKHR
-    if (g_unlimit) unlimit_on_present();
-    // …
-    if (sr_on() &amp;&amp; ip_on()) {   // 超分 + 插帧
-        tl_present_next = d.QueuePresentKHR; tl_present_frame = f;
-        return sr_on_present(q, pi, rk_present_via_interp, f);   // 超分做完调 ip_on_present
-    }
-
-// interp.cpp: ip_on_present (子图层分支, 节选)
-        sub.waitSemaphoreCount = pi-&gt;waitSemaphoreCount; sub.pWaitSemaphores = pi-&gt;pWaitSemaphores;
-        sub.commandBufferCount = 1; sub.pCommandBuffers = &amp;sl.cb;
-        sub.signalSemaphoreCount = 1; sub.pSignalSemaphores = &amp;S.sems[idxN];
-        if (D-&gt;QueueSubmit(q, 1, &amp;sub, sl.fence) != VK_SUCCESS) { g_fb["submit_fail"]++; return bail("sc_submit"); }
-        int fence_fd = sc_export_fence(D-&gt;dev, q);   // 拿不到才退回 CPU 等 (最多 50 ms)
-        // … 排上屏时刻 (第 7 节)
-        VkSemaphore semN = S.sems[idxN];
-        lk.unlock();
-        sc_show(D-&gt;dev, show, S.w, S.h, S.pre, fence_fd);
-        VkPresentInfoKHR pn = *pi;
-        pn.waitSemaphoreCount = 1; pn.pWaitSemaphores = &amp;semN;
-        return next(q, &amp;pn);   // 游戏自己的送显照常, 被子图层盖在下面</code></pre>
-    <figcaption><code>vk_layer_refknobs.cpp: rk_QueuePresentKHR / interp.cpp: ip_on_present（子图层分支）</code></figcaption>
-  </figure>
-
-  <h3>4. 超分调度</h3>
-  <p>超分一共一次计算调度。先把游戏画的左上角拷进 T，再绑定描述符集：binding 0 是 T（带采样器，Catmull-Rom 要用硬件双线性），binding 1 是输出图 O（storage image）。推送常量 32 字节：输入尺寸、输出尺寸、锐化强度、算法编号。工作组 16×16，按输出尺寸向上取整。</p>
-  <p>着色器里每个工作组先把 18×18 的放大结果（多一圈邻居）算进共享内存，Catmull-Rom 用 9 次双线性取样代替 16 次取点。然后直接在共享内存上做 RCAS 锐化写出，省掉一整张中间图的写出和读回。交换链图支持存储写入时直接写进交换链图（正式测试走的就是这条，9128 帧全部直写）；不支持时先写到层自己的图 O，再拷回交换链图。</p>
-  <figure class="cd-fig">
-<pre><code>// selfsr.cpp: sr_on_present
-    D-&gt;CmdCopyImage(cb, N, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, S.T, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &amp;rg);
-    struct { int32_t iw, ih, ow, oh; float sharp; int32_t algo; int32_t pad[2]; } pc{(int32_t)S.in_w, (int32_t)S.in_h,
-        (int32_t)S.out_w, (int32_t)S.out_h, g_sharp, g_algo, {0, 0}};
-    D-&gt;CmdBindPipeline(cb, VK_PIPELINE_BIND_POINT_COMPUTE, D-&gt;pipe);
-    D-&gt;CmdBindDescriptorSets(cb, VK_PIPELINE_BIND_POINT_COMPUTE, D-&gt;pl, 0, 1, &amp;S.set, 0, nullptr);
-    D-&gt;CmdPushConstants(cb, D-&gt;pl, VK_SHADER_STAGE_COMPUTE_BIT, 0, sizeof pc, &amp;pc);
-    D-&gt;CmdDispatch(cb, (S.out_w + 15) / 16, (S.out_h + 15) / 16, 1);
-
-// selfsr_fused.comp: main
-    for (uint k = lid; k &lt; 18u * 18u; k += 256u) {
-        ivec2 t = ivec2(int(k % 18u), int(k / 18u));
-        ivec2 q = clamp(base + t, ivec2(0), pc.out_size - 1);
-        tile[t.y][t.x] = pc.algo == 1 ? upscale_cr(q) : upscale(q);
-    }
-    barrier();
-    // … c = 中心, n/s/w/e = 上下左右 (都从 tile 取)
-    vec3 mn = min(min(min(n, s), min(w, e)), c);
-    vec3 mx = max(max(max(n, s), max(w, e)), c);
-    vec3 hit_min = mn / (4.0 * mx + 1e-5);
-    vec3 hit_max = (1.0 - mx) / (4.0 * mn - 4.0 + 1e-5);
-    vec3 l3 = max(-hit_min, hit_max);
-    float lobe = clamp(max(l3.r, max(l3.g, l3.b)), -0.1875, 0.0) * pc.sharp;
-    vec3 r = (lobe * (n + s + w + e) + c) / (4.0 * lobe + 1.0);</code></pre>
-    <figcaption><code>selfsr.cpp: sr_on_present / selfsr_fused.comp: main</code></figcaption>
-  </figure>
-
-  <h3>5. 块匹配着色器</h3>
-  <p>块匹配在 1/4 分辨率的亮度图上做。一个工作组 256 个线程负责一个 8×8 块：先把这块和后一帧里周围 ±16 的窗口（40×40）读进共享内存，再让 256 个线程分摊 33×33 = 1089 个候选位移，每个候选算 64 个像素的绝对差之和（SAD）。</p>
-  <p>比较用三元组（SAD，|dx|+|dy|，扫描序号）：SAD 相同就取位移小的，再相同取扫描序靠前的。这样平坦区域不会总落到搜索窗的角上。最后用共享内存做 8 轮归约，选出全组最小者，写出这块的 (dx, dy)。在 <code>interp_bm.cpp: synth_bm</code> 里它是 4 步中的第 2 步：亮度 → 块匹配 → 平滑 → 合成。</p>
-  <figure class="cd-fig">
-<pre><code>    barrier();
-    uvec3 best = uvec3(0xFFFFFFFFu);
-    for (uint c = lid; c &lt; uint(NC); c += 256u) {
-        int dy = int(c) / (2 * R + 1) - R, dx = int(c) % (2 * R + 1) - R;
-        uint sad = 0u;
-        for (int y = 0; y &lt; BS; y++) {
-            int rb = (y + dy + R) * WIN + dx + R;
-            for (int x = 0; x &lt; BS; x++) {
-                uint a = sA[y * BS + x], b = sB[rb + x];
-                sad += a &gt; b ? a - b : b - a;
-            }
-        }
-        uvec3 key = uvec3(sad, uint(abs(dx) + abs(dy)), c);
-        if (less3(key, best)) best = key;
-    }
-    sBest[lid] = best;
-    barrier();
-    for (uint s = 128u; s &gt; 0u; s &gt;&gt;= 1u) {
-        if (lid &lt; s &amp;&amp; less3(sBest[lid + s], sBest[lid])) sBest[lid] = sBest[lid + s];
-        barrier();
-    }
-    if (lid == 0u) {
-        int c = int(sBest[0].z);
-        // … 写出 mv: (c % 33 - 16, c / 33 - 16)
-    }</code></pre>
-    <figcaption><code>interp_b_bm.comp: main</code></figcaption>
-  </figure>
-
-  <h3>6. 子图层</h3>
-  <p>插帧开着时，层接管 <code>vkCreateAndroidSurfaceKHR</code>，记下游戏的 <code>ANativeWindow</code>。第一次送显时用 <code>ASurfaceControl_createFromWindow</code> 在这个窗口下建一个子图层（名字 <code>selfsr_interp</code>）。相关函数都从 <code>libandroid.so</code> 里 dlsym 取，不加链接依赖。</p>
-  <p>送显缓冲是层自己分配的 <code>AHardwareBuffer</code>（环形 8 张），通过 <code>VK_ANDROID_external_memory_android_hardware_buffer</code> 导入成 <code>VkImage</code>，GPU 直接往里写。每张缓冲一个 <code>ASurfaceTransaction</code>：<code>setBuffer</code>（带同步 fd）、<code>setDesiredPresentTime</code>、<code>apply</code>。第一次还要设几何和变换（跟随游戏的预旋转）、z 序 1（盖在游戏图层上面）、120 Hz 帧率票，并声明不透明。不声明不透明的话，合成器会把下面的游戏图层混进来，HUD 出现双影。</p>
-  <figure class="cd-fig">
-<pre><code>// sc_ready
-        D-&gt;sc = g_api.createFromWindow(g_window, "selfsr_interp");
-// make_buf: AHardwareBuffer → VkImage
-    desc.usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE | AHARDWAREBUFFER_USAGE_GPU_COLOR_OUTPUT |
-                 AHARDWAREBUFFER_USAGE_COMPOSER_OVERLAY;
-    if (g_api.ahbAlloc(&amp;desc, &amp;b.ahb) != 0 || !b.ahb) { g_reason = "ahb_allocate"; return false; }
-    // … VkImageCreateInfo 挂 VkExternalMemoryImageCreateInfo (ANDROID_HARDWARE_BUFFER)
-    VkImportAndroidHardwareBufferInfoANDROID imp{VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID, &amp;ded, b.ahb};
-    VkMemoryAllocateInfo mai{VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO, &amp;imp, pp.allocationSize, mt};
-// sc_show: 第一次设几何, 之后每张缓冲一个事务
-            g_api.setGeometry(t, D-&gt;sc, &amp;src, &amp;dst, xf);   // xf = 游戏 preTransform 的反向
-            g_api.setVisibility(t, D-&gt;sc, 1);
-            if (g_api.setZOrder) g_api.setZOrder(t, D-&gt;sc, 1);
-            // … 投 120 Hz 帧率票
-            if (g_api.setTransparency) g_api.setTransparency(t, D-&gt;sc, 2 /* ..._TRANSPARENCY_OPAQUE */);
-        // …
-        int fd = fence_fd &lt; 0 ? -1 : (i + 1 == frames.size() ? fence_fd : dup(fence_fd));
-        g_api.setBuffer(t, D-&gt;sc, static_cast&lt;AHardwareBuffer*&gt;(frames[i].first-&gt;ahb), fd);
-        if (frames[i].second &gt; 0) g_api.setDesiredPresentTime(t, frames[i].second);
-        g_api.txnApply(t);
-        g_api.txnDelete(t);</code></pre>
-    <figcaption><code>interp_sc.cpp: sc_ready / make_buf / sc_show</code></figcaption>
-  </figure>
-
-  <h3>7. 上屏时刻排程</h3>
-  <p>每个游戏帧送两张：先中间帧，后真实帧。第一张的期望时刻 <code>t0</code> = 现在 + 提前量（正式测试 25 ms），真实帧再晚 <code>step</code>，即半个游戏周期（游戏送显间隔的滑动平均除以 2）。</p>
-  <p><code>slot()</code> 保证相邻两张至少隔 <code>gap</code> = 一个刷新周期减 0.3 ms（120 Hz 时约 8.03 ms）。太近的话两张会落进同一个刷新周期，合成器只显示后一张。如果之前排的已经积压超过一个游戏周期，这一帧就不插中间帧，只送真实帧，避免延迟越滚越大。</p>
-  <figure class="cd-fig">
-<pre><code>        uint64_t period = S.ema_ns &gt; 0 ? (uint64_t)S.ema_ns : 2 * R;
-        uint64_t step = period / (uint64_t)(m + 1);
-        if (step &lt; 2000000ull) step = 2000000ull;
-        const uint64_t t0 = now_ns() + (g_lead_ns &gt;= 0 ? (uint64_t)g_lead_ns : R);
-        // …
-        const uint64_t gap = grid ? gP / 2 : g_sc_gap_ns &gt; 0 ? (uint64_t)g_sc_gap_ns
-                           : 1000000000ull / (uint64_t)(g_fps_vote &gt; 0 ? g_fps_vote : 120) - 300000ull;
-        auto slot = [&amp;](uint64_t want) {
-            uint64_t d = (g_sc_last &amp;&amp; want &lt; g_sc_last + gap) ? g_sc_last + gap : want;
-            // … interp_sc_grid=1 时对齐刷新网格 (缺省关)
-            g_sc_last = d; return d;
-        };
-        std::vector&lt;std::pair&lt;ScBuf*, int64_t&gt;&gt; show;
-        int shown_synth = 0;
-        uint64_t real_at = 0;
-        const bool backlog = g_sc_last &amp;&amp; g_sc_last + gap &gt; t0 + period;
-        if (backlog) g_sc_skip++;
-        for (int k = 0; k &lt; m &amp;&amp; synth_any &amp;&amp; done &amp;&amp; !backlog; k++) { show.push_back({bufs[k], (int64_t)slot(t0 + (uint64_t)k * step)}); shown_synth++; }
-        if (done) { real_at = slot(t0 + (uint64_t)shown_synth * step); show.push_back({rb, (int64_t)real_at}); }</code></pre>
-    <figcaption><code>interp.cpp: ip_on_present</code></figcaption>
-  </figure>
-
-  <h3>8. 解开进程内限帧</h3>
-  <p>系统图形库里有一份进程内的限帧配置，游戏每次送显时会按它补睡眠，把帧率压到系统给的目标（发热时是 30）。层在 <code>vkCreateInstance</code> 时找到读这份配置的函数 <code>getGlobalConfig</code>：先试 <code>dlopen</code>；不 root 加载时应用的链接器命名空间看不到系统内部库，就用 <code>dl_iterate_phdr</code> 找到这个库在进程里的装载基址，再从磁盘读它 ELF 的 <code>.dynsym</code>，查到符号偏移，加上基址就是函数地址。</p>
-  <p>之后每次送显前调一次这个函数拿到配置指针，把偏移 0x60 处的限帧值清零，并计数。这个偏移只对实测的系统版本成立；找不到符号或指针为空时什么都不做，原因写进日志文件。</p>
-  <figure class="cd-fig">
-<pre><code>static void* sym_from_loaded(const char* lib, const char* sym) {
-    LoadedLib L{lib};
-    dl_iterate_phdr(find_loaded_cb, &amp;L);   // 按文件名找已加载的库, 记 dlpi_addr
-    // … 打开 L.path, 读 ELF 头和节头表
-            for (auto&amp; s : sh) {
-                if (s.sh_type != SHT_DYNSYM || s.sh_link &gt;= sh.size()) continue;
-                // … 读 .dynsym 和它的字符串表
-                for (auto&amp; y : syms)
-                    if (y.st_value &amp;&amp; y.st_name &lt; strs.size() &amp;&amp; !strcmp(&amp;strs[y.st_name], sym)) { found = reinterpret_cast&lt;void*&gt;(L.base + y.st_value); break; }
-                break;
-            }
-    // …
-}
-
-static void unlimit_init() {
-    g_unlimit = read_bool_prop("debug.knobs.unlimit");
-    if (!g_unlimit) return;
-    // … dlopen(系统图形库) 取 "…getGlobalConfig…", 拿不到再走 sym_from_loaded
-}
-static void unlimit_on_present() {
-    char* cfg = static_cast&lt;char*&gt;(g_fps_cfg_get());   // … 函数或指针为空时直接返回
-    int* lim = reinterpret_cast&lt;int*&gt;(cfg + 0x60);
-    int v = *lim;
-    if (v != 0) { g_unlimit_seen = v; *lim = 0; g_unlimit_cleared++; }
-}</code></pre>
-    <figcaption><code>vk_layer_refknobs.cpp: sym_from_loaded / unlimit_init / unlimit_on_present</code></figcaption>
-  </figure>
-
-  <h3>9. 一键开关与还原</h3>
-  <p>层的所有行为都由 <code>debug.knobs.*</code> 系统属性控制，在 <code>vkCreateInstance</code> 时读一次。属性为空就是关：模块不接任何调用、不改交换链，层只做透传。开关都不改游戏的文件和设置，也不需要重新打包游戏。</p>
-  <p>测试脚本收尾（包括 Ctrl-C）走 <code>restore</code>：结束游戏，还原 Game Mode，清空所有 <code>debug.knobs.*</code>，写回厂商超分插帧设置的原值。<code>restore_panel</code> 删掉合成器后门里给游戏 uid 下的帧率覆盖，把合成器的「等游戏帧」写回开，屏幕刷新率和帧节奏属性按开跑前记下的原值写回。最后核对游戏 lib 目录里没有 .so、<code>debug.vulkan.layers</code> 为空，结果写进 <code>restore.json</code>。</p>
-  <figure class="cd-fig">
-<pre><code>// selfsr.cpp: sr_init_from_props
-    __system_property_get("debug.knobs.selfsr", v);
-    int n = sscanf(v, "%ux%u:%f", &amp;w, &amp;h, &amp;sharp);
-    if (n &gt;= 2 &amp;&amp; w &gt;= 64 &amp;&amp; h &gt;= 64 &amp;&amp; w &lt;= 4096 &amp;&amp; h &lt;= 4096) {
-        g_on = true; g_want_w = w; g_want_h = h;
-        // …
-    }
-    return g_on;
-
-# selfsr_ab.py: restore_panel
-def restore_panel(dev):
-    dump = dev.su("dumpsys SurfaceFlinger | grep -A8 '^FrameRateOverrides'")
-    back = dump.split("Backdoor=", 1)[1] if "Backdoor=" in dump else ""
-    for uid in re.findall(r"\{(\d+), [0-9.]+ Hz\}", back.split("\n\n", 1)[0]):
-        set_sfovr(dev, uid, 0)   # service call SurfaceFlinger 1039 i32 &lt;uid&gt; f 0
-    SFOVR_UID["uid"] = None
-    if SFWAIT_OFF["on"] or dev.prop(…) == "true":   # 有这个开关的机器上一律写回开
-        dev.su("dumpsys SurfaceFlinger --fpsControl_waitframe_on &gt;/dev/null")
-        SFWAIT_OFF["on"] = False
-    # … 读 panel_orig.json, 写回刷新率相关 settings 和帧节奏属性</code></pre>
-    <figcaption><code>selfsr.cpp: sr_init_from_props / selfsr_ab.py: restore_panel</code></figcaption>
-  </figure>
-
-  <h3>10. 测试脚本入口</h3>
-  <p><code>repro.sh</code> 一条命令跑完全部对照组，每组调 <code>selfsr_ab.py run --a &lt;臂&gt; --b &lt;臂&gt;</code>，冷启动 ABBA 交替。臂的写法：<code>native</code>（不挂层）、<code>layer</code>（只挂透传层）、<code>sr:&lt;降分辨率比例&gt;:&lt;宽&gt;x&lt;高&gt;:&lt;锐化&gt;</code>、<code>ip:&lt;合成方式&gt;:&lt;帧率&gt;:键=值,…</code>、<code>srip:…</code>（超分 + 插帧）。</p>
-  <p><code>measure()</code> 在同一个时间窗口里并行采：合成器 timestats（游戏图层的上屏帧率、丢帧）、<code>dumpsys SurfaceFlinger --latency selfsr_interp#N</code>（子图层的实际上屏时刻，timestats 不收子图层）、ftrace 解析出的游戏 GPU 提交（游戏渲染帧率、p95 帧时、GPU 忙碌时间），以及一张截图（锐度）。</p>
-  <figure class="cd-fig">
-<pre><code># repro.sh: 第 7 组, 超分 + 插帧对原生
-    7) run 7_sr_interp native "srip:1:$SR_FULL:$IP_MODE:$IP_FPS:$IP_TUNE" ;;
-# 缺省: SR_FULL=&lt;屏幕宽x高&gt;:1.0  IP_MODE=bm  IP_FPS=120
-#       IP_TUNE=stamp=0,panel=120,backend=sc,lead_ns=25000000 (需要时另加 ,unlimit=1,sfwait=off)
-
-# selfsr_ab.py: measure (返回值节选)
-    return {"in_game": a.pkg in fg,
-            "display_fps": round(ts["layer_frames"] / span, 2) if ts.get("layer_frames") else None,
-            "display_fps_sc": sc.get("fps") or …,          # 子图层, SF --latency
-            "seen_fps": sc.get("fps") or …,                # 看到的画面: 有子图层取子图层
-            "game_fps": game.get("fps_mean"), "game_frame_p95_ms": game.get("frame_p95"),
-            "gpu_active_ms": game.get("gpu_active_mean"),  # ftrace → phonefarm parse-trace
-            "out_res": src, "sharp_full": sharpness(shot), "sharp_hud": sharpness(shot, HUD_BOX), "shot": shot}</code></pre>
-    <figcaption><code>repro.sh（第 7 组）/ selfsr_ab.py: measure</code></figcaption>
-  </figure>
-
-  <h3>文件 → 行数 → 作用</h3>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>文件</th><th class="cd-num">行数</th><th>作用</th></tr></thead>
-      <tbody>
-        <tr><td><code>knobs/gray/layer/vk_layer_refknobs.cpp</code></td><td class="cd-num">4408</td><td>层入口：加载器协商、函数分发、建实例/设备（加扩展）、交换链和送显钩子、解开限帧、日志文件</td></tr>
-        <tr><td><code>knobs/gray/layer/selfsr.cpp</code></td><td class="cd-num">599</td><td>超分：改交换链尺寸、建 T/O/P 图和管线、每帧录制并提交超分命令</td></tr>
-        <tr><td><code>knobs/gray/layer/selfsr.h</code></td><td class="cd-num">35</td><td>超分模块接口和开关说明</td></tr>
-        <tr><td><code>knobs/gray/layer/selfsr_fused.comp</code></td><td class="cd-num">98</td><td>超分着色器：Catmull-Rom（或 Lanczos2）放大 + RCAS 锐化，一次调度</td></tr>
-        <tr><td><code>knobs/gray/layer/interp.cpp</code></td><td class="cd-num">1102</td><td>插帧框架：交换链多要图、送显时录制提交、上屏时刻排程、统计</td></tr>
-        <tr><td><code>knobs/gray/layer/interp.h</code></td><td class="cd-num">83</td><td>插帧模块接口、合成方式注册接口</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_bm.cpp</code></td><td class="cd-num">311</td><td>块匹配插帧：建 4 个计算管线并按顺序调度</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_b_luma.comp</code></td><td class="cd-num">27</td><td>第 1 步：1/4 分辨率亮度图</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_b_bm.comp</code></td><td class="cd-num">61</td><td>第 2 步：8×8 块 ±16 全搜索块匹配</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_b_smooth.comp</code></td><td class="cd-num">39</td><td>第 3 步：运动向量平滑</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_b_compose.comp</code></td><td class="cd-num">49</td><td>第 4 步：按运动向量合成中间帧</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_common.glsl</code></td><td class="cd-num">83</td><td>插帧着色器共用函数</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_sc.cpp</code></td><td class="cd-num">646</td><td>子图层：建 ASurfaceControl、AHardwareBuffer 缓冲环、导出同步 fd、提交事务</td></tr>
-        <tr><td><code>knobs/gray/layer/interp_sc.h</code></td><td class="cd-num">49</td><td>子图层接口</td></tr>
-        <tr><td><code>knobs/gray/layer/VkLayer_refknobs.json</code></td><td class="cd-num">14</td><td>层清单（桌面加载器用，Android 不读）</td></tr>
-        <tr><td><code>knobs/gray/build/build_layer.sh</code></td><td class="cd-num">124</td><td>编译层和着色器</td></tr>
-        <tr><td><code>src/gray_session.rs</code></td><td class="cd-num">1332</td><td>测试会话：装 .so、设 / 收窄 debug.vulkan.layers、摘层</td></tr>
-        <tr><td><code>loop_v1/selfsr/selfsr_ab.py</code></td><td class="cd-num">796</td><td>两臂 ABBA：设属性、冷启动进游戏、测量、收尾还原、统计</td></tr>
-        <tr><td><code>loop_v1/selfsr/repro.sh</code></td><td class="cd-num">92</td><td>一条命令复现全部对照组并汇总报告</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p class="muted">行数是 <code>wc -l</code> 在 2026-10-27 的结果。</p>
-</section>
 
 
 <section id="method">
@@ -3012,6 +2765,341 @@ marker 里 <code>interp.sc.xform</code> 记实际用的值。原神交的画面�
 <li>插帧走缓冲队列时被第 2 节的限帧挡住；改走子图层后能上屏；要到约 120 帧还需要关掉 SF 的 waitframe（见 3.1），这是全局开关，演示和测试时用。延迟 +33.5 ms 是层里记的排队时刻，真实操作延迟没有用外部设备测。</li>
 </ul>
 </div></details>
+</section>
+
+<section id="code">
+  <style>
+    .cd-fig { margin: 12px 0 28px; }
+    .cd-fig pre { margin: 0; }
+    .cd-fig figcaption { margin-top: 6px; font-size: 13px; color: var(--muted); }
+    .cd-fig figcaption code { font-size: 12px; }
+    .cd-list { margin: 0; padding-left: 1.2em; }
+    .cd-list li { margin: 2px 0; }
+    .cd-num { text-align: right; font-variant-numeric: tabular-nums; }
+  </style>
+  <div class="stack">
+    <div class="eyebrow">代码级说明</div>
+    <h2>代码里是怎么实现的</h2>
+    <p class="muted">代码在 <code>HGamey/phonefarm</code> 仓库的 <code>feat/selfsr</code> 分支。层的源码在 <code>knobs/gray/layer/</code>，测试脚本在 <code>loop_v1/selfsr/</code>。下面的代码片段都摘自源码，只删了日志和部分注释，删掉的地方用 <code>// …</code> 标出。</p>
+  </div>
+
+  <h3>1. 层怎么被加载、怎么拦截调用</h3>
+  <p>层是一个 <code>libVkLayer_refknobs.so</code>，层名 <code>VK_LAYER_refknobs_readonly</code>。Android 的 Vulkan 加载器不读 JSON 清单（<code>VkLayer_refknobs.json</code> 只给桌面加载器用）。它在应用自己的 native 库目录里找 .so，用 dlsym 取 4 个枚举函数和 <code>vkNegotiateLoaderLayerInterfaceVersion</code>，缺一个就丢掉这个层。</p>
+  <p>上机用的是 root 路线：把 .so 拷进游戏的 <code>nativeLibraryDir</code>（<code>/data/app/…/lib/arm64</code>），再 <code>setprop debug.vulkan.layers VK_LAYER_refknobs_readonly</code>。这个属性是全局的，会影响别的 Vulkan 应用，所以测试会话在游戏加载完层之后立刻把它清空（<code>src/gray_session.rs</code>）。不 root 的标准做法是 <code>settings put global enable_gpu_debug_layers / gpu_debug_app / gpu_debug_layers</code>，但系统只对可调试应用生效：对原神这类不可调试的商业游戏无效；在第二台手机上，用可调试的测试程序和重打包成可调试版的 Megacity，不 root 也成功加载了层（插帧 60→119.9、30→60.1）。</p>
+  <p>加载器通过协商拿到我们的 <code>GetInstanceProcAddr</code> / <code>GetDeviceProcAddr</code>。游戏每查一个函数，先问超分、插帧、抓帧三个模块要不要接（没开的模块恒返回空），再查本层的钩子表，都不要就原样转给下一层。正式测试实际接管的入口：</p>
+  <ul class="cd-list">
+    <li>实例级：<code>vkCreateInstance</code>、<code>vkDestroyInstance</code>、<code>vkCreateDevice</code>（加 <code>VK_GOOGLE_display_timing</code> 和 AHardwareBuffer 导入扩展）、<code>vkEnumerateDeviceExtensionProperties</code>（只转发）、<code>vkCreateAndroidSurfaceKHR</code>（插帧开时才接，用来拿游戏窗口）。</li>
+    <li>设备级：<code>vkQueuePresentKHR</code>、<code>vkCreateSwapchainKHR</code>、<code>vkDestroySwapchainKHR</code>、<code>vkDestroyDevice</code>、<code>vkGetDeviceQueue</code> / <code>vkGetDeviceQueue2</code>（记队列族）、<code>vkGetPastPresentationTimingGOOGLE</code>。</li>
+    <li>另有 render pass、draw、提交等观测用钩子，只在 <code>passdump</code> / <code>frameaudit</code> 等属性打开时才挂，正式测试不挂。</li>
+  </ul>
+  <figure class="cd-fig">
+<pre><code>extern "C" RK_EXPORT VkResult VKAPI_CALL vkNegotiateLoaderLayerInterfaceVersion(RkNegotiate* v) {
+    if (v-&gt;loaderLayerInterfaceVersion &gt; 2) v-&gt;loaderLayerInterfaceVersion = 2;
+    v-&gt;pfnGetInstanceProcAddr = dispatch_instance;
+    v-&gt;pfnGetDeviceProcAddr = dispatch_device;
+    v-&gt;pfnGetPhysicalDeviceProcAddr = nullptr;
+    return VK_SUCCESS;
+}
+
+static PFN_vkVoidFunction dispatch_device(VkDevice dev, const char* name) {
+    RK_HOOK("vkGetDeviceProcAddr", dispatch_device);
+    if (PFN_vkVoidFunction p = sr_hook(name)) return p;   // selfsr 没开时恒为空
+    if (PFN_vkVoidFunction p = ip_hook(name)) return p;   // interp 没开时恒为空
+    if (PFN_vkVoidFunction p = fd_hook(name)) return p;   // framedump 没开时恒为空
+    RK_HOOK("vkDestroyDevice", rk_DestroyDevice);
+    RK_HOOK("vkQueuePresentKHR", rk_QueuePresentKHR);
+    RK_HOOK("vkCreateSwapchainKHR", rk_CreateSwapchainKHR);
+    // … render pass 钩子; passdump / frameaudit 开时才挂的观测钩子
+    DevDisp d;
+    { std::lock_guard&lt;std::mutex&gt; lk(g_mtx); auto it = g_dev.find(key(dev)); if (it == g_dev.end()) return nullptr; d = it-&gt;second; }
+    // …
+    return d.gdpa ? d.gdpa(dev, name) : nullptr;
+}</code></pre>
+    <figcaption><code>vk_layer_refknobs.cpp: vkNegotiateLoaderLayerInterfaceVersion / dispatch_device</code></figcaption>
+  </figure>
+
+  <h3>2. 改交换链</h3>
+  <p>游戏建交换链时，超分模块把 <code>imageExtent</code> 换成屏幕分辨率，并加上拷贝用的用途位。游戏的帧缓冲还是原来的小尺寸（帧缓冲允许比图像小），所以它只画在每张图的左上角。插帧模块在同一个调用里多要几张图（缺省多 2 张），加用途位，并强制 FIFO。改过的参数建不成，就退回游戏的原参数，画面照常，只是不超分不插帧。</p>
+  <p>交换链建好后，超分模块再建三张自己的图：T（游戏尺寸，采样读）、O 和 P（屏幕尺寸，计算着色器写），以及每张交换链图一个信号量。子图层路线的插帧帧不放在交换链里，而是放在另外一组共享缓冲里，见第 6 节。</p>
+  <figure class="cd-fig">
+<pre><code>// selfsr.cpp: sr_patch_swapchain_ci
+    if (ci-&gt;imageExtent.width == g_want_w &amp;&amp; ci-&gt;imageExtent.height == g_want_h) return false;   // 游戏本来就要这个尺寸
+    // … 只接受 RGBA8; 查 surface 能力: 用途位、最大最小尺寸
+    ci-&gt;imageExtent = {g_want_w, g_want_h};
+    ci-&gt;imageUsage |= VK_IMAGE_USAGE_TRANSFER_SRC_BIT | VK_IMAGE_USAGE_TRANSFER_DST_BIT;
+
+// interp.cpp: ip_patch_swapchain_ci
+    uint32_t want = ci-&gt;minImageCount + (uint32_t)g_extra_images;
+    if (have_caps &amp;&amp; caps.maxImageCount &amp;&amp; want &gt; caps.maxImageCount) want = caps.maxImageCount;
+    ci-&gt;minImageCount = want;
+    ci-&gt;imageUsage |= need;
+    if (ci-&gt;presentMode != VK_PRESENT_MODE_FIFO_KHR &amp;&amp; ci-&gt;presentMode != VK_PRESENT_MODE_FIFO_RELAXED_KHR)
+        ci-&gt;presentMode = VK_PRESENT_MODE_FIFO_KHR;
+
+// vk_layer_refknobs.cpp: rk_CreateSwapchainKHR
+        if (ip_on()) ip_patched = ip_patch_swapchain_ci(dev, &amp;mod_ci);
+        if (sr_on()) sr_patched = sr_patch_swapchain_ci(dev, &amp;mod_ci);
+        bool patched = fd_usage || ip_patched || sr_patched;
+        r = d.CreateSwapchainKHR(dev, patched ? &amp;mod_ci : ci, a, out);
+        if (r != VK_SUCCESS &amp;&amp; patched) {
+            // … 记日志, 退回原参数
+            r = d.CreateSwapchainKHR(dev, ci, a, out);
+        }</code></pre>
+    <figcaption><code>selfsr.cpp: sr_patch_swapchain_ci / interp.cpp: ip_patch_swapchain_ci / vk_layer_refknobs.cpp: rk_CreateSwapchainKHR</code></figcaption>
+  </figure>
+
+  <h3>3. <code>vkQueuePresentKHR</code> 主流程</h3>
+  <p>游戏每送显一次，层先解开限帧（第 8 节），然后串起两个模块：超分模块录一批命令，等游戏的信号量，做完发出自己的信号量；它不直接送显，而是把「改成等这个信号量」的送显请求交给插帧模块。插帧模块再录一批命令（插帧、拷真实帧、存历史帧），等超分的信号量，提交后导出一个同步 fd，把两张缓冲交给子图层，最后把游戏原来的送显转下去，让它等插帧的信号量。</p>
+  <p>CPU 全程不等 GPU：子图层靠同步 fd 自己等。任何一步失败都走 <code>bail()</code>，按游戏的原参数送显，并把原因计数写进日志文件。</p>
+  <figure class="cd-fig">
+<pre><code>// vk_layer_refknobs.cpp: rk_QueuePresentKHR
+    if (g_unlimit) unlimit_on_present();
+    // …
+    if (sr_on() &amp;&amp; ip_on()) {   // 超分 + 插帧
+        tl_present_next = d.QueuePresentKHR; tl_present_frame = f;
+        return sr_on_present(q, pi, rk_present_via_interp, f);   // 超分做完调 ip_on_present
+    }
+
+// interp.cpp: ip_on_present (子图层分支, 节选)
+        sub.waitSemaphoreCount = pi-&gt;waitSemaphoreCount; sub.pWaitSemaphores = pi-&gt;pWaitSemaphores;
+        sub.commandBufferCount = 1; sub.pCommandBuffers = &amp;sl.cb;
+        sub.signalSemaphoreCount = 1; sub.pSignalSemaphores = &amp;S.sems[idxN];
+        if (D-&gt;QueueSubmit(q, 1, &amp;sub, sl.fence) != VK_SUCCESS) { g_fb["submit_fail"]++; return bail("sc_submit"); }
+        int fence_fd = sc_export_fence(D-&gt;dev, q);   // 拿不到才退回 CPU 等 (最多 50 ms)
+        // … 排上屏时刻 (第 7 节)
+        VkSemaphore semN = S.sems[idxN];
+        lk.unlock();
+        sc_show(D-&gt;dev, show, S.w, S.h, S.pre, fence_fd);
+        VkPresentInfoKHR pn = *pi;
+        pn.waitSemaphoreCount = 1; pn.pWaitSemaphores = &amp;semN;
+        return next(q, &amp;pn);   // 游戏自己的送显照常, 被子图层盖在下面</code></pre>
+    <figcaption><code>vk_layer_refknobs.cpp: rk_QueuePresentKHR / interp.cpp: ip_on_present（子图层分支）</code></figcaption>
+  </figure>
+
+  <h3>4. 超分调度</h3>
+  <p>超分一共一次计算调度。先把游戏画的左上角拷进 T，再绑定描述符集：binding 0 是 T（带采样器，Catmull-Rom 要用硬件双线性），binding 1 是输出图 O（storage image）。推送常量 32 字节：输入尺寸、输出尺寸、锐化强度、算法编号。工作组 16×16，按输出尺寸向上取整。</p>
+  <p>着色器里每个工作组先把 18×18 的放大结果（多一圈邻居）算进共享内存，Catmull-Rom 用 9 次双线性取样代替 16 次取点。然后直接在共享内存上做 RCAS 锐化写出，省掉一整张中间图的写出和读回。交换链图支持存储写入时直接写进交换链图（正式测试走的就是这条，9128 帧全部直写）；不支持时先写到层自己的图 O，再拷回交换链图。</p>
+  <figure class="cd-fig">
+<pre><code>// selfsr.cpp: sr_on_present
+    D-&gt;CmdCopyImage(cb, N, VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL, S.T, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, 1, &amp;rg);
+    struct { int32_t iw, ih, ow, oh; float sharp; int32_t algo; int32_t pad[2]; } pc{(int32_t)S.in_w, (int32_t)S.in_h,
+        (int32_t)S.out_w, (int32_t)S.out_h, g_sharp, g_algo, {0, 0}};
+    D-&gt;CmdBindPipeline(cb, VK_PIPELINE_BIND_POINT_COMPUTE, D-&gt;pipe);
+    D-&gt;CmdBindDescriptorSets(cb, VK_PIPELINE_BIND_POINT_COMPUTE, D-&gt;pl, 0, 1, &amp;S.set, 0, nullptr);
+    D-&gt;CmdPushConstants(cb, D-&gt;pl, VK_SHADER_STAGE_COMPUTE_BIT, 0, sizeof pc, &amp;pc);
+    D-&gt;CmdDispatch(cb, (S.out_w + 15) / 16, (S.out_h + 15) / 16, 1);
+
+// selfsr_fused.comp: main
+    for (uint k = lid; k &lt; 18u * 18u; k += 256u) {
+        ivec2 t = ivec2(int(k % 18u), int(k / 18u));
+        ivec2 q = clamp(base + t, ivec2(0), pc.out_size - 1);
+        tile[t.y][t.x] = pc.algo == 1 ? upscale_cr(q) : upscale(q);
+    }
+    barrier();
+    // … c = 中心, n/s/w/e = 上下左右 (都从 tile 取)
+    vec3 mn = min(min(min(n, s), min(w, e)), c);
+    vec3 mx = max(max(max(n, s), max(w, e)), c);
+    vec3 hit_min = mn / (4.0 * mx + 1e-5);
+    vec3 hit_max = (1.0 - mx) / (4.0 * mn - 4.0 + 1e-5);
+    vec3 l3 = max(-hit_min, hit_max);
+    float lobe = clamp(max(l3.r, max(l3.g, l3.b)), -0.1875, 0.0) * pc.sharp;
+    vec3 r = (lobe * (n + s + w + e) + c) / (4.0 * lobe + 1.0);</code></pre>
+    <figcaption><code>selfsr.cpp: sr_on_present / selfsr_fused.comp: main</code></figcaption>
+  </figure>
+
+  <h3>5. 块匹配着色器</h3>
+  <p>块匹配在 1/4 分辨率的亮度图上做。一个工作组 256 个线程负责一个 8×8 块：先把这块和后一帧里周围 ±16 的窗口（40×40）读进共享内存，再让 256 个线程分摊 33×33 = 1089 个候选位移，每个候选算 64 个像素的绝对差之和（SAD）。</p>
+  <p>比较用三元组（SAD，|dx|+|dy|，扫描序号）：SAD 相同就取位移小的，再相同取扫描序靠前的。这样平坦区域不会总落到搜索窗的角上。最后用共享内存做 8 轮归约，选出全组最小者，写出这块的 (dx, dy)。在 <code>interp_bm.cpp: synth_bm</code> 里它是 4 步中的第 2 步：亮度 → 块匹配 → 平滑 → 合成。</p>
+  <figure class="cd-fig">
+<pre><code>    barrier();
+    uvec3 best = uvec3(0xFFFFFFFFu);
+    for (uint c = lid; c &lt; uint(NC); c += 256u) {
+        int dy = int(c) / (2 * R + 1) - R, dx = int(c) % (2 * R + 1) - R;
+        uint sad = 0u;
+        for (int y = 0; y &lt; BS; y++) {
+            int rb = (y + dy + R) * WIN + dx + R;
+            for (int x = 0; x &lt; BS; x++) {
+                uint a = sA[y * BS + x], b = sB[rb + x];
+                sad += a &gt; b ? a - b : b - a;
+            }
+        }
+        uvec3 key = uvec3(sad, uint(abs(dx) + abs(dy)), c);
+        if (less3(key, best)) best = key;
+    }
+    sBest[lid] = best;
+    barrier();
+    for (uint s = 128u; s &gt; 0u; s &gt;&gt;= 1u) {
+        if (lid &lt; s &amp;&amp; less3(sBest[lid + s], sBest[lid])) sBest[lid] = sBest[lid + s];
+        barrier();
+    }
+    if (lid == 0u) {
+        int c = int(sBest[0].z);
+        // … 写出 mv: (c % 33 - 16, c / 33 - 16)
+    }</code></pre>
+    <figcaption><code>interp_b_bm.comp: main</code></figcaption>
+  </figure>
+
+  <h3>6. 子图层</h3>
+  <p>插帧开着时，层接管 <code>vkCreateAndroidSurfaceKHR</code>，记下游戏的 <code>ANativeWindow</code>。第一次送显时用 <code>ASurfaceControl_createFromWindow</code> 在这个窗口下建一个子图层（名字 <code>selfsr_interp</code>）。相关函数都从 <code>libandroid.so</code> 里 dlsym 取，不加链接依赖。</p>
+  <p>送显缓冲是层自己分配的 <code>AHardwareBuffer</code>（环形 8 张），通过 <code>VK_ANDROID_external_memory_android_hardware_buffer</code> 导入成 <code>VkImage</code>，GPU 直接往里写。每张缓冲一个 <code>ASurfaceTransaction</code>：<code>setBuffer</code>（带同步 fd）、<code>setDesiredPresentTime</code>、<code>apply</code>。第一次还要设几何和变换（跟随游戏的预旋转）、z 序 1（盖在游戏图层上面）、120 Hz 帧率票，并声明不透明。不声明不透明的话，合成器会把下面的游戏图层混进来，HUD 出现双影。</p>
+  <figure class="cd-fig">
+<pre><code>// sc_ready
+        D-&gt;sc = g_api.createFromWindow(g_window, "selfsr_interp");
+// make_buf: AHardwareBuffer → VkImage
+    desc.usage = AHARDWAREBUFFER_USAGE_GPU_SAMPLED_IMAGE | AHARDWAREBUFFER_USAGE_GPU_COLOR_OUTPUT |
+                 AHARDWAREBUFFER_USAGE_COMPOSER_OVERLAY;
+    if (g_api.ahbAlloc(&amp;desc, &amp;b.ahb) != 0 || !b.ahb) { g_reason = "ahb_allocate"; return false; }
+    // … VkImageCreateInfo 挂 VkExternalMemoryImageCreateInfo (ANDROID_HARDWARE_BUFFER)
+    VkImportAndroidHardwareBufferInfoANDROID imp{VK_STRUCTURE_TYPE_IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID, &amp;ded, b.ahb};
+    VkMemoryAllocateInfo mai{VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO, &amp;imp, pp.allocationSize, mt};
+// sc_show: 第一次设几何, 之后每张缓冲一个事务
+            g_api.setGeometry(t, D-&gt;sc, &amp;src, &amp;dst, xf);   // xf = 游戏 preTransform 的反向
+            g_api.setVisibility(t, D-&gt;sc, 1);
+            if (g_api.setZOrder) g_api.setZOrder(t, D-&gt;sc, 1);
+            // … 投 120 Hz 帧率票
+            if (g_api.setTransparency) g_api.setTransparency(t, D-&gt;sc, 2 /* ..._TRANSPARENCY_OPAQUE */);
+        // …
+        int fd = fence_fd &lt; 0 ? -1 : (i + 1 == frames.size() ? fence_fd : dup(fence_fd));
+        g_api.setBuffer(t, D-&gt;sc, static_cast&lt;AHardwareBuffer*&gt;(frames[i].first-&gt;ahb), fd);
+        if (frames[i].second &gt; 0) g_api.setDesiredPresentTime(t, frames[i].second);
+        g_api.txnApply(t);
+        g_api.txnDelete(t);</code></pre>
+    <figcaption><code>interp_sc.cpp: sc_ready / make_buf / sc_show</code></figcaption>
+  </figure>
+
+  <h3>7. 上屏时刻排程</h3>
+  <p>每个游戏帧送两张：先中间帧，后真实帧。第一张的期望时刻 <code>t0</code> = 现在 + 提前量（正式测试 25 ms），真实帧再晚 <code>step</code>，即半个游戏周期（游戏送显间隔的滑动平均除以 2）。</p>
+  <p><code>slot()</code> 保证相邻两张至少隔 <code>gap</code> = 一个刷新周期减 0.3 ms（120 Hz 时约 8.03 ms）。太近的话两张会落进同一个刷新周期，合成器只显示后一张。如果之前排的已经积压超过一个游戏周期，这一帧就不插中间帧，只送真实帧，避免延迟越滚越大。</p>
+  <figure class="cd-fig">
+<pre><code>        uint64_t period = S.ema_ns &gt; 0 ? (uint64_t)S.ema_ns : 2 * R;
+        uint64_t step = period / (uint64_t)(m + 1);
+        if (step &lt; 2000000ull) step = 2000000ull;
+        const uint64_t t0 = now_ns() + (g_lead_ns &gt;= 0 ? (uint64_t)g_lead_ns : R);
+        // …
+        const uint64_t gap = grid ? gP / 2 : g_sc_gap_ns &gt; 0 ? (uint64_t)g_sc_gap_ns
+                           : 1000000000ull / (uint64_t)(g_fps_vote &gt; 0 ? g_fps_vote : 120) - 300000ull;
+        auto slot = [&amp;](uint64_t want) {
+            uint64_t d = (g_sc_last &amp;&amp; want &lt; g_sc_last + gap) ? g_sc_last + gap : want;
+            // … interp_sc_grid=1 时对齐刷新网格 (缺省关)
+            g_sc_last = d; return d;
+        };
+        std::vector&lt;std::pair&lt;ScBuf*, int64_t&gt;&gt; show;
+        int shown_synth = 0;
+        uint64_t real_at = 0;
+        const bool backlog = g_sc_last &amp;&amp; g_sc_last + gap &gt; t0 + period;
+        if (backlog) g_sc_skip++;
+        for (int k = 0; k &lt; m &amp;&amp; synth_any &amp;&amp; done &amp;&amp; !backlog; k++) { show.push_back({bufs[k], (int64_t)slot(t0 + (uint64_t)k * step)}); shown_synth++; }
+        if (done) { real_at = slot(t0 + (uint64_t)shown_synth * step); show.push_back({rb, (int64_t)real_at}); }</code></pre>
+    <figcaption><code>interp.cpp: ip_on_present</code></figcaption>
+  </figure>
+
+  <h3>8. 解开进程内限帧</h3>
+  <p>系统图形库里有一份进程内的限帧配置，游戏每次送显时会按它补睡眠，把帧率压到系统给的目标（发热时是 30）。层在 <code>vkCreateInstance</code> 时找到读这份配置的函数 <code>getGlobalConfig</code>：先试 <code>dlopen</code>；不 root 加载时应用的链接器命名空间看不到系统内部库，就用 <code>dl_iterate_phdr</code> 找到这个库在进程里的装载基址，再从磁盘读它 ELF 的 <code>.dynsym</code>，查到符号偏移，加上基址就是函数地址。</p>
+  <p>之后每次送显前调一次这个函数拿到配置指针，把偏移 0x60 处的限帧值清零，并计数。这个偏移只对实测的系统版本成立；找不到符号或指针为空时什么都不做，原因写进日志文件。</p>
+  <figure class="cd-fig">
+<pre><code>static void* sym_from_loaded(const char* lib, const char* sym) {
+    LoadedLib L{lib};
+    dl_iterate_phdr(find_loaded_cb, &amp;L);   // 按文件名找已加载的库, 记 dlpi_addr
+    // … 打开 L.path, 读 ELF 头和节头表
+            for (auto&amp; s : sh) {
+                if (s.sh_type != SHT_DYNSYM || s.sh_link &gt;= sh.size()) continue;
+                // … 读 .dynsym 和它的字符串表
+                for (auto&amp; y : syms)
+                    if (y.st_value &amp;&amp; y.st_name &lt; strs.size() &amp;&amp; !strcmp(&amp;strs[y.st_name], sym)) { found = reinterpret_cast&lt;void*&gt;(L.base + y.st_value); break; }
+                break;
+            }
+    // …
+}
+
+static void unlimit_init() {
+    g_unlimit = read_bool_prop("debug.knobs.unlimit");
+    if (!g_unlimit) return;
+    // … dlopen(系统图形库) 取 "…getGlobalConfig…", 拿不到再走 sym_from_loaded
+}
+static void unlimit_on_present() {
+    char* cfg = static_cast&lt;char*&gt;(g_fps_cfg_get());   // … 函数或指针为空时直接返回
+    int* lim = reinterpret_cast&lt;int*&gt;(cfg + 0x60);
+    int v = *lim;
+    if (v != 0) { g_unlimit_seen = v; *lim = 0; g_unlimit_cleared++; }
+}</code></pre>
+    <figcaption><code>vk_layer_refknobs.cpp: sym_from_loaded / unlimit_init / unlimit_on_present</code></figcaption>
+  </figure>
+
+  <h3>9. 一键开关与还原</h3>
+  <p>层的所有行为都由 <code>debug.knobs.*</code> 系统属性控制，在 <code>vkCreateInstance</code> 时读一次。属性为空就是关：模块不接任何调用、不改交换链，层只做透传。开关都不改游戏的文件和设置，也不需要重新打包游戏。</p>
+  <p>测试脚本收尾（包括 Ctrl-C）走 <code>restore</code>：结束游戏，还原 Game Mode，清空所有 <code>debug.knobs.*</code>，写回厂商超分插帧设置的原值。<code>restore_panel</code> 删掉合成器后门里给游戏 uid 下的帧率覆盖，把合成器的「等游戏帧」写回开，屏幕刷新率和帧节奏属性按开跑前记下的原值写回。最后核对游戏 lib 目录里没有 .so、<code>debug.vulkan.layers</code> 为空，结果写进 <code>restore.json</code>。</p>
+  <figure class="cd-fig">
+<pre><code>// selfsr.cpp: sr_init_from_props
+    __system_property_get("debug.knobs.selfsr", v);
+    int n = sscanf(v, "%ux%u:%f", &amp;w, &amp;h, &amp;sharp);
+    if (n &gt;= 2 &amp;&amp; w &gt;= 64 &amp;&amp; h &gt;= 64 &amp;&amp; w &lt;= 4096 &amp;&amp; h &lt;= 4096) {
+        g_on = true; g_want_w = w; g_want_h = h;
+        // …
+    }
+    return g_on;
+
+# selfsr_ab.py: restore_panel
+def restore_panel(dev):
+    dump = dev.su("dumpsys SurfaceFlinger | grep -A8 '^FrameRateOverrides'")
+    back = dump.split("Backdoor=", 1)[1] if "Backdoor=" in dump else ""
+    for uid in re.findall(r"\{(\d+), [0-9.]+ Hz\}", back.split("\n\n", 1)[0]):
+        set_sfovr(dev, uid, 0)   # service call SurfaceFlinger 1039 i32 &lt;uid&gt; f 0
+    SFOVR_UID["uid"] = None
+    if SFWAIT_OFF["on"] or dev.prop(…) == "true":   # 有这个开关的机器上一律写回开
+        dev.su("dumpsys SurfaceFlinger --fpsControl_waitframe_on &gt;/dev/null")
+        SFWAIT_OFF["on"] = False
+    # … 读 panel_orig.json, 写回刷新率相关 settings 和帧节奏属性</code></pre>
+    <figcaption><code>selfsr.cpp: sr_init_from_props / selfsr_ab.py: restore_panel</code></figcaption>
+  </figure>
+
+  <h3>10. 测试脚本入口</h3>
+  <p><code>repro.sh</code> 一条命令跑完全部对照组，每组调 <code>selfsr_ab.py run --a &lt;臂&gt; --b &lt;臂&gt;</code>，冷启动 ABBA 交替。臂的写法：<code>native</code>（不挂层）、<code>layer</code>（只挂透传层）、<code>sr:&lt;降分辨率比例&gt;:&lt;宽&gt;x&lt;高&gt;:&lt;锐化&gt;</code>、<code>ip:&lt;合成方式&gt;:&lt;帧率&gt;:键=值,…</code>、<code>srip:…</code>（超分 + 插帧）。</p>
+  <p><code>measure()</code> 在同一个时间窗口里并行采：合成器 timestats（游戏图层的上屏帧率、丢帧）、<code>dumpsys SurfaceFlinger --latency selfsr_interp#N</code>（子图层的实际上屏时刻，timestats 不收子图层）、ftrace 解析出的游戏 GPU 提交（游戏渲染帧率、p95 帧时、GPU 忙碌时间），以及一张截图（锐度）。</p>
+  <figure class="cd-fig">
+<pre><code># repro.sh: 第 7 组, 超分 + 插帧对原生
+    7) run 7_sr_interp native "srip:1:$SR_FULL:$IP_MODE:$IP_FPS:$IP_TUNE" ;;
+# 缺省: SR_FULL=&lt;屏幕宽x高&gt;:1.0  IP_MODE=bm  IP_FPS=120
+#       IP_TUNE=stamp=0,panel=120,backend=sc,lead_ns=25000000 (需要时另加 ,unlimit=1,sfwait=off)
+
+# selfsr_ab.py: measure (返回值节选)
+    return {"in_game": a.pkg in fg,
+            "display_fps": round(ts["layer_frames"] / span, 2) if ts.get("layer_frames") else None,
+            "display_fps_sc": sc.get("fps") or …,          # 子图层, SF --latency
+            "seen_fps": sc.get("fps") or …,                # 看到的画面: 有子图层取子图层
+            "game_fps": game.get("fps_mean"), "game_frame_p95_ms": game.get("frame_p95"),
+            "gpu_active_ms": game.get("gpu_active_mean"),  # ftrace → phonefarm parse-trace
+            "out_res": src, "sharp_full": sharpness(shot), "sharp_hud": sharpness(shot, HUD_BOX), "shot": shot}</code></pre>
+    <figcaption><code>repro.sh（第 7 组）/ selfsr_ab.py: measure</code></figcaption>
+  </figure>
+
+  <h3>文件 → 行数 → 作用</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>文件</th><th class="cd-num">行数</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td><code>knobs/gray/layer/vk_layer_refknobs.cpp</code></td><td class="cd-num">4408</td><td>层入口：加载器协商、函数分发、建实例/设备（加扩展）、交换链和送显钩子、解开限帧、日志文件</td></tr>
+        <tr><td><code>knobs/gray/layer/selfsr.cpp</code></td><td class="cd-num">599</td><td>超分：改交换链尺寸、建 T/O/P 图和管线、每帧录制并提交超分命令</td></tr>
+        <tr><td><code>knobs/gray/layer/selfsr.h</code></td><td class="cd-num">35</td><td>超分模块接口和开关说明</td></tr>
+        <tr><td><code>knobs/gray/layer/selfsr_fused.comp</code></td><td class="cd-num">98</td><td>超分着色器：Catmull-Rom（或 Lanczos2）放大 + RCAS 锐化，一次调度</td></tr>
+        <tr><td><code>knobs/gray/layer/interp.cpp</code></td><td class="cd-num">1102</td><td>插帧框架：交换链多要图、送显时录制提交、上屏时刻排程、统计</td></tr>
+        <tr><td><code>knobs/gray/layer/interp.h</code></td><td class="cd-num">83</td><td>插帧模块接口、合成方式注册接口</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_bm.cpp</code></td><td class="cd-num">311</td><td>块匹配插帧：建 4 个计算管线并按顺序调度</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_luma.comp</code></td><td class="cd-num">27</td><td>第 1 步：1/4 分辨率亮度图</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_bm.comp</code></td><td class="cd-num">61</td><td>第 2 步：8×8 块 ±16 全搜索块匹配</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_smooth.comp</code></td><td class="cd-num">39</td><td>第 3 步：运动向量平滑</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_b_compose.comp</code></td><td class="cd-num">49</td><td>第 4 步：按运动向量合成中间帧</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_common.glsl</code></td><td class="cd-num">83</td><td>插帧着色器共用函数</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_sc.cpp</code></td><td class="cd-num">646</td><td>子图层：建 ASurfaceControl、AHardwareBuffer 缓冲环、导出同步 fd、提交事务</td></tr>
+        <tr><td><code>knobs/gray/layer/interp_sc.h</code></td><td class="cd-num">49</td><td>子图层接口</td></tr>
+        <tr><td><code>knobs/gray/layer/VkLayer_refknobs.json</code></td><td class="cd-num">14</td><td>层清单（桌面加载器用，Android 不读）</td></tr>
+        <tr><td><code>knobs/gray/build/build_layer.sh</code></td><td class="cd-num">124</td><td>编译层和着色器</td></tr>
+        <tr><td><code>src/gray_session.rs</code></td><td class="cd-num">1332</td><td>测试会话：装 .so、设 / 收窄 debug.vulkan.layers、摘层</td></tr>
+        <tr><td><code>loop_v1/selfsr/selfsr_ab.py</code></td><td class="cd-num">796</td><td>两臂 ABBA：设属性、冷启动进游戏、测量、收尾还原、统计</td></tr>
+        <tr><td><code>loop_v1/selfsr/repro.sh</code></td><td class="cd-num">92</td><td>一条命令复现全部对照组并汇总报告</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">行数是 <code>wc -l</code> 在 2026-10-27 的结果。</p>
 </section>
 
 <footer>HGamey · 2026-10-27 · 本页源文件在 <a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr/site">HGamey/docs/experiments/2026-10-24-selfsr/site</a></footer>
