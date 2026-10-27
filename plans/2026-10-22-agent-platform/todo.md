@@ -144,7 +144,7 @@ FLEET-01/02的人工登记、稳定身份与位置查询已发布，见[FLEET-DI
   - [x] JOB-STATE-EVENTS-01 按[JOB-STATE-EVENTS](JOB-STATE-EVENTS.md)已发布harnessed133f8：原SQL同事务状态revision/增量events，Web/CLI/API同级，实时观察和日志offset独立；137协议、实际单job HTTP重启/原cursor接续、390与五CI全部首次通过。
 - [x] JOB-05 网页队列、任务详情、准备进度、日志、取消/恢复与CLI/API同级交付；最后的失败恢复子链已由f692972及SESSION-RECOVERY-CHAIN验收收口。实际重启/设备与其他producer边界仍归JOB-06/10。
 - [ ] JOB-06 掉线、重启、超时、用户取消、失去lease后执行明确收尾；恢复失败占用独立屏障，不用exit0掩盖。
-- [ ] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。
+- [x] JOB-07 真正的取消与安全点暂停语义；非幂等步骤不能自动retry，重试使用新attempt并保留旧失败。 2026-10-28 确认：当前无自动 retry 机制——worker 单次执行、失败保留、恢复手动（retry-finalize 仅存储提交阻断）；取消/暂停语义已由 JOB-PAUSE-01（队列级）+ SAFE-PAUSE-01（会话级安全点）交付。
   - [x] JOB-PAUSE-01 队列级暂停/恢复：harness 613e120经code-only+node-tests CI后同SHA直推main。jobs 表持久 paused 列，claim_next 跳过 paused 排队任务；POST /jobs/{id}/pause|resume 仅 queued 态（幂等），claimed/blocked/done 一律 409 pause_unsupported——运行中命令不可暂停只能 cancel，不提供假暂停；status controls 增 pause/resume_supported；pf-node pause/resume 同合同。SQL 级回归+实机 409 拒绝链验证；~/node 已同步。多步 producer 步骤间真安全点暂停仍归各会话合同。 Web 任务页：harness b883de0 补暂停/恢复按钮与独立回执（按 controls 启停、409 原文展示），test_jobs_page_ids 保证脚本引用 id 均在页面声明；node --check + 175 项协议过。 真实浏览器 DOM 批次：harness a3a48c1 发现并修复 dash.py 未路由 /dash/api/jobs/{id}/pause|resume（404 曾被回执掩盖），补 board.handle_post 分支与 tests/browser_pause_check.py（playwright 登录→解锁→选中→恢复全链 200，1440/390 截图，pageerror 无）；problems=[]，产物在当前任务 qa/browser-pause/。
 - [x] JOB-08 队列资源等待与研究局部依赖已分开；阻断设备不占满无关宿主名额，RESEARCH-STATE/03/04已验一条等人、另一离线方向继续及显式反馈接续。方向排序由外部Agent决定；显式灰层设备并行已交付，旧global入口迁移归JOB-03，真机并发归JOB-10。
 - [ ] JOB-09 任务/研究预算、超时与磁盘上限；停止后可解释哪些动作发生、哪些没发生、哪些恢复待核。
