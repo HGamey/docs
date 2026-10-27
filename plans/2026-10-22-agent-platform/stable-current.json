@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261027-overlay-blocked-admission",
-  "promoted_at": "2026-10-27T01:37:00+00:00",
+  "batch": "20261027-actor-id",
+  "promoted_at": "2026-10-27T17:56:00+08:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,7 +10,7 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "8d5b36519e6c8a61daeaf26f5819e50587dc5406"
+      "sha": "fa3acba6cffaeb04bccfa3ce38be70c0663f07c7"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",
