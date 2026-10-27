@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>原神超分插帧成果</title>
+<meta name="description" content="HGamey 自研超分 + 插帧：从项目开始到 2026-10-27 的实测增益、代价与交付物">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 版式：单栏长文报告，左对齐；关键数字用衬线大字，数据用等宽字。主色 = 「插帧」青，对照 = 石墨灰，厂商方案 = 琥珀 */
+:root {
+  --bg: #f6f7f8;
+  --surface: #ffffff;
+  --ink: #15191e;
+  --muted: #5b6672;
+  --line: #dde2e7;
+  --ours: #0b7a8a;
+  --ours-soft: #d7eef1;
+  --base: #8b96a2;
+  --vendor: #b7791f;
+  --warn-bg: #fff5e0;
+  --warn-ink: #7a4b00;
+  --font-display: "Noto Serif SC", "Songti SC", serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101317; --surface: #171b21; --ink: #e8ecf0; --muted: #9aa5b1; --line: #2a3139;
+    --ours: #4cc3d2; --ours-soft: #12343a; --base: #6b7682; --vendor: #e0a54a;
+    --warn-bg: #2e2412; --warn-ink: #f0c879; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #101317; --surface: #171b21; --ink: #e8ecf0; --muted: #9aa5b1; --line: #2a3139;
+  --ours: #4cc3d2; --ours-soft: #12343a; --base: #6b7682; --vendor: #e0a54a;
+  --warn-bg: #2e2412; --warn-ink: #f0c879; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 16px/1.75 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: calc(40px + env(safe-area-inset-top, 0px)) calc(64px + env(safe-area-inset-bottom, 0px));
+}
+main { max-width: 920px; margin: 0 auto; display: grid; gap: 56px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font: 900 clamp(30px, 6vw, 48px)/1.2 var(--font-display); letter-spacing: 0.01em; }
+h2 { font: 600 24px/1.35 var(--font-display); }
+h3 { font: 700 17px/1.5 var(--font-body); }
+p { margin: 0; max-width: 65ch; }
+a { color: var(--ours); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--ours); outline-offset: 2px; border-radius: 2px; }
+.eyebrow { font: 600 12px/1 var(--font-data); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.stack { display: grid; gap: 16px; }
+.lede { font-size: 18px; color: var(--ink); }
+.muted { color: var(--muted); }
+.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+section { display: grid; gap: 20px; }
+
+/* 头部大数字 */
+.hero-figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.fig { background: var(--surface); padding: 20px 20px 18px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.fig .k { font-size: 13px; color: var(--muted); }
+.fig .v { font: 900 34px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.fig .v small { font: 600 15px var(--font-data); color: var(--muted); margin-left: 4px; }
+.fig .d { font-size: 13px; color: var(--muted); }
+.fig.lead .v { color: var(--ours); }
+
+/* vsync 时间轴 */
+.timeline { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; }
+.tl-row { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 12px; min-width: 0; }
+.tl-row .lab { font-size: 13px; color: var(--muted); }
+.tl-track { position: relative; height: 34px; min-width: 0; }
+.tl-track svg { width: 100%; height: 34px; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 6px; }
+
+/* 条形图 */
+.bars { display: grid; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; }
+.bar { display: grid; grid-template-columns: minmax(0, 210px) 1fr 64px; gap: 12px; align-items: center; }
+.bar .name { font-size: 14px; min-width: 0; }
+.bar .track { height: 14px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 3px; }
+.bar .val { font: 600 14px var(--font-data); text-align: right; font-variant-numeric: tabular-nums; }
+.axis { display: grid; grid-template-columns: minmax(0, 210px) 1fr 64px; gap: 12px; font: 12px var(--font-data); color: var(--muted); }
+.axis .ticks { display: flex; justify-content: space-between; }
+
+/* 表格 */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 14px; }
+th, td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+th { font-weight: 500; color: var(--muted); font-size: 13px; background: var(--bg); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-family: var(--font-data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td strong { color: var(--ours); }
+.pill { display: inline-block; font: 600 11px/1 var(--font-data); padding: 4px 7px; border-radius: 999px; background: var(--ours-soft); color: var(--ours); white-space: nowrap; }
+.pill.gray { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+
+/* 截图 */
+.shots { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
+figure img { width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--line); display: block; image-rendering: auto; }
+figcaption { font-size: 13px; color: var(--muted); }
+.hud { display: grid; gap: 10px; }
+.hud img { image-rendering: pixelated; }
+
+.note { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
+.note p { color: inherit; }
+ul.clean { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; max-width: 70ch; }
+code { font: 13px var(--font-data); background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; word-break: break-all; }
+pre { margin: 0; overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; font: 13px/1.6 var(--font-data); }
+footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 20px; }
+@media (max-width: 560px) {
+  .bar, .axis { grid-template-columns: minmax(0, 110px) 1fr 52px; }
+  .tl-row { grid-template-columns: 1fr; gap: 4px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fill { transition: width .6s ease-out; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="stack">
+  <div class="eyebrow">HGamey · 自研超分 + 插帧 · 截至 2026-10-27</div>
+  <h1>原神上帧率接近翻倍，画质高于原生和厂商方案</h1>
+  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。</p>
+</header>
+
+<section aria-label="核心数字">
+  <div class="hero-figs">
+    <div class="fig lead"><span class="k">实际看到的帧率</span><span class="v num">118.2<small>fps</small></span><span class="d">不插帧时 60.0，<b>+97%</b></span></div>
+    <div class="fig lead"><span class="k">固定图标区锐度</span><span class="v num">+160%</span><span class="d">原生 366 → 953</span></div>
+    <div class="fig"><span class="k">对比厂商方案 GFRC+ 的画质</span><span class="v num">+18%</span><span class="d">图标区锐度 948 对 803</span></div>
+    <div class="fig"><span class="k">代价：真实帧延迟</span><span class="v num">+33.5<small>ms</small></span><span class="d">层内记录的排队时间（下限）</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">插帧在做什么</div>
+    <h2>屏幕每 8.3 ms 刷新一次，游戏只画其中一半</h2>
+    <p>屏幕 120 Hz，游戏渲染 60 帧。不插帧时，每两次刷新里有一次只能重复上一帧。我们用 GPU 做块匹配运动估计，在相邻两帧之间算出中间帧，把空着的那一格填上。</p>
+  </div>
+  <div class="timeline" role="img" aria-label="示意：120 Hz 刷新下，不插帧时每两格一张新画面，插帧后每格一张">
+    <div class="tl-row"><span class="lab">vsync（8.3 ms）</span><div class="tl-track" id="tl-vsync"></div></div>
+    <div class="tl-row"><span class="lab">不插帧</span><div class="tl-track" id="tl-native"></div></div>
+    <div class="tl-row"><span class="lab">插帧后</span><div class="tl-track" id="tl-ours"></div></div>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--base)"></span>游戏画的真实帧</span>
+      <span><span class="sw" style="background:var(--ours)"></span>我们算出的中间帧</span>
+      <span><span class="sw" style="background:var(--line)"></span>重复上一帧</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">帧率</div>
+    <h2>同一场景下，人眼实际看到的帧率</h2>
+  </div>
+  <div class="bars" id="bars"></div>
+  <p class="muted">「原生」被系统按温度限在约 30 帧；我们的层先解开这个限制（约 60 帧），再插帧到 118。GFRC+ 的数字来自另一轮测试，没有和我们放在同一轮里直接对比。</p>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">逐项增益</div>
+    <h2>每一项能力的收益和代价</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>能力</th><th>结果</th><th>代价</th><th>显著性</th></tr></thead>
+      <tbody>
+        <tr><td>插帧（只差插帧的对照）</td><td>上屏 <span class="num">60.0 → <strong>118.2</strong></span> 帧，+97%</td><td>真实帧延迟 +33.5 ms；游戏渲染 −0.7%</td><td><span class="pill">6/6 对 · p=0.031</span></td></tr>
+        <tr><td>超分 + 插帧，对比原生</td><td>看到的画面 <span class="num">29.8 → <strong>108.8</strong></span> 帧（中位数 118.5）；游戏渲染 29.4 → 59.3</td><td>同上</td><td><span class="pill">p=0.031</span></td></tr>
+        <tr><td>满分辨率超分（提画质）</td><td>整屏锐度 <strong>+132%</strong>，固定图标区 <strong>+94%</strong></td><td>帧率、帧时测不出变化</td><td><span class="pill">p=0.031</span></td></tr>
+        <tr><td>降分辨率 + 超分（省电）</td><td>每帧 GPU 时间 <strong>−19%</strong>，p95 帧时 −5%</td><td>图标区锐度持平（−2%，不显著）</td><td><span class="pill">p=0.031</span></td></tr>
+        <tr><td>解开系统限帧</td><td>约 30 → 约 60 帧</td><td>无</td><td><span class="pill gray">多轮一致</span></td></tr>
+        <tr><td>透传层（地基）</td><td>挂上层本身不影响性能，上屏帧率差在 ±0.1 帧内</td><td>无</td><td><span class="pill gray">差值区间</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">对标</div>
+    <h2>和厂商自带的 GFRC+ 比</h2>
+    <p>GFRC+ 是手机厂商在系统合成器里做的超分 + 插帧。我们的方案跑在游戏进程里，画质更好，帧率持平，GPU 多花 2–3 ms。</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>指标</th><th>GFRC+ 超分 + 插帧</th><th>自研超分 + 插帧</th></tr></thead>
+      <tbody>
+        <tr><td>固定图标区锐度</td><td class="n">803</td><td class="n"><strong>948</strong>（+18%，p=0.031）</td></tr>
+        <tr><td>整帧锐度</td><td class="n">245</td><td class="n"><strong>295</strong>（+21%）</td></tr>
+        <tr><td>上屏帧率</td><td class="n">116.1</td><td class="n">118.5（中位数，另一轮测试）</td></tr>
+        <tr><td>每帧 GPU</td><td class="n">11.9 ms</td><td class="n">13.5–15.2 ms</td></tr>
+        <tr><td>丢帧 / 60 秒</td><td class="n">27</td><td class="n">0.3–2.5</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">画面</div>
+    <h2>截图对比</h2>
+    <p>左边是原生，右边是我们的超分 + 插帧。两张是不同次冷启动截的，场景和时辰会不同；画质请看下面右上角那排固定图标的放大。</p>
+  </div>
+  <div class="shots">
+    <figure><img src="img/native_full.jpg" alt="原神原生画面截图" width="1600" height="724" loading="lazy"><figcaption>原生（系统限帧约 30 帧）</figcaption></figure>
+    <figure><img src="img/ours_full.jpg" alt="原神开启自研超分和插帧后的画面截图" width="1600" height="724" loading="lazy"><figcaption>自研超分 + 插帧（约 118 帧）</figcaption></figure>
+  </div>
+  <div class="hud">
+    <figure><img src="img/native_hud.png" alt="原生画面右上角图标区放大" width="1680" height="240" loading="lazy"><figcaption>原生：右上角图标区放大 2 倍，锐度 366</figcaption></figure>
+    <figure><img src="img/ours_hud.png" alt="自研超分后右上角图标区放大" width="1680" height="240" loading="lazy"><figcaption>自研超分：同一区域，锐度 953，图标边缘更清楚</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">推广</div>
+    <h2>换游戏、换手机</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>场景</th><th>结果</th></tr></thead>
+      <tbody>
+        <tr><td>换游戏：Unity《Megacity Metro》，主测手机</td><td>同一个层不改代码就能用。超分：整帧锐度 +46%，固定区 +107%，丢帧 2.3 → 0（p=0.031）</td></tr>
+        <tr><td>换手机：第二台手机（未 root），测试程序</td><td>插帧 <span class="num">60.0 → <strong>119.9</strong></span> 帧（×2.0），延迟 +33.4 ms</td></tr>
+        <tr><td>换手机 + 换游戏：第二台手机，Megacity</td><td>插帧 <span class="num">30.1 → <strong>60.1</strong></span> 帧（×2.0）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">经验：锐化强度要按游戏调。Megacity 有胶片颗粒，开强锐化会把颗粒放大成噪点，所以对它关闭锐化。</p>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">代价与局限</div>
+    <h2>上线前要知道的</h2>
+  </div>
+  <div class="note">
+    <p><b>插帧要关掉手机系统合成器里的一个「等游戏帧」机制，帧率才能到 118。</b>它会在游戏画面没画完时等待最多 7–8 ms，导致下一帧被整帧跳过，插帧因此卡在 89 帧。关闭它是一条运行时命令，不改系统文件，测试结束自动恢复，但需要 root。正式上线需要手机厂商配合，请求已经写好。</p>
+  </div>
+  <ul class="clean">
+    <li>延迟 +33.5 ms 是层内记录的排队时间，是下限，还没有用外部高速相机测端到端的操作延迟。</li>
+    <li>重影：静止和慢动作画面干净，快速转身时物体边缘有块匹配插帧常见的拖影。</li>
+    <li>每款游戏只测了一个静置场景。</li>
+    <li>原神只在主测手机上测过，第二台手机上没有跑原神。</li>
+  </ul>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">怎么测的、怎么复现</div>
+    <h2>方法与交付物</h2>
+    <p>每组测试 6 对，「关 / 开」交替冷启动进游戏大世界，每臂测 60 秒，用精确符号翻转检验。p=0.031 意味着 6 对全部朝同一方向，这是 6 对能达到的最强显著性。测量开始前和结束后都会检查屏幕刷新率，被系统中途降频的那一臂作废。</p>
+  </div>
+<pre>sh loop_v1/selfsr/repro.sh &lt;serial&gt;          # root 手机：自动跑多组对比，出报告和对比截图
+sh loop_v1/selfsr/repro_noroot.sh &lt;serial&gt;   # 未 root 手机：测试程序 + 可调试游戏</pre>
+  <ul class="clean">
+    <li>代码：<a href="https://github.com/HGamey/phonefarm/tree/feat/selfsr">HGamey/phonefarm · feat/selfsr</a>（Vulkan 层在 <code>knobs/gray/layer/</code>，测试脚本在 <code>loop_v1/selfsr/</code>）</li>
+    <li>测量方法：<a href="https://github.com/HGamey/docs/blob/main/experiments/2026-10-24-selfsr/HARNESS_GUIDE.md">HARNESS_GUIDE.md</a>（每个数字从哪来、怎么统计、怎么还原）</li>
+    <li>给游戏厂商的报告：<a href="https://github.com/HGamey/docs/blob/main/experiments/2026-10-24-selfsr/VENDOR_REPORT.md">VENDOR_REPORT.md</a></li>
+    <li>逐步报告：<a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr">STEP1–STEP6 与全部原始数据</a></li>
+  </ul>
+</section>
+
+<footer>HGamey · 2026-10-27 · 本页源文件在 <a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr/site">HGamey/docs/experiments/2026-10-24-selfsr/site</a></footer>
+</main>
+
+<script>
+(function () {
+  // 帧率条形图：统一刻度 0–120
+  var rows = [
+    { name: "原生（系统限帧）", v: 29.8, c: "var(--base)" },
+    { name: "解开限帧，不插帧", v: 60.0, c: "var(--base)" },
+    { name: "GFRC+ 超分 + 插帧", v: 116.1, c: "var(--vendor)" },
+    { name: "自研超分 + 插帧", v: 118.2, c: "var(--ours)" }
+  ];
+  var max = 120, el = document.getElementById("bars"), html = "";
+  rows.forEach(function (r) {
+    html += '<div class="bar"><span class="name">' + r.name + '</span><div class="track"><div class="fill" style="width:' +
+      (r.v / max * 100).toFixed(1) + '%;background:' + r.c + '"></div></div><span class="val">' + r.v.toFixed(1) + '</span></div>';
+  });
+  html += '<div class="axis"><span></span><div class="ticks"><span>0</span><span>30</span><span>60</span><span>90</span><span>120 fps</span></div><span></span></div>';
+  el.innerHTML = html;
+
+  // vsync 时间轴示意：12 格
+  var N = 12, W = 600, H = 34, cw = W / N;
+  function svg(cells) {
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">';
+    cells.forEach(function (c, i) {
+      if (c === "tick") {
+        s += '<rect x="' + (i * cw) + '" y="8" width="2" height="18" fill="var(--muted)"></rect>';
+      } else {
+        var f = c === "real" ? "var(--base)" : c === "synth" ? "var(--ours)" : "var(--line)";
+        s += '<rect x="' + (i * cw + 2) + '" y="4" width="' + (cw - 4) + '" height="26" rx="3" fill="' + f + '"></rect>';
+      }
+    });
+    return s + "</svg>";
+  }
+  var ticks = [], nat = [], ours = [];
+  for (var i = 0; i < N; i++) { ticks.push("tick"); nat.push(i % 2 ? "repeat" : "real"); ours.push(i % 2 ? "synth" : "real"); }
+  document.getElementById("tl-vsync").innerHTML = svg(ticks);
+  document.getElementById("tl-native").innerHTML = svg(nat);
+  document.getElementById("tl-ours").innerHTML = svg(ours);
+})();
+</script>
+</body>
+</html>
