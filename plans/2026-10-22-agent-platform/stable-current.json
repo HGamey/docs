@@ -1,7 +1,7 @@
 {
   "schema": "hgamey/stable-set@1",
-  "batch": "20261028-agent-cooldown",
-  "promoted_at": "2026-10-27T11:55:00-07:00",
+  "batch": "20261028-full",
+  "promoted_at": "2026-10-27T12:15:00-07:00",
   "scope": "source refs and recorded isolated acceptance; production unverified",
   "components": {
     "phonefarm": {
@@ -10,11 +10,11 @@
     },
     "harness-ops": {
       "repository": "https://github.com/HGamey/harness-ops",
-      "sha": "f3ff64cc9958010ddb1a014eff3f68cd811d739d"
+      "sha": "2c3c9d489c9768442f06a6eff609a150d64b32f4"
     },
     "game_opt_loop": {
       "repository": "https://github.com/HGamey/game_opt_loop",
-      "sha": "4bbc7c3a76e431fa93470702edc47295823d5648"
+      "sha": ""
     }
   }
 }
