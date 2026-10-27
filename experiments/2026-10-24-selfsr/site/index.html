@@ -141,6 +141,14 @@ details.appx[open] > summary { border-bottom: 1px solid var(--line); }
 .appx-body ul, .appx-body ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
 .appx-body table { min-width: 560px; font-size: 13px; }
 .appx-body blockquote { margin: 0; padding: 8px 14px; border-left: 3px solid var(--line); color: var(--muted); }
+/* 下载区 */
+.dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; }
+.dl { display: grid; gap: 6px; align-content: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; text-decoration: none; color: var(--ink); }
+.dl:hover { border-color: var(--ours); }
+.dl:focus-visible { outline: 2px solid var(--ours); outline-offset: 2px; }
+.dl b { font-size: 15px; }
+.dl span { font-size: 13px; color: var(--muted); }
+.dl .btn { justify-self: start; margin-top: 4px; font: 600 13px var(--font-data); color: var(--ours); background: var(--ours-soft); border-radius: 6px; padding: 6px 10px; }
 .note { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
 .note p { color: inherit; }
 ul.clean { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; max-width: 70ch; }
@@ -163,7 +171,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
   <div class="eyebrow">HGamey · 自研超分 + 插帧 · 截至 2026-10-27</div>
   <h1>原神上帧率接近翻倍，画质高于原生和厂商方案</h1>
   <p class="lede">由 agent 在真机测试平台上自主优化完成：3 天，253 次冷启动测量，26 份对比报告。</p>
-  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#video">视频</a>、<a href="#charts">数据图表</a>、<a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>；更细的内容见 <a href="#diagrams">算法图解</a>、<a href="#code">代码级说明</a>、<a href="#method">测试方法与条件</a>、<a href="#data">每一步的全部数据</a>。</p>
+  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#download">下载</a>、<a href="#video">视频</a>、<a href="#charts">数据图表</a>、<a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>；更细的内容见 <a href="#diagrams">算法图解</a>、<a href="#code">代码级说明</a>、<a href="#method">测试方法与条件</a>、<a href="#data">每一步的全部数据</a>。</p>
 </header>
 
 <section aria-label="核心数字">
@@ -189,6 +197,28 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
     <figure><video src="vid/native_60fps.mp4" poster="vid/native_poster.jpg" controls muted loop playsinline preload="metadata" width="1344" height="608" style="width:100%;height:auto;border-radius:6px;border:1px solid var(--line)"></video><figcaption>原速：不插帧（60 帧/秒）</figcaption></figure>
     <figure><video src="vid/interp_120fps.mp4" poster="vid/interp_poster.jpg" controls muted loop playsinline preload="metadata" width="1344" height="608" style="width:100%;height:auto;border-radius:6px;border:1px solid var(--line)"></video><figcaption>原速：超分 + 插帧（约 119 帧/秒）。要在 120 Hz 屏幕上才能看出区别，普通 60 Hz 显示器会丢一半帧，请看上面的慢放。</figcaption></figure>
   </div>
+</section>
+
+<section id="download">
+  <div class="stack">
+    <div class="eyebrow">下载</div>
+    <h2>代码、编好的层、模型、数据集</h2>
+    <p>全部放在 GitHub 公开 Release <a href="https://github.com/HGamey/phonefarm/releases/tag/selfsr-2026-10-27">HGamey/phonefarm · selfsr-2026-10-27</a>，点按钮直接下载，不需要登录。</p>
+  </div>
+  <div class="dl-grid">
+    <a class="dl" href="https://github.com/HGamey/phonefarm/archive/refs/tags/selfsr-2026-10-27.zip"><b>完整源码</b><span>phonefarm 仓库在本版本的全部代码：Vulkan 层、测试平台、测试脚本</span><span class="btn">下载 .zip</span></a>
+    <a class="dl" href="https://github.com/HGamey/phonefarm/releases/download/selfsr-2026-10-27/selfsr-src.zip"><b>算法源码（精简包）</b><span>超分和插帧的 shader 与 C++、构建脚本、测试脚本、插帧 numpy 参考实现 · 0.2 MB</span><span class="btn">下载 selfsr-src.zip</span></a>
+    <a class="dl" href="https://github.com/HGamey/phonefarm/releases/download/selfsr-2026-10-27/libVkLayer_refknobs.so"><b>编好的 Vulkan 层</b><span>arm64，放进手机即可用，开关见「实现规格」· 4.2 MB</span><span class="btn">下载 .so</span></a>
+    <a class="dl" href="https://github.com/HGamey/phonefarm/releases/download/selfsr-2026-10-27/npu-sr-models.zip"><b>NPU 超分模型</b><span>另一条路线的 tflite 模型、训练和评测脚本。网页上的结果<b>不用</b>神经网络 · 1.7 MB</span><span class="btn">下载 npu-sr-models.zip</span></a>
+    <a class="dl" href="https://github.com/HGamey/phonefarm/releases/download/selfsr-2026-10-27/dataset-index.zip"><b>数据集索引与管线</b><span>登记表、训练 / 测试划分、清单、数据管线代码 · 8.5 MB</span><span class="btn">下载 dataset-index.zip</span></a>
+    <a class="dl" href="https://github.com/HGamey/phonefarm/releases/tag/selfsr-2026-10-27"><b>数据集（约 28 GB，分卷）</b><span>真机采集（原神无损帧、超分配对、录屏，113 项）+ 模拟器连续帧序列（177 项）。每卷 1.9 GB</span><span class="btn">打开分卷列表</span></a>
+  </div>
+  <p>一次下载全部（需要 <a href="https://cli.github.com/">GitHub CLI</a>）：</p>
+<pre>gh release download selfsr-2026-10-27 -R HGamey/phonefarm
+cat device-captures.tar.part-* | tar -xf -
+cat emu-sequences.tar.part-*   | tar -xf -
+shasum -a 256 -c SHA256SUMS     # 校验（分卷按 .part 文件校验）</pre>
+  <p class="muted">公开插帧数据集（Vimeo90K、UCF101、X4K1000FPS、SNU-FILM、Middlebury、MSU VFI、GameIR）的许可证不允许转存，这里不提供，请从各自官方渠道获取。</p>
 </section>
 
 <section id="agent">
