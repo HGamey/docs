@@ -666,3 +666,17 @@ harnessbe8279c已main/stable，code-only40317136127和node-tests40317136207全�
 - DIST-QUOTA-01/02（harness 4624480/725d1c7）：显式可审计配额 GC 与启动时配额逐出（审计报告落缓存根）。
 - 测试可用性：phonefarm ef06f3b（缺 adb 不杀测试进程）+ e6fde01（Linux 门控合成 helper 后端）——rhodes1 上 PF 全量 bin 套件 1017 项 130.4s 完整通过，Linux 部署宿主首次可完整运行。
 - 边界：真机/生产项（DEPLOY-04/05、设备业务实报、跨参与者协调的生产验证）仍开放；Mac 旧节点状态 unknown；lease 存储已在 rhodes1 显式配置（DEVLOCK_DIR=/data2/kamico/hgamey-node/devlock）。
+
+## 2026-10-28 批次（AGENT 身份层 + 前端重构 + 内网开放）
+
+- AGENT-01（harness fa3acba）：job spec 加 actor_id 声明字段（1-64 字符）；base_meta 输出；pf-node --actor-id。
+- AGENT-02（harness e2a6b64）：agent 注册表（SafeRoot/_node/agents/registry.json，file_lock 并发，create/update/list/get）；API GET/POST /agents；CLI pf-node agents。首次失败保留：_locked contextmanager、_fields revision 顺序、PUT 无路由、body 预读 EOF。
+- FRONT-01（harness 79a3eda）：统一 5-tab 外壳（shell.css/shell.js：总览/设备/任务/Agent/设置；固定 pill 不跳色；动作收割）。
+- FRONT-02R（harness f889f0c）：主页恢复原结构+新外壳；home.css 平面化。
+- 走查修复（harness 57f9eb6/e8eb41e）：全局卡片去阴影；退出链接独立类；target 卡网格塌陷修复。
+- AGENT-04（PF 5d565d8 + harness f3ff64c）：30min 设备冷却（PF_JOB_ACTOR 门控）。
+- AGENT-05（harness 2c3c9d4）：任务级 discuss 模块（API/CLI/网页）。
+- AGENT-06（harness 7ad5dc5）：agent 状态上报（POST /agents/<name>/status；历史 ≤50 条；Agent 页显示）。
+- 内网开放：--host 参数（a841a38）；dash 明文 cookie（a9cb581）；rhodes1 已开 0.0.0.0:8765。
+- 设置页修复（a855b8d）：#dev-name 被 shell 删除 → null 保护。
+- 实机验证：5 tab 走查全通过；Agent 页显示注册表+状态；设置页恢复实时。
