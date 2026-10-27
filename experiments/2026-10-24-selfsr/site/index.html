@@ -110,6 +110,23 @@ figcaption { font-size: 13px; color: var(--muted); }
 .hud { display: grid; gap: 10px; }
 .hud img { image-rendering: pixelated; }
 
+/* 流程图 */
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.flow .node { flex: 1 1 140px; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; display: grid; gap: 4px; align-content: start; }
+.flow .node b { font-size: 14px; }
+.flow .node span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.flow .node.ours { border-color: var(--ours); background: var(--ours-soft); }
+.flow .node.ours b { color: var(--ours); }
+.flow .arrow { align-self: center; color: var(--muted); font: 16px var(--font-data); }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.cols > * { min-width: 0; }
+ol.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 10px; max-width: 72ch; }
+.gates { display: grid; gap: 12px; }
+.gate { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
+.gate .g-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
+.gate .g-head .num { font: 600 15px var(--font-data); color: var(--ours); white-space: nowrap; }
+.gate p { max-width: none; }
+@media (max-width: 560px) { .flow .arrow { display: none; } .flow .node { flex-basis: 100%; } }
 .note { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
 .note p { color: inherit; }
 ul.clean { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; max-width: 70ch; }
@@ -131,7 +148,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
 <header class="stack">
   <div class="eyebrow">HGamey · 自研超分 + 插帧 · 截至 2026-10-27</div>
   <h1>原神上帧率接近翻倍，画质高于原生和厂商方案</h1>
-  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。</p>
+  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#how">怎么做到的</a>。</p>
 </header>
 
 <section aria-label="核心数字">
@@ -158,6 +175,109 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
       <span><span class="sw" style="background:var(--ours)"></span>我们算出的中间帧</span>
       <span><span class="sw" style="background:var(--line)"></span>重复上一帧</span>
     </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="stack">
+    <div class="eyebrow">怎么做到的</div>
+    <h2>一帧画面经过了哪些处理</h2>
+    <p>游戏每画完一帧，会调用 Vulkan 的 <code>vkQueuePresentKHR</code> 把画面交给系统。我们写了一个 Vulkan 层，挂在这个调用前面：先超分，再插帧，最后绕开系统的限帧，把画面直接交给系统合成器。整个过程不改游戏文件、不改游戏内设置，一个开关就能关掉。</p>
+  </div>
+  <div class="flow" role="img" aria-label="处理流程：游戏渲染，进入我们的 Vulkan 层做超分和插帧，经子图层交给系统合成器，最后上屏">
+    <div class="node"><b>游戏渲染</b><span>2141×969，约 60 帧</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node ours"><b>① 超分</b><span>Catmull-Rom 放大到 2688×1216 + RCAS 锐化</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node ours"><b>② 插帧</b><span>块匹配运动估计，算出两帧中间那一帧</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node ours"><b>③ 子图层送显</b><span>绕开进程内限帧，按 vsync 排好每一张的上屏时刻</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node"><b>系统合成器 → 屏幕</b><span>120 Hz，每 8.3 ms 一张</span></div>
+  </div>
+
+  <h3>每一项增益来自哪个改动</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>增益</th><th>来自</th><th>原理</th></tr></thead>
+      <tbody>
+        <tr><td>画质：锐度 +94% ~ +160%</td><td>① 超分</td><td>原来游戏画 2141×969，由屏幕硬件做 1.256 倍双线性放大，画面发糊。我们在交给系统之前，用更好的算法直接放大到屏幕原生分辨率并锐化，硬件不再二次放大。</td></tr>
+        <tr><td>游戏渲染 30 → 60 帧</td><td>③ 解开进程内限帧</td><td>系统在游戏进程里有一个限帧器，按温度把每秒送显次数卡在 30。层在进程内找到它的配置并解开，游戏回到 60 帧。</td></tr>
+        <tr><td>上屏 60 → 118 帧</td><td>② 插帧 + ③ 子图层 + 关「等游戏帧」</td><td>每两张真实帧之间插一张算出来的中间帧。中间帧要单独走一条送显通道，并关掉系统合成器的一个等待机制，才能每个刷新周期都上屏一张。</td></tr>
+        <tr><td>省电：每帧 GPU −19%</td><td>Android Game Mode 降分辨率 + ① 超分</td><td>让游戏少画约一半像素（每边 0.70 倍），再由我们放大回来，画质持平。</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">① 超分算法</div>
+    <h2>放大 + 锐化，合并成一次 GPU 计算</h2>
+  </div>
+  <div class="cols">
+    <div class="stack">
+      <h3>放大：Catmull-Rom 双三次</h3>
+      <p>每个输出像素参考周围 4×4 个源像素，比双线性（2×2）保留更多细节。我们把 16 次采样合并成 9 次硬件双线性采样，计算量减半。</p>
+      <p class="muted">第一版用 Lanczos2 加去振铃（FSR1 EASU 的思路），层自身 GPU 耗时 p50 4.4 ms。换成 Catmull-Rom 后降到 2.2 ms，离线画质不变（SSIM 0.9840 对 0.9841）。</p>
+    </div>
+    <div class="stack">
+      <h3>锐化：RCAS</h3>
+      <p>采用 AMD FSR1 的对比度自适应锐化思路：看十字邻域的明暗范围，按局部对比度限制锐化力度，结果不会超出邻域的最亮和最暗值，所以不出白边、不出光晕。</p>
+      <p class="muted">强度按游戏调：原神用 1.0。Megacity 有胶片颗粒，锐化会把颗粒放大成噪点，所以设为 0。</p>
+    </div>
+  </div>
+  <p class="muted">工程细节：放大和锐化在同一个 compute shader 里完成。每个 16×16 工作组先把 18×18 的放大结果算进共享内存，再在共享内存上做锐化，省掉一整张中间图的写出和读回。</p>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">② 插帧算法</div>
+    <h2>块匹配运动补偿，4 个 GPU 计算步骤</h2>
+    <p>中间帧 = 把前一帧和当前帧各自沿运动方向挪到「半步」的位置，再取平均。难点在于估准每块画面往哪里动。</p>
+  </div>
+  <ol class="steps">
+    <li><b>算亮度小图</b>：把两帧缩到 1/4 分辨率的整数亮度图（每格 = 4×4 像素的加权亮度和）。全程用整数，GPU 结果和离线参考实现逐位一致，方便验证。</li>
+    <li><b>块匹配</b>：小图上每 8×8 一块（对应原图 32×32 像素），在后一帧的 ±64 像素范围内逐个尝试 33×33 = 1089 个位置，找差异（SAD）最小的那个作为这块的运动方向。差异相同时选位移更小的，避免平坦区域乱跳。</li>
+    <li><b>平滑运动场</b>：先做 3×3 中值滤波去掉个别错配的块，再做 5×5 平滑，让相邻块的运动连续，减少画面撕裂。</li>
+    <li><b>合成中间帧</b>：每个像素按运动场，从前一帧往前挪半步取色、从后一帧往回挪半步取色，两者取平均。</li>
+  </ol>
+  <p class="muted">已知局限：块匹配对快速转身、大面积遮挡估不准，物体边缘会有拖影；静止和慢速画面干净。</p>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">③ 送显路径</div>
+    <h2>帧率从 30 到 118，过了三道关</h2>
+    <p>算法写好后，帧率并没有自动翻倍。真正花时间的是让每一张画面都能按时上屏。</p>
+  </div>
+  <div class="gates">
+    <div class="gate"><div class="g-head"><span class="num">30 → 60</span><b>解开游戏进程里的限帧器</b></div><p>系统在游戏进程加载的图形库里放了一个限帧器，按温度下发目标帧率，把每秒送显次数卡在 30。层启动时在进程内存里找到这个图形库，解析它的符号表定位到限帧配置，并把它关掉。</p></div>
+    <div class="gate"><div class="g-head"><span class="num">60 → 89</span><b>中间帧改走自己的子图层</b></div><p>中间帧如果和真实帧一起走游戏的送显队列，也会被计入限帧次数，结果只是把一半真实帧换成了中间帧。我们改为在游戏窗口上挂一个自己的图层（Android 的 <code>ASurfaceControl</code>），把真实帧拷一份、中间帧画在自己的缓冲里，直接交给系统合成器。每张都带「期望上屏时刻」：第一张定在 25 ms 之后，留给 GPU 算完；后面每张间隔至少一个刷新周期，避免两张挤进同一个 vsync 只显示后一张。</p></div>
+    <div class="gate"><div class="g-head"><span class="num">89 → 118</span><b>关掉合成器的「等游戏帧」机制</b></div><p>系统合成器在合成时，如果游戏这一帧还没画完，会每 1 ms 查一次，最多等 7–8 ms。这一帧因此合成晚了，下一个刷新周期被整帧跳过，排在那一格的中间帧和下一张撞车被丢掉，约 1/4 的帧因此丢失。这是从合成器的性能跟踪里一帧一帧对出来的。它有一个运行时开关，关掉后上屏到 118。</p></div>
+  </div>
+  <p class="muted">排查中试过但无效的做法：给游戏改帧率投票、定时叫醒合成器、把上屏时刻对齐 vsync 网格、真实帧交出前在 CPU 上等 GPU（这一项让游戏掉到 22 帧）。</p>
+
+  <h3>延迟 +33.5 ms 是怎么来的</h3>
+  <p>真实帧不再是一画完就上屏，而是排在中间帧后面：先留 25 ms 给 GPU 算中间帧，中间帧占一个刷新周期（8.3 ms），真实帧再上屏。25 + 8.3 ≈ 33.5 ms。把这 25 ms 缩到 12 ms 可以让延迟降到约 21 ms，但会有更多帧来不及上屏。这是下一步可以优化的方向。</p>
+</section>
+
+<section>
+  <div class="stack">
+    <div class="eyebrow">调通过程</div>
+    <h2>修掉的关键问题</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>现象</th><th>原因</th><th>修法</th></tr></thead>
+      <tbody>
+        <tr><td>中间帧和真实帧同时到，只显示 60 帧</td><td>两张在同一个刷新周期就绪，合成器只显示后一张</td><td>第一张中间帧延后 25 ms 上屏</td></tr>
+        <tr><td>超分 + 插帧时画面发暗，叠一张放大的残影</td><td>游戏重建交换链后，旧图的句柄被复用，运动估计还在读旧图</td><td>历史帧按「代号」重建，句柄相同也能识别</td></tr>
+        <tr><td>子图层半透明，界面出现双影、整屏发灰</td><td>拷来的真实帧 alpha 通道不一定是 1</td><td>子图层声明为不透明</td></tr>
+        <tr><td>另一台手机上插帧画面错位</td><td>游戏按屏幕方向预旋转画面，子图层没跟着转</td><td>按游戏的预旋转方向给子图层设相同的变换</td></tr>
+        <tr><td>插帧卡在 89 帧</td><td>合成器「等游戏帧」导致下一帧被跳过</td><td>测试时关掉这个机制，测完写回</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
