@@ -148,7 +148,7 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
 <header class="stack">
   <div class="eyebrow">HGamey · 自研超分 + 插帧 · 截至 2026-10-27</div>
   <h1>原神上帧率接近翻倍，画质高于原生和厂商方案</h1>
-  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#how">怎么做到的</a>。</p>
+  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>。</p>
 </header>
 
 <section aria-label="核心数字">
@@ -210,24 +210,84 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
   </div>
 </section>
 
-<section>
+<section id="sr">
   <div class="stack">
-    <div class="eyebrow">① 超分算法</div>
-    <h2>放大 + 锐化，合并成一次 GPU 计算</h2>
+    <div class="eyebrow">① 超分</div>
+    <h2>超分：问题出在哪、我们怎么放大、怎么锐化</h2>
   </div>
+
+  <h3>问题：画面是被屏幕硬件「糊」大的</h3>
+  <p>原神在这台手机上并不按屏幕分辨率渲染。它画 2141×969，交给系统后，由显示硬件（HWC）用双线性插值放大 1.256 倍到屏幕的 2688×1216。双线性每个像素只看周围 2×2 个点，放大后边缘和细纹理都会变软。离线测量里，双线性放大后的锐度只有真值的 0.45 倍。</p>
+
+  <h3>做法：在交给系统之前，自己放大到屏幕分辨率</h3>
+  <ol class="steps">
+    <li><b>改交换链尺寸</b>：游戏创建交换链（用来送显的那组图）时，层把尺寸从 2141×969 改成屏幕的 2688×1216。游戏自己的渲染目标仍是 2141×969，所以它只画在每张图的左上角，不需要改游戏的任何逻辑。</li>
+    <li><b>送显前放大并锐化</b>：游戏调 <code>vkQueuePresentKHR</code> 时，层先跑一次 compute shader，把左上角 2141×969 放大成整张 2688×1216，直接写回这张交换链图（省一次整图拷贝），然后再交给系统。</li>
+    <li><b>系统不再二次放大</b>：交给系统的已经是屏幕原生尺寸，HWC 只需 1:1 显示。</li>
+  </ol>
+
   <div class="cols">
     <div class="stack">
-      <h3>放大：Catmull-Rom 双三次</h3>
-      <p>每个输出像素参考周围 4×4 个源像素，比双线性（2×2）保留更多细节。我们把 16 次采样合并成 9 次硬件双线性采样，计算量减半。</p>
-      <p class="muted">第一版用 Lanczos2 加去振铃（FSR1 EASU 的思路），层自身 GPU 耗时 p50 4.4 ms。换成 Catmull-Rom 后降到 2.2 ms，离线画质不变（SSIM 0.9840 对 0.9841）。</p>
+      <h3>放大：Catmull-Rom 双三次插值</h3>
+      <p>每个输出像素按距离加权周围 4×4 = 16 个源像素。权重来自三次曲线（离中心越近权重越大，外圈权重为负，用来保持边缘的反差）：</p>
+<pre>w0 = f·(−0.5 + f·(1 − 0.5f))
+w1 = 1 + f²·(−2.5 + 1.5f)
+w2 = f·(0.5 + f·(2 − 1.5f))
+w3 = f²·(−0.5 + 0.5f)      f = 小数位置</pre>
+      <p>优化：中间两列（行）的权重同号，可以合并成一次硬件双线性采样，所以 16 次读取变成 <b>9 次</b>硬件采样，也不用算三角函数。</p>
     </div>
     <div class="stack">
-      <h3>锐化：RCAS</h3>
-      <p>采用 AMD FSR1 的对比度自适应锐化思路：看十字邻域的明暗范围，按局部对比度限制锐化力度，结果不会超出邻域的最亮和最暗值，所以不出白边、不出光晕。</p>
-      <p class="muted">强度按游戏调：原神用 1.0。Megacity 有胶片颗粒，锐化会把颗粒放大成噪点，所以设为 0。</p>
+      <h3>锐化：RCAS（对比度自适应）</h3>
+      <p>取 AMD FSR1 的 RCAS 思路。对每个像素看上下左右 4 个邻居：</p>
+<pre>mn, mx = 邻域最暗、最亮值
+lobe = 能让结果不超出 [mn, mx] 的
+       最大负权重，上限 0.1875
+lobe = lobe × 强度
+输出 = (lobe·(上+下+左+右) + 中心)
+       / (4·lobe + 1)</pre>
+      <p>效果：平坦区域和已经很锐的边缘少锐化，模糊的边缘多锐化；结果永远落在邻域范围内，不会出白边或光晕。</p>
     </div>
   </div>
-  <p class="muted">工程细节：放大和锐化在同一个 compute shader 里完成。每个 16×16 工作组先把 18×18 的放大结果算进共享内存，再在共享内存上做锐化，省掉一整张中间图的写出和读回。</p>
+
+  <h3>工程优化：一次 GPU 调度完成</h3>
+  <p>放大和锐化写在同一个 compute shader 里。每个工作组负责 16×16 个输出像素，先把这块外加一圈（18×18）的放大结果算进片上共享内存，再在共享内存里做锐化并写出。中间结果不落地，省掉一整张 2688×1216 图的写出和读回。实测超分每帧 GPU 耗时 <b>1.06 ms</b>（p95 1.09 ms）。</p>
+
+  <h3>迭代过程</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>版本</th><th>做法</th><th>层自身 GPU</th><th>离线画质（对真值 SSIM / 锐度）</th></tr></thead>
+      <tbody>
+        <tr><td>系统原状</td><td>HWC 双线性放大</td><td class="n">0</td><td class="n">0.9847 / 0.45×</td></tr>
+        <tr><td>v1</td><td>Lanczos2（4×4，16 次读取 + sin 计算）+ 2×2 去振铃（FSR1 EASU 思路）</td><td class="n">—</td><td class="n">0.9894 / 0.58×</td></tr>
+        <tr><td>v2</td><td>v1 + RCAS 锐化，两次调度</td><td class="n">p50 4.4 ms</td><td class="n">0.9841 / 1.04×</td></tr>
+        <tr><td><b>v3（现在）</b></td><td>Catmull-Rom（9 次硬件采样）+ RCAS，融合成一次调度，直写交换链</td><td class="n"><strong>p50 1.06 ms</strong></td><td class="n">0.9840 / 1.05×</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">锐度 1.0× 表示和真值一样锐。离线测量用同一帧：真值是原生分辨率截图，先缩到 0.7 倍再用各算法放大回来，和真值比较。</p>
+
+  <h3>两种用法</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>提画质（满分辨率超分）</th><th>省电（降分辨率 + 超分）</th></tr></thead>
+      <tbody>
+        <tr><td>游戏实际渲染</td><td class="n">2141×969（不变）</td><td class="n">1505×681（Android Game Mode 降到 0.70 倍，像素少一半）</td></tr>
+        <tr><td>层输出</td><td class="n">2688×1216（屏幕原生）</td><td class="n">2141×969，再由 HWC 放大</td></tr>
+        <tr><td>结果</td><td>整屏锐度 +132%，图标区 +94%，帧率帧时不变</td><td>每帧 GPU −19%，p95 帧时 −5%，图标区锐度持平</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>锐化强度要按游戏调</h3>
+  <p>原神用 1.0。Megacity 画面有胶片颗粒，锐化会把颗粒放大成噪点（SSIM −17%），所以设为 0，只放大不锐化，固定区锐度仍有 +107%。</p>
+  <figure><img src="img/megacity_sr.jpg" alt="Megacity Metro 局部：原生、自研超分锐化 0、自研超分锐化 1.0 三张对比" width="1800" height="382" loading="lazy"><figcaption>Megacity 同一局部：原生（2068×935 由 HWC 放大）/ 自研超分锐化 0 / 锐化 1.0（天空出现颗粒噪点）</figcaption></figure>
+
+  <h3>效果</h3>
+  <div class="shots">
+    <figure><img src="img/sr_crop_native.png" alt="原生画面角色局部" width="350" height="350" loading="lazy"><figcaption>原生：游戏 2141×969 + HWC 双线性放大</figcaption></figure>
+    <figure><img src="img/sr_crop_ours.png" alt="自研超分后角色局部" width="350" height="350" loading="lazy"><figcaption>自研超分到 2688×1216：腰包、手套纹理和边缘更清楚</figcaption></figure>
+  </div>
+  <figure><img src="img/hud_gfrc_vs_ours.jpg" alt="右上角界面区域：左为厂商 GFRC+，右为自研超分加插帧" width="1600" height="360" loading="lazy"><figcaption>右上角界面区域：左 GFRC+ 超分 + 插帧，右自研超分 + 插帧（图标区锐度 803 对 948）</figcaption></figure>
 </section>
 
 <section>
@@ -260,6 +320,113 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
 
   <h3>延迟 +33.5 ms 是怎么来的</h3>
   <p>真实帧不再是一画完就上屏，而是排在中间帧后面：先留 25 ms 给 GPU 算中间帧，中间帧占一个刷新周期（8.3 ms），真实帧再上屏。25 + 8.3 ≈ 33.5 ms。把这 25 ms 缩到 12 ms 可以让延迟降到约 21 ms，但会有更多帧来不及上屏。这是下一步可以优化的方向。</p>
+</section>
+
+<section id="spec">
+  <div class="stack">
+    <div class="eyebrow">实现规格</div>
+    <h2>模型多大、算多少、占多少</h2>
+    <p><b>没有神经网络模型，可学习参数为 0。</b>超分和插帧都是手写的 GPU 计算程序（Vulkan compute shader），不需要训练、不需要权重文件，也不用 NPU。整个方案就是一个 4.2 MB 的动态库，shader 编译后嵌在里面。</p>
+  </div>
+
+  <h3>体积</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>组件</th><th>文件</th><th>大小</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td>整个 Vulkan 层</td><td><code>libVkLayer_refknobs.so</code>（arm64）</td><td class="n">4.16 MB</td><td>含全部 shader 和送显逻辑，唯一需要放进手机的文件</td></tr>
+        <tr><td>超分（放大 + 锐化合一）</td><td><code>selfsr_fused.comp</code></td><td class="n">11.7 KB</td><td>正式结果用的版本</td></tr>
+        <tr><td>插帧 · 亮度小图</td><td><code>interp_b_luma.comp</code></td><td class="n">3.1 KB</td><td>两帧缩到 1/4 分辨率整数亮度</td></tr>
+        <tr><td>插帧 · 块匹配</td><td><code>interp_b_bm.comp</code></td><td class="n">6.0 KB</td><td>每块找运动方向</td></tr>
+        <tr><td>插帧 · 平滑</td><td><code>interp_b_smooth.comp</code></td><td class="n">3.9 KB</td><td>中值 + 二项式平滑运动场</td></tr>
+        <tr><td>插帧 · 合成</td><td><code>interp_b_compose.comp</code></td><td class="n">10.4 KB</td><td>沿运动场取两帧、合成中间帧</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>每帧的计算量和实测耗时（正式测试，60 帧游戏，输出 2688×1216）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>环节</th><th>规模</th><th>实测</th></tr></thead>
+      <tbody>
+        <tr><td>超分</td><td>2141×969 → 2688×1216（×1.256），每个输出像素 9 次双线性采样 + 5 点锐化，一次调度，工作组 16×16</td><td class="n">GPU p50 <strong>1.06 ms</strong>，p95 1.09 ms</td></tr>
+        <tr><td>插帧 · 块匹配</td><td>亮度小图 672×304，8×8 块共 84×38 = 3192 块，每块 1089 个候选 × 64 像素 ≈ 每帧 2.2 亿次差值运算</td><td rowspan="2">四步没有单独计时。游戏进程的 GPU 忙碌时间：开插帧 13.54 ms / 帧，不开 13.19 ms / 帧（同时包含超分）</td></tr>
+        <tr><td>插帧 · 平滑 + 合成</td><td>3192 块的中值和平滑；合成对 2688×1216 每个像素做两次双线性采样</td></tr>
+        <tr><td>层的 CPU 开销</td><td>每次送显时记录命令、提交、交给合成器</td><td class="n">p50 <strong>0.11 ms</strong>，p95 0.14 ms</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>显存占用（输出 2688×1216，RGBA8，每张 13.1 MB）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>缓冲</th><th>数量</th><th>合计</th></tr></thead>
+      <tbody>
+        <tr><td>子图层送显缓冲（AHardwareBuffer 环形队列）</td><td class="n">8 张</td><td class="n">≈ 105 MB</td></tr>
+        <tr><td>上一帧（运动估计要用）</td><td class="n">1 张</td><td class="n">≈ 13 MB</td></tr>
+        <tr><td>游戏交换链多申请的图（4 → 6 张）</td><td class="n">2 张</td><td class="n">≈ 26 MB</td></tr>
+        <tr><td>亮度小图和运动场</td><td class="n">—</td><td class="n">&lt; 2 MB</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>功耗</h3>
+  <div class="note"><p><b>整机功耗还没有测</b>（需要在停充状态下采电池电流，已排进下一步）。目前有的是 GPU 和 CPU 的负载数据，可以作为功耗的参考。</p></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>场景</th><th>已测到的负载</th><th>对功耗的含义</th></tr></thead>
+      <tbody>
+        <tr><td>降分辨率 + 超分（省电用法）</td><td>每帧 GPU 忙碌 28.0 → 22.6 ms（<strong>−19%</strong>，p=0.031）</td><td>GPU 工作量减少约五分之一，预期 GPU 功耗下降</td></tr>
+        <tr><td>满分辨率超分</td><td>超分本身每帧 GPU 1.06 ms</td><td>60 帧时每秒约 64 ms GPU 时间，增量小</td></tr>
+        <tr><td>超分 + 插帧</td><td>游戏进程 GPU 忙碌 13.19 → 13.54 ms / 帧（同为 60 帧渲染）；层 CPU 每帧 0.11 ms</td><td>插帧不让游戏多渲染，主要开销是块匹配和合成；整机功耗待测</td></tr>
+        <tr><td>解开限帧器（30 → 60 帧）</td><td>游戏渲染帧数翻倍</td><td><b>功耗会明显上升</b>：系统限帧本来就是为了控温省电。这是帧率提升的主要代价，需要实测</td></tr>
+        <tr><td>对比 GFRC+</td><td>每帧 GPU 11.9 ms（GFRC+）对 15.2 ms（自研）</td><td>同样效果下我们 GPU 多约 3 ms / 帧</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>每次 <code>vkQueuePresentKHR</code> 时发生的事（按顺序）</h3>
+  <ol class="steps">
+    <li>游戏把画好的一帧交过来。层在游戏创建交换链时已把它改成屏幕原生 2688×1216，游戏仍按 2141×969 画在左上角。</li>
+    <li><b>超分</b>：一次 compute 调度，把左上角 2141×969 放大并锐化成整张 2688×1216。</li>
+    <li><b>插帧</b>：用上一帧和这一帧跑亮度小图、块匹配、平滑、合成四步，把中间帧写进环形队列里的一张送显缓冲。</li>
+    <li>把这一帧原样拷进下一张送显缓冲，再拷一份留作「上一帧」。</li>
+    <li>给两张缓冲加屏障，把所有权交给系统；整批命令提交到 GPU，导出一个同步 fd，CPU 不等 GPU。</li>
+    <li>用一个 <code>ASurfaceTransaction</code> 把两张缓冲交给子图层：中间帧期望上屏时刻 = 现在 + 25 ms，真实帧再晚半个游戏周期，相邻至少隔一个刷新周期减 0.3 ms。</li>
+    <li>游戏自己的送显照常进行。它被不透明的子图层盖在下面，看不见，但游戏的节奏不受影响。</li>
+    <li>子图层第一次出现时设置一次：盖在游戏图层上方、声明不透明、按游戏的预旋转方向设变换、投 120 Hz 帧率票。</li>
+  </ol>
+
+  <h3>可调参数（系统属性 <code>debug.knobs.*</code>，全部默认关闭）</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>参数</th><th>正式结果用的值</th><th>作用</th></tr></thead>
+      <tbody>
+        <tr><td><code>selfsr</code></td><td><code>2688x1216:1.0</code></td><td>超分目标分辨率和锐化强度（0 = 不锐化）</td></tr>
+        <tr><td><code>selfsr_algo</code></td><td><code>cr</code></td><td>放大算法：<code>cr</code> = Catmull-Rom，<code>lanczos</code> = Lanczos2 + 去振铃</td></tr>
+        <tr><td><code>interp</code> / <code>interp_mode</code></td><td><code>1</code> / <code>bm</code></td><td>开插帧；<code>bm</code> = 块匹配，<code>dup</code> = 复制上一帧，<code>real</code> = 不插帧对照</td></tr>
+        <tr><td><code>interp_fps</code></td><td><code>120</code></td><td>子图层投的帧率</td></tr>
+        <tr><td><code>interp_backend</code></td><td><code>sc</code></td><td>插帧走子图层送显</td></tr>
+        <tr><td><code>interp_lead_ns</code></td><td><code>25000000</code></td><td>第一张中间帧的提前量（25 ms），直接决定延迟</td></tr>
+        <tr><td><code>unlimit</code></td><td><code>1</code></td><td>解开游戏进程里的限帧器</td></tr>
+        <tr><td>合成器「等游戏帧」</td><td>关</td><td>不是层的参数，由测试脚本在进游戏后关掉、测完写回</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>代码在哪</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>文件（<code>knobs/gray/layer/</code>）</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><code>vk_layer_refknobs.cpp</code></td><td>层入口：拦截 Vulkan 调用、改交换链、解开限帧器（在进程内存里找到图形库、解析符号表定位限帧配置）</td></tr>
+        <tr><td><code>selfsr.cpp</code> + <code>selfsr_*.comp</code></td><td>超分调度与 shader</td></tr>
+        <tr><td><code>interp.cpp</code></td><td>插帧主流程：每次送显时排程、提交、计算上屏时刻、统计延迟</td></tr>
+        <tr><td><code>interp_bm.cpp</code> + <code>interp_b_*.comp</code></td><td>块匹配插帧的四个 shader 与资源管理</td></tr>
+        <tr><td><code>interp_sc.cpp</code></td><td>子图层：建 <code>ASurfaceControl</code>、分配 AHardwareBuffer 并导入成 Vulkan 图、交给合成器</td></tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <section>
@@ -343,6 +510,24 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
   <div class="hud">
     <figure><img src="img/native_hud.png" alt="原生画面右上角图标区放大" width="1680" height="240" loading="lazy"><figcaption>原生：右上角图标区放大 2 倍，锐度 366</figcaption></figure>
     <figure><img src="img/ours_hud.png" alt="自研超分后右上角图标区放大" width="1680" height="240" loading="lazy"><figcaption>自研超分：同一区域，锐度 953，图标边缘更清楚</figcaption></figure>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="stack">
+    <div class="eyebrow">更多截图</div>
+    <h2>各阶段的真机截图</h2>
+    <p>截图只能看到某一瞬间的画面，看不出帧率；帧率差别请看上面的数字。</p>
+  </div>
+  <figure><img src="img/baseline.jpg" alt="原神原生基线截图" width="2000" height="905" loading="lazy"><figcaption>第 1 步：原生基线（游戏渲染 2141×969，60 帧，测量位置）</figcaption></figure>
+  <figure><img src="img/repro_cmp.jpg" alt="一键复现脚本自动生成的对比图，左不插帧右插帧" width="2000" height="453" loading="lazy"><figcaption><code>repro.sh</code> 自动生成的对比图：左 不插帧（60.0 帧），右 超分 + 插帧（117.5 帧）</figcaption></figure>
+  <div class="shots">
+    <figure><img src="img/bug_ghost_before.jpg" alt="修复前：超分加插帧时画面发暗并叠加放大残影" width="1792" height="810" loading="lazy"><figcaption>调通过程：修复前，超分 + 插帧时合成帧发暗，并叠了一张放大 1.26 倍的旧画面</figcaption></figure>
+    <figure><img src="img/bug_ghost_after.jpg" alt="修复后：画面正常，右上一张是镜头转动时" width="1792" height="810" loading="lazy"><figcaption>修复后：画面正常（右上那张截在镜头转动时）</figcaption></figure>
+  </div>
+  <div class="shots">
+    <figure><img src="img/phone2_refbench.jpg" alt="第二台手机上测试程序原生与插帧对比" width="1400" height="317" loading="lazy"><figcaption>第二台手机，测试程序：左原生 60 帧，右插帧 119.9 帧，画面一致</figcaption></figure>
+    <figure><img src="img/phone2_megacity.jpg" alt="第二台手机上 Megacity 原生与插帧对比" width="1400" height="317" loading="lazy"><figcaption>第二台手机，Megacity：左原生 30.1 帧，右插帧 60.1 帧（飞船不同是游戏随机生成的）</figcaption></figure>
   </div>
 </section>
 
