@@ -127,6 +127,20 @@ ol.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 10px; max-width: 
 .gate .g-head .num { font: 600 15px var(--font-data); color: var(--ours); white-space: nowrap; }
 .gate p { max-width: none; }
 @media (max-width: 560px) { .flow .arrow { display: none; } .flow .node { flex-basis: 100%; } }
+/* 附录：报告原文 */
+details.appx { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+details.appx > summary { cursor: pointer; padding: 14px 18px; font-weight: 700; list-style-position: inside; }
+details.appx > summary:focus-visible { outline: 2px solid var(--ours); outline-offset: 2px; border-radius: 8px; }
+details.appx[open] > summary { border-bottom: 1px solid var(--line); }
+.appx-body { padding: 8px 18px 20px; display: grid; gap: 12px; min-width: 0; font-size: 15px; }
+.appx-body > * { min-width: 0; }
+.appx-body h3 { font: 600 20px/1.4 var(--font-display); margin-top: 12px; }
+.appx-body h4 { font: 700 16px/1.5 var(--font-body); margin: 10px 0 0; }
+.appx-body h5 { font: 700 15px/1.5 var(--font-body); margin: 6px 0 0; color: var(--muted); }
+.appx-body p, .appx-body li { max-width: 80ch; }
+.appx-body ul, .appx-body ol { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+.appx-body table { min-width: 560px; font-size: 13px; }
+.appx-body blockquote { margin: 0; padding: 8px 14px; border-left: 3px solid var(--line); color: var(--muted); }
 .note { background: var(--warn-bg); color: var(--warn-ink); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; }
 .note p { color: inherit; }
 ul.clean { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; max-width: 70ch; }
@@ -148,7 +162,8 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
 <header class="stack">
   <div class="eyebrow">HGamey · 自研超分 + 插帧 · 截至 2026-10-27</div>
   <h1>原神上帧率接近翻倍，画质高于原生和厂商方案</h1>
-  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>。</p>
+  <p class="lede">由 agent 在真机测试平台上自主优化完成：3 天，253 次冷启动测量，26 份对比报告。</p>
+  <p class="lede">我们在游戏把画面交给系统之前插入一层自己的 Vulkan 处理：先超分提画质，再在两帧之间算出中间帧。全部数字来自真机上 6 对「开 / 关」交替冷启动测试。具体用了什么算法、改了哪些地方，见 <a href="#how">怎么做到的</a>；模型大小、计算量和资源占用，见 <a href="#spec">实现规格</a>；更细的内容见 <a href="#diagrams">算法图解</a>、<a href="#code">代码级说明</a>、<a href="#method">测试方法与条件</a>、<a href="#data">每一步的全部数据</a>。</p>
 </header>
 
 <section aria-label="核心数字">
@@ -158,6 +173,105 @@ footer { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line)
     <div class="fig"><span class="k">对比厂商方案 GFRC+ 的画质</span><span class="v num">+18%</span><span class="d">图标区锐度 948 对 803</span></div>
     <div class="fig"><span class="k">代价：真实帧延迟</span><span class="v num">+33.5<small>ms</small></span><span class="d">层内记录的排队时间（下限）</span></div>
   </div>
+</section>
+
+<section id="agent">
+  <div class="stack">
+    <div class="eyebrow">Agent 自主优化</div>
+    <h2>这些优化是 agent 在真机上自己跑出来的</h2>
+    <p>整个项目由一个编程 agent（Claude Code）驱动，跑在我们的真机测试平台 phonefarm 上。人给出目标、验收标准和边界，agent 自己读代码、写 Vulkan 层、编译、装到手机、跑对比实验、读性能跟踪、定位问题、修复、再测，最后写报告和这个网页。三天里没有人手工跑过一次测量。</p>
+  </div>
+
+  <div class="hero-figs">
+    <div class="fig"><span class="k">真机冷启动测量</span><span class="v num">253<small>臂</small></span><span class="d">含正式对比和排查冒烟</span></div>
+    <div class="fig"><span class="k">A/B 对比报告</span><span class="v num">26<small>份</small></span><span class="d">每份自动出表、区间、p 值</span></div>
+    <div class="fig"><span class="k">代码提交</span><span class="v num">67</span><span class="d">phonefarm，另有文档 16 次</span></div>
+    <div class="fig"><span class="k">时间</span><span class="v num">3<small>天</small></span><span class="d">2026-10-24 → 10-27</span></div>
+  </div>
+
+  <h3>分工</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>人做的</th><th>agent 自主做的</th></tr></thead>
+      <tbody>
+        <tr><td>
+          <ul class="clean">
+            <li>定目标：6 步路线和每步的验收标准</li>
+            <li>定边界：不改游戏设置、不登录游戏、不替用户授权隐私权限</li>
+            <li>关键决策：允许绕开系统限帧（「我们就是厂商」）；第二台手机不跑原神</li>
+            <li>物理操作：给第二台手机 root、修好它的系统，处理需要人在手机上确认的弹窗</li>
+          </ul>
+        </td><td>
+          <ul class="clean">
+            <li>读系统和游戏的出图链路，定方案</li>
+            <li>写超分和插帧的 shader、Vulkan 层、子图层送显</li>
+            <li>写和改测试脚本，自己加需要的测量和开关</li>
+            <li>排期跑实验：冷启动、进游戏、测量、还原，全自动</li>
+            <li>读数据和系统性能跟踪，提出并验证假设</li>
+            <li>发现自己的错误并更正，写报告、部署网页</li>
+          </ul>
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>优化闭环</h3>
+  <div class="flow" role="img" aria-label="闭环：提出假设，改代码或加开关，真机对比实验，读数据和跟踪，接受或否定，回到下一个假设">
+    <div class="node ours"><b>提出假设</b><span>例：卡在 89 帧是因为合成器没在每个 vsync 醒来</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node ours"><b>改代码 / 加开关</b><span>层里加 <code>sc_kick_ns</code>，脚本里加对应参数</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node"><b>真机 A/B</b><span>phonefarm 拿锁、冷启动、自动进游戏、测 60 秒、还原</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node"><b>读数据和跟踪</b><span>帧率、frametimeline、合成器 atrace</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node ours"><b>接受或否定</b><span>89.1，否定 → 下一个假设</span></div>
+  </div>
+
+  <h3>harness（phonefarm）给 agent 的能力</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>能力</th><th>做什么</th><th>为什么 agent 需要它</th></tr></thead>
+      <tbody>
+        <tr><td>设备锁与租约</td><td>多台手机、多个任务排队拿锁；进程异常退出会留下「需恢复」屏障</td><td>agent 可以放心并行，不会两个实验抢同一台手机</td></tr>
+        <tr><td>挂层会话</td><td>把层装进游戏、启动、结束时摘除并核对</td><td>每次实验后设备回到原样，下一次实验不受污染</td></tr>
+        <tr><td>自动进游戏</td><td>截图 + OCR 识别界面，点到进入大世界</td><td>每臂都冷启动，没有人在旁边点</td></tr>
+        <tr><td>A/B 编排</td><td>ABBA 交替、降温、开风扇、测量窗口、作废规则、符号翻转检验</td><td>结果能直接拿来判断「改动到底有没有用」</td></tr>
+        <tr><td>多路测量</td><td>合成器 timestats、子图层 latency、GPU 提交 ftrace、截图锐度、层内计数</td><td>agent 能看到帧率之外的原因</td></tr>
+        <tr><td>系统跟踪</td><td>atrace / frametimeline 抓取</td><td>89 帧的真正原因就是从合成器跟踪里一帧一帧对出来的</td></tr>
+        <tr><td>还原与核对</td><td>每项改过的设置记原值、收尾写回、回读确认</td><td>agent 改系统开关（刷新率、限帧、合成器机制）也不会把手机留在异常状态</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>案例一：从 89 帧到 118 帧，agent 排查了 7 个假设</h3>
+  <p>插帧做通后上屏卡在 89 帧。agent 每次提出一个假设，就给层或测试脚本加一个开关，跑真机冒烟，用数据判断：</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>假设</th><th>agent 加的东西</th><th>结果</th></tr></thead>
+      <tbody>
+        <tr><td class="n">1</td><td>合成帧上屏时刻排得不好</td><td>提前量、间隔、Choreographer 节拍、帧率投票等 5 种排程方案</td><td class="n">71–89，否定</td></tr>
+        <tr><td class="n">2</td><td>系统按 60 Hz 判定这个应用的事务</td><td>读系统跟踪；用合成器后门把应用帧率覆盖改成 120（<code>sfovr</code>）</td><td class="n">判定已变 120，帧率仍 89.9，否定</td></tr>
+        <tr><td class="n">3</td><td>合成器没在每个 vsync 醒来</td><td>每 8.3 ms 发空事务叫醒它（<code>sc_kick_ns</code>）</td><td class="n">89.1，否定</td></tr>
+        <tr><td class="n">4</td><td>上屏时刻没对齐 vsync 网格</td><td>层里起 Choreographer 线程估 vsync 相位，按格子中点排（<code>sc_grid</code>）</td><td class="n">89.2，否定（还发现并修了一个取整积压 bug）</td></tr>
+        <tr><td class="n">5</td><td>合成器在等游戏缓冲画完</td><td>真实帧交出前 CPU 等 GPU（<code>sc_real_wait</code>）</td><td class="n">游戏掉到 22 帧，方向对、做法不行</td></tr>
+        <tr><td class="n">6</td><td>同上，但从系统侧解决</td><td>在合成器二进制里找到「等游戏帧」的运行时开关，脚本加 <code>sfwait=off</code>，收尾写回</td><td class="n"><strong>119.9</strong>，确认</td></tr>
+        <tr><td class="n">7</td><td>帧率覆盖还需要吗</td><td>只关等待、不改覆盖</td><td class="n"><strong>119.9</strong>，不需要</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>关键一步在假设 5 和 6 之间：agent 抓了 3 秒合成器跟踪，看到每次 commit 里有一串每 1 ms 一次的 <code>wait</code>，正在等游戏图层缓冲；紧接着下一个 vsync 被整帧跳过。它据此在合成器里找到了 <code>--fpsControl_waitframe_off</code> 开关。最后用两组 6 对正式实验确认：60.0 → 118.2。</p>
+
+  <h3>案例二：超分算子迭代，耗时从 4.4 ms 降到 1.06 ms</h3>
+  <p>第一版用 Lanczos2 + 去振铃 + RCAS，两次调度，每帧 4.4 ms。agent 先用离线同帧对比确认 Catmull-Rom 画质不降（SSIM 0.9840 对 0.9841），再改成 9 次硬件采样，把放大和锐化融合进一次调度，最后直写交换链。主要版本都在真机上跑了 6 对，确认帧率和帧时没有退化。</p>
+
+  <h3>agent 自己发现并更正的错误</h3>
+  <ul class="clean">
+    <li><b>根因写错过一次</b>：先把 89 帧归因于「系统按 60 Hz 判定」并写进了报告。后来用帧率覆盖实验否定了它，在报告里明确标注「此节结论有误」，并写上正确原因。</li>
+    <li><b>测量漏洞</b>：正式实验里有一臂，屏幕在测量中途被系统降回 60 Hz，但没有作废。agent 发现后，给脚本加了「测完再检查一次刷新率」。</li>
+    <li><b>测试脚本 bug</b>：还原逻辑在另一个进程里执行，导致合成器后门的设置没被清掉。agent 改成按设备上的实际状态逐条清理。</li>
+    <li><b>换机适配</b>：第二台手机的性能表格多一列，root 方式也不同，导致解析失败、写属性被拒。agent 都改成了通用写法。</li>
+  </ul>
 </section>
 
 <section>
@@ -579,6 +693,1925 @@ sh loop_v1/selfsr/repro_noroot.sh &lt;serial&gt;   # 未 root 手机：测试程
     <li>给游戏厂商的报告：<a href="https://github.com/HGamey/docs/blob/main/experiments/2026-10-24-selfsr/VENDOR_REPORT.md">VENDOR_REPORT.md</a></li>
     <li>逐步报告：<a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr">STEP1–STEP6 与全部原始数据</a></li>
   </ul>
+</section>
+
+<!--DIAGRAMS--><!--CODE-->
+<section id="method">
+  <div class="stack">
+    <div class="eyebrow">测试方法与条件</div>
+    <h2>每个数字是怎么测出来的</h2>
+    <p>下面是测量 harness 的完整说明：怎么把层挂进游戏、每一臂怎么跑、每个指标从哪读、怎么统计、怎么判作废、怎么还原。</p>
+  </div>
+  <details class="appx" open><summary>展开 / 收起：测量方法完整说明</summary><div class="appx-body"><h3>测量 harness 指南：自研超分 + 插帧的结果是怎么产生的</h3>
+<p>本文说明 STEP1–STEP6 里每一个数字的来源：代码在哪，一次 A/B 怎么跑，每个指标从哪里读，怎么统计，跑完怎么还原，以及踩过的坑。
+所有代码都在 phonefarm 仓库的 <code>feat/selfsr</code> 分支。下文路径都相对于该仓库根目录。</p>
+<h4>1. 总体流程</h4>
+<pre><code>selfsr_ab.py run --a &lt;臂A&gt; --b &lt;臂B&gt; --rounds 6
+  │  开跑前: 检查设备上没有层残留; 记下所有要改的系统设置的原值 (orig.json / panel_orig.json)
+  │  按 ABBA 顺序排 12 臂: A1 B1 B2 A2 A3 B3 …
+  ├─ 每一臂
+  │    等电池降温 → 拿设备锁 → 设好本臂的系统设置与层属性 → 冷启动游戏、挂层 → 自动进大世界
+  │    → 进世界后再设刷新率和系统开关 → 静置 settle 秒 → 测量窗口 (并行采 5 路数据) → 停游戏、摘层、核对
+  ├─ 收尾 (含 Ctrl-C): 所有设置写回原值并回读核对
+  └─ 统计: 每对 B−A 配对差 → 精确符号翻转检验 + bootstrap 95% 区间 → report.md / report.json
+</code></pre>
+<h4>2. 组件</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>位置</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vulkan 层 <code>libVkLayer_refknobs.so</code></td>
+<td><code>knobs/gray/layer/</code>，<code>knobs/gray/build/build_layer.sh</code> 用 NDK r28c 编</td>
+<td>在游戏 <code>vkQueuePresentKHR</code> 前做超分（<code>selfsr.cpp</code>）和插帧（<code>interp*.cpp</code>），插帧经子图层送显（<code>interp_sc.cpp</code>）。所有行为由 <code>debug.knobs.*</code> 系统属性控制，默认全关，等于透传</td>
+</tr>
+<tr>
+<td><code>phonefarm</code></td>
+<td><code>src/</code>（Rust），<code>cargo build --release</code></td>
+<td>设备锁和租约（<code>tools/devlock</code>、<code>phonefarm lease</code>）；挂层会话 <code>gray-layer session</code>；自动进游戏 <code>onboard</code>；解析 GPU 提交 <code>parse-trace</code></td>
+</tr>
+<tr>
+<td>A/B 编排</td>
+<td><code>loop_v1/selfsr/selfsr_ab.py</code></td>
+<td>本文的主角，见第 4–7 节</td>
+</tr>
+<tr>
+<td>GPU 提交采集</td>
+<td><code>loop_v1/tools/ftrace_capture.sh</code></td>
+<td>设备端 root 脚本。在私有 ftrace 实例里采 <code>adreno_cmdbatch_*</code> 等事件，采完删掉实例，不动全局 tracing</td>
+</tr>
+<tr>
+<td>一键复现</td>
+<td><code>loop_v1/selfsr/repro.sh</code>（root）、<code>repro_noroot.sh</code>（非 root）</td>
+<td>把多组 A/B 串起来，出总报告和对比截图</td>
+</tr>
+</tbody>
+</table></div>
+<h4>3. 层是怎么挂进游戏的</h4>
+<p><strong>root 设备</strong>（<code>gray-layer session</code>）</p>
+<ol>
+<li>会话先拿设备租约。</li>
+<li>把 <code>.so</code> 拷进游戏的 native 库目录（<code>/data/app/…/lib/arm64</code>）。</li>
+<li>设 <code>debug.vulkan.layers=VK_LAYER_refknobs</code>，然后冷启动游戏。</li>
+<li>游戏建 VkInstance 时，Android 的 Vulkan loader 会加载这个层。</li>
+<li>会话结束时删 <code>.so</code>、清属性。</li>
+</ol>
+<p>每臂结束后，<code>selfsr_ab.py</code> 会再独立核对一次：<code>.so</code> 不在、属性为空。核对不通过，整轮立刻中止。</p>
+<p><strong>非 root 设备</strong>（<code>noroot_smoke.sh</code>）</p>
+<ol>
+<li>目标 App 必须是可调试的。我们用自编的 refbench，以及重打包成可调试的第三方游戏。</li>
+<li>设 <code>settings global enable_gpu_debug_layers=1</code>、<code>gpu_debug_app=&lt;包名&gt;</code>、<code>gpu_debug_layers=VK_LAYER_refknobs</code>。</li>
+<li>用 <code>run-as &lt;包名&gt; cp</code> 把 <code>.so</code> 放进 App 私有目录。</li>
+<li>结束时删回这三项 settings，并删掉 <code>.so</code>。</li>
+</ol>
+<p>层属性（<code>debug.*</code>）用 shell 身份写。有的 root 方案里，su 所在的 SELinux 域会被 init 拒绝写 <code>debug.*</code>，而 shell 域在所有设备上都能写。</p>
+<h4>4. 臂（<code>--a</code> / <code>--b</code>）</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>臂</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>native</code></td>
+<td>不挂层，游戏原样运行</td>
+</tr>
+<tr>
+<td><code>layer</code> / <code>layer:unlimit=1</code></td>
+<td>只挂透传层；<code>unlimit=1</code> 另外解开应用进程内的限帧器（见第 8 节）</td>
+</tr>
+<tr>
+<td><code>hwc:&lt;F&gt;</code></td>
+<td>Android Game Mode 降分辨率 F，放大交给系统合成器</td>
+</tr>
+<tr>
+<td><code>sr:&lt;F&gt;:&lt;宽&gt;x&lt;高&gt;[:&lt;锐化&gt;]</code></td>
+<td>Game Mode 降到 F 倍，层内超分到 &lt;宽&gt;x&lt;高&gt;</td>
+</tr>
+<tr>
+<td><code>ip:&lt;合成方式&gt;[:&lt;投帧率&gt;[:键=值,…]]</code></td>
+<td>层内插帧。合成方式 <code>bm</code> = 块匹配运动补偿，<code>dup</code> = 复制上一帧，<code>real</code> = 不插帧的对照</td>
+</tr>
+<tr>
+<td><code>srip:&lt;F&gt;:&lt;宽&gt;x&lt;高&gt;:&lt;锐化&gt;:&lt;合成方式&gt;[:&lt;投帧率&gt;[:键=值,…]]</code></td>
+<td>超分和插帧同时开</td>
+</tr>
+<tr>
+<td><code>gfrc:&lt;三位&gt;</code>、<code>&lt;挂层臂&gt;+gfrc:&lt;三位&gt;</code></td>
+<td>厂商自带的超分 / 插帧（对标用），或与自研层同开</td>
+</tr>
+</tbody>
+</table></div>
+<p>插帧臂常用的键（写进 <code>debug.knobs.interp_&lt;键&gt;</code>，或由脚本自己处理）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>键</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>backend=sc</code></td>
+<td>插帧经子图层送显（见第 8 节），正式结果都用它</td>
+</tr>
+<tr>
+<td><code>lead_ns=25000000</code></td>
+<td>第一张合成帧定在「现在 + 25 ms」上屏，给 GPU 留时间</td>
+</tr>
+<tr>
+<td><code>stamp=0</code></td>
+<td>不在画面上打调试标记</td>
+</tr>
+<tr>
+<td><code>panel=120</code></td>
+<td>进世界后把屏幕切到 120 Hz，回读 SF 刷新周期确认，切不到这一臂就作废</td>
+</tr>
+<tr>
+<td><code>unlimit=1</code></td>
+<td>解开进程内限帧器</td>
+</tr>
+<tr>
+<td><code>sfwait=off</code></td>
+<td>进世界后关掉定制 SF 的「等游戏帧」特性（见第 8 节），收尾写回开</td>
+</tr>
+<tr>
+<td><code>sfovr=&lt;Hz&gt;</code></td>
+<td>用 SF 后门给游戏 uid 下帧率覆盖（排查用，正式结果不需要）</td>
+</tr>
+<tr>
+<td><code>sc_grid</code>、<code>sc_kick_ns</code>、<code>sc_real_wait</code>、<code>sc_gap_ns</code>、<code>sc_pacer</code>…</td>
+<td>子图层节奏的排查开关，默认全关</td>
+</tr>
+</tbody>
+</table></div>
+<h4>5. 一臂的完整步骤</h4>
+<ol>
+<li><strong>降温</strong>：<code>--cool-max 40</code> 时，先停游戏、熄屏，直到电池温度 ≤ 40 °C（最多等 15 分钟）。过热时系统会压帧率、弹高温窗口。整轮用 <code>--fan</code> 把机身风扇开到最高，收尾写回原值。</li>
+<li><strong>加锁并设置</strong>：不挂层的臂整臂在 <code>tools/devlock</code> 下跑。挂层的臂由 <code>gray-layer session</code> 持有设备租约。设置内容包括 Game Mode 干预、<code>debug.knobs.*</code> 和厂商功能开关。</li>
+<li><strong>冷启动并进世界</strong>：<code>phonefarm onboard --enter-only</code> 用截图和 OCR 识别界面，点「点击进入」等按钮进到大世界。它认不出的游戏，用 <code>--enter-script 's:&lt;秒&gt;;t:&lt;x&gt;,&lt;y&gt;;…'</code> 固定点击序列。不登录、不改游戏内任何设置。</li>
+<li><strong>进世界之后再设</strong>：刷新率、<code>sfwait</code>、<code>sfovr</code>。原因是有的系统在游戏启动时会把刷新率压回 60 Hz，启动前设会被覆盖。</li>
+<li><strong>静置</strong>：<code>--settle</code> 秒（默认 20）。</li>
+<li><strong>测量窗口</strong>：<code>--window</code> 秒（正式结果用 60），5 路数据并行采集，见第 6 节。</li>
+<li><strong>收尾</strong>：停会话、摘层、<code>am force-stop</code>，核对层已不在。</li>
+</ol>
+<h4>6. 每个指标从哪里来</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>报告里的指标</th>
+<th>来源</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>游戏图层上屏帧率 <code>display_fps</code></td>
+<td><code>dumpsys SurfaceFlinger --timestats</code>，窗口开始时清零，结束时 dump</td>
+<td>游戏 SurfaceView 图层的 <code>totalFrames ÷ displayOnTime</code></td>
+</tr>
+<tr>
+<td>子图层上屏帧率 <code>display_fps_sc</code>、间隔 p95</td>
+<td><code>dumpsys SurfaceFlinger --latency selfsr_interp#N</code> 的实际上屏列，每秒清一次、取 6 段</td>
+<td>timestats 不统计子图层，只能这样量。latency 缓冲只存 128 帧，所以按 1 秒分段</td>
+</tr>
+<tr>
+<td>实际看到的帧率 <code>seen_fps</code></td>
+<td>有子图层时取子图层，否则取游戏图层</td>
+<td>子图层是不透明的，盖在游戏图层上</td>
+</tr>
+<tr>
+<td>游戏渲染帧率、渲染 p95 帧时、每帧 GPU 忙碌</td>
+<td><code>ftrace_capture.sh</code> 采 GPU 提交/退役事件，<code>phonefarm parse-trace</code> 只统计游戏进程自己的线程</td>
+<td>衡量游戏自己画了多少帧，与上屏数无关</td>
+</tr>
+<tr>
+<td>插帧给真实帧加的延迟 <code>sc_added_delay_p50_ms</code></td>
+<td>层内记录：真实帧从「游戏调 present」到「排定的上屏时刻」的间隔</td>
+<td>这是下限：提前量 + 合成帧占的那一格；实际上屏只会更晚</td>
+</tr>
+<tr>
+<td>窗口内真实帧数 / 合成帧数</td>
+<td>层的 marker（会话 <code>marker</code> 动作）和 <code>knobs_interp_frames.csv</code></td>
+<td>用于确认层确实加载、确实在插帧 / 超分。没加载或没超分的臂作废</td>
+</tr>
+<tr>
+<td>锐度、HUD 区锐度</td>
+<td>窗口结束时截图，拉普拉斯方差；HUD 区是右上角那排固定图标</td>
+<td>整屏锐度受场景影响大，HUD 区在各臂之间内容相同</td>
+</tr>
+<tr>
+<td>SSIM</td>
+<td>与本轮第一张原生截图比</td>
+<td>冷启动后时间和云层会变，只作参考</td>
+</tr>
+<tr>
+<td>送显缓冲尺寸</td>
+<td><code>dumpsys SurfaceFlinger</code> 的 HWC 层表，游戏图层的 Source Crop</td>
+<td>用来确认降分辨率或超分确实生效</td>
+</tr>
+</tbody>
+</table></div>
+<h4>7. 统计和作废规则</h4>
+<ul>
+<li><strong>ABBA 配对</strong>：第 i 对的两臂紧挨着跑，奇偶对的先后顺序互换，以抵消发热和时间漂移。</li>
+<li><strong>作废</strong>：出现以下任一情况，这一臂作废，它所在的那一对整对不进统计，并写进报告的「作废臂」：
+<ul>
+<li>有报错；</li>
+<li>测量时游戏不在前台；</li>
+<li>挂层臂的层没加载或没摘干净；</li>
+<li>屏幕没切到要求的刷新率（窗口开始前和结束后各回读一次；系统可能在窗口中途把刷新率压回去）；</li>
+<li>超分臂没在超分。</li>
+</ul>
+</li>
+<li><strong>检验</strong>：对每个指标算 B−A 配对差，做精确符号翻转检验（6 对时可能的最小 p 是 2/64 ≈ 0.031），再用 bootstrap 给出差值的 95% 区间。</li>
+<li><strong>输出</strong>：
+<ul>
+<li><code>report.md</code> 是对比表；</li>
+<li><code>report.json</code> 是同样的数据；</li>
+<li><code>arms.jsonl</code> 每臂一行，含全部原始字段；</li>
+<li><code>traces/</code> 下有 timestats、子图层 latency、ftrace、SF 摘要；</li>
+<li><code>shots/</code> 下是每臂的截图；</li>
+<li><code>onboard/</code> 下是进门过程的截图和 OCR 记录；</li>
+<li><code>restore.json</code> 是收尾核对的结果。</li>
+</ul>
+</li>
+</ul>
+<h4>8. 插帧要越过的三道系统关卡</h4>
+<p>插帧的目标是在 60 帧的游戏上做到上屏约 120 帧。在实际设备上，算法本身之外还有三道关卡。</p>
+<ol>
+<li><strong>进程内限帧器</strong>：部分系统定制的 <code>libgui</code> 在应用进程内限制每秒送显次数。层多送的合成帧也算在里面，结果只是把一半真实帧换成了合成帧，总数不变。
+<ul>
+<li>层的 <code>unlimit=1</code> 在进程内找到这个限帧器的配置，把它解开。</li>
+<li>插帧本身改走 <strong>子图层</strong>：在游戏窗口下挂一个 <code>ASurfaceControl</code> 子图层，真实帧拷一份、合成帧画进层自己的 AHardwareBuffer，用 <code>ASurfaceTransaction</code> 直接交给 SurfaceFlinger，不经过被限帧的缓冲队列。</li>
+</ul>
+</li>
+<li><strong>按 vsync 排上屏时刻</strong>：
+<ul>
+<li>同一游戏帧的合成帧和真实帧如果在同一个 vsync 就绪，SF 只显示后一张。所以第一张定在「现在 + 提前量」，后面每张间隔至少一个刷新周期，每张都带 <code>desiredPresentTime</code>。</li>
+<li>子图层还要做旋转：游戏按 <code>preTransform</code> 预旋转时，子图层设相同的反向变换。</li>
+</ul>
+</li>
+<li><strong>定制 SF 的「等游戏帧」特性</strong>：
+<ul>
+<li>现象：有的定制 SurfaceFlinger 在合成时，如果游戏图层的缓冲 GPU 还没画完，会每 1 ms 轮询一次，最多等 7–8 ms。这一帧因此合成晚了，下一个 vsync 因为 backpressure 整帧跳过。那一格排好的子图层缓冲，下次和后一张一起就绪，前一张被顶掉。最终上屏卡在约 89 帧。</li>
+<li>定位方法：在测量窗口内另开 <code>atrace -t 3 gfx view</code>，看 SF 主线程的 <code>commit</code> → <code>fence unsignaled</code> → 一串 <code>wait</code> → 下一次 <code>PrevFramePending</code> / <code>onCommitNotComposited</code>，以及子图层的 <code>releasePendingBuffer</code>。</li>
+<li>处理：该 SF 自带运行时开关 <code>dumpsys SurfaceFlinger --fpsControl_waitframe_off</code>，不改系统文件。<code>sfwait=off</code> 在进世界后关掉它，收尾写回开。关掉后子图层上屏约 118–120 帧。</li>
+<li>排查中试过、但<strong>无效</strong>的做法（STEP4 有完整表格）：
+<ul>
+<li>用 SF 后门（<code>service call SurfaceFlinger 1039</code>）把 uid 帧率覆盖改成 120；</li>
+<li>定时给 SF 发空事务叫醒它；</li>
+<li>把上屏时刻对齐 vsync 网格；</li>
+<li>真实帧交出前在 CPU 上等 GPU 做完（游戏渲染掉到 22 帧）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4>9. 复现命令</h4>
+<pre><code class="language-sh"># 编层 (NDK r28c, 也可用 ANDROID_NDK_HOME 指定)
+bash knobs/gray/build/build_layer.sh
+
+# root 设备: 原生 vs 自研超分 + 插帧, 6 对
+python3 -I loop_v1/selfsr/selfsr_ab.py run --serial &lt;serial&gt; --out &lt;目录&gt; --a native \
+  --b 'srip:1:&lt;屏宽&gt;x&lt;屏高&gt;:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000,unlimit=1,sfwait=off' \
+  --rounds 6 --fan --cool-max 40 --window 60
+
+# 只看插帧本身: 透传层 (解限帧) vs 插帧
+python3 -I loop_v1/selfsr/selfsr_ab.py run --serial &lt;serial&gt; --out &lt;目录&gt; --a 'layer:unlimit=1' --b '&lt;同上&gt;' --rounds 6 --fan --cool-max 40 --window 60
+
+# root 设备: 多组串跑, 出总报告
+sh loop_v1/selfsr/repro.sh &lt;serial&gt; [配对数] [输出目录] [包名]
+
+# 非 root 设备: refbench 钉 60 帧 + 可调试第三方游戏, 出 report.md 和 *_cmp.png
+sh loop_v1/selfsr/repro_noroot.sh &lt;serial&gt; [轮数] [输出目录]
+</code></pre>
+<p>前提：</p>
+<ul>
+<li>root 路径：游戏已装好并登录过（onboard 能进大世界）。</li>
+<li>非 root 路径：已装可调试的 refbench（<code>REFBENCH_DEBUGGABLE=1</code> 编），可选装可调试的游戏包。</li>
+</ul>
+<h4>10. 踩过的坑</h4>
+<ul>
+<li><strong>收尾可能在另一个进程</strong>：每臂的设置和收尾经 <code>tools/devlock run</code> 在子进程里执行，主进程里记的状态传不过去。凡是「进世界后才设」的东西，收尾都按设备上的实际状态清理，不依赖进程内变量：
+<ul>
+<li><code>sfovr</code>：读 SF 里现有的后门条目，逐条删除；</li>
+<li><code>sfwait</code>：在有这个开关的系统上一律写回开。</li>
+</ul>
+</li>
+<li><strong>不要并行跑两轮同一台设备</strong>：后一轮开跑时会把前一轮改过、还没还原的值记成「原值」。前一轮完全退出后再开下一轮。</li>
+<li><strong>不要删还在恢复中的输出目录</strong>：挂层会话失败时，租约会留下「需恢复」屏障，恢复要读会话目录里的记录。删了目录就只能手工清租约（备份租约目录，并在 <code>phonefarm-recovery.jsonl</code> 里记一条原因）。</li>
+<li><strong>锁队列是全局的</strong>：一台设备的残留请求会挡住所有设备。被杀掉的进程留下的队首请求，10 分钟后才会被跳过。</li>
+<li><strong>HWC 层表的列数因系统而异</strong>：有的系统多一列 <code>[*]</code>。Source Crop 要按「4 个带小数点的数」识别，不能按固定列号取。</li>
+<li><strong>热</strong>：同一设备连续跑，电池温度会逼近系统的降帧阈值，屏幕会被压回 60 Hz（这一臂会因 <code>panel</code> 回读失败而作废）。降温阈值设低一点（40 °C），配合风扇。</li>
+<li><strong>算延迟用的时钟</strong>：层用 <code>CLOCK_MONOTONIC</code>，<code>/proc/uptime</code> 包含休眠时间，两者对不齐。窗口统计以层 CSV 里最后一条上屏时刻为终点往前取。</li>
+</ul>
+</div></details>
+</section>
+
+<section id="data">
+  <div class="stack">
+    <div class="eyebrow">完整实验记录</div>
+    <h2>每一步的全部数据</h2>
+    <p>以下是各步骤报告原文，包含每次实验的条件、每臂数据、区间和 p 值，以及排查过程（包括后来被更正的结论，原文保留，更正写在后面的追加段）。点标题展开。文中证据目录名里的机型已替换为 phone1（主测手机）/ phone2（第二台手机）。</p>
+  </div>
+  <details class="appx"><summary>第 1 步 · 原神怎么出图（原生基线）</summary><div class="appx-body"><h3>自研超分+插帧 · 第 1 步：原神怎么出图（只读）</h3>
+<p>设备 主测手机（Adreno 840，Android 16，手机系统），<code>com.miHoYo.Yuanshen</code>，2026-10-24 01:54–01:58。
+游戏设置未改（游戏内 60 帧），G-FRC+ 关（<code>game_gfrc_mode</code> 本游戏位 000），插着充电。
+复现：<code>loop_v1/selfsr/probe_present.sh &lt;serial&gt; &lt;out&gt;</code>（游戏在前台时跑，只读）；基线用 <code>loop_v1/gfrc/gfrc_ab.py --on 000</code>（两臂都是原生）。
+原始数据在 <code>step1/</code>。脚本在 phonefarm <code>loop_v1/selfsr/probe_present.sh</code>。</p>
+<h4>出图链路</h4>
+<pre><code>Unity(IL2CPP) 主线程 UnityMain
+  └─ Vulkan (vulkan.adreno.so)
+       场景 pass 2140×968 ……… 后处理 …… 最后一个 pass 2141×969：全屏放大 draw + 约 50 笔 UI draw（同一个 pass）
+       └─ vkQueuePresentKHR → swapchain 2141×969 R8G8B8A8_UNORM
+  └─ SurfaceView(BLAST) 缓冲 2141×969
+       └─ HWC DEVICE 合成：ROT_90，放大到屏幕 2688×1216（×1.256），面板 60 Hz
+</code></pre>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>项</th>
+<th>值</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图形接口</td>
+<td>Vulkan（进程映射 <code>vulkan.adreno.so</code>；GLES 库也在，但实际渲染走 Vulkan，层能拦到全部 render pass）</td>
+<td><code>gfx_libs.txt</code>；<code>knobs/evidence/02,06,07</code></td>
+</tr>
+<tr>
+<td>送显分辨率</td>
+<td>2141×969（swapchain = SurfaceView 缓冲）</td>
+<td><code>sf_hwc_layers.txt</code> Source Crop</td>
+</tr>
+<tr>
+<td>屏幕原生</td>
+<td>2688×1216，支持 60/90/120/144 Hz，原神前台时 60 Hz</td>
+<td><code>display.txt</code></td>
+</tr>
+<tr>
+<td>屏幕前最后一次放大</td>
+<td>HWC 硬件做，×1.256，双线性级</td>
+<td><code>sf_hwc_layers.txt</code> Comp Type=DEVICE</td>
+</tr>
+<tr>
+<td>游戏内部放大</td>
+<td>最后一个 pass 的第一笔 draw 采样场景结果放大到 swapchain，UI 在同 pass 后画</td>
+<td><code>knobs/evidence/07_sr_feasibility</code></td>
+</tr>
+<tr>
+<td>Android Game Mode</td>
+<td>standard/custom 可用，当前无任何干预</td>
+<td><code>game_modes.txt</code></td>
+</tr>
+<tr>
+<td>调试层开关</td>
+<td>全为空，<code>ro.debuggable=0</code></td>
+<td><code>debug_layer_settings.txt</code></td>
+</tr>
+</tbody>
+</table></div>
+<h4>原生基线（6 臂，同局镜头不动，每臂 10 s）</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>均值</th>
+<th>最小</th>
+<th>最大</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上屏帧率（SF timestats）</td>
+<td>59.86 fps</td>
+<td>59.79</td>
+<td>59.89</td>
+</tr>
+<tr>
+<td>游戏渲染帧率（GPU 提交）</td>
+<td>60.00 fps</td>
+<td>59.97</td>
+<td>60.08</td>
+</tr>
+<tr>
+<td>游戏渲染 p95 帧时</td>
+<td>18.29 ms</td>
+<td>17.17</td>
+<td>18.98</td>
+</tr>
+<tr>
+<td>锐度（拉普拉斯方差，整屏）</td>
+<td>88.5</td>
+<td>79.1</td>
+<td>103.9</td>
+</tr>
+<tr>
+<td>SF 丢帧 / 10 s</td>
+<td>0.17</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>空对照（原生对原生）3 对全部不显著（p ≥ 0.5），说明测量链在两臂相同时不会假报差异；
+同时给出噪声量级：p95 帧时 ±0.8 ms、锐度 ±15%。后面各步的效应要明显大于这个才算数。
+截图：<code>step1/native_off1.jpg</code>。</p>
+<h4>对后面几步的含义</h4>
+<ol>
+<li><strong>插得进去</strong>（第 2 步）：Vulkan 路线成立，<code>VK_LAYER_refknobs</code> 以前已在原神大世界里只读挂载、反作弊未拦（<code>knobs/evidence/06</code>）。
+最新 main 的正式入口是 <code>phonefarm gray-layer session</code>；旧的 bind-mount 脚本已退役。</li>
+<li><strong>超分有两个落点</strong>（第 3 步）：
+<ul>
+<li>不改游戏设置降渲染分辨率：Android Game Mode 降分辨率已在真机生效过（缓冲宽 2141→1344，<code>_tmp/npu/N7</code>）。</li>
+<li>输出端：HWC 现在用简单放大把 2141×969 拉到 2688×1216；我们的超分直接输出到 2688×1216 就能比原生更清楚。</li>
+</ul>
+</li>
+<li><strong>插帧要先过刷新率这关</strong>（第 4 步）：原神前台面板压在 60 Hz，60→120 必须让面板跑 120 Hz（G-FRC+ 开插帧时就切到了 120 Hz）。</li>
+<li>层里不能开线程（原神会杀层线程），全局 <code>debug.vulkan.layers</code> 会打崩 <code>cn.vendor.gameassist</code>，挂上后要立刻收回。</li>
+</ol>
+</div></details>
+  <details class="appx"><summary>第 2 步 · 透传层</summary><div class="appx-body"><h3>自研超分+插帧 · 第 2 步：透传 Vulkan 层挂进原神</h3>
+<p>设备 主测手机，<code>com.miHoYo.Yuanshen</code> 7.1.0，2026-10-24 02:41–03:01。游戏内设置未改。
+层：phonefarm <code>knobs/gray</code> 的 <code>libVkLayer_refknobs.so</code>（commit cec2807，冻结副本），probe 模式（只计数、不改任何东西）。
+挂/摘：<code>phonefarm gray-layer session --mode probe</code>（会话持设备租约、启动游戏、结束摘层）。
+测量：与第 1 步同一套（SurfaceFlinger timestats + ftrace GPU 提交 + 截图）。
+复现：<code>python3 -I loop_v1/selfsr/selfsr_ab.py run --serial S --out DIR --a native --b layer --rounds 6</code>。</p>
+<h4>结果：没有可测出的差别</h4>
+<p>每臂冷启动进大世界、静置 20 s 后采 10 s。6 对 ABBA，B4 那一臂 onboard 没进到大世界（测量前作废，层照常摘除），有效 5 对。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>不挂层</th>
+<th>挂层</th>
+<th>差</th>
+<th>95% 区间</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上屏帧率</td>
+<td>29.70</td>
+<td>29.68</td>
+<td>−0.07%</td>
+<td>[−0.08, +0.04] fps</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.59</td>
+<td>29.47</td>
+<td>−0.41%</td>
+<td>[−0.47, +0.32] fps</td>
+<td>0.63</td>
+</tr>
+<tr>
+<td>p95 帧时</td>
+<td>36.3 ms</td>
+<td>37.0 ms</td>
+<td>+1.7%</td>
+<td>[−2.0, +2.7] ms</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>锐度</td>
+<td>93.8</td>
+<td>86.5</td>
+<td>−7.7%</td>
+<td>[−18, +3.6]</td>
+<td>0.31</td>
+</tr>
+<tr>
+<td>SF 丢帧</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>层确实在工作：每个挂层臂的采样窗口内层自己数到 300–600 帧（marker <code>readonly_stats.frames</code>）。</li>
+<li>每个挂层臂结束后核对：游戏 lib 目录里没有层 .so、<code>debug.vulkan.layers</code> 为空；收尾 Game Mode 仍为 standard。</li>
+</ul>
+<h4>口径与限制</h4>
+<ul>
+<li><strong>5 对的最小可能 p 是 0.0625</strong>，所以「不显著」本身说明不了多少；能说的是差值区间：上屏帧率在 ±0.1 fps 内，p95 帧时在 ±2.7 ms 内。</li>
+<li>本批测量时手机过热（CPU0 ≈ 99.6 °C，充电中），原神被压在 <strong>30 帧档</strong>（第 1 步时为 60 帧档）。两臂交替，热的影响落在两边。
+每帧 GPU 忙约 29 ms / 33 ms 间隔，这个状态下原神是 GPU 受限的。</li>
+<li>锐度与 SSIM 跨冷启动受云、时辰影响大（同为原生的两臂之间 SSIM 只有 0.65），只作参考。</li>
+<li>会话自带的 <code>sample</code> 动作在本机 ftrace 子进程起不来（worker exit 76），会话的点击功能识别不出屏幕方向（<code>SurfaceOrientation</code> 读不到），
+所以测量与导航不用会话的；有层臂用 <code>onboard --no-cold --no-devlock</code> 在会话租约内导航。</li>
+</ul>
+</div></details>
+  <details class="appx"><summary>第 3 步 · 超分</summary><div class="appx-body"><h3>自研超分+插帧 · 第 3 步：超分</h3>
+<h4>更新 (2026-10-24 06:30)：算法换成 Catmull-Rom，层自身 GPU 减半，复测</h4>
+<p>成本诊断（同为 0.56 倍，各 2 臂，层在自己的命令前后写 GPU 时间戳）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>层内算法</th>
+<th>层自身 GPU p50 / p95</th>
+<th>每帧 GPU 总忙碌</th>
+<th>离线 SSIM / 锐度（0.7 倍）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lanczos2 + RCAS</td>
+<td>4.4 / 9.1 ms</td>
+<td>25.8 ms</td>
+<td>0.9841 / 1.04×</td>
+</tr>
+<tr>
+<td><strong>Catmull-Rom + RCAS（新缺省）</strong></td>
+<td><strong>2.2 / 3.8 ms</strong></td>
+<td><strong>20.6 ms</strong></td>
+<td><strong>0.9840 / 1.05×</strong></td>
+</tr>
+<tr>
+<td>只降分辨率、HWC 放大（对照）</td>
+<td>0</td>
+<td>16.8 ms</td>
+<td>0.9841 / 0.45×（双线性）</td>
+</tr>
+</tbody>
+</table></div>
+<p>直写 swapchain（加 STORAGE 用途、省一次整屏拷贝）层自身少 0.15 ms，但整帧 GPU 平均多 0.9 ms（疑 UBWC 被关），缺省不开。</p>
+<p>Catmull-Rom 版复测（各 6 对，p 最小 0.031）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>指标</th>
+<th>原生</th>
+<th>我们</th>
+<th>差</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>满分辨率超分</strong> <code>sr:1:2688x1216:0.8</code></td>
+<td>整屏锐度</td>
+<td>92.5</td>
+<td>215.0</td>
+<td><strong>+133%</strong></td>
+<td>0.031</td>
+</tr>
+<tr>
+<td></td>
+<td>右上角图标区锐度</td>
+<td>367</td>
+<td>722</td>
+<td><strong>+97%</strong></td>
+<td>0.031</td>
+</tr>
+<tr>
+<td></td>
+<td>游戏渲染帧率</td>
+<td>29.49</td>
+<td>29.15</td>
+<td>−1.2%</td>
+<td>0.063</td>
+</tr>
+<tr>
+<td></td>
+<td>p95 帧时</td>
+<td>36.7 ms</td>
+<td>38.3 ms</td>
+<td>+1.6 ms</td>
+<td>0.063</td>
+</tr>
+<tr>
+<td><strong>0.56 倍 + 超分</strong> <code>sr:0.56:2141x969:0.8</code></td>
+<td>每帧 GPU 忙碌</td>
+<td>27.1 ms</td>
+<td>20.7 ms</td>
+<td><strong>−23.8%</strong></td>
+<td>0.031</td>
+</tr>
+<tr>
+<td></td>
+<td>右上角图标区锐度</td>
+<td>361</td>
+<td>352</td>
+<td>−2%</td>
+<td>0.84</td>
+</tr>
+<tr>
+<td></td>
+<td>游戏渲染帧率</td>
+<td>29.57</td>
+<td>29.85</td>
+<td>+1.0%</td>
+<td>0.063</td>
+</tr>
+<tr>
+<td></td>
+<td>p95 帧时</td>
+<td>36.1 ms</td>
+<td>35.3 ms</td>
+<td>−2.2%</td>
+<td>0.13</td>
+</tr>
+</tbody>
+</table></div>
+<p>下面是 Lanczos 版（初版）的记录。</p>
+<p>设备 主测手机，<code>com.miHoYo.Yuanshen</code> 7.1.0，2026-10-24。游戏内设置未改。
+层：phonefarm <code>knobs/gray/layer/selfsr.*</code>（commit 2c8d335 / 309ac6a 冻结副本，selfsr 部分相同）。
+做法：<code>debug.knobs.selfsr=&lt;宽&gt;x&lt;高&gt;:&lt;锐化&gt;</code> 时，层在 <code>vkCreateSwapchainKHR</code> 把游戏要的尺寸换成目标尺寸（游戏的帧缓冲不变，只画左上角），
+送显前把游戏画的那块拷出来，计算着色器 Lanczos2（4×4，最近 2×2 去振铃）放大到整张，再做 RCAS 对比度自适应锐化，拷回送显。
+降分辨率用 Android Game Mode（<code>cmd game mode custom</code> + <code>cmd game set --downscale F</code>），每臂冷启动生效，收尾 reset 并核对。
+测量与第 1、2 步相同；复现：<code>loop_v1/selfsr/selfsr_ab.py run --a native --b sr:&lt;F&gt;:&lt;宽&gt;x&lt;高&gt;:&lt;锐化&gt; --rounds 6</code>。</p>
+<h4>两种用法</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>降分辨率 + 超分（省 GPU）</th>
+<th>满分辨率超分（提画质）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>臂</td>
+<td><code>sr:0.56:2141x969:0.8</code></td>
+<td><code>sr:1:2688x1216:0.8</code></td>
+</tr>
+<tr>
+<td>游戏实际渲染</td>
+<td>1505×681（原生的 0.70 倍）</td>
+<td>2141×969（原生，不降）</td>
+</tr>
+<tr>
+<td>层输出</td>
+<td>2141×969，再由 HWC 放大到屏幕</td>
+<td>2688×1216 = 屏幕原生，HWC 不再放大</td>
+</tr>
+</tbody>
+</table></div>
+<h5>A. 降分辨率 + 超分：GPU −19%，帧时 −5%（6 对，p=0.031）</h5>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>我们</th>
+<th>差</th>
+<th>95% 区间</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每帧 GPU 忙碌</td>
+<td>28.0 ms</td>
+<td>22.6 ms</td>
+<td><strong>−19.1%</strong></td>
+<td>[−6.6, −4.2] ms</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>p95 帧时</td>
+<td>36.6 ms</td>
+<td>34.8 ms</td>
+<td><strong>−5.1%</strong></td>
+<td>[−2.5, −1.3] ms</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.49</td>
+<td>29.85</td>
+<td>+1.2%</td>
+<td>[+0.17, +0.56]</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>上屏帧率</td>
+<td>29.68</td>
+<td>29.69</td>
+<td>0</td>
+<td></td>
+<td>0.69</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>帧率只多 1.2%：测量时手机过热，原神的帧节奏在 30 帧档（每帧 GPU 28 ms &gt; 16.7 ms）；降到 22.6 ms 仍不够跳回 60 帧档。</li>
+<li>整屏锐度 −24% <strong>不可比</strong>：Game Mode 缩小窗口后，进世界导航的点击落点不同，6 个超分臂的角色/镜头都与原生臂不同（截图可见）。
+画质用同帧离线评估（下）。</li>
+</ul>
+<h5>B. 满分辨率超分：锐度 +132%，帧率/帧时无可测代价（6 对，p=0.031）</h5>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>我们</th>
+<th>差</th>
+<th>95% 区间</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整屏锐度</td>
+<td>93.8</td>
+<td>217.3</td>
+<td><strong>+132%</strong></td>
+<td>[+104, +144]</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>右上角固定图标区锐度</td>
+<td>378</td>
+<td>734</td>
+<td><strong>+94%</strong></td>
+<td>[+286, +409]</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>上屏帧率</td>
+<td>29.68</td>
+<td>29.65</td>
+<td>−0.1%</td>
+<td>[−0.08, +0.03]</td>
+<td>0.38</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.54</td>
+<td>29.58</td>
+<td>+0.2%</td>
+<td>[−0.29, +0.36]</td>
+<td>0.81</td>
+</tr>
+<tr>
+<td>p95 帧时</td>
+<td>36.9 ms</td>
+<td>36.9 ms</td>
+<td>0</td>
+<td>[−1.2, +1.4] ms</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>SF 丢帧 / 10 s</td>
+<td>0.3</td>
+<td>4</td>
+<td></td>
+<td>[−0.2, +8.7]</td>
+<td>0.38</td>
+</tr>
+</tbody>
+</table></div>
+<p>同场景局部（左原生：游戏 2141×969 + HWC 双线性放大；右：层超分到 2688×1216）：
+<a href="https://github.com/HGamey/docs/blob/main/experiments/2026-10-24-selfsr/step3/full_native_crop.png">[图：step3/full_native_crop.png]</a> <a href="https://github.com/HGamey/docs/blob/main/experiments/2026-10-24-selfsr/step3/full_selfsr_crop.png">[图：step3/full_selfsr_crop.png]</a></p>
+<h4>同帧离线画质（算子本身）</h4>
+<p>跨冷启动的整屏 SSIM 被云/时辰/待机动作主导（同为原生的相邻两臂只有 0.49–0.73），判不了画质。
+改为同帧比：6 张真机原生帧当真值，缩到 0.7 倍再放大回来（<code>loop_v1/selfsr/sr_quality.py</code>，Python 实现与着色器逐项对应）。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>放大方式</th>
+<th>对真值 SSIM</th>
+<th>锐度 / 真值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>双线性（≈ HWC 现状）</td>
+<td>0.9847</td>
+<td>0.45×</td>
+</tr>
+<tr>
+<td>Lanczos2</td>
+<td>0.9894</td>
+<td>0.58×</td>
+</tr>
+<tr>
+<td><strong>Lanczos2 + RCAS 0.8（我们）</strong></td>
+<td><strong>0.9847</strong></td>
+<td><strong>1.01×</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h4>对照第 3 步完成标准</h4>
+<ul>
+<li>「和原生截图比 SSIM 不明显下降、锐度不低于原生」：同帧离线 SSIM 与双线性持平、锐度 1.01×；满分辨率超分真机锐度 +132%。<strong>达成</strong>。</li>
+<li>「游戏渲染帧率显著提高」：显著但只有 +1.2%。<strong>未达成预期幅度</strong>——原神有帧率档位（30/60），过热时每帧 GPU 28 ms，
+0.7 倍降分辨率省下 19% 仍不够跳档。省下的 GPU 体现在帧时（−5%）上。手机凉下来（60 帧档、GPU 余量小）时可能不同，待测。</li>
+<li>HWC 放大对照（<code>hwc:0.56</code>）排队中，用来区分「降分辨率省的」和「我们放大的代价」。</li>
+</ul>
+</div></details>
+  <details class="appx"><summary>第 4 步 · 插帧</summary><div class="appx-body"><h3>自研超分+插帧 · 第 4 步：插帧（主测手机原神上屏 60 → 约 120，见文末「89 帧的真正原因」）</h3>
+<p>设备 主测手机（手机系统，Android 16），<code>com.miHoYo.Yuanshen</code> 7.1.0，2026-10-24。游戏内设置未改。
+层：phonefarm <code>knobs/gray/layer/interp*.cpp</code>。每次游戏 <code>vkQueuePresentKHR</code>，层在真实帧之前多送 m 张合成帧
+（<code>dup</code> 复制上一帧 / <code>bm</code> 块匹配运动补偿，<code>interp_mult</code> 张，t = k/(m+1)）。</p>
+<h4>已做成的</h4>
+<ul>
+<li>合成帧确实上屏：层用 <code>VK_GOOGLE_display_timing</code> 回读每张的实际上屏时刻，真实帧与合成帧交替出现。</li>
+<li>块匹配插帧（I5 路线 B 的 4 个着色器）接进层并在真机上跑通；同一帧插多张时复用运动场。</li>
+<li>屏幕高刷：主测手机 <code>settings system refresh_rate_mode</code> 1/2/3/4 = 60/90/120/144 Hz，原神进世界<strong>之后</strong>设才生效
+（启动前设会被游戏助手压回 60 Hz；AOSP <code>min/peak_refresh_rate</code> 无效）。<code>panel_probe.txt</code>。</li>
+<li>延迟口径：真实帧「游戏调 present → 实际上屏」，插帧臂与 <code>interp_mode=real</code> 对照臂之差（60 Hz、1 张插帧时 +10–19 ms，节奏未调好时测得）。</li>
+</ul>
+<h4>卡住的地方：每进程每秒约 30 次送显</h4>
+<p>层回读、测量窗口内（屏幕 144 Hz，周期 6.92 ms）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>臂</th>
+<th>每秒上屏</th>
+<th>真实帧</th>
+<th>合成帧</th>
+<th>上屏间隔</th>
+<th>游戏渲染帧率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不插帧 <code>ip:real</code></td>
+<td>29.9</td>
+<td>29.9</td>
+<td>0</td>
+<td>34.6 ms（5 个周期）</td>
+<td>29.9</td>
+</tr>
+<tr>
+<td>插 1 张 <code>ip:dup</code></td>
+<td>29.9</td>
+<td>15.0</td>
+<td>14.9</td>
+<td>34.6 ms</td>
+<td>14.9</td>
+</tr>
+<tr>
+<td>0.45 倍超分、不插帧</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>29.8（GPU 有余量也不回 60）</td>
+</tr>
+<tr>
+<td>0.45 倍超分 + 插 1 张</td>
+<td>30.0</td>
+<td>15.0</td>
+<td>15.0</td>
+<td>34.6 ms</td>
+<td>14.7</td>
+</tr>
+</tbody>
+</table></div>
+<p>总送显数被钉在约 30/s：插帧只把一半真实帧换成合成帧。与 GPU 余量无关（0.45 倍降分辨率后游戏仍 30 帧）。
+第 1 步手机凉时原神 60 帧，过热后 30 帧——是外部按温度定的目标帧率。</p>
+<p>逐个排除：</p>
+<ul>
+<li>SurfaceFlinger 没限：原神图层 <code>requestedFrameRate</code> = 144 Hz（层投的票生效），uid 帧率覆盖 = 144 Hz（<code>*_sf.txt</code>）。</li>
+<li>高通 perf HAL 帧节奏 <code>vendor.perf.framepacing.enable=0</code>：无变化。</li>
+<li>原神没传 <code>VkPresentTimesInfoGOOGLE</code>（不是 Swappy 的显示时刻反馈问题）。</li>
+<li><code>厂商 Vulkan 统计库</code>（被 <code>libvulkan.so</code> 加载进游戏进程）：只统计帧率、经 socket 报「掉帧等级」给提频，不限帧。</li>
+<li><code>厂商提频库</code>：把送显事件经 <code>/proc/perfmgr/perf_ioctl</code> 报给内核提频，不限帧。</li>
+</ul>
+<p>找到的限帧器：主测手机改过的 <strong><code>libgui.so</code> 里的 <code>FpsControl</code> / IFAS</strong>（<code>setLimitedFps to %d</code>、<code>Desired Fps</code>、<code>Ceiling</code>/<code>Floor</code>、
+<code>IScreenRefreshRate::beginFixFps</code>）。它在应用进程内、缓冲队列这一级，参数由系统服务经 binder 下发；没找到可直接改的属性或文件。
+本机 <code>log.tag=S</code>，logcat 可读 0 字节，看不到它的日志。
+G-FRC+ 能到 117 帧，是厂商在合成侧插帧、并同时抬高这个上限。</p>
+<h4>下一步的路线（待定）</h4>
+<ol>
+<li>绕开应用缓冲队列：层用 NDK <code>ASurfaceControl</code> 在游戏窗口上挂一个子图层，合成帧经 <code>ASurfaceTransaction</code> 直接交给 SurfaceFlinger，
+不走被限帧的 <code>queueBuffer</code>。工作量大，但不依赖厂商。</li>
+<li>逆向 <code>libgui.so</code> 的 <code>FpsControl</code> 下发路径，找系统服务里的开关（只对主测手机有效）。</li>
+<li>在没有这套限帧器的 root 机上验证插帧本身（例如农场里能 root 的非主测手机机）。</li>
+</ol>
+<h4>追加 (12:03)：开 G-FRC+ 放开限帧后再试插帧，还是不行</h4>
+<p><code>step4/smoke_srip_gfrc</code>（冒烟 1 对，屏幕 120 Hz，自研超分 + G-FRC+ 101）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>臂</th>
+<th>SF 上屏</th>
+<th>游戏渲染</th>
+<th>层回读：每秒上屏 真实 / 合成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不插帧 <code>real</code></td>
+<td>59.4</td>
+<td>58.2</td>
+<td>29.9 / 0</td>
+</tr>
+<tr>
+<td>块匹配插帧 <code>bm</code></td>
+<td>43.0</td>
+<td>21.2</td>
+<td>29.9 / 0</td>
+</tr>
+</tbody>
+</table></div>
+<p>G-FRC+ 放开的是游戏到 60 帧，不是每进程的送显次数。插帧一开，游戏渲染跌到 21 帧，合成帧也没有上屏。
+主测手机上插帧仍然走不通，插帧（以及第 5 步的「超分 + 插帧叠加」）要在第二台手机（同为 SM8850，没有这套限帧）上做。</p>
+<h4>追加 (2026-10-25)：子图层送显，插帧在主测手机上做成</h4>
+<p>第二台手机修不好了，改在主测手机上走「下一步」第 1 条：层用 NDK <code>ASurfaceControl</code> 在游戏窗口上挂子图层 <code>selfsr_interp</code>，
+真实帧拷一份、合成帧画进层自己的 AHardwareBuffer，经 <code>ASurfaceTransaction</code> 直接交给 SurfaceFlinger。
+游戏自己的送显只剩真实帧，不再被限帧器吃掉合成帧。开关：<code>ip:bm:120:...,backend=sc,lead_ns=25000000</code>。
+子图层的上屏帧率用 <code>dumpsys SurfaceFlinger --latency selfsr_interp#N</code> 的实际上屏列量（timestats 不收子图层）。</p>
+<p>路上修掉的问题（phonefarm <code>feat/selfsr</code> c518c71、915e5dc、8e7ccff）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>修法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>子图层只上屏 60/s（游戏 53 帧）</td>
+<td>合成帧与真实帧的 fence 同时到，同一 vsync 就绪，SF 只显示后一张</td>
+<td>第一张定在「现在 + 提前量」（<code>lead_ns</code>，25 ms）</td>
+</tr>
+<tr>
+<td>开 G-FRC+ 时子图层只盖住左上 2/3</td>
+<td>G-FRC+ 把父图层缓冲放到 3214×1456，父图层再缩 0.836</td>
+<td>只插帧时 <code>sc_dst=3214x1456</code></td>
+</tr>
+<tr>
+<td>超分 + 插帧时合成帧发暗、叠一张放大 1.26 倍的画面（<code>step4/sc_debug/before_fix_ghost.jpg</code>）</td>
+<td>swapchain 重建后历史图句柄值被复用，块匹配还用着旧图（2141×969）的视图</td>
+<td>块匹配按历史图「代号」重建视图（<code>after_fix.jpg</code>）</td>
+</tr>
+<tr>
+<td>子图层半透明</td>
+<td>拷来的真实帧 alpha 不保证是 1</td>
+<td>子图层声明不透明</td>
+</tr>
+</tbody>
+</table></div>
+<h5>正式结果：<code>step4/ab6_sc_interp</code>（6 对，G-FRC+ 101 放开限帧到 60）</h5>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>透传层 + G-FRC+ 101</th>
+<th>自研插帧（子图层）+ G-FRC+ 101</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实际上屏帧率</td>
+<td>59.3（游戏图层）</td>
+<td><strong>89.0</strong>（子图层，6 次 87.7–89.7）</td>
+<td>0.031（6/6 对插帧臂更高；两臂量的是不同图层）</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>57.5</td>
+<td>53.1（−7.7%）</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>游戏渲染 p95 帧时</td>
+<td>22.2 ms</td>
+<td>29.0 ms</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>插帧给真实帧加的延迟（p50）</td>
+<td>—</td>
+<td><strong>+33.5 ms</strong>（提前量 25 ms + 半个游戏周期；下限）</td>
+<td></td>
+</tr>
+<tr>
+<td>子图层上屏间隔</td>
+<td>—</td>
+<td>8.3 ms 约 2/3，16.7 ms 约 1/3</td>
+<td></td>
+</tr>
+<tr>
+<td>右上角图标区锐度</td>
+<td>802</td>
+<td>344</td>
+<td>0.031</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>上屏帧率 59 → 89（×1.5）</strong>，没到翻倍。约 1/3 的合成帧被 SF 合并掉。</li>
+<li><strong>重影</strong>：静止和慢动作画面干净；角色快速转身时边缘有块匹配插帧常见的拖影（<code>after_fix.jpg</code> 右上那张是镜头转动）。可以接受。</li>
+<li><strong>延迟</strong>：真实帧比不插帧晚约 33.5 ms 上屏（层里记的排队时刻，实际上屏只会更晚）。提前量降到 12 ms 时延迟为 20.7 ms，但上屏帧率降到约 85。</li>
+<li><strong>只插帧时画质下降</strong>：子图层显示的是游戏原始的 2141×969，没有 G-FRC+ 的放大，所以图标区锐度 −57%。要和自研超分一起开（第 5 步）。</li>
+</ul>
+<h5>上屏为什么卡在约 89：试过的节奏方案（各 1 对冒烟，都没超过 89）</h5>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>子图层上屏</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>desiredPresentTime + 提前量 25 ms（采用）</td>
+<td>88–89</td>
+</tr>
+<tr>
+<td>同上 + 相邻至少隔一个 vsync</td>
+<td>88</td>
+</tr>
+<tr>
+<td>层自己的送显线程，到点前 3 ms apply、不带 desiredPresentTime</td>
+<td>76–78</td>
+</tr>
+<tr>
+<td>AChoreographer 每个 vsync 最多交一张</td>
+<td>71–73</td>
+</tr>
+<tr>
+<td>子图层改投 FIXED_SOURCE / ALWAYS</td>
+<td>89</td>
+</tr>
+</tbody>
+</table></div>
+<p>SF 的时间戳显示合成帧在定的时刻之前就画完了（fence 早 4 ms），但实际上屏常晚 1–2 个 vsync。
+游戏进程拿到的 Choreographer 回调也只有约 60–70 Hz（屏幕是 120 Hz）。所以剩下的上限来自系统对这个应用的 vsync 节拍。
+这是厂商的帧率策略，用公开 API 投票改不动，我们不绕过它。</p>
+<h5>验收（2026-10-25）</h5>
+<p>上屏 59 → 89（×1.5）没到「接近翻倍」。剩下的差距来自厂商给游戏进程的 vsync 节拍，不绕过；用户确认按此结果验收第 4 步。</p>
+<h4>追加 (2026-10-26)：第二台手机上插帧翻倍</h4>
+<p>第二台手机（不 root，可调试的 refbench 钉在 60 帧）上，同一个层的子图层插帧：上屏 60.0 → <strong>119.9 帧</strong>（4 对，×2.0），
+程序自身帧率不变，给真实帧加的延迟 p50 +33.4 ms，画面和原生一致。详见 STEP6「第二台手机上插帧 60 → 120 翻倍」。
+主测手机上的 89 帧是厂商给游戏进程的 vsync 节拍限制，方法本身能做到翻倍。</p>
+<h4>追加 (2026-10-26)：主测手机 89 帧的根因（<strong>此节结论有误</strong>，已由下一节更正）</h4>
+<p>不是插帧本身的问题，也不是 AOSP 的帧率覆盖。SF atrace 里，原神 uid 的事务全部按 <code>isVsyncValid uid: 10518 frameRate: 60.00 Hz</code> 判定，共 1216 次，没有一次是 120。
+这是 vendor 的 lmt / IFAS 逻辑：游戏每帧带 <code>IFAS=1</code> 给 SF。结果是同 uid 的子图层事务每隔一个 vsync 才放行，frametimeline 里 26% 的子图层帧被 Dropped，120 × 74% ≈ 89。
+游戏侧能改的都试过（清 <code>Limited Frame</code>、关 FpsControl 总开关、改 Ceiling、改窗口投票、加大提前量和间隔、定时唤醒 SF），都没突破。
+需要主测手机系统组在 SF 里放开，见 <code>phone1_SF_ASK.md</code>。副产品：<code>unlimit</code> 修好后，不开 G-FRC+ 时原神渲染 55 → 59.6 帧。</p>
+<h4>追加 (2026-10-26 下午)：89 帧的真正原因是 SF 的 waitframe，关掉后子图层上屏 119.9</h4>
+<p>上一节说的 <code>isVsyncValid</code> 按 60 Hz 放行<strong>不是</strong>瓶颈。用 SF 后门（<code>service call SurfaceFlinger 1039 i32 10518 f 120</code>）把原神 uid 的帧率覆盖改成 120 后，
+<code>isVsyncValid</code> 全部按 120 Hz 判定，子图层还是 89.9 帧。再加上每 8.3 ms 叫醒一次 SF（<code>sc_kick_ns</code>）、把排的时刻对齐 vsync 网格（<code>sc_grid</code>），都还是 89。</p>
+<p>SF atrace（<code>step4/phone1_waitframe/atrace_waitframe_excerpt.txt</code>）里看到的是：</p>
+<pre><code>commit 107512273
+  TransactionHandler:flushTransactions
+  fence unsignaled, frameNum: 5692        ← 游戏图层的缓冲, GPU 还没画完
+  wait  wait  wait  wait  wait  wait  wait ← 每 1 ms 轮询一次, 共约 7.5 ms
+  ...
+commit 107512320
+  PrevFramePending 1 / PrevFrameMissed 1  ← 上一帧合成晚了, present fence 没到
+  onCommitNotComposited                   ← 这个 vsync 整帧跳过
+</code></pre>
+<p>被跳过的那个 vsync 里排的子图层缓冲，下一次 commit 时和后一张一起就绪，前一张被 <code>releasePendingBuffer</code> 顶掉（3 秒 103 次，约 34/s，正好是 120 − 89 的差）。
+这个 1 ms 轮询是 vendor 加的 <strong>waitframe</strong>（<code>ro.vendor.feature.vendor_feature_fps_control_wait_frame=true</code>），SF 自带运行时开关：</p>
+<pre><code>adb shell su -c 'dumpsys SurfaceFlinger --fpsControl_waitframe_off'   # 关
+adb shell su -c 'dumpsys SurfaceFlinger --fpsControl_waitframe_on'    # 开 (出厂状态)
+</code></pre>
+<p>不改系统文件，重启或 <code>waitframe_on</code> 即恢复。A/B 脚本的 <code>sfwait=off</code> 在进世界后关、收尾时写回开。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>冒烟（各 1 臂，自研超分 + 子图层插帧，屏幕 120 Hz）</th>
+<th>子图层上屏</th>
+<th>间隔 p95</th>
+<th>真实帧加的延迟 p50</th>
+<th>游戏渲染</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原方案</td>
+<td>89.9</td>
+<td>16.6 ms</td>
+<td>33.5 ms</td>
+<td>59.3</td>
+</tr>
+<tr>
+<td>+ uid 帧率覆盖 120（<code>sfovr=120</code>）</td>
+<td>89.9</td>
+<td>16.6 ms</td>
+<td>33.5 ms</td>
+<td>59.3</td>
+</tr>
+<tr>
+<td>+ 覆盖 + 每 8.3 ms 叫醒 SF（<code>sc_kick_ns</code>）</td>
+<td>89.1</td>
+<td>16.6 ms</td>
+<td>33.5 ms</td>
+<td>—</td>
+</tr>
+<tr>
+<td>+ 覆盖 + 对齐 vsync 网格（<code>sc_grid</code>）</td>
+<td>89.2</td>
+<td>16.6 ms</td>
+<td>46.1 ms</td>
+<td>59.4</td>
+</tr>
+<tr>
+<td>+ 覆盖 + 真实帧交给游戏 swapchain 前 CPU 等 GPU（<code>sc_real_wait</code>）</td>
+<td>25.6</td>
+<td>49.9 ms</td>
+<td>47.4 ms</td>
+<td><strong>22.2</strong></td>
+</tr>
+<tr>
+<td><strong>+ 关 waitframe（<code>sfwait=off</code>）+ 覆盖</strong></td>
+<td><strong>119.2</strong></td>
+<td><strong>8.3 ms</strong></td>
+<td>33.6 ms</td>
+<td>59.0</td>
+</tr>
+<tr>
+<td><strong>只关 waitframe（<code>sfwait=off</code>）</strong></td>
+<td><strong>119.9</strong></td>
+<td><strong>8.3 ms</strong></td>
+<td>33.6 ms</td>
+<td>59.1</td>
+</tr>
+</tbody>
+</table></div>
+<p>只关 waitframe 就够，不需要帧率覆盖。各次原始记录在 <code>step4/phone1_waitframe/probe*_arms.jsonl</code>。
+正式结果见下节。</p>
+<h5>正式结果：<code>step4/ab6_waitframe_off</code>（6 对，原生 vs 自研超分 + 子图层插帧 + 关 waitframe）</h5>
+<p>每臂冷启动进大世界，ABBA，测量窗口 60 s，作废臂无。原生臂没有改任何系统设置，系统按温度把原神限在 30 帧。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>自研超分 + 插帧</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实际看到的画面帧率（插帧臂取子图层）</td>
+<td>29.8</td>
+<td><strong>108.8</strong>（6 次：117.4 / 118.4 / 119.2 / 60.1 / 118.9 / 118.6，中位数 118.5）</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>子图层上屏间隔 p95</td>
+<td>—</td>
+<td>8.3 ms（5 次）；16.6 ms（B4）</td>
+<td></td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.4</td>
+<td>59.3</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>游戏渲染 p95 帧时</td>
+<td>37.2 ms</td>
+<td>19.1 ms</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>插帧给真实帧加的延迟 p50（下限）</td>
+<td>—</td>
+<td><strong>33.5 ms</strong>（提前量 25 ms + 合成帧占的一格）</td>
+<td></td>
+</tr>
+<tr>
+<td>右上角图标区锐度</td>
+<td>366</td>
+<td>953</td>
+<td>0.031</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>B4 那一臂</strong>：开始测量时屏幕是 120 Hz，窗口内被系统降回 60 Hz（timestats 刷新率 60），所以子图层只有 60.1。当时的脚本只在窗口开始前检查刷新率，这一臂没有作废。
+<ul>
+<li>现已改为窗口结束后再回读一次，不对就作废（phonefarm 439c24b）。</li>
+<li>去掉 B4，其余 5 次子图层上屏是 117.4–119.2。</li>
+</ul>
+</li>
+<li><strong>渲染帧率 30 → 59 主要来自 <code>unlimit</code></strong>（解开进程内限帧器），不是插帧本身。只看插帧的对照（透传层 + <code>unlimit</code> vs 同一套插帧）在 <code>step4/ab6_interp_vs_layer</code>。</li>
+<li><strong>SSIM</strong>（与第一张原生截图比）是 0.58 和 0.41。冷启动后时辰、云和镜头都会变，这一项只作参考，画质以 HUD 区锐度和 STEP3 / STEP5 的对比为准。</li>
+<li><strong>重影</strong>：与 2026-10-25 的子图层插帧一致，静止和慢动作画面干净，快速转身时边缘有块匹配插帧常见的拖影。</li>
+</ul>
+<h5>正式结果：只看插帧，<code>step4/ab6_interp_vs_layer</code>（6 对，透传层 + <code>unlimit</code> vs 自研超分 + 子图层插帧 + 关 waitframe）</h5>
+<p>两臂都挂层、都解开进程内限帧器，游戏都渲染约 60 帧，差别只在插帧。作废臂无，插帧臂的屏幕在窗口前后都是 120 Hz。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>透传层（不插帧）</th>
+<th>插帧</th>
+<th>差</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实际看到的画面帧率</td>
+<td>60.0</td>
+<td><strong>118.2</strong>（6 次 116.2–119.1）</td>
+<td><strong>+97%</strong>，95% 区间 [+57.4, +58.8] 帧</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>59.8</td>
+<td>59.3</td>
+<td>−0.7%</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>游戏渲染 p95 帧时</td>
+<td>19.1 ms</td>
+<td>18.9 ms</td>
+<td>不显著</td>
+<td>0.28</td>
+</tr>
+<tr>
+<td>插帧给真实帧加的延迟 p50（下限）</td>
+<td>—</td>
+<td><strong>33.5 ms</strong>（6 次 33.52–33.55）</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>右上角图标区锐度</td>
+<td>364</td>
+<td>916</td>
+<td>+152%（超分）</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>SF 丢帧 / 窗口</td>
+<td>0</td>
+<td>0.3</td>
+<td>不显著</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>第 4 步验收</strong>：</p>
+<ul>
+<li>上屏帧率 60 → 118.2，接近翻倍。</li>
+<li>重影：静止和慢动作干净，快速转身时边缘有块匹配拖影（<code>sc_debug/after_fix.jpg</code>），可以接受。</li>
+<li>延迟：真实帧比不插帧晚上屏至少 33.5 ms，其中提前量 25 ms，合成帧占一格 8.3 ms。这个数是层里记录的排队时刻，没有用外部高速相机测端到端延迟。</li>
+<li>前提：关掉 SF 的 waitframe（运行时开关，测完写回）。</li>
+</ul>
+</div></details>
+  <details class="appx"><summary>第 5 步 · 叠加并和 GFRC+ 对标</summary><div class="appx-body"><h3>自研超分+插帧 · 第 5 步：和 GFRC+ 对标（超分 + 插帧同开已在主测手机上测完）</h3>
+<p>设备 主测手机（SM8850，手机系统，Android 16），<code>com.miHoYo.Yuanshen</code> 7.1.0，2026-10-24。游戏内设置未改。
+每臂冷启动进大世界、静置后采 60 s；A/B 交替 6 对，精确符号翻转检验（6 对时最小可能 p = 0.031）。
+风扇开到最大（<code>--fan</code>），每臂开始前等电池 ≤ 42 °C（<code>--cool-max 42</code>）。
+GFRC+ 的开关（<code>settings global game_gfrc_mode</code>）和自研层属性都在<strong>进世界之后</strong>设置并核对：游戏助手会在启动时把 GFRC+ 重新打开。
+第一次跑的 <code>gfrc:101 vs sr</code> 就是因为这个被污染的（见文末），已作废重跑。</p>
+<h4>同一张表</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>GFRC+ 111（超分+插帧）</th>
+<th>GFRC+ 101（只超分）</th>
+<th>自研满分辨率超分</th>
+<th>自研超分 + GFRC+ 101</th>
+<th><strong>同左，锐化 1.0</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上屏帧率</td>
+<td>29.7</td>
+<td><strong>118.4</strong></td>
+<td>59.1</td>
+<td>29.7</td>
+<td>59.2</td>
+<td>59.2</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.6</td>
+<td>57.2</td>
+<td><strong>57.4</strong></td>
+<td>29.2</td>
+<td>55.2</td>
+<td>55.1</td>
+</tr>
+<tr>
+<td>游戏渲染 p95 帧时 (ms)</td>
+<td>35.9</td>
+<td>22.8</td>
+<td><strong>22.1</strong></td>
+<td>38.8</td>
+<td>27.4</td>
+<td>27.6</td>
+</tr>
+<tr>
+<td>送显缓冲</td>
+<td>2141×969</td>
+<td>3214×1456</td>
+<td>3214×1456</td>
+<td>2688×1216</td>
+<td>2688×1216（GFRC+ 不再二次放大）</td>
+<td>2688×1216</td>
+</tr>
+<tr>
+<td>右上角固定图标区锐度</td>
+<td>334</td>
+<td>821</td>
+<td>781</td>
+<td>698</td>
+<td>692</td>
+<td><strong>874</strong></td>
+</tr>
+<tr>
+<td>SF 丢帧 / 60 s 窗口</td>
+<td><strong>0</strong></td>
+<td>27</td>
+<td>6.8</td>
+<td>3.7</td>
+<td>0.3</td>
+<td><strong>0.2</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>最后一列：GFRC+ 开 101 时系统放开 30 帧限帧，我们的层照常把游戏的 2141×969 放大到 2688×1216 上屏，
+GFRC+ 的放大不再作用到我们的输出上（送显缓冲 2688×1216）。只开 G-FRC+ 总开关（001）不放开限帧（冒烟测试 29.4 帧，<code>step5/smoke_sr_gfrc</code>）。</p>
+<p>两组实验，每组内部是配对比较；跨组（原生 ↔ 自研）只作参考：</p>
+<ul>
+<li><code>step5/ab6_native_gfrc111</code>：原生 vs GFRC+ 111。帧率、锐度、丢帧全部 p = 0.031。
+GFRC+ 上屏 +299%，游戏渲染 +93%，图标区锐度 +146%，但丢帧从 0 涨到 27 次/窗口。</li>
+<li><code>step5/ab6_gfrc101_vs_srsharp1</code>（<strong>主结论</strong>，锐化 1.0）：GFRC+ 101 vs 自研超分（RCAS 1.0）+ GFRC+ 101，6 对。
+上屏帧率持平（p = 0.88）；<strong>整帧锐度持平</strong>（−3%，p = 0.94）；<strong>图标区锐度 +10%</strong>（p = 0.0625）；
+<strong>丢帧 6.3 → 0.17（−97%，p = 0.031）</strong>；代价同上（游戏渲染 −4.3%，p95 +5.4 ms，GPU +1.7 ms）。</li>
+<li><code>step5/ab6_gfrc101_vs_srgfrc101</code>（锐化 0.8）：GFRC+ 101 vs 自研超分 + GFRC+ 101，6 对。
+上屏帧率持平（59.1 vs 59.2，p = 0.66）；<strong>SF 丢帧 6.8 → 0.3 次/窗口（−95%，p = 0.031）</strong>；
+代价：游戏渲染 −3.9%、p95 帧时 +5.3 ms、每帧 GPU +1.6 ms（均 p = 0.031）；
+整帧锐度 −25%（p = 0.031，GFRC+ 输出 3214×1456 再由 HWC 缩到屏幕，相当于超采样）；图标区锐度 −11%（p = 0.094，不显著）。</li>
+<li><code>step5/ab6_gfrc101_vs_srfull</code>：GFRC+ 101 vs 自研满分辨率超分（GFRC+ 关）（Catmull-Rom 放大到 2688×1216 + RCAS 0.8）。
+自研这一臂游戏只跑 29.2 帧（−50%，p = 0.031）；整帧锐度 −24%（p = 0.031）；图标区锐度 −13%（p = 0.094，不显著）；
+丢帧 3.7 vs 6.7 次（p = 0.125，不显著）。</li>
+</ul>
+<p>图标区截图（每张取右上角 800×360）：<code>step5/hud_crops.png</code>。各臂冷启动后的游戏内时间和天气不同，
+所以整帧锐度会受场景影响；比画质时以右上角固定图标区为准。</p>
+<h4>结论：超分部分达标，插帧部分还没做成</h4>
+<p>完成标准：「超分和插帧同时开……帧率和画质都显著好于原生，至少一项追平或超过 GFRC+」。</p>
+<ul>
+<li>好于原生（同温度下）：上屏帧率 29.7 → 59.2，图标区锐度 334 → 874（锐化 1.0，+162%）。跨组比较，两组各自 6 对、差距远大于组内波动。</li>
+<li>追平或超过 GFRC+：<strong>上屏帧率、整帧锐度追平</strong>，<strong>丢帧显著优于 GFRC+</strong>（−97%，p = 0.031），图标区锐度 +10%（p = 0.0625）。</li>
+<li>没做到的：
+<ul>
+<li><strong>插帧没叠进来</strong>。主测手机的进程内限帧器把每秒送显钉死（第 4 步），GFRC+ 开着时也只放到 60，不够插到 120。
+插帧要在第二台手机（同 SoC，没有这套限帧）上做。</li>
+<li>~~整帧锐度不如 GFRC+（锐化 0.8 时 −25%）~~：锐化加到 1.0 后持平。照 GFRC+ 做超采样反而更糊（见下一步第 2 条）。</li>
+<li>要放开限帧，得借 GFRC+ 的开关，自己没有独立的帧率预算（见下）。</li>
+</ul>
+</li>
+</ul>
+<h4>为什么帧率上不去：30 帧是厂商策略，不是 GPU 算力</h4>
+<ul>
+<li>被污染的那次（<code>ab6_gfrc101_vs_srfull_SUSPECT</code>）里，GFRC+ 没关干净，自研超分臂也跑到了 <strong>59.3 帧</strong>，
+每帧 GPU 时间 16.2 ms，只比 GFRC+ 多 1.4 ms（我们的层自身约 2.2 ms，第 3 步测过）。
+只要 GFRC+ 开着，系统就放开到 60 帧；GFRC+ 一关，不管挂不挂我们的层，都回到 30 帧。</li>
+<li>第 4 步定位到的限帧器（<code>libgui.so</code> 的 <code>FpsControl</code>/IFAS）在游戏进程内按系统下发的目标帧率卡送显次数。
+GFRC+ 是厂商自己的功能，会同时把这个目标抬高。</li>
+<li>所以在主测手机上，第三方超分/插帧拿到的帧率预算只有厂商功能的一半。这是平台限制，要在报告里写给厂商。
+我们不绕过这个系统限制。</li>
+</ul>
+<h4>下一步</h4>
+<ol>
+<li>在没有这套限帧器的同 SoC 机（第二台手机，SM8850）上复测同一张表：确认自研超分在不被限帧时的帧率，以及插帧能否上屏翻倍。
+第二台手机在修，修好再上。</li>
+<li>~~主测手机上「GFRC+ 的帧率预算 + 自研画质」~~：已测（<code>ab6_gfrc101_vs_srgfrc101</code>），见上。
+试过照 GFRC+ 做超采样（<code>sr:1:3214x1456:0.8+gfrc:101</code>，<code>step5/ab6_gfrc101_vs_srss</code>，5 对有效）：<strong>更差</strong>。
+图标区锐度 −41%，整帧 −43%（p = 0.0625，5 对时的最小可能值）。
+Catmull-Rom 放大 1.5 倍再让 HWC 缩回屏幕，等于多做一次低通，所以留在屏幕原生分辨率 2688×1216。
+GFRC+ 的整帧锐度优势应该来自它自己的锐化/重建算子，不是超采样本身。加强 RCAS 到 1.0 后整帧锐度持平（主结论）。</li>
+<li>把「第三方渲染增强被厂商限帧器卡在 30 帧」写进给厂商的报告（第 6 步）。</li>
+</ol>
+<h4>文件</h4>
+<ul>
+<li><code>step5/ab6_native_gfrc111/</code>、<code>step5/ab6_gfrc101_vs_srfull/</code>、<code>step5/ab6_gfrc101_vs_srgfrc101/</code>：<code>report.md</code> / <code>report.json</code> / <code>arms.jsonl</code></li>
+<li><code>step5/ab6_gfrc101_vs_srfull_SUSPECT/report.md</code>：GFRC+ 没关干净的那次，只作旁证</li>
+<li><code>step5/hud_crops.png</code></li>
+<li>复现：<code>sh loop_v1/selfsr/repro.sh &lt;serial&gt;</code> 的第 5、6 组；单组：<code>loop_v1/selfsr/selfsr_ab.py run --serial &lt;serial&gt; --a gfrc:101 --b sr:1:2688x1216:0.8 --rounds 6 --fan --cool-max 42</code></li>
+</ul>
+<h4>追加 (2026-10-25)：超分 + 插帧同时开，在主测手机上和原生、G-FRC+ 同表</h4>
+<p>插帧改走子图层（STEP4 追加）后，主测手机上可以把超分和插帧同时开：
+<code>srip:1:2688x1216:1.0:bm:120:stamp=0,panel=120,backend=sc,lead_ns=25000000+gfrc:101</code>
+（G-FRC+ 101 只用来放开限帧到 60；画面由我们的层出：Catmull-Rom + RCAS 1.0 超分到 2688×1216，再块匹配插帧）。</p>
+<p><code>step5/ab6_gfrc111_vs_srip_sc</code>（6 对）：G-FRC+ 111（厂商超分 + 插帧）vs 自研超分 + 插帧。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生（同温度，见上表）</th>
+<th>G-FRC+ 111</th>
+<th><strong>自研超分 + 插帧</strong></th>
+<th>自研 vs G-FRC+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实际上屏帧率</td>
+<td>29.7</td>
+<td><strong>116.1</strong></td>
+<td>88.0（子图层）</td>
+<td>−24%</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.6</td>
+<td>57.2</td>
+<td>54.7</td>
+<td>−4.4%（p = 0.031）</td>
+</tr>
+<tr>
+<td>游戏渲染 p95 帧时 (ms)</td>
+<td>35.9</td>
+<td>23.0</td>
+<td>28.0</td>
+<td>+5.0 ms（p = 0.031）</td>
+</tr>
+<tr>
+<td>每帧 GPU 忙碌 (ms)</td>
+<td>—</td>
+<td>11.9</td>
+<td>15.2</td>
+<td>+3.3 ms（p = 0.031）</td>
+</tr>
+<tr>
+<td>右上角图标区锐度</td>
+<td>334</td>
+<td>803</td>
+<td><strong>948</strong></td>
+<td><strong>+18%（p = 0.031）</strong></td>
+</tr>
+<tr>
+<td>整帧锐度</td>
+<td>—</td>
+<td>245</td>
+<td><strong>295</strong></td>
+<td>+21%（p = 0.0625）</td>
+</tr>
+<tr>
+<td>插帧给真实帧加的延迟</td>
+<td>—</td>
+<td>未测（厂商内部）</td>
+<td>+33.5 ms</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>图标区对比：<code>step5/hud_gfrc111_vs_srip.png</code>（左 G-FRC+ 111，右自研）。</p>
+<p>对照完成标准「帧率和画质都显著好于原生，至少一项追平或超过 GFRC+」：</p>
+<ul>
+<li>好于原生：上屏 29.7 → 88.0（×3.0），图标区锐度 334 → 948（×2.8）。跨组比较，差距远大于组内波动。</li>
+<li>超过 G-FRC+：<strong>画质</strong>（图标区 +18%，p = 0.031；整帧 +21%，p = 0.0625）。帧率不如 G-FRC+（88 vs 116）。</li>
+<li>「SF 丢帧」一行在自研臂量的是被子图层盖住的游戏图层，不代表看到的画面，不作比较。</li>
+</ul>
+<p><strong>结论：达标</strong>（帧率、画质都好于原生；画质超过 G-FRC+）。帧率差距的原因见 STEP4 追加：系统给游戏进程的 vsync 节拍约 60–70 Hz，
+厂商自家的 G-FRC+ 在合成侧插帧，不受这个限制。</p>
+</div></details>
+  <details class="appx"><summary>第 6 步 · 交付与推广</summary><div class="appx-body"><h3>自研超分+插帧 · 第 6 步：交付与推广（换游戏已做；换手机：第二台手机上层能加载，性能未测准）</h3>
+<h4>一键复现</h4>
+<pre><code>sh loop_v1/selfsr/repro.sh &lt;serial&gt; [配对数=6] [输出目录] [包名=com.miHoYo.Yuanshen]
+</code></pre>
+<ul>
+<li>现编层 → 依次跑 6 组 A/B（透传层、满分辨率超分、降分辨率+超分、插帧、G-FRC+ 对标 ×2；没有 G-FRC+ 的机器跳过后两组）
+→ 每组出 <code>report.md</code> / <code>report.json</code> / 每臂截图 → 汇总 <code>summary.md</code>。</li>
+<li>满分辨率超分的目标分辨率取本机屏幕（<code>wm size</code>），换机不用改。</li>
+<li>已知游戏的进门方式写在脚本里：原神走 <code>phonefarm onboard</code>；Megacity Metro 用固定进门脚本，并全程保留层属性
+（<code>--enter-script</code> / <code>--keep-layer-prop</code>，原因见下）。</li>
+<li>每组结束（含 Ctrl-C）都会恢复并回读核对 Game Mode、G-FRC+ 位、<code>debug.knobs.*</code>、刷新率、风扇、屏幕超时，层会被摘除
+（<code>CHECKS_STEP0_2.md</code>）。</li>
+<li>前提：手机已 root，游戏已装好；需要账号的游戏要先人工登录一次。</li>
+</ul>
+<h4>换游戏：Unity《Megacity Metro》（主测手机，同一台机器）</h4>
+<p>选它是因为：已经装在机器上，不需要账号，Vulkan，并且和原神引擎不同版本、渲染管线不同（URP + 胶片颗粒）。
+游戏把 2068×935 交给系统，HWC 放大到 2688×1216 上屏（和原神同一类问题）。</p>
+<p>推广时遇到两个问题，都已解决：</p>
+<ol>
+<li><code>onboard</code> 认不出这款游戏「已经在游戏里」（画面里没有它认识的 HUD），所以加了 <code>--enter-script</code>：
+单人模式 → 关掉「链接 Unity 账号」提示 → 点任意处开始。不登录，不接受任何条款。</li>
+<li>层被加载了，但一帧都没拦到：Unity 先建一个探测用的 VkInstance，等真正建实例时，会话已经把 <code>debug.vulkan.layers</code> 清掉了。
+加了 <code>--keep-layer-prop</code>，会话期间一直保留这个属性。</li>
+</ol>
+<h5>结果（各 6 对，p 为精确符号翻转检验）</h5>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>超分 锐化 0</th>
+<th>p</th>
+<th>超分 锐化 1.0</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>整帧锐度</td>
+<td>49</td>
+<td>71（<strong>+46%</strong>）</td>
+<td>0.031</td>
+<td>411（+722%）</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>右上角固定区锐度</td>
+<td>9.9</td>
+<td>20.4（<strong>+107%</strong>）</td>
+<td>0.031</td>
+<td>65.9（+572%）</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>与原生截图 SSIM</td>
+<td>0.90</td>
+<td>0.86（−3.9%，<strong>不显著</strong>）</td>
+<td>0.38</td>
+<td>0.78（−17%）</td>
+<td>0.031</td>
+</tr>
+<tr>
+<td>上屏帧率</td>
+<td>29.8</td>
+<td>28.4（−4.7%）</td>
+<td>0.063</td>
+<td>29.0（−2.8%）</td>
+<td>0.19</td>
+</tr>
+<tr>
+<td>每帧 GPU 忙碌 (ms)</td>
+<td>24.4</td>
+<td>27.1（+2.7）</td>
+<td>0.031</td>
+<td>26.5（+2.6）</td>
+<td>0.063</td>
+</tr>
+<tr>
+<td>SF 丢帧 / 窗口</td>
+<td>2.3</td>
+<td><strong>0</strong></td>
+<td>0.031</td>
+<td>0</td>
+<td>0.063</td>
+</tr>
+</tbody>
+</table></div>
+<p>截图对比：<code>step6/megacity_crops.png</code>（原生 / 锐化 0 / 锐化 1.0）。</p>
+<ul>
+<li><strong>锐化 0 达到第 3 步的画质标准</strong>：锐度显著提高，SSIM 下降不显著。</li>
+<li><strong>锐化 1.0 不能用在这款游戏上</strong>：它把胶片颗粒放大成了噪点（天空明显）。拉普拉斯锐度会把噪点也算成「锐」，
+所以 +722% 是假象，SSIM 显著下降。原神没有颗粒，锐化 1.0 是合适的。
+<strong>结论：锐化强度必须按游戏选，默认值应当偏保守。</strong> <code>repro.sh</code> 对 Megacity 用 <code>SR_FULL=&lt;屏幕&gt;:0</code> 跑。</li>
+<li>代价：每帧 GPU 多 2.7 ms，上屏帧率约 −4.7%（p = 0.063，接近显著）。这台机器热了以后被厂商卡在 30 帧，GPU 余量也小。</li>
+</ul>
+<h4>换手机：第二台手机（SM8850，同 SoC）——等修好</h4>
+<p>第二台手机已经 root，有风扇节点（<code>/sys/devices/virtual/hn_thermal/fan</code>），没有主测手机那套进程内限帧器。
+修好以后要跑三件事：<code>repro.sh &lt;第二台手机序列号&gt;</code>（换手机验证）、第 4 步插帧（60 → 120）、第 5 步超分 + 插帧叠加。
+注意：第二台手机重启后要重新加上 <code>magiskpolicy --live &quot;allow kernel debug_prop property_service set&quot;</code>，否则 setprop 被 SELinux 拦。</p>
+<h4>给游戏厂商的报告</h4>
+<p><code>VENDOR_REPORT.md</code></p>
+<h4>追加 (2026-10-25)：一键复现加了子图层插帧的两组</h4>
+<p><code>repro.sh</code> 缺省 SETS 改为 <code>1 … 9</code>，插帧缺省走子图层（<code>IP_TUNE=stamp=0,panel=120,backend=sc,lead_ns=25000000</code>）：</p>
+<ul>
+<li>第 8 组：<code>layer+gfrc:101</code> vs 子图层插帧 + G-FRC+ 101（第 4 步）</li>
+<li>第 9 组：<code>gfrc:111</code> vs 自研超分 + 子图层插帧 + G-FRC+ 101（第 5 步）</li>
+</ul>
+<p>主测手机上 <code>SETS=&quot;8 9&quot;</code>、1 对整条跑通（<code>step6/repro_groups89/summary.md</code>），收尾核对全部还原。
+子图层上屏 88.1 / 88.8，第 9 组图标区锐度比 G-FRC+ 111 高 16%，和 6 对正式结果一致。
+报告第一行改为「实际上屏帧率」（有子图层取子图层），两臂直接可比。</p>
+<p>换手机：同 SoC 的第二台手机 坏了，农场里没有别的可 root 真机，<strong>第二台手机的验证没有做</strong>。</p>
+<h4>追加 (2026-10-26)：换手机——第二台手机，不 root</h4>
+<p>第二台手机现在能用，但没有 root，原神也不是可调试版，所以没法给原神挂层。改用可调试的测试程序 refbench（<code>frag_alu</code>，强度 16 时约 60 帧），
+走 Android 自带的 GPU 调试层机制（<code>enable_gpu_debug_layers</code> / <code>gpu_debug_app</code> / <code>gpu_debug_layers</code>，层放进 app 私有目录），全程不用 root。
+脚本：<code>step6/phone2_noroot/noroot_smoke.sh &lt;serial&gt; [层.so] [轮数]</code>；结束后三项设置删回系统默认，debug.knobs.* 清空。</p>
+<p>结果（3 轮，<code>step6/phone2_noroot/summary.txt</code>）：</p>
+<ul>
+<li><strong>能推广的部分</strong>：同一个层二进制在第二台手机上不用 root 就能加载（logcat <code>Loaded layer VK_LAYER_refknobs_readonly</code>，marker <code>layer_loaded=true</code>），
+透传、超分、子图层插帧三种模式都能跑起来，插帧子图层 <code>selfsr_interp</code> 正常出现在 SurfaceFlinger 里。</li>
+<li><strong>性能结论不成立</strong>：手机持续发热（机身 43 °C，thermal 状态 3），原生一臂从 59.9 掉到 44.9、32.2 帧，各臂顺序跑，没法比。
+第 1 轮透传 45.1 vs 原生 59.9，掉得比主测手机上多，原因没查。插帧一臂子图层只有 26–36 帧，<strong>在第二台手机上没有翻倍</strong>。</li>
+<li>要得到可信的第二台手机性能数，需要风扇/降温和 A/B 交替（主测手机那套 <code>--fan --cool-max</code>），并且最好用可调试或可 root 的游戏。</li>
+</ul>
+<h5>追加：第二台手机上插帧 60 → 120 翻倍（2026-10-26，不 root）</h5>
+<p>上面那次的插帧之所以没翻倍，是因为测试负载自己就把 GPU 吃满了才跑到 60 帧（强度 16），插帧再占一份 GPU，
+游戏就掉到 37–41 帧，上屏只有 43–47 帧（等温到 35 °C 后 2 轮，<code>step6/phone2_cap60/uncapped_gpu_bound_summary.txt</code>）。
+真实游戏是被限帧器或垂直同步钉在 60 帧，GPU 留有余量，所以给 refbench 加了 <code>fps_cap</code>（present 后按绝对时刻睡到下一帧），
+用轻负载（强度 4，不限帧能跑 120）钉在 60 帧来模拟。</p>
+<p>第一次跑翻倍了，但插帧画面错位（<code>step6/phone2_cap60/before_fix_native_vs_interp.png</code>）：
+refbench 按 <code>preTransform = ROTATE_90</code> 预旋转画面，驱动给父图层设了反向的缓冲变换，子图层不继承它。
+层改成按 swapchain 的 preTransform 自动给子图层设反向变换（ROTATE_90 → ANATIVEWINDOW_TRANSFORM_ROTATE_270，宽高对调），
+marker 里 <code>interp.sc.xform</code> 记实际用的值。原神交的画面不预旋转（主测手机上旧代码画面就是对的），走 transform 0，行为不变。</p>
+<p>修好后 4 对（原生 / 插帧交替，每臂开跑前等机身 &lt; 36 °C；<code>step6/phone2_cap60/summary.txt</code>）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>插帧（子图层）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实际上屏帧率</td>
+<td>60.0</td>
+<td><strong>119.9</strong>（119.4–120.4，×2.0）</td>
+</tr>
+<tr>
+<td>程序自己的帧率</td>
+<td>60.0</td>
+<td>60.0</td>
+</tr>
+<tr>
+<td>真实帧 / 插帧</td>
+<td>—</td>
+<td>1499 / 1498（每个真实帧后插一帧）</td>
+</tr>
+<tr>
+<td>给真实帧加的延迟（p50）</td>
+<td>—</td>
+<td>+33.4 ms</td>
+</tr>
+<tr>
+<td>画面</td>
+<td>—</td>
+<td>和原生一致（<code>after_fix_native_vs_interp.png</code>）</td>
+</tr>
+</tbody>
+</table></div>
+<p>4 对时符号翻转检验的最小 p 是 0.125，但 4 对全部在 119.4–120.4，原生全部在 59.9–60.2，没有重叠。
+结论：<strong>同一个层，在第二台手机上不用 root 就能插帧到 120</strong>。主测手机上只有 89 帧，卡在厂商给游戏进程的 vsync 节拍（STEP4），不是方法本身的问题。
+局限：第二台手机上测的是可调试的测试程序，不是原神（原神不可调试，没 root 挂不上层）。</p>
+<h5>追加：第二台手机上换游戏——Megacity Metro 插帧 30 → 60（2026-10-26，不 root）</h5>
+<p>第二台手机不 root，游戏必须可调试才能挂层。Megacity Metro 是 Unity 的开源示例，所以用 apktool 加 <code>android:debuggable=&quot;true&quot;</code> 重新打包、签名后装到第二台手机上
+（<code>~/hgamey-work/megacity_dbg/megacity_debuggable.apk</code>）。原神不能这样做（商业游戏，重打包违反其条款且有完整性校验）。
+进游戏的步骤和主测手机相同（单人模式 → 关提示 → 点任意处）。游戏启动时会请求麦克风权限，一律点「禁止」，没有授予任何权限。
+脚本：<code>step6/phone2_megacity/megacity_noroot.sh &lt;serial&gt; &lt;层.so&gt; [轮数]</code>，每臂开跑前等机身温度 &lt; 36 °C，结束后三项 GPU 调试设置删回默认。</p>
+<p>结果（3 对，原生 / 插帧交替；<code>step6/phone2_megacity/summary.txt</code>）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>插帧（子图层）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>游戏自身帧率</td>
+<td>30.1</td>
+<td>30.1（30.0–30.1，不变）</td>
+</tr>
+<tr>
+<td>实际上屏帧率</td>
+<td>30.1</td>
+<td><strong>60.1</strong>（59.9–60.2，×2.0）</td>
+</tr>
+<tr>
+<td>给真实帧加的延迟（p50）</td>
+<td>—</td>
+<td>+69.6 ms</td>
+</tr>
+<tr>
+<td>画面</td>
+<td>—</td>
+<td>正常（<code>native_vs_interp.png</code>，两张里的飞船不同是游戏随机选的）</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>同一个层二进制、同一套参数（只把投票帧率设为 60、<code>lead_ns</code> 50 ms），第二台手机、第二款游戏都翻倍。</li>
+<li>延迟比 60 帧源时大：源帧间隔 33 ms，插帧要等下一帧到了才能算中间帧，再加 50 ms 提前量。</li>
+<li>3 对时符号翻转检验最小 p = 0.25，但 3 对全部在 59.9–60.2，原生全部 30.1，没有重叠。</li>
+</ul>
+<h5>追加：第二台手机一键复现（2026-10-26）</h5>
+<p><code>sh loop_v1/selfsr/repro_noroot.sh &lt;serial&gt; [轮数] [输出目录]</code>（phonefarm <code>feat/selfsr</code>）：不用 root，自动跑 refbench（钉 60 帧）和可调试版 Megacity 的原生 / 插帧交替，
+输出 <code>report.md</code> 和对比截图，结束后删回 GPU 调试设置。第二台手机 上 3 对的结果（<code>step6/repro_noroot_phone2/</code>）：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>负载</th>
+<th>原生上屏</th>
+<th>插帧上屏</th>
+<th>倍数</th>
+<th>延迟 p50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>refbench</td>
+<td>59.9</td>
+<td>119.4</td>
+<td>×1.99</td>
+<td>+33.4 ms</td>
+</tr>
+<tr>
+<td>Megacity Metro</td>
+<td>30.1</td>
+<td>60.2</td>
+<td>×2.00</td>
+<td>+69.5 ms</td>
+</tr>
+</tbody>
+</table></div>
+</div></details>
+  <details class="appx"><summary>给游戏厂商的报告（全文）</summary><div class="appx-body"><h3>《原神》Android 版出图与画质实测报告</h3>
+<p>对象：米哈游《原神》Android 渲染/画质团队；抄送：主测手机（努比亚）游戏性能团队
+测试日期：2026-10-24。设备：主测手机（Snapdragon SM8850 / Adreno 840，屏幕 2688×1216，最高 144 Hz），
+手机系统（Android 16），游戏版本 7.1.0，游戏内画质设置保持默认未改。</p>
+<p>方法：每组 A/B 交替各 6 次，每次冷启动进大世界、静置后采 60 s。用精确符号翻转检验（6 对时最小 p = 0.031）。
+测试时风扇全开，每次开跑前等电池降到 42 °C 以下。原始数据和复现脚本见同目录 <code>STEP1–5.md</code>。</p>
+<h4>1. 发现：游戏最终画面是 0.8 倍分辨率，靠显示硬件放大，HUD 和文字被一起放糊</h4>
+<ul>
+<li>游戏 swapchain 是 <strong>2141×969</strong>，屏幕是 2688×1216。最后一步 ×1.256 的放大由 HWC 显示硬件做，效果相当于双线性。</li>
+<li>HUD/UI 和场景画在同一个最终 pass 里，所以 <strong>UI 也被放大</strong>。图标边缘和文字明显发软。</li>
+<li>我们在 Vulkan 层里把同一帧换成 Catmull-Rom 放大 + RCAS 锐化，直接输出原生分辨率：
+<ul>
+<li>整屏锐度 <strong>+132%</strong>，右上角固定图标区 <strong>+94%</strong>（6 对，p = 0.031）；</li>
+<li>帧率和帧时没有可测的代价；层本身在 GPU 上每帧约 2.2 ms。</li>
+</ul>
+</li>
+</ul>
+<p><strong>建议</strong>：
+(a) 按屏幕原生分辨率创建 swapchain，场景照常低分辨率渲染，在游戏内放大，UI 用原生分辨率画；
+(b) 至少把 UI pass 和场景放大拆开。
+这两种做法都不需要提高场景渲染分辨率，GPU 成本主要在一次全屏放大上（我们实测约 2 ms）。</p>
+<h4>2. 发现：热了以后游戏被系统钉在 30 帧，GPU 还有余量</h4>
+<ul>
+<li>设备凉的时候，游戏能跑满 60 帧。连续测试、机身变热后，游戏渲染稳定在约 <strong>29.6 帧</strong>。</li>
+<li>原因不在 GPU：把渲染分辨率降到 0.45 倍以后，帧率仍是 30。</li>
+<li>限制来自厂商系统 <code>libgui</code> 里的进程内限帧（FpsControl/IFAS），按系统下发的目标帧率卡住游戏的送显次数。</li>
+<li>打开厂商 G-FRC+ 时，同样的温度下游戏渲染能到 <strong>57–58 帧</strong>。系统在 G-FRC+ 开着时会放开这个上限。</li>
+</ul>
+<p><strong>建议</strong>（给厂商）：限帧目标帧率应当和第三方/游戏自带的渲染优化一视同仁。现在的做法是只有厂商自家功能开着才放开，
+第三方或游戏自己做的超分/插帧只能拿到一半的帧率预算。</p>
+<h4>3. 对标：厂商 G-FRC+ vs 层内超分</h4>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>G-FRC+ 超分+插帧</th>
+<th>G-FRC+ 只超分</th>
+<th>层内超分（限帧未放开）</th>
+<th>层内超分 + G-FRC+ 放开限帧（锐化 1.0）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上屏帧率</td>
+<td>29.7</td>
+<td>118.4</td>
+<td>59.1</td>
+<td>29.7</td>
+<td>59.2</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.6</td>
+<td>57.2</td>
+<td>57.5</td>
+<td>29.2</td>
+<td>55.1</td>
+</tr>
+<tr>
+<td>右上角图标区锐度</td>
+<td>334</td>
+<td>821</td>
+<td>794</td>
+<td>698</td>
+<td>874</td>
+</tr>
+<tr>
+<td>整屏锐度（同组对比）</td>
+<td>—</td>
+<td>—</td>
+<td>278</td>
+<td>—</td>
+<td>269</td>
+</tr>
+<tr>
+<td>SF 丢帧 / 60 s</td>
+<td>0</td>
+<td>27</td>
+<td>6.3</td>
+<td>3.7</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>G-FRC+ 插帧能把上屏帧率翻到约 118，但丢帧多：60 s 里约 27 次，原生是 0。</li>
+<li>限帧放开以后，层内超分的上屏帧率和 G-FRC+ 持平（59.2 vs 59.1）。
+丢帧从 6.3 次降到 0.17 次（−97%，p = 0.031）；整屏锐度持平（−3%，p = 0.94）；图标区锐度 +10%（p = 0.0625）。</li>
+<li>代价：游戏渲染帧率 −4.3%，p95 帧时 +5.4 ms，每帧 GPU +1.7 ms。</li>
+<li>也就是说，同样的帧率预算下，一个通用的层内超分可以做到和厂商方案同档的画质，而且上屏更稳。
+第 2 节的限帧策略才是第三方方案和厂商方案之间的主要差距。</li>
+</ul>
+<h5>3.1 超分 + 插帧同时开（插帧走子图层）</h5>
+<p>应用缓冲队列被限帧，层就在游戏窗口上挂一个 <code>ASurfaceControl</code> 子图层，合成帧直接交给 SurfaceFlinger。6 对：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>原生</th>
+<th>G-FRC+ 超分+插帧</th>
+<th>层内超分 + 插帧</th>
+<th>层内超分 + 插帧 + 关 SF waitframe¹</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实际上屏帧率</td>
+<td>29.7</td>
+<td>116.1</td>
+<td>88.0</td>
+<td><strong>108.8</strong>（中位数 <strong>118.5</strong>）</td>
+</tr>
+<tr>
+<td>游戏渲染帧率</td>
+<td>29.6</td>
+<td>57.2</td>
+<td>54.7</td>
+<td>59.3</td>
+</tr>
+<tr>
+<td>右上角图标区锐度</td>
+<td>334</td>
+<td>803</td>
+<td><strong>948</strong>（+18%，p = 0.031）</td>
+<td>953（同轮原生 366）</td>
+</tr>
+<tr>
+<td>插帧给真实帧加的延迟</td>
+<td>—</td>
+<td>—</td>
+<td>+33.5 ms</td>
+<td>+33.5 ms</td>
+</tr>
+<tr>
+<td>每帧 GPU</td>
+<td>—</td>
+<td>11.9 ms</td>
+<td>15.2 ms</td>
+<td>13.5 ms</td>
+</tr>
+</tbody>
+</table></div>
+<p>¹ 另一轮 6 对（<code>step4/ab6_waitframe_off</code>），同轮原生 29.8 帧，p = 0.031。6 次插帧里有 5 次在 117.4–119.2；另一次（60.1）是测量窗口中途系统把屏幕降回了 60 Hz。</p>
+<ul>
+<li>画质超过 G-FRC+。关掉 SF 的 waitframe 后，上屏帧率和 G-FRC+ 持平（中位数 118.5 对 116.1）。</li>
+<li>只看插帧本身（两臂都挂层、都解开限帧，游戏都渲染约 60 帧）：上屏 60.0 → <strong>118.2</strong>（+97%，6 对，p = 0.031），游戏渲染只降 0.7%，真实帧延迟 +33.5 ms（<code>step4/ab6_interp_vs_layer</code>）。</li>
+<li>不关 waitframe 时只到约 88 帧，原因如下：
+<ul>
+<li>游戏缓冲的 GPU 还没画完时，SF 的 waitframe 在合成里每 1 ms 轮询一次，最多等 7–8 ms；</li>
+<li>这一帧因此晚了，下一个 vsync 因 backpressure 整帧跳过；</li>
+<li>那一格排的插帧缓冲，下次和后一张撞车被丢掉（约 1/4）。</li>
+</ul>
+</li>
+<li>关掉的方法是 SF 自带的运行时开关 <code>dumpsys SurfaceFlinger --fpsControl_waitframe_off</code>，不改系统文件，测完写回开。</li>
+<li>早先写的「vsync 节拍限制（isVsyncValid 按 60 Hz）」不是原因：把 uid 帧率覆盖改成 120 后还是 89 帧（STEP4）。</li>
+</ul>
+<p><strong>建议</strong>（给厂商）：</p>
+<ul>
+<li>waitframe 在同一应用还有其他已就绪图层（比如游戏或第三方插帧的子图层）时不等，或者最多等半个 vsync；</li>
+<li>或者按包名开放关闭接口。详见 <code>phone1_SF_ASK.md</code>。</li>
+</ul>
+<h4>4. 换一款游戏：Unity《Megacity Metro》</h4>
+<p>同一台手机，游戏把 2068×935 交给系统放大，问题和原神同一类。
+同一个层不改代码就能用，只需要两个开关：固定进门脚本、全程保留层属性（Unity 会二次创建 VkInstance）。</p>
+<ul>
+<li>只放大、不锐化：整帧锐度 +46%，固定区锐度 +107%（p = 0.031），SSIM 下降不显著（−3.9%，p = 0.38），丢帧 2.3 → 0。
+代价是每帧 GPU +2.7 ms。</li>
+<li>锐化 1.0 会把这款游戏的胶片颗粒放大成噪点（SSIM −17%），不可用。<strong>锐化强度要按游戏调。</strong></li>
+</ul>
+<h4>5. 怎么复现</h4>
+<p><code>sh loop_v1/selfsr/repro.sh &lt;serial&gt; [配对数] [输出目录] [包名]</code>（phonefarm 仓库）。需要 root。
+脚本自动出每组报告、汇总和截图，结束后恢复所有设置、摘掉层。</p>
+<h4>6. 局限</h4>
+<ul>
+<li>原神只在一台手机（主测手机）上测过。第二台手机第二台手机（同 SoC，未 root）上用可调试的测试程序验证：同一个层不用 root 就能加载，插帧把 60 帧翻到 119.9 帧（4 对）；换成 Megacity Metro（重打包成可调试版），30 帧翻到 60.1 帧（3 对）。主测手机上原来只到 89 帧，是第 3.1 节说的 SF waitframe 造成的，关掉后到 118.5（中位数）。每款游戏只测了一个静置场景。</li>
+<li>整屏锐度会受冷启动后的游戏内时间和天气影响，所以画质结论以 HUD 固定区域为准。</li>
+<li>插帧走缓冲队列时被第 2 节的限帧挡住；改走子图层后能上屏；要到约 120 帧还需要关掉 SF 的 waitframe（见 3.1），这是全局开关，演示和测试时用。延迟 +33.5 ms 是层里记的排队时刻，真实操作延迟没有用外部设备测。</li>
+</ul>
+</div></details>
 </section>
 
 <footer>HGamey · 2026-10-27 · 本页源文件在 <a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr/site">HGamey/docs/experiments/2026-10-24-selfsr/site</a></footer>
