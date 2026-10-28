@@ -17,17 +17,17 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 - 根目录 `README.md`，不超过 40 行：是什么、怎么构建、文档在哪
 - 给 AI 编程助手读的配置：`AGENTS.md`、`CLAUDE.md`、`skills/`、`.cursor/`
 - 许可证：`LICENSE`、`THIRD_PARTY_NOTICES.md`
-- 程序或测试要读取的数据：`tests/`、`fixtures/`、`testdata/`、`evidence/`，以及 phonefarm 的 `tasks/`、`loop_v1/runs*/`
+- 程序或测试要读取的数据：`tests/`、`fixtures/`、`testdata/`、`evidence/`
 
 每个代码仓库都有 CI 检查 `code-only`，新增或修改上述例外之外的 `.md`、图片、PPT、PDF、drawio 文件会受到检查约束。
 
 2026-10-22 起本轮开发采用直接 commit、push 的协作方式，不新开 PR。每批只提交自己的改动，记录验证与限制，推送前核对远端并保留同事的并发修改；不 force push。已有 PR 和历史报告继续作为历史证据，不自动批量合并或关闭。
 
-各代码仓库原有的文档已连同修改历史迁到 `repos/<仓库名>/`，路径与原仓库一致。
+各代码仓库原有的文档已连同修改历史迁到 `repos/<仓库名>/`，路径与原仓库一致。phonefarm 的运行数据、任务记录与旋钮证据（`loop_v1/runs*/`、`tasks/`、`knobs/evidence/`）2026-10-28 也这样迁到了 `repos/phonefarm/`。之后在平台上跑的实验，代码在 [HGamey/experiments](https://github.com/HGamey/experiments)，数据随任务产物留在节点。
 
 ## 目录
 
-较早的计划、演示与架构图按各自日期留档，不覆盖当前产品准则与逐批状态。网页与 CLI/API 的节点、任务、结果和异步研究入口见 [harness-ops](https://github.com/HGamey/harness-ops)。
+较早的计划、演示与架构图按各自日期留档，不覆盖当前产品准则与逐批状态。网页与 CLI/API 的节点、任务、结果和异步研究入口见 [HGamey/hgamey](https://github.com/HGamey/hgamey) 的 `harness-ops/`。
 
 | 路径 | 内容 |
 |---|---|
