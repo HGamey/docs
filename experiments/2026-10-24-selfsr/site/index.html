@@ -2203,7 +2203,7 @@ adb shell su -c 'dumpsys SurfaceFlinger --fpsControl_waitframe_on'    # 开 (出
 <tr><td>插帧给真实帧加的延迟 p50（前 3 对）</td><td>33.6 ms</td><td>33.5 ms</td><td>不变</td><td>0.25</td></tr>
 </tbody></table></div>
 <ul>
-<li>作废 1 臂：B3 窗口内 118.6，窗口结束后屏幕被系统降到 60 Hz（原方案臂也出现过，和改名无关，原因待查）。补测又有 1 对两臂都在窗口后被降到 60 Hz 作废。合计有效 4 对，4/4 同向，p = 0.125（4 对时的最小值）。</li>
+<li>作废 1 臂：B3 窗口内 118.6，窗口结束后屏幕被系统降到 60 Hz（原方案臂也出现过，和改名无关。后来查明：电池温度向上穿过 43 °C 时，厂商刷新率控制器会把屏幕钉在 60 Hz；掉了以后重设刷新率就能恢复）。补测又有 1 对两臂都在窗口后被降到 60 Hz 作废。合计有效 4 对，4/4 同向，p = 0.125（4 对时的最小值）。</li>
 <li>和关 waitframe（root）的 118.2 持平。<code>repro.sh</code> 第 12 组复现这一对比；带 waitframe 的机器缺省用改名，<code>SFWAIT_OFF=1</code> 走旧做法。</li>
 </ul>
 </div></details>

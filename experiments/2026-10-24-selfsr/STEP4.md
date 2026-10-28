@@ -248,7 +248,7 @@ SF 认「游戏图层」看的是图层名。把子图层起成 `SurfaceView[<�
 | 每帧 GPU 忙碌（前 3 对） | 13.45 ms | 13.44 ms | 不变 | 0.75 |
 | 插帧给真实帧加的延迟 p50（前 3 对） | 33.6 ms | 33.5 ms | 不变 | 0.25 |
 
-- 作废 1 臂：B3 窗口内 118.6，窗口结束后屏幕被系统降到 60 Hz（这几天原方案臂也出现过，和改名无关，原因待查），按规则作废。补测 2 对（节点 `_runs/name_auto_ab2`）又有 1 对两臂都在窗口后被降到 60 Hz 作废。合计有效 4 对，4/4 同向，精确符号翻转 p = 0.125（4 对时的最小值）。
+- 作废 1 臂：B3 窗口内 118.6，窗口结束后屏幕被系统降到 60 Hz（这几天原方案臂也出现过，和改名无关；原因见下文「已查明」：电池温度向上穿过 43 °C），按规则作废。补测 2 对（节点 `_runs/name_auto_ab2`）又有 1 对两臂都在窗口后被降到 60 Hz 作废。合计有效 4 对，4/4 同向，精确符号翻转 p = 0.125（4 对时的最小值）。
 - 和关 waitframe（root，`ab6_interp_vs_layer` 的 118.2）持平。
 - 现在层缺省就是 `sc_name=auto`（`none` = 旧名）；`repro.sh` 在带 waitframe 的机器上缺省用它，第 12 组复现这一对比，`SFWAIT_OFF=1` 走旧的关 waitframe 做法。
 
@@ -259,3 +259,23 @@ SF 认「游戏图层」看的是图层名。把子图层起成 `SurfaceView[<�
 `waitframe_name/name_smoke/traces/B1_atrace.txt.gz` 正好抓到切换那一刻：两个图层的票都是 120 Hz（`ExplicitDefault 120` / `ExplicitExactOrMultiple 120`），但 `chooseDisplayModes` 给出 `60.00 Hz (primaryRangeIsSingleRate)`，并 `getFrameRateOverrides: overriding to 60.00 Hz for uid=10518`。也就是 system_server 下发的刷新率范围被设成只有 60 Hz，不是图层内容引起的。设备上 `settings system ScreenRefreshRateController_resultFps=60`，像是厂商刷新率控制器的决定。
 
 下一步（等节点空闲）：游戏里不碰屏幕，每秒记录 `ScreenRefreshRateController_resultFps`、`dumpsys display` 的 desired specs 和 logcat；再对照每 10 s 点一下屏幕空白处。看是不是「无触摸一段时间降帧」或温控触发。
+
+### 已查明 (2026-10-28 下午，平台研究 `selfsr-genshin-ab-20261028`)：电池温度向上穿过 43 °C 时触发
+
+平台上的研究 agent 接着查完了（探测任务 82246c84b27c、0f93d527296a、c954fcb2ae96，代码在 HGamey/experiments 的 `glm/hold120-probe` 等分支）：
+
+- **触发条件**：电池温度**向上穿过 43.0 °C** 后 0–6 秒，厂商控制器把 `settings global ScreenRefreshRateController_resultFps` 和 SF 收到的范围（`dumpsys SurfaceFlinger --displays` 的 displayManagerPolicy）同时改成 [60, 60]。`refresh_rate_mode` 仍是 3。三次观测分别在 t=163 s、56 s、34 s，掉的那一刻电池温度都是 43.0 °C。
+- **掉了以后不会自己回到 120 Hz**。一直在 43 °C 以上（49→57 °C）或者正在降温时，都不会掉。所以是"穿越"这一事件触发的，不是温度高到某个值就触发。
+- **为什么以前像是随机作废**：我们每臂开跑前先等电池降到 `COOL_MAX=42` °C 以下，然后在窗口里升温，正好人为制造了一次穿越；凉机直接跑、窗口内没升过 43 °C 的臂就守得住。前面说的"和冷却时长没有对应关系"是错的。
+- **对策**（两种都已在真机验证）：
+  - A：掉了就立刻把 `refresh_rate_mode` 重设成 0 再设回 3。验证中重设 2 次后恢复 120 Hz，之后稳定 200 s，凹陷约 2 s。
+  - B：先升温到 43.5 °C 以上再设 120 Hz，零掉落。
+  - 平台第 7 组重跑（任务 1744980d63a3）用的是 A：插帧臂窗口内有看门狗每秒检查，掉了就重设，并把凹陷秒数计进报告。这样 A/B 两臂都从 ≤42 °C 起跑，热状态一致。
+- 原生臂负载轻，没升到 43 °C，所以"不挂层是否也会掉"还没测到，但不影响重跑。
+
+另外，平台复现时还查出我们 harness 的两个问题，已在 HGamey/experiments b6d4190 修掉：
+
+- `report.md` 里"层回读：窗口内每秒实际上屏"一栏在子图层臂（`backend=sc`）上无效。子图层后端不写那个 CSV，脚本读到的是以前运行的旧数据，比如 `name_auto_ab` 报告里的 60.12。本文正文里引用的"层回读"都来自缓冲队列后端的臂，不受影响。
+- `refresh_probe.sh` 读错了两个来源：控制器结果其实在 `settings global`，不在 `system`；范围要从 SF 读，`dumpsys display` 的 DisplayModeDirector 一直显示 0–240。
+
+子图层臂的"看到的帧率"是窗口结束后 6 秒用 `--latency` 量的，代表窗口末尾的状态，不是整个窗口的平均。
