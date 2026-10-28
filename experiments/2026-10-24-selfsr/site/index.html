@@ -714,6 +714,7 @@ details.ch-more[open] > summary { margin-bottom: 12px; }
       <tbody>
         <tr><td>插帧（只差插帧的对照）</td><td>上屏 <span class="num">60.0 → <strong>118.2</strong></span> 帧，+97%</td><td>真实帧延迟 +33.5 ms；游戏渲染 −0.7%；整机功耗 +1.76 W（+42%）</td><td><span class="pill">6/6 对 · p=0.031</span></td></tr>
         <tr><td>超分 + 插帧，对比原生</td><td>看到的画面 <span class="num">29.8 → <strong>108.8</strong></span> 帧（中位数 118.5）；游戏渲染 29.4 → 59.3</td><td>同上</td><td><span class="pill">p=0.031</span></td></tr>
+        <tr><td>插帧静止保护（界面防重影）</td><td>转视角时界面区相邻帧差 <strong>−35%</strong>，文字重影基本消失</td><td>帧率、GPU 不变（+0.05 ms）；半透明图标仍有轻微拖影</td><td><span class="pill">4/4 对 · p=0.125</span></td></tr>
         <tr><td>满分辨率超分（提画质）</td><td>整屏锐度 <strong>+132%</strong>，固定图标区 <strong>+94%</strong></td><td>帧率、帧时测不出变化</td><td><span class="pill">p=0.031</span></td></tr>
         <tr><td>降分辨率 + 超分（省电）</td><td>每帧 GPU 时间 <strong>−19%</strong>，p95 帧时 −5%</td><td>图标区锐度持平（−2%，不显著）</td><td><span class="pill">p=0.031</span></td></tr>
         <tr><td>解开系统限帧</td><td>约 30 → 约 60 帧</td><td>无</td><td><span class="pill gray">多轮一致</span></td></tr>
@@ -803,9 +804,13 @@ details.ch-more[open] > summary { margin-bottom: 12px; }
   <div class="note">
     <p><b>插帧要关掉手机系统合成器里的一个「等游戏帧」机制，帧率才能到 118。</b>它会在游戏画面没画完时等待最多 7–8 ms，导致下一帧被整帧跳过，插帧因此卡在 89 帧。关闭它是一条运行时命令，不改系统文件，测试结束自动恢复，但需要 root。正式上线需要手机厂商配合，请求已经写好。</p>
   </div>
+  <div class="shots">
+    <figure><img src="img/hud_static_before.jpg" alt="转视角时连续 4 个上屏帧的右下界面，未开静止保护，UID 文字出现双影" width="2000" height="204" loading="lazy"><figcaption>转视角时连续 4 个上屏帧，未开静止保护：第 1、3 帧 UID 文字叠成双影，图标有重边</figcaption></figure>
+    <figure><img src="img/hud_static_after.jpg" alt="同样操作下开启静止保护后的右下界面，UID 文字清楚" width="2000" height="204" loading="lazy"><figcaption>开静止保护（阈值 32）：UID 文字每帧都清楚；半透明图标边缘仍有轻微拖影</figcaption></figure>
+  </div>
   <ul class="clean">
     <li>延迟 +33.5 ms 是层内记录的排队时间，是下限，还没有用外部高速相机测端到端的操作延迟。</li>
-    <li>重影：镜头转动时，插出来的中间帧里<b>界面文字、小地图标签会有明显重影</b>（见下面的慢放视频）：界面不跟场景一起运动，块匹配却按场景的运动去挪它。代码里有「界面区域直接取最近真实帧」的保护，但默认关闭、还没调好，这是下一步要做的。物体边缘也有块匹配常见的拖影。静止和慢速画面干净。</li>
+    <li>重影：镜头转动时，插出来的中间帧里界面会被块匹配按场景运动拖出重影（界面不跟场景动）。<b>已加「静止保护」</b>：两帧之间几乎不变的像素不做运动补偿，运动采样落到这种像素上就丢掉、改用另一侧，不用手工标界面框。正式 4 对 A/B：转视角时界面区相邻帧差 <b>−35%</b>（4/4 对，p=0.125），帧率、GPU 不变。<b>文字（UID 等）重影基本消失；半透明的技能图标边缘仍有轻微拖影</b>（底下场景在动，判不成静止）。物体边缘的块匹配拖影不在这次处理范围内。</li>
     <li>每款游戏只测了一个静置场景。</li>
     <li>原神只在主测手机上测过，第二台手机上没有跑原神。</li>
   </ul>
