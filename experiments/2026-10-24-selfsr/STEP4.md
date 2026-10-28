@@ -251,3 +251,11 @@ SF 认「游戏图层」看的是图层名。把子图层起成 `SurfaceView[<�
 - 作废 1 臂：B3 窗口内 118.6，窗口结束后屏幕被系统降到 60 Hz（这几天原方案臂也出现过，和改名无关，原因待查），按规则作废。补测 2 对（节点 `_runs/name_auto_ab2`）又有 1 对两臂都在窗口后被降到 60 Hz 作废。合计有效 4 对，4/4 同向，精确符号翻转 p = 0.125（4 对时的最小值）。
 - 和关 waitframe（root，`ab6_interp_vs_layer` 的 118.2）持平。
 - 现在层缺省就是 `sc_name=auto`（`none` = 旧名）；`repro.sh` 在带 waitframe 的机器上缺省用它，第 12 组复现这一对比，`SFWAIT_OFF=1` 走旧的关 waitframe 做法。
+
+### 待查：部分臂在窗口结束后屏幕被降到 60 Hz
+
+2026-10-27/28 共 7 臂（原方案和改名都有）在测量窗口后回读到 60 Hz，按规则作废；窗口内 timestats 都是 120 Hz，上屏数据正常。和冷却时长没有对应关系。
+
+`waitframe_name/name_smoke/traces/B1_atrace.txt.gz` 正好抓到切换那一刻：两个图层的票都是 120 Hz（`ExplicitDefault 120` / `ExplicitExactOrMultiple 120`），但 `chooseDisplayModes` 给出 `60.00 Hz (primaryRangeIsSingleRate)`，并 `getFrameRateOverrides: overriding to 60.00 Hz for uid=10518`。也就是 system_server 下发的刷新率范围被设成只有 60 Hz，不是图层内容引起的。设备上 `settings system ScreenRefreshRateController_resultFps=60`，像是厂商刷新率控制器的决定。
+
+下一步（等节点空闲）：游戏里不碰屏幕，每秒记录 `ScreenRefreshRateController_resultFps`、`dumpsys display` 的 desired specs 和 logcat；再对照每 10 s 点一下屏幕空白处。看是不是「无触摸一段时间降帧」或温控触发。
