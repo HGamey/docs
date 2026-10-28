@@ -1,0 +1,24 @@
+{
+  "error": null,
+  "finished_at": "2026-10-27T08:11:31.046672+00:00",
+  "request_id": "selfsr-stop-602209ef",
+  "requested_at": "2026-10-27T08:11:23.385943+00:00",
+  "result": {
+    "recovery": {
+      "error": null,
+      "game_state_restored": false,
+      "job_recovery_complete": false,
+      "reports": [
+        "gray-session-20795-1793088543042607000/eval-recovery-20795-1793088691026385.json"
+      ],
+      "scope": "gray_control_owned_resources_installation_properties_target_stopped",
+      "session_path": "gray-session-20795-1793088543042607000",
+      "status": "reported_complete"
+    }
+  },
+  "schema": "phonefarm/gray-control-action-result@1",
+  "sequence": 3,
+  "session_id": "gray-session-20795-1793088543042607000",
+  "started_at": "2026-10-27T08:11:23.438048+00:00",
+  "status": "completed"
+}

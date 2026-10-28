@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-26T17:28:09.535862+00:00",
+  "checks": {
+    "no_device_mutations": true,
+    "property_values_restored": null,
+    "scope": "no_device_mutations",
+    "target_stopped": null
+  },
+  "completion_owner": "gray_layer_control",
+  "error": null,
+  "evidence_origin": "device",
+  "experiment_error": "pre-existing installation/session path; refusing overwrite: /data/local/tmp/knobs_layer_state",
+  "game_state_restored": false,
+  "package": "com.miHoYo.Yuanshen",
+  "report_path": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/recovery-5782-1793035689535856000.json",
+  "schema": "phonefarm/gray-control-recovery@1",
+  "scope": "no_device_mutations",
+  "serial": "AVXB6R5C19000481",
+  "session": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000",
+  "status": "verified",
+  "token": "5782-1793035688446182000"
+}

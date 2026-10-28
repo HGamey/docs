@@ -1,0 +1,149 @@
+{
+  "effective": [],
+  "failed": [],
+  "interp": {
+    "csv": false,
+    "displayed_interval_ns": {
+      "n": 0
+    },
+    "displayed_interval_real_to_synth_ns": {
+      "n": 0
+    },
+    "displayed_interval_synth_to_real_ns": {
+      "n": 0
+    },
+    "fallbacks": {},
+    "fps_vote": "setFrameRate(120)=0",
+    "frames": {
+      "dup_without_history": 0,
+      "real": 6299,
+      "real_only": 0,
+      "synth": 6271
+    },
+    "half_period_ns": 0,
+    "layer_cpu_us": {
+      "max": 106697,
+      "min": 67,
+      "n": 6299,
+      "p50": 135,
+      "p95": 173,
+      "p99": 244
+    },
+    "mode": "bm",
+    "on": true,
+    "pacing": "google_display_timing",
+    "pacing_fallback_reason": "",
+    "period_ns": 0,
+    "present_call_interval_ns": {
+      "max": 446212552,
+      "min": 9574687,
+      "n": 6294,
+      "p50": 16627552,
+      "p95": 18708802,
+      "p99": 20432813
+    },
+    "present_margin_ns": {
+      "n": 0
+    },
+    "real_present_to_display_ns": {
+      "n": 0
+    },
+    "sc": {
+      "buffers_allocated": 16,
+      "grid": 0,
+      "grid_cb": 0,
+      "grid_period_ns": 0,
+      "kick_ns": 0,
+      "kicks": 0,
+      "margin_ns": 3000000,
+      "pacer": 0,
+      "pacer_late": 0,
+      "reason": "",
+      "requested": true,
+      "shown": 12570,
+      "vsync_cb": 0,
+      "vsync_sent": 0,
+      "window": true,
+      "winvote": -1,
+      "winvote_calls": 0,
+      "winvote_rc": 0,
+      "xform": 0
+    },
+    "sc_backlog_skips": 26,
+    "sc_real_sched_delay_ns": {
+      "max": 139730468,
+      "min": 33313794,
+      "n": 6299,
+      "p50": 33611663,
+      "p95": 36387359,
+      "p99": 38849339
+    },
+    "swapchain": {
+      "fmt": 37,
+      "game_period_ns_ema": 16499109,
+      "h": 969,
+      "history_image": true,
+      "images": 6,
+      "min_image_count_req": 4,
+      "min_image_count_used": 6,
+      "patched": true,
+      "phase_known": false,
+      "present_mode_orig": 2,
+      "present_mode_used": 2,
+      "refresh_ns": 16653769,
+      "timing_ok": true,
+      "usage": 159,
+      "w": 2141
+    },
+    "swapchain_fallback_reason": "",
+    "timing": {
+      "early": 0,
+      "late": 0,
+      "pairs": {
+        "real_real": 0,
+        "real_synth": 0,
+        "synth_real": 0,
+        "synth_synth": 0
+      },
+      "samples": 0
+    }
+  },
+  "knob": "gray_interp",
+  "layer_loaded": true,
+  "pkg": "com.miHoYo.Yuanshen",
+  "readonly_stats": {
+    "frames": 6300,
+    "render_pass_begins": 199100,
+    "render_passes_created": 137
+  },
+  "unavailable_reason": null,
+  "unlimit": {
+    "cfg_hex": "",
+    "cfg_str": "",
+    "cleared": 4678,
+    "last_seen": 30,
+    "reason": "",
+    "symbol": true
+  },
+  "upop_artifact": {
+    "artifact_id": "legacy-fixed-upop",
+    "counts": {
+      "disabled": 0,
+      "disabled_reason": null,
+      "dispatch_recorded": 0,
+      "pipeline_created": 0,
+      "queue_submitted": 0,
+      "substituted": 0
+    },
+    "deployable": false,
+    "disabled_state": false,
+    "evaluation_eligible": false,
+    "gpu_completion_proven": false,
+    "ineligible_reason": "missing_source_layout_target_compute_contract",
+    "ownership_scope": "recording_generation_per_dispatch",
+    "queue_submission_api": "vkQueueSubmit",
+    "requested": false,
+    "source_sha256": "",
+    "spirv_sha256": ""
+  }
+}

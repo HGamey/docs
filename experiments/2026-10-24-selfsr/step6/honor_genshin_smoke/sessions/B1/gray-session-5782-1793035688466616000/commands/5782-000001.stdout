@@ -1,0 +1,494 @@
+Activity Resolver Table:
+  Schemes:
+      tencent1110976923:
+        379bb7 com.miHoYo.Yuanshen/com.tencent.tauth.AuthActivity filter fa93f24
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "tencent1110976923"
+      yuanshen:
+        7c1ea com.miHoYo.Yuanshen/com.mihoyo.sdk.hoyolink.protocol.HoYoLinkProtocolActivity filter bc56378
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "yuanshen"
+      http:
+        7c1ea com.miHoYo.Yuanshen/com.mihoyo.sdk.hoyolink.protocol.HoYoLinkProtocolActivity filter 55f0cdb
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "https"
+          Scheme: "http"
+          Authority: "oig.mihoyo.com": -1
+          Authority: "oig.mihoyo.com": -1
+          Path: "PatternMatcher{LITERAL: /ys_android}"
+          Path: "PatternMatcher{PREFIX: /ys_android/}"
+          Path: "PatternMatcher{LITERAL: /ys}"
+          Path: "PatternMatcher{PREFIX: /ys/}"
+          AutoVerify=true
+      mdk_:
+        e2a1a51 com.miHoYo.Yuanshen/com.miHoYo.sdk.platform.SchemeActivity filter 79812b6
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Scheme: "mdk_"
+      https:
+        7c1ea com.miHoYo.Yuanshen/com.mihoyo.sdk.hoyolink.protocol.HoYoLinkProtocolActivity filter 55f0cdb
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "https"
+          Scheme: "http"
+          Authority: "oig.mihoyo.com": -1
+          Authority: "oig.mihoyo.com": -1
+          Path: "PatternMatcher{LITERAL: /ys_android}"
+          Path: "PatternMatcher{PREFIX: /ys_android/}"
+          Path: "PatternMatcher{LITERAL: /ys}"
+          Path: "PatternMatcher{PREFIX: /ys/}"
+          AutoVerify=true
+      bilibili:
+        830e0a7 com.miHoYo.Yuanshen/com.bilibili.bplus.followingshare.ShareTransFormActivity filter 96cb954
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "bilibili"
+          Authority: "share.transform": -1
+      myssharesdkcom.miHoYo.Yuanshen:
+        ad539c1 com.miHoYo.Yuanshen/com.mihoyo.myssdk.share.callback.MysShareCallbackActivity filter a89566
+          Action: "android.intent.action.VIEW"
+          Category: "android.intent.category.DEFAULT"
+          Category: "android.intent.category.BROWSABLE"
+          Scheme: "myssharesdkcom.miHoYo.Yuanshen"
+
+  Non-Data Actions:
+      cn.jpush.android.ui.PushActivity:
+        464c289 com.miHoYo.Yuanshen/cn.jpush.android.ui.PushActivity filter 122c28e
+          Action: "cn.jpush.android.ui.PushActivity"
+          Category: "android.intent.category.DEFAULT"
+          Category: "com.miHoYo.Yuanshen"
+      android.intent.action.MAIN:
+        d5a2a8c com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity filter ca2f5d5
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+          Category: "android.intent.category.LEANBACK_LAUNCHER"
+      android.intent.action.VIEW:
+        6250a8d com.miHoYo.Yuanshen/com.combosdk.module.push.impl.OpenClickActivity filter d0aa442
+          Action: "android.intent.action.VIEW"
+          Action: "com.miHoYo.Yuanshen.OpenClickActivity"
+          Category: "android.intent.category.DEFAULT"
+      cn.android.service.JTransitActivity:
+        acdfe45 com.miHoYo.Yuanshen/cn.android.service.JTransitActivity filter b8c799a
+          Action: "cn.android.service.JTransitActivity"
+          Category: "android.intent.category.DEFAULT"
+          Category: "com.miHoYo.Yuanshen"
+      cn.jpush.android.intent.JNotifyActivity:
+        ae84aaf com.miHoYo.Yuanshen/cn.jpush.android.service.JNotifyActivity filter e034ebc
+          Action: "cn.jpush.android.intent.JNotifyActivity"
+          Category: "android.intent.category.DEFAULT"
+          Category: "com.miHoYo.Yuanshen"
+      cn.jpush.android.ui.PopWinActivity:
+        8a03c53 com.miHoYo.Yuanshen/cn.jpush.android.ui.PopWinActivity filter 9cd2990
+          Action: "cn.jpush.android.ui.PopWinActivity"
+          Category: "android.intent.category.DEFAULT"
+          Category: "com.miHoYo.Yuanshen"
+      com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY:
+        ef8e2cb com.miHoYo.Yuanshen/com.sina.weibo.sdk.share.ShareTransActivity filter 9149aa8
+          Action: "com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"
+          Category: "android.intent.category.DEFAULT"
+      com.miHoYo.Yuanshen.OpenClickActivity:
+        6250a8d com.miHoYo.Yuanshen/com.combosdk.module.push.impl.OpenClickActivity filter d0aa442
+          Action: "android.intent.action.VIEW"
+          Action: "com.miHoYo.Yuanshen.OpenClickActivity"
+          Category: "android.intent.category.DEFAULT"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      com.xiaomi.mipush.MESSAGE_ARRIVED:
+        c402b5 com.miHoYo.Yuanshen/cn.jpush.android.service.PluginXiaomiPlatformsReceiver filter e6c14bb
+          Action: "com.xiaomi.mipush.MESSAGE_ARRIVED"
+      cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY:
+        a865ff9 com.miHoYo.Yuanshen/cn.jpush.android.service.PushReceiver filter aeb3e
+          Action: "cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"
+          Category: "com.miHoYo.Yuanshen"
+          mPriority=1000, mOrder=0, mHasStaticPartialTypes=false, mHasDynamicPartialTypes=false
+      com.xiaomi.mipush.ERROR:
+        c402b5 com.miHoYo.Yuanshen/cn.jpush.android.service.PluginXiaomiPlatformsReceiver filter 5f7fdd8
+          Action: "com.xiaomi.mipush.ERROR"
+      com.mihoyo.hyperion.share.MysShareCallbackReceiver:
+        6ff1531 com.miHoYo.Yuanshen/com.mihoyo.myssdk.share.callback.MysShareCallbackReceiver filter 7f72416
+          Action: "com.mihoyo.hyperion.share.MysShareCallbackReceiver"
+      com.aweme.opensdk.action.stay.in.dy:
+        ebab0fd com.miHoYo.Yuanshen/com.mihoyo.sora.share.douyin.StayInDouyinReceiver filter 818a1f2
+          Action: "com.aweme.opensdk.action.stay.in.dy"
+          Action: "com.aweme.opensdk.action.stay.in.dy.im"
+      com.aweme.opensdk.action.stay.in.dy.im:
+        ebab0fd com.miHoYo.Yuanshen/com.mihoyo.sora.share.douyin.StayInDouyinReceiver filter 818a1f2
+          Action: "com.aweme.opensdk.action.stay.in.dy"
+          Action: "com.aweme.opensdk.action.stay.in.dy.im"
+      com.xiaomi.push.PING_TIMER:
+        8473d9f com.miHoYo.Yuanshen/com.xiaomi.push.service.receivers.PingReceiver filter 315deec
+          Action: "com.xiaomi.push.PING_TIMER"
+      com.xiaomi.mipush.RECEIVE_MESSAGE:
+        c402b5 com.miHoYo.Yuanshen/cn.jpush.android.service.PluginXiaomiPlatformsReceiver filter 9467d4a
+          Action: "com.xiaomi.mipush.RECEIVE_MESSAGE"
+      cn.jpush.android.intent.RECEIVER_MESSAGE:
+        700e043 com.miHoYo.Yuanshen/com.combosdk.module.push.JPushReceiver filter 68616c0
+          Action: "cn.jpush.android.intent.RECEIVER_MESSAGE"
+          Category: "com.miHoYo.Yuanshen"
+
+Service Resolver Table:
+  Non-Data Actions:
+      cn.jiguang.user.service.action:
+        5fed36d com.miHoYo.Yuanshen/com.combosdk.module.push.PushService filter 5396ba2
+          Action: "cn.jiguang.user.service.action"
+      cn.jpush.android.intent.PUSH_TIME:
+        98a6033 com.miHoYo.Yuanshen/cn.jpush.android.service.PushService filter 3acaff0
+          Action: "cn.jpush.android.intent.PUSH_TIME"
+          Action: "cn.jpush.android.intent.REPORT"
+          Action: "cn.jpush.android.intent.PushService"
+          Action: "cn.jpush.android.intent.REGISTER"
+      cn.jpush.android.intent.REPORT:
+        98a6033 com.miHoYo.Yuanshen/cn.jpush.android.service.PushService filter 3acaff0
+          Action: "cn.jpush.android.intent.PUSH_TIME"
+          Action: "cn.jpush.android.intent.REPORT"
+          Action: "cn.jpush.android.intent.PushService"
+          Action: "cn.jpush.android.intent.REGISTER"
+      gamestateservice:
+        3d4197 com.miHoYo.Yuanshen/com.miHoYo.GameStateService.GameStateService filter 5db1f84
+          Action: "gamestateservice"
+      cn.jpush.android.intent.PushService:
+        98a6033 com.miHoYo.Yuanshen/cn.jpush.android.service.PushService filter 3acaff0
+          Action: "cn.jpush.android.intent.PUSH_TIME"
+          Action: "cn.jpush.android.intent.REPORT"
+          Action: "cn.jpush.android.intent.PushService"
+          Action: "cn.jpush.android.intent.REGISTER"
+      cn.jpush.android.intent.REGISTER:
+        98a6033 com.miHoYo.Yuanshen/cn.jpush.android.service.PushService filter 3acaff0
+          Action: "cn.jpush.android.intent.PUSH_TIME"
+          Action: "cn.jpush.android.intent.REPORT"
+          Action: "cn.jpush.android.intent.PushService"
+          Action: "cn.jpush.android.intent.REGISTER"
+
+Domain verification status:
+  com.miHoYo.Yuanshen:
+    ID: 6f0fc59e-c66e-4cd1-8e40-09931ca56bf3
+    Signatures: [F2:D8:DC:DD:D0:50:56:15:13:47:B5:F3:19:60:52:29:88:5C:71:46:18:09:AB:58:ED:90:D8:34:7E:3B:4A:49]
+    Domain verification state:
+      oig.mihoyo.com: verified
+    User all:
+      Verification link handling allowed: true
+      Selection state:
+        Disabled:
+          oig.mihoyo.com
+
+Permissions:
+  Permission [com.miHoYo.Yuanshen.permission.JPUSH_MESSAGE] (a17a77a):
+    sourcePackage=com.miHoYo.Yuanshen
+    uid=10264 gids=[] type=0 prot=signature
+    perm=PermissionInfo{250b72d com.miHoYo.Yuanshen.permission.JPUSH_MESSAGE}
+    flags=0x0
+
+Permissions:
+  Permission [com.miHoYo.Yuanshen.permission.MIPUSH_RECEIVE] (375ab2b):
+    sourcePackage=com.miHoYo.Yuanshen
+    uid=10264 gids=[] type=0 prot=signature
+    perm=PermissionInfo{9a249f3 com.miHoYo.Yuanshen.permission.MIPUSH_RECEIVE}
+    flags=0x0
+
+Registered ContentProviders:
+  com.miHoYo.Yuanshen/com.sina.weibo.sdk.content.WeiboSDKFileProvider:
+    Provider{193b6b0 com.miHoYo.Yuanshen/com.sina.weibo.sdk.content.WeiboSDKFileProvider}
+  com.miHoYo.Yuanshen/com.taptap.sdk.themis.lite.ThemisProvider:
+    Provider{9ae9929 com.miHoYo.Yuanshen/com.taptap.sdk.themis.lite.ThemisProvider}
+  com.miHoYo.Yuanshen/cn.jpush.android.service.DownloadProvider:
+    Provider{b7e4ae com.miHoYo.Yuanshen/cn.jpush.android.service.DownloadProvider}
+  com.miHoYo.Yuanshen/com.taptap.sdk.kit.internal.TapTapKitInitProvider:
+    Provider{28d924f com.miHoYo.Yuanshen/com.taptap.sdk.kit.internal.TapTapKitInitProvider}
+  com.miHoYo.Yuanshen/cn.jpush.android.service.DataProvider:
+    Provider{f58ddc com.miHoYo.Yuanshen/cn.jpush.android.service.DataProvider}
+  com.miHoYo.Yuanshen/androidx.lifecycle.ProcessLifecycleOwnerInitializer:
+    Provider{dee9ee5 com.miHoYo.Yuanshen/androidx.lifecycle.ProcessLifecycleOwnerInitializer}
+  com.miHoYo.Yuanshen/com.combosdk.support.basewebview.WebViewFileProvider:
+    Provider{d219dba com.miHoYo.Yuanshen/com.combosdk.support.basewebview.WebViewFileProvider}
+  com.miHoYo.Yuanshen/com.sina.weibo.sdk.content.FileProviderV2:
+    Provider{d3b046b com.miHoYo.Yuanshen/com.sina.weibo.sdk.content.FileProviderV2}
+  com.miHoYo.Yuanshen/com.combosdk.module.share.sora.ShareProvider:
+    Provider{33babc8 com.miHoYo.Yuanshen/com.combosdk.module.share.sora.ShareProvider}
+  com.miHoYo.Yuanshen/cn.jpush.android.service.InitProvider:
+    Provider{36f4461 com.miHoYo.Yuanshen/cn.jpush.android.service.InitProvider}
+  com.miHoYo.Yuanshen/com.bilibili.bplus.followingshare.content.FileProvider:
+    Provider{13bdb86 com.miHoYo.Yuanshen/com.bilibili.bplus.followingshare.content.FileProvider}
+
+ContentProvider Authorities:
+  [com.miHoYo.Yuanshen.wbsdk.fileprovider]:
+    Provider{193b6b0 com.miHoYo.Yuanshen/com.sina.weibo.sdk.content.WeiboSDKFileProvider}
+      applicationInfo=ApplicationInfo{1832b88 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.combosdk.ShareProvider]:
+    Provider{33babc8 com.miHoYo.Yuanshen/com.combosdk.module.share.sora.ShareProvider}
+      applicationInfo=ApplicationInfo{f4d2921 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.fileprovider]:
+    Provider{d3b046b com.miHoYo.Yuanshen/com.sina.weibo.sdk.content.FileProviderV2}
+      applicationInfo=ApplicationInfo{6e8c146 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.DownloadProvider]:
+    Provider{b7e4ae com.miHoYo.Yuanshen/cn.jpush.android.service.DownloadProvider}
+      applicationInfo=ApplicationInfo{e21cf07 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.lifecycle-process]:
+    Provider{dee9ee5 com.miHoYo.Yuanshen/androidx.lifecycle.ProcessLifecycleOwnerInitializer}
+      applicationInfo=ApplicationInfo{7e37834 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.themisLite]:
+    Provider{9ae9929 com.miHoYo.Yuanshen/com.taptap.sdk.themis.lite.ThemisProvider}
+      applicationInfo=ApplicationInfo{6b2365d com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.jiguang.InitProvider]:
+    Provider{36f4461 com.miHoYo.Yuanshen/cn.jpush.android.service.InitProvider}
+      applicationInfo=ApplicationInfo{f5fabd2 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.DataProvider]:
+    Provider{f58ddc com.miHoYo.Yuanshen/cn.jpush.android.service.DataProvider}
+      applicationInfo=ApplicationInfo{88254a3 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.TapTapKitInitProvider]:
+    Provider{28d924f com.miHoYo.Yuanshen/com.taptap.sdk.kit.internal.TapTapKitInitProvider}
+      applicationInfo=ApplicationInfo{e59e3a0 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.miHoYo.sdk.webview.fileprovider]:
+    Provider{d219dba com.miHoYo.Yuanshen/com.combosdk.support.basewebview.WebViewFileProvider}
+      applicationInfo=ApplicationInfo{d60db59 com.miHoYo.Yuanshen}
+  [com.miHoYo.Yuanshen.share-to-follow-file-provider]:
+    Provider{13bdb86 com.miHoYo.Yuanshen/com.bilibili.bplus.followingshare.content.FileProvider}
+      applicationInfo=ApplicationInfo{4e8b31e com.miHoYo.Yuanshen}
+
+Key Set Manager:
+  [com.miHoYo.Yuanshen]
+      Signing KeySets: 93
+
+Packages:
+  Package [com.miHoYo.Yuanshen] (e263b96):
+    appId=10264
+    pkg=Package{1c23969 com.miHoYo.Yuanshen}
+    codePath=/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==
+    resourcePath=/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==
+    legacyNativeLibraryDir=/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==/lib
+    extractNativeLibs=true
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=1241 minSdk=23 targetSdk=36
+    minExtensionVersions=[]
+    versionName=7.1.0_48052158_48145775
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    applicationInfo.owns=-1
+    flags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    hwflags=[ ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_REQUEST_LEGACY_EXTERNAL_STORAGE HAS_DOMAIN_URLS PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    isRougueApp=false    rogueAppFlags=0
+    forceQueryable=false
+    pageSizeCompat=0
+    queriesPackages=[com.android.creator, com.zhuoyi.security.lite, com.freeme.secureguard, com.android.secureguard, com.mdid.msa, com.samsung.android.deviceidservice, com.coolpad.deviceidsupport, com.heytap.openid, com.qiku.id, com.taptap, com.eg.android.AlipayGphone, hk.alipay.wallet, com.mihoyo.hyperion, com.tencent.mm, com.mihoyo.combo.logcat, com.tencent.mobileqq, com.tencent.tim, com.sina.weibo, com.tencent.minihd.qq, com.tencent.mobileqqi, com.tencent.qqlite, com.ss.android.ugc.aweme, com.ss.android.ugc.aweme.lite, com.taptap.global, com.taptap.global.lite, com.eg.android.AlipayGphoneRC, hk.alipay.walletRC, com.sina.weibog3, com.mihoyo.hyperiondev, tv.danmaku.bili, tv.danmaku.bilibilihd]
+    queriesIntents=[Intent { act=android.intent.action.VIEW dat=weixin:/... }, Intent { act=android.media.action.IMAGE_CAPTURE }, Intent { act=android.intent.action.VIEW }, Intent { act=com.taptap.sdk.action cat=[android.intent.category.DEFAULT] }, Intent { act=com.taptap.global.sdk.action cat=[android.intent.category.DEFAULT] }, Intent { act=* dat=tbopen:/... }]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      org.apache.http.legacy
+    usesLibraryFiles:
+      /system/framework/org.apache.http.legacy.jar
+    timeStamp=2026-10-22 05:10:10
+    lastUpdateTime=2026-10-22 05:10:13
+    installerPackageName=com.honor.browser
+    installerPackageUid=10220
+    initiatingPackageName=com.android.packageinstaller
+    originatingPackageName=com.honor.browser
+    packageSource=4
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{ec9de5b version:2, signatures:[64f1724b], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_REQUEST_LEGACY_EXTERNAL_STORAGE HAS_DOMAIN_URLS PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      com.miHoYo.Yuanshen.permission.JPUSH_MESSAGE: prot=signature
+      com.miHoYo.Yuanshen.permission.MIPUSH_RECEIVE: prot=signature
+    requested permissions:
+      com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+      android.permission.POST_NOTIFICATIONS
+      android.permission.MODIFY_AUDIO_SETTINGS
+      com.miHoYo.Yuanshen.permission.JPUSH_MESSAGE
+      freemme.permission.msa
+      freemme.permission.msa.SECURITY_ACCESS
+      com.android.permission.GET_INSTALLED_APPS
+      com.vivo.identifier.permission.OAID_STATE_DIALOG
+      android.permission.CHANGE_NETWORK_STATE
+      android.permission.FOREGROUND_SERVICE
+      android.permission.READ_MEDIA_VISUAL_USER_SELECTED
+      com.asus.msa.SupplementaryDID.ACCESS
+      android.permission.BLUETOOTH
+      android.permission.INTERNET
+      com.vivo.notification.permission.BADGE_ICON
+      android.permission.READ_EXTERNAL_STORAGE
+      oplus.permission.settings.LAUNCH_FOR_EXPORT
+      android.permission.READ_MEDIA_IMAGES
+      android.permission.CHANGE_WIFI_STATE
+      android.permission.FOREGROUND_SERVICE_DATA_SYNC
+      android.permission.FLASHLIGHT
+      android.permission.ACCESS_NETWORK_STATE
+      android.permission.CAMERA
+      android.permission.READ_MEDIA_AUDIO
+      android.permission.READ_MEDIA_VIDEO
+      com.miHoYo.Yuanshen.permission.MIPUSH_RECEIVE
+      android.permission.WRITE_EXTERNAL_STORAGE
+      android.permission.VIBRATE
+      com.huawei.android.launcher.permission.CHANGE_BADGE
+      android.permission.ACCESS_WIFI_STATE
+      android.permission.RECORD_AUDIO
+      android.permission.WAKE_LOCK
+    install permissions:
+      android.permission.MODIFY_AUDIO_SETTINGS: granted=true
+      com.miHoYo.Yuanshen.permission.JPUSH_MESSAGE: granted=true
+      android.permission.CHANGE_NETWORK_STATE: granted=true
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.BLUETOOTH: granted=true
+      android.permission.INTERNET: granted=true
+      android.permission.CHANGE_WIFI_STATE: granted=true
+      android.permission.FOREGROUND_SERVICE_DATA_SYNC: granted=true
+      android.permission.FLASHLIGHT: granted=true
+      android.permission.ACCESS_NETWORK_STATE: granted=true
+      com.miHoYo.Yuanshen.permission.MIPUSH_RECEIVE: granted=true
+      android.permission.VIBRATE: granted=true
+      android.permission.ACCESS_WIFI_STATE: granted=true
+      android.permission.WAKE_LOCK: granted=true
+    User 0: ceDataInode=34008 deDataInode=34016 installed=true hidden=false suspended=false suspendedByPrivacy=false distractionFlags=0 stopped=false iAwareStopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=4
+      dataDir=/data/user/0/com.miHoYo.Yuanshen
+      firstInstallTime=2026-01-07 00:03:27
+      uninstallReason=0
+      overlay paths:
+        /system/app/NavigationBarModeGesturalOverlay/NavigationBarModeGesturalOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-PmZf.frro
+        /data/resource-cache/com.android.systemui-accent-dpYx.frro
+        /data/resource-cache/com.android.systemui-dynamic-KbKz.frro
+      legacy overlay paths:
+        /system/app/NavigationBarModeGesturalOverlay/NavigationBarModeGesturalOverlay.apk
+      lastDisabledCaller: com.honor.browser
+      gids=[3002, 3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        com.android.permission.GET_INSTALLED_APPS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_MEDIA_VISUAL_USER_SELECTED: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_EXTERNAL_STORAGE: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.READ_MEDIA_IMAGES: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.CAMERA: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_MEDIA_AUDIO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.READ_MEDIA_VIDEO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.WRITE_EXTERNAL_STORAGE: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+        android.permission.RECORD_AUDIO: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+      disabledComponents:
+        cn.jpush.android.service.DownloadProvider
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+    com.hihonor.cloudmusic:
+      com.miHoYo.Yuanshen
+    com.miHoYo.Yuanshen:
+      com.honor.browser
+      tv.danmaku.bili
+      com.eg.android.AlipayGphone
+      com.ss.android.ugc.aweme
+      com.tencent.mobileqq
+  queries via component:
+    com.android.settings.intelligence:
+      com.miHoYo.Yuanshen
+    com.baidu.input_hihonor:
+      com.miHoYo.Yuanshen
+    com.hihonor.cloudmusic:
+      com.miHoYo.Yuanshen
+    com.honor.quickgamecenter:
+      com.miHoYo.Yuanshen
+    ctrip.android.view:
+      com.miHoYo.Yuanshen
+    com.jingdong.app.mall:
+      com.miHoYo.Yuanshen
+    com.taobao.taobao:
+      com.miHoYo.Yuanshen
+    com.xingin.xhs:
+      com.miHoYo.Yuanshen
+    com.quark.browser:
+      com.miHoYo.Yuanshen
+    com.Qunar:
+      com.miHoYo.Yuanshen
+    com.xunmeng.pinduoduo:
+      com.miHoYo.Yuanshen
+    com.miHoYo.Yuanshen:
+      com.hihonor.calendar
+      com.hihonor.servicecenter
+      com.hihonor.devicefinder
+      com.hihonor.cloudmusic
+      com.hihonor.youku.video
+      com.microsoft.appmanager
+      com.hihonor.quickgame
+      com.android.cts.priv.ctsshim
+      com.android.cts.ctsshim
+      com.hihonor.magichome
+      com.unionpay.tsmservice
+      com.dragon.read
+      com.dianping.v1
+      com.zhihu.android
+      com.taobao.idlefish
+      com.xingin.xhs
+      com.quark.browser
+      com.phoenix.read
+      com.xs.fm
+      com.ss.android.ugc.aweme
+      com.ss.android.article.news
+      com.smile.gifmaker
+      com.baidu.searchbox
+      com.qiyi.video
+      com.xiaoji.egggame
+      com.netease.sky.honor
+      com.hypergryph.endfield
+      com.miHoYo.hkrpg
+      com.tencent.tmgp.pubgmhd
+      com.tencent.tmgp.sgame
+    com.miHoYo.GenshinImpact:
+      com.miHoYo.Yuanshen
+    com.kurogame.wutheringwaves.global:
+      com.miHoYo.Yuanshen
+    com.miHoYo.hkrpg:
+      com.miHoYo.Yuanshen
+    com.HoYoverse.hkrpgoversea:
+      com.miHoYo.Yuanshen
+    com.tencent.tmgp.pubgmhd:
+      com.miHoYo.Yuanshen
+  queryable via interaction:
+    User 0:
+      [com.hihonor.hnasm,com.android.settings,com.android.server.telecom,com.hihonor.android.airsharing,com.hihonor.aod,com.hihonor.desktop.explorer,com.hihonor.android.FloatTasks,com.android.providers.settings,com.hihonor.assetsyncservice,com.hihonor.dmsdp,com.hihonor.securityserver,com.hihonor.lbs,androidhnext,com.hihonor.android.chr,com.android.localtransport,com.hihonor.airlink,com.hihonor.android.hnaps,com.hihonor.android.internal.app,com.hihonor.systemmanager,com.hihonor.powergenie,com.hihonor.hiviewtunnel,com.android.dynsystem,com.hihonor.android.instantshare,com.hihonor.synergy,com.hihonor.searchservice,com.android.inputdevices,com.hihonor.game.kitserver,android,com.hihonor.iaware,com.android.location.fused,com.hihonor.msdp,com.hihonor.detectrepair,com.hihonor.systemserver,com.hihonor.motionservice,com.hihonor.nearby,com.hihonor.audioaccessorymanager,com.hihonor.trustspace,com.hihonor.hiviewpush,com.hihonor.cooperatedconfig,com.hihonor.iconnect,com.android.keychain,com.hihonor.hiview,com.hihonor.mmitest,com.hihonor.android.projectmenu,com.hihonor.pcassistant]:
+        com.miHoYo.Yuanshen
+      com.hihonor.android.launcher:
+        com.miHoYo.Yuanshen
+      com.google.android.webview:
+        com.miHoYo.Yuanshen
+      com.sohu.inputmethod.sogou.honor:
+        com.miHoYo.Yuanshen
+      com.miHoYo.Yuanshen:
+        [com.hihonor.hnasm,com.android.settings,com.android.server.telecom,com.hihonor.android.airsharing,com.hihonor.aod,com.hihonor.desktop.explorer,com.hihonor.android.FloatTasks,com.android.providers.settings,com.hihonor.assetsyncservice,com.hihonor.dmsdp,com.hihonor.securityserver,com.hihonor.lbs,androidhnext,com.hihonor.android.chr,com.android.localtransport,com.hihonor.airlink,com.hihonor.android.hnaps,com.hihonor.android.internal.app,com.hihonor.systemmanager,com.hihonor.powergenie,com.hihonor.hiviewtunnel,com.android.dynsystem,com.hihonor.android.instantshare,com.hihonor.synergy,com.hihonor.searchservice,com.android.inputdevices,com.hihonor.game.kitserver,android,com.hihonor.iaware,com.android.location.fused,com.hihonor.msdp,com.hihonor.detectrepair,com.hihonor.systemserver,com.hihonor.motionservice,com.hihonor.nearby,com.hihonor.audioaccessorymanager,com.hihonor.trustspace,com.hihonor.hiviewpush,com.hihonor.cooperatedconfig,com.hihonor.iconnect,com.android.keychain,com.hihonor.hiview,com.hihonor.mmitest,com.hihonor.android.projectmenu,com.hihonor.pcassistant]
+        com.google.android.webview
+  queryable via uses-library:
+
+Dexopt state:
+  [com.miHoYo.Yuanshen]
+    path: /data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==/base.apk
+      arm64: [status=speed-profile] [reason=ab-ota] [primary-abi]
+        [location is /data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==/oat/arm64/base.odex]
+    known secondary dex files:
+      /data/user/0/com.miHoYo.Yuanshen/files/.p/9495013EDE91FC4300629C1BC022FC54/5ECA41E34F5EFB833430520FE54F56FA.d (removed)
+        arm64: [status=unknown] [reason=unknown] [primary-abi]
+          [location is error]
+        class loader context: =UnsupportedClassLoaderContext=
+      /data/user/0/com.miHoYo.Yuanshen/files/.p/C3B306CEEEFEA4BF28D6749587CCCAEF/B438E1CF2BA8D711933EDAD64DEA9D91.d (removed)
+        arm64: [status=unknown] [reason=unknown] [primary-abi]
+          [location is error]
+        class loader context: =UnsupportedClassLoaderContext=
+
+Compiler stats:
+  [com.miHoYo.Yuanshen]
+    (No recorded stats)

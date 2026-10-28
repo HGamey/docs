@@ -1,0 +1,18 @@
+{
+  "error": null,
+  "finished_at": "2026-10-26T20:39:41.361641+00:00",
+  "request_id": "selfsr-marker-50350eb1",
+  "requested_at": "2026-10-26T20:39:41.035429+00:00",
+  "result": {
+    "go": null,
+    "kind": "marker",
+    "new_capture_claimed": false,
+    "observed_at": "2026-10-26T20:39:41.361553+00:00",
+    "path": "gray-control/artifacts/selfsr-marker-50350eb1.json"
+  },
+  "schema": "phonefarm/gray-control-action-result@1",
+  "sequence": 2,
+  "session_id": "gray-session-14963-1793046999244600000",
+  "started_at": "2026-10-26T20:39:41.095879+00:00",
+  "status": "completed"
+}

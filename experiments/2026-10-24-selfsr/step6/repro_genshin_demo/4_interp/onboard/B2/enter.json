@@ -1,0 +1,214 @@
+{
+  "needs_human_shot": null,
+  "probe": {
+    "confirm": {
+      "idle": 0.0077,
+      "ingame": true,
+      "ret": 0.363,
+      "swing": 0.745,
+      "swipe": [
+        1075,
+        486,
+        1882,
+        486,
+        1000
+      ]
+    },
+    "first": {
+      "idle": 0.0814,
+      "ingame": true,
+      "ret": 0.402,
+      "swing": 0.7439,
+      "swipe": [
+        1075,
+        486,
+        1882,
+        486,
+        1000
+      ]
+    }
+  },
+  "reason": null,
+  "screen_wh": [
+    2688,
+    1216
+  ],
+  "seconds": 70.6,
+  "status": "INGAME",
+  "steps": [
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 0,
+      "ocr": [
+        "原戶"
+      ],
+      "probe": {
+        "idle": 0.0389,
+        "ingame": false,
+        "ret": 0.9945,
+        "swing": 0.9603,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "00_unknown.jpg",
+      "t_s": 5.7,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "wait",
+        "why": "加载 / 连接 / 健康忠告"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 1,
+      "ocr": [
+        "适龄提示",
+        "CNRELAndroid7.1.0_R48652077_S48511369_D48533839"
+      ],
+      "screen": "loading",
+      "shot": "01_loading.jpg",
+      "t_s": 15.4,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "tap",
+        "label": "点击进入",
+        "rule": "start:点击进入",
+        "x": 1344,
+        "y": 1132
+      },
+      "at": [
+        0.5,
+        0.930921
+      ],
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 2,
+      "ocr": [
+        "CADPA",
+        "适龄提示",
+        "印㳑山",
+        "点击进入",
+        "CNRELAndroid7.1.0_R48652077_S48511369_D48533839."
+      ],
+      "screen": "start",
+      "shot": "02_start.jpg",
+      "t_s": 20.9,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "wait",
+        "why": "纯色画面 (黑屏过场)"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 3,
+      "ocr": [
+        "⑤ ∞",
+        "佩戴耳机游玩体验更佳",
+        "UID: 28997/6292"
+      ],
+      "screen": "loading",
+      "shot": "03_loading.jpg",
+      "t_s": 25.2,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "wait",
+        "why": "纯色画面 (黑屏过场)"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 4,
+      "ocr": [],
+      "screen": "loading",
+      "shot": "04_loading.jpg",
+      "t_s": 30.3,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 5,
+      "ocr": [
+        "星之归还•已开启",
+        "41ms",
+        "芭芭拉",
+        "②",
+        "前往奔狼领",
+        "2703m",
+        "凯亚",
+        "北斗",
+        "Lv.80",
+        "15240 17390",
+        "UID: 239976292"
+      ],
+      "probe": {
+        "idle": 0.1656,
+        "ingame": false,
+        "ret": 0.737,
+        "swing": 0.7693,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "05_unknown.jpg",
+      "t_s": 35.6,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 6,
+      "ocr": [
+        "星之归还•已开启",
+        "42ms",
+        "芭芭拉",
+        "前往奔狼领",
+        "2703m",
+        "凯亚",
+        "北斗",
+        "Lv.80",
+        "15240 /17390",
+        "UID: 239976292"
+      ],
+      "probe": {
+        "idle": 0.0814,
+        "ingame": true,
+        "ret": 0.402,
+        "swing": 0.7439,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "06_unknown.jpg",
+      "t_s": 45.5,
+      "zoom_items": 0
+    }
+  ],
+  "taps": 1,
+  "vlm_calls": 0
+}

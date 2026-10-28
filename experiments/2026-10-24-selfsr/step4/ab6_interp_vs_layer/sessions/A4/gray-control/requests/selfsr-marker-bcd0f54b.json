@@ -1,0 +1,13 @@
+{
+  "request": {
+    "action": "marker",
+    "actor_id": "agent",
+    "control_epoch": 1,
+    "params": {},
+    "request_id": "selfsr-marker-bcd0f54b",
+    "schema": "phonefarm/gray-control-action@1",
+    "session_id": "gray-session-10385-1793046487303058000"
+  },
+  "requested_at": "2026-10-26T20:29:52.345580+00:00",
+  "sequence": 1
+}

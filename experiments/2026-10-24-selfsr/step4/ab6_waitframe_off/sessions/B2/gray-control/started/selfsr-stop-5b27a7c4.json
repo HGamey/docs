@@ -1,0 +1,12 @@
+{
+  "error": null,
+  "finished_at": null,
+  "request_id": "selfsr-stop-5b27a7c4",
+  "requested_at": "2026-10-26T19:06:53.738832+00:00",
+  "result": null,
+  "schema": "phonefarm/gray-control-action-result@1",
+  "sequence": 3,
+  "session_id": "gray-session-62657-1793041430624278000",
+  "started_at": "2026-10-26T19:06:53.753267+00:00",
+  "status": "started"
+}

@@ -1,0 +1,181 @@
+{
+  "needs_human_shot": null,
+  "probe": {
+    "confirm": {
+      "idle": 0.0602,
+      "ingame": true,
+      "ret": 0.4506,
+      "swing": 0.7539,
+      "swipe": [
+        1075,
+        486,
+        1882,
+        486,
+        1000
+      ]
+    },
+    "first": {
+      "idle": 0.1308,
+      "ingame": true,
+      "ret": 0.3056,
+      "swing": 0.6023,
+      "swipe": [
+        1075,
+        486,
+        1882,
+        486,
+        1000
+      ]
+    }
+  },
+  "reason": null,
+  "screen_wh": [
+    2688,
+    1216
+  ],
+  "seconds": 60.3,
+  "status": "INGAME",
+  "steps": [
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 0,
+      "ocr": [
+        "原南"
+      ],
+      "probe": {
+        "idle": 0.0372,
+        "ingame": false,
+        "ret": 0.9986,
+        "swing": 0.9641,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "00_unknown.jpg",
+      "t_s": 5.9,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "wait",
+        "why": "加载 / 连接 / 健康忠告"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 1,
+      "ocr": [
+        "100.00%",
+        "CNRELAndroid7.1.0-R48652077_S48511369_D48533839",
+        "12+",
+        "适龄提示"
+      ],
+      "screen": "loading",
+      "shot": "01_loading.jpg",
+      "t_s": 15.6,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "tap",
+        "label": "点击进入",
+        "rule": "start:点击进入",
+        "x": 1342,
+        "y": 1131
+      },
+      "at": [
+        0.499256,
+        0.930099
+      ],
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 2,
+      "ocr": [
+        "12+",
+        "CADEA",
+        "适龄提示",
+        "⑦m",
+        "点击进入",
+        "CNRELAndroid7.1.0_R48652077_$48511369_D4853383"
+      ],
+      "screen": "start",
+      "shot": "02_start.jpg",
+      "t_s": 21.1,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 3,
+      "ocr": [
+        "⑤∞⑦",
+        "の",
+        "佩戴耳机游玩体验更佳",
+        "UUTD: 239976292"
+      ],
+      "probe": {
+        "idle": 0.0059,
+        "ingame": false,
+        "ret": 0.9897,
+        "swing": 0.9892,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "03_unknown.jpg",
+      "t_s": 25.8,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 4,
+      "ocr": [
+        "星之归还•已开启",
+        "•142 ms",
+        "芭芭拉",
+        "前往奔狼领",
+        "2703m」",
+        "凯亚",
+        "北斗",
+        "Lv.80",
+        "15240",
+        "7390",
+        "UID:239976292"
+      ],
+      "probe": {
+        "idle": 0.1308,
+        "ingame": true,
+        "ret": 0.3056,
+        "swing": 0.6023,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "04_unknown.jpg",
+      "t_s": 35.1,
+      "zoom_items": 0
+    }
+  ],
+  "taps": 1,
+  "vlm_calls": 0
+}

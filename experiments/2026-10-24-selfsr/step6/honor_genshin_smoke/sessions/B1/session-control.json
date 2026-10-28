@@ -1,0 +1,51 @@
+{
+  "accepting": false,
+  "action_capabilities": {
+    "quality": 1,
+    "sample": 2
+  },
+  "allowed_actions": [],
+  "controller": {
+    "actor_id": "agent",
+    "epoch": 1,
+    "expires_at": null,
+    "kind": "agent"
+  },
+  "created_at": "2026-10-26T17:28:08.494619+00:00",
+  "deadline_at": "2026-10-26T17:48:08.494621+00:00",
+  "frame_max_age_seconds": 30,
+  "job_id": null,
+  "keep_prop": false,
+  "last_error": "pre-existing installation/session path; refusing overwrite: /data/local/tmp/knobs_layer_state",
+  "latest_image": null,
+  "latest_quality": null,
+  "max_seconds": 1200,
+  "mode": "probe",
+  "package": "com.miHoYo.Yuanshen",
+  "phase": "closed",
+  "power": {
+    "control_modified_by_session": false,
+    "initial": null,
+    "last_observation": null,
+    "policy": "observe",
+    "stage": "unmodified"
+  },
+  "producer": "phonefarm",
+  "recovery": {
+    "error": null,
+    "game_state_restored": false,
+    "job_recovery_complete": false,
+    "reports": [
+      "gray-session-5782-1793035688466616000/eval-recovery-5782-1793035689547762.json"
+    ],
+    "scope": "gray_control_owned_resources_installation_properties_target_stopped",
+    "session_path": "gray-session-5782-1793035688466616000",
+    "status": "reported_complete"
+  },
+  "schema": "phonefarm/gray-control@1",
+  "serial": "AVXB6R5C19000481",
+  "session_id": "gray-session-5782-1793035688466616000",
+  "session_path": "gray-session-5782-1793035688466616000",
+  "stop_reason": "pre-existing installation/session path; refusing overwrite: /data/local/tmp/knobs_layer_state",
+  "updated_at": "2026-10-26T17:28:09.559873+00:00"
+}

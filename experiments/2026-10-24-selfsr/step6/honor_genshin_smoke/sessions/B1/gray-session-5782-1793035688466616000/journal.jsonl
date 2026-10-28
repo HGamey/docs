@@ -1,0 +1,24 @@
+{"args":["-s","AVXB6R5C19000481","shell","cat /proc/sys/kernel/random/boot_id"],"event":"command_intent","operation":"boot_identity"}
+{"code":0,"event":"command_result","operation":"boot_identity","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000000.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","dumpsys package 'com.miHoYo.Yuanshen'"],"event":"command_intent","operation":"native_directory"}
+{"code":0,"event":"command_result","operation":"native_directory","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000001.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000002.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000003.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/app'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000004.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ=='\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000005.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg=='\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000006.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==/lib'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000007.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/app/~~bf4TOc6mCRmlpxvr9gi4hQ==/com.miHoYo.Yuanshen-In4y96zyZfP6gtqKJeY7jg==/lib/arm64'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000008.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000009.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/local'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000010.stdout"}
+{"args":["-s","AVXB6R5C19000481","shell","su -c 'ls -1A -- '\\''/data/local/tmp'\\'''"],"event":"command_intent","operation":"directory_listing"}
+{"code":0,"event":"command_result","operation":"directory_listing","stdout_path":"/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/commands/5782-000011.stdout"}

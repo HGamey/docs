@@ -1,0 +1,97 @@
+{
+  "base_recovery": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step4/ab6_interp_vs_layer/sessions/A2/gray-session-648-1793045383487227000/recovery-648-1793045553804475000.json",
+  "boot_id": "3c23f4b5-83c6-496a-b761-8e5ccf744670",
+  "completion_owner": "gray_layer_control",
+  "control_resources": {
+    "path": "eval-session.json",
+    "schema": "phonefarm/gray-control-resources@3"
+  },
+  "control_session_id": "gray-session-648-1793045383487227000",
+  "created_at": "2026-10-26T20:09:43.492132+00:00",
+  "evidence_origin": "device",
+  "files": [
+    {
+      "acquired": true,
+      "archive": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step4/ab6_interp_vs_layer/sessions/A2/gray-session-648-1793045383487227000/output-g0-0-648-1793045547181435000.raw",
+      "backup": "/storage/emulated/0/Android/data/com.miHoYo.Yuanshen/files/.phonefarm-gray-648-1793045383466375000-knobs_layer_out.json.bak",
+      "backup_done": false,
+      "original_present": false,
+      "path": "/storage/emulated/0/Android/data/com.miHoYo.Yuanshen/files/knobs_layer_out.json",
+      "restored": true
+    },
+    {
+      "acquired": true,
+      "archive": null,
+      "backup": "/data/data/com.miHoYo.Yuanshen/.phonefarm-gray-648-1793045383466375000-knobs_layer_out.json.bak",
+      "backup_done": false,
+      "original_present": false,
+      "path": "/data/data/com.miHoYo.Yuanshen/knobs_layer_out.json",
+      "restored": true
+    },
+    {
+      "acquired": true,
+      "archive": null,
+      "backup": "/data/local/tmp/.phonefarm-gray-648-1793045383466375000-knobs_layer_out.com.miHoYo.Yuanshen.json.bak",
+      "backup_done": false,
+      "original_present": false,
+      "path": "/data/local/tmp/knobs_layer_out.com.miHoYo.Yuanshen.json",
+      "restored": true
+    },
+    {
+      "acquired": true,
+      "archive": null,
+      "backup": "/storage/emulated/0/Android/data/com.miHoYo.Yuanshen/files/.phonefarm-gray-648-1793045383466375000-knobs_frameaudit.json.bak",
+      "backup_done": false,
+      "original_present": false,
+      "path": "/storage/emulated/0/Android/data/com.miHoYo.Yuanshen/files/knobs_frameaudit.json",
+      "restored": true
+    },
+    {
+      "acquired": true,
+      "archive": null,
+      "backup": "/data/data/com.miHoYo.Yuanshen/.phonefarm-gray-648-1793045383466375000-knobs_frameaudit.json.bak",
+      "backup_done": false,
+      "original_present": false,
+      "path": "/data/data/com.miHoYo.Yuanshen/knobs_frameaudit.json",
+      "restored": true
+    },
+    {
+      "acquired": true,
+      "archive": null,
+      "backup": "/data/local/tmp/.phonefarm-gray-648-1793045383466375000-knobs_frameaudit.com.miHoYo.Yuanshen.json.bak",
+      "backup_done": false,
+      "original_present": false,
+      "path": "/data/local/tmp/knobs_frameaudit.com.miHoYo.Yuanshen.json",
+      "restored": true
+    }
+  ],
+  "generation": 0,
+  "installation_owned": true,
+  "launch_marker": null,
+  "native_dir": "/data/app/~~nKaGjafw3iLUEVp5pFaJLQ==/com.miHoYo.Yuanshen-bgMU_2GdaMFg2AHmtfxH-Q==/lib/arm64",
+  "package": "com.miHoYo.Yuanshen",
+  "properties": {
+    "debug.knobs.copyprobe": "0",
+    "debug.knobs.frameaudit": "0",
+    "debug.knobs.frameaudit_go": "0",
+    "debug.knobs.frameaudit_ts": "0",
+    "debug.knobs.loadop": "0",
+    "debug.knobs.npuprobe": "0",
+    "debug.knobs.passdump": "0",
+    "debug.knobs.storeop": "0",
+    "debug.knobs.storeop_live": "0",
+    "debug.knobs.storeop_on": "0",
+    "debug.knobs.upop": "0",
+    "debug.vulkan.layers": ""
+  },
+  "remote": "/data/local/tmp/phonefarm-gray-648-1793045383466375000",
+  "round_label": null,
+  "schema": "phonefarm/gray-capture-session@3",
+  "serial": "91253241019A",
+  "stage": "active",
+  "staging_created": true,
+  "state_owned": true,
+  "token": "648-1793045383466375000",
+  "transport_uncertain": false,
+  "write_pending": null
+}

@@ -1,0 +1,29 @@
+{
+  "base_recovery": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/honor_genshin_smoke/sessions/B1/gray-session-5782-1793035688466616000/recovery-5782-1793035689535856000.json",
+  "boot_id": null,
+  "completion_owner": "gray_layer_control",
+  "control_resources": {
+    "path": "eval-session.json",
+    "schema": "phonefarm/gray-control-resources@3"
+  },
+  "control_session_id": "gray-session-5782-1793035688466616000",
+  "created_at": "2026-10-26T17:28:08.471758+00:00",
+  "evidence_origin": "device",
+  "files": [],
+  "generation": 0,
+  "installation_owned": false,
+  "launch_marker": null,
+  "native_dir": null,
+  "package": "com.miHoYo.Yuanshen",
+  "properties": {},
+  "remote": "/data/local/tmp/phonefarm-gray-5782-1793035688446182000",
+  "round_label": null,
+  "schema": "phonefarm/gray-capture-session@3",
+  "serial": "AVXB6R5C19000481",
+  "stage": "new",
+  "staging_created": false,
+  "state_owned": false,
+  "token": "5782-1793035688446182000",
+  "transport_uncertain": false,
+  "write_pending": null
+}

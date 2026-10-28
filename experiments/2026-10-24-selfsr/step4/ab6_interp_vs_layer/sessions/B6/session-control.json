@@ -1,0 +1,50 @@
+{
+  "accepting": false,
+  "action_capabilities": {
+    "quality": 1,
+    "sample": 2
+  },
+  "allowed_actions": [],
+  "controller": {
+    "actor_id": "agent",
+    "epoch": 1,
+    "expires_at": null,
+    "kind": "agent"
+  },
+  "created_at": "2026-10-26T20:43:50.304117+00:00",
+  "deadline_at": "2026-10-26T21:03:50.304119+00:00",
+  "frame_max_age_seconds": 30,
+  "job_id": null,
+  "keep_prop": false,
+  "latest_image": null,
+  "latest_quality": null,
+  "max_seconds": 1200,
+  "mode": "probe",
+  "package": "com.miHoYo.Yuanshen",
+  "phase": "closed",
+  "power": {
+    "control_modified_by_session": false,
+    "initial": null,
+    "last_observation": null,
+    "policy": "observe",
+    "stage": "unmodified"
+  },
+  "producer": "phonefarm",
+  "recovery": {
+    "error": null,
+    "game_state_restored": false,
+    "job_recovery_complete": false,
+    "reports": [
+      "gray-session-18542-1793047430278356000/eval-recovery-18542-1793047623184015.json"
+    ],
+    "scope": "gray_control_owned_resources_installation_properties_target_stopped",
+    "session_path": "gray-session-18542-1793047430278356000",
+    "status": "reported_complete"
+  },
+  "schema": "phonefarm/gray-control@1",
+  "serial": "91253241019A",
+  "session_id": "gray-session-18542-1793047430278356000",
+  "session_path": "gray-session-18542-1793047430278356000",
+  "stop_reason": "requested",
+  "updated_at": "2026-10-26T20:47:03.198157+00:00"
+}

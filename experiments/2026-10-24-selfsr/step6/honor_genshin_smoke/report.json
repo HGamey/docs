@@ -1,0 +1,60 @@
+{
+ "pkg": "com.miHoYo.Yuanshen",
+ "a": "native",
+ "b": "ip:bm:120:stamp=0,backend=sc,lead_ns=25000000",
+ "rounds": 1,
+ "valid_pairs": 0,
+ "dropped_arms": [
+  "A1",
+  "B1"
+ ],
+ "out_res": {
+  "A": [],
+  "B": []
+ },
+ "metrics": {
+  "seen_fps": {
+   "status": "not_measured"
+  },
+  "display_fps": {
+   "status": "not_measured"
+  },
+  "display_fps_sc": {
+   "status": "not_measured"
+  },
+  "sc_added_delay_p50_ms": {
+   "status": "not_measured"
+  },
+  "sc_interval_p95_ms": {
+   "status": "not_measured"
+  },
+  "game_fps": {
+   "status": "not_measured"
+  },
+  "game_frame_p95_ms": {
+   "status": "not_measured"
+  },
+  "gpu_active_ms": {
+   "status": "not_measured"
+  },
+  "sharp_full": {
+   "status": "not_measured"
+  },
+  "sharp_hud": {
+   "status": "not_measured"
+  },
+  "ssim_vs_native_ref": {
+   "status": "not_measured"
+  },
+  "missed_frames": {
+   "status": "not_measured"
+  },
+  "display_latency_p50_ms": {
+   "status": "not_measured"
+  },
+  "displayed_per_s": {
+   "status": "not_measured"
+  }
+ },
+ "min_p_possible": null
+}

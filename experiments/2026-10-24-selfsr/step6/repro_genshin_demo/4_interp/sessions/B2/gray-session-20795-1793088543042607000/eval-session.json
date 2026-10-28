@@ -1,0 +1,31 @@
+{
+  "charging": null,
+  "deployment": "not_started",
+  "fan": null,
+  "identity": {
+    "base_recovery": null,
+    "boot_id": null,
+    "completion_owner": "gray_layer_control",
+    "control_parent_schema": "phonefarm/gray-control-resources@3",
+    "evidence_origin": "device",
+    "native_dir": null,
+    "package": "com.miHoYo.Yuanshen",
+    "serial": "91253241019A",
+    "session": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step6/repro_genshin_demo/4_interp/sessions/B2/gray-session-20795-1793088543042607000",
+    "token": "20795-1793088543020805000"
+  },
+  "input_plan": null,
+  "pending": null,
+  "power_policy": "observe",
+  "remote": "/data/local/tmp/phonefarm-confirmation-gray-20795-1793088543020805000",
+  "request": {
+    "power_policy": "observe",
+    "protocol": "current_scene"
+  },
+  "rounds": [],
+  "schema": "phonefarm/gray-control-resources@3",
+  "stage": "created",
+  "tools_created": false,
+  "trace": "/sys/kernel/tracing/instances/phonefarm_gray_20795-1793088543020805000",
+  "trace_state": "not_started"
+}

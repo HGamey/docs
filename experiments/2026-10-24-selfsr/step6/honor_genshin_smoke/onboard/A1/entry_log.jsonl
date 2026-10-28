@@ -1,0 +1,4 @@
+{"act":{"do":"relaunch"},"fg":"com.android.settings","n":0,"ocr":["01:23④旦","08 100","设置","Q 搜索设置项","186******20","荣耀账号、查找设备、会员中心等","刁","WLAN","*蓝牙","11 移动网络","◎","智慧互联"],"screen":"not_foreground","shot":"00_not_foreground.jpg","t_s":5.9,"zoom_items":0}
+{"act":{"do":"relaunch"},"fg":"com.android.settings","n":1,"ocr":["设置","Q 搜索设置项","186******20","荣耀账号、查找设备、会员中心等","WLAN","蓝牙","ly>","已开启＞"],"screen":"not_foreground","shot":"01_not_foreground.jpg","t_s":12.3,"zoom_items":0}
+{"act":{"do":"relaunch"},"fg":"com.android.settings","n":2,"ocr":["设置","Q 搜索设置项","186******20","荣耀账号、查找设备、会员中心等","WLAN","蓝牙","ly>","已开启＞"],"screen":"not_foreground","shot":"02_not_foreground.jpg","t_s":18.9,"zoom_items":0}
+{"act":{"do":"relaunch"},"fg":"com.android.settings","n":3,"ocr":["设置","Q 搜索设置项","186******20","荣耀账号、查找设备、会员中心等","WLAN","蓝牙","ly>","已开启＞"],"screen":"not_foreground","shot":"03_not_foreground.jpg","t_s":25.6,"zoom_items":0}

@@ -200,3 +200,54 @@ adb shell su -c 'dumpsys SurfaceFlinger --fpsControl_waitframe_on'    # 开 (出
 - 重影：静止和慢动作干净，快速转身时边缘有块匹配拖影（`sc_debug/after_fix.jpg`），可以接受。
 - 延迟：真实帧比不插帧晚上屏至少 33.5 ms，其中提前量 25 ms，合成帧占一格 8.3 ms。这个数是层里记录的排队时刻，没有用外部高速相机测端到端延迟。
 - 前提：关掉 SF 的 waitframe（运行时开关，测完写回）。
+
+## 追加 (2026-10-28)：不关 waitframe、不用 root，子图层上屏 89 → 117
+
+上一节的 118 帧要用 root 关掉 SF 的 waitframe，普通用户做不到。这一节只改我们自己的层，系统设置全程不动。
+
+### waitframe 到底在等什么（atrace 对比）
+
+每臂窗口后抓 3 s SF atrace（`selfsr_ab --sf-atrace`），看 SF 主线程 `TransactionHandler:flushTransactions` 之后的空白：
+
+| 配置 | 主线程在 flushTransactions 里 | 整帧跳过 (`onCommitNotComposited`) / 3 s | 子图层上屏 |
+|---|---|---|---|
+| 原方案（游戏图层照常送） | 每 1 ms 轮询一次「游戏缓冲 fence 没 signal」，一等约 7.5 ms | 90 | 89 |
+| 游戏图层不再送（`sc_noreal=1`，图用 `vkReleaseSwapchainImagesEXT` 还回去） | **每帧固定空等 4.22 ms**（= 120 Hz 周期的 50%） | 120 | 80 |
+| 关 waitframe（root，对照） | 不等 | 0 | 118 |
+
+- waitframe 认定「游戏图层」每个 vsync 都该来一帧。游戏缓冲还没画完就轮询等它，游戏图层没来就等满「waitframe range factor」（出厂 50% vsync）。
+- 等完这一帧合成晚了，present fence 晚一个 vsync，下一帧被 backpressure 整帧跳过。
+- 所以只让游戏缓冲「交之前就画完」（`sc_presig`，送显线程先等 fence）没用：子图层缓冲交出去时本来就画完了（20 s 只等了 160 次），被等的是游戏图层。
+- 游戏图层停掉也不行：除了每帧白等 4.2 ms，系统还会判游戏掉帧，把峰值刷新率压到 60 Hz。
+
+### 绕法：子图层起游戏图层的名字
+
+SF 认「游戏图层」看的是图层名。把子图层起成 `SurfaceView[<包名>/...selfsr_interp`（`debug.knobs.interp_sc_name`；`auto` = 层从进程名拼 `SurfaceView[<包名>/` 前缀）后：
+
+- waitframe 把每个 vsync 都来一张、交时已画完的子图层当成游戏图层，不再轮询游戏缓冲的 fence（atrace: `fence unsignaled` 0 次，整帧跳过 0 次）。
+- 游戏图层照常送（被不透明的子图层盖着），系统看到游戏帧率正常，不降刷新率。
+
+冒烟（2 对，名字写全 `SurfaceView[com.miHoYo.Yuanshen/com.miHoYo.GetMobileInfo.MainActivity](BLAST)`，`_runs/name_ab`）：
+
+| | 原方案 | 改名 |
+|---|---|---|
+| 子图层上屏 | 89.8 / 89.9 | **116.9 / 117.7** |
+| SF 丢帧 / 20 s 窗口 | 1201 | **3** |
+
+正式结果见下节。
+
+### 正式结果：`step4/name_auto_ab`（4 对，原方案 vs `sc_name=auto`，waitframe 开着，不 root）
+
+`auto` 只拼 `SurfaceView[<包名>/` 前缀（层从进程名取包名），不写死原神的 Activity 名。两臂都是自研超分 + 子图层插帧 + `unlimit`，差别只在子图层的名字。
+
+| 指标 | 原方案 | 改名 | 差 | p |
+|---|---|---|---|---|
+| 实际看到的画面帧率 | 89.8（89.6 / 89.9 / 89.7） | **118.8**（118.6 / 118.3 / 119.4） | **+32%**，95% 区间 [+28.4, +29.6] 帧 | 0.25 |
+| SF 丢帧 / 20 s 窗口 | 1204 | **3.3** | −99.7% | 0.25 |
+| 游戏渲染帧率 | 59.2 | 59.4 | +0.3% | 0.25 |
+| 每帧 GPU 忙碌 | 13.45 ms | 13.44 ms | 不变 | 0.75 |
+| 插帧给真实帧加的延迟 p50 | 33.6 ms | 33.5 ms | 不变 | 0.25 |
+
+- 作废 1 臂：B3 窗口内 118.6，窗口结束后屏幕被系统降到 60 Hz（这几天原方案臂也出现过，和改名无关，原因待查），按规则作废。有效 3 对，3 对方向一致；3 对时 p 最小只能到 0.25。
+- 和关 waitframe（root，`ab6_interp_vs_layer` 的 118.2）持平。
+- 现在层缺省就是 `sc_name=auto`（`none` = 旧名）；`repro.sh` 在带 waitframe 的机器上缺省用它，第 12 组复现这一对比，`SFWAIT_OFF=1` 走旧的关 waitframe 做法。

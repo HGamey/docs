@@ -1,0 +1,42 @@
+{
+  "effective": [],
+  "failed": [],
+  "knob": "gray_readonly_probe",
+  "layer_loaded": true,
+  "pkg": "com.miHoYo.Yuanshen",
+  "readonly_stats": {
+    "frames": 5400,
+    "render_pass_begins": 165840,
+    "render_passes_created": 126
+  },
+  "unavailable_reason": null,
+  "unlimit": {
+    "cfg_hex": "",
+    "cfg_str": "",
+    "cleared": 5357,
+    "last_seen": 30,
+    "reason": "",
+    "symbol": true
+  },
+  "upop_artifact": {
+    "artifact_id": "legacy-fixed-upop",
+    "counts": {
+      "disabled": 0,
+      "disabled_reason": null,
+      "dispatch_recorded": 0,
+      "pipeline_created": 0,
+      "queue_submitted": 0,
+      "substituted": 0
+    },
+    "deployable": false,
+    "disabled_state": false,
+    "evaluation_eligible": false,
+    "gpu_completion_proven": false,
+    "ineligible_reason": "missing_source_layout_target_compute_contract",
+    "ownership_scope": "recording_generation_per_dispatch",
+    "queue_submission_api": "vkQueueSubmit",
+    "requested": false,
+    "source_sha256": "",
+    "spirv_sha256": ""
+  }
+}

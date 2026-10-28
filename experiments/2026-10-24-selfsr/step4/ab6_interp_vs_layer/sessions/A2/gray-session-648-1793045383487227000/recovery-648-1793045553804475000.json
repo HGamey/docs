@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-26T20:12:33.804488+00:00",
+  "checks": {
+    "acquired_historical_files_restored": true,
+    "app_check": "force-stop succeeded; exact package/package:child names absent from ps NAME",
+    "game_state_restored": false,
+    "owned_installation_absent": true,
+    "owned_staging_absent": true,
+    "property_values_restored": true,
+    "scope": "gray_layer_control_owned_installation_properties_target_stopped",
+    "target_stopped": true
+  },
+  "completion_owner": "gray_layer_control",
+  "error": null,
+  "evidence_origin": "device",
+  "experiment_error": null,
+  "game_state_restored": false,
+  "package": "com.miHoYo.Yuanshen",
+  "report_path": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step4/ab6_interp_vs_layer/sessions/A2/gray-session-648-1793045383487227000/recovery-648-1793045553804475000.json",
+  "schema": "phonefarm/gray-control-recovery@1",
+  "scope": "gray_layer_control_owned_installation_properties_target_stopped",
+  "serial": "91253241019A",
+  "session": "/Users/yao/hgamey-work/docs/experiments/2026-10-24-selfsr/step4/ab6_interp_vs_layer/sessions/A2/gray-session-648-1793045383487227000",
+  "status": "verified",
+  "token": "648-1793045383466375000"
+}

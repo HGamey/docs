@@ -1,0 +1,176 @@
+{
+  "effective": [],
+  "failed": [],
+  "interp": {
+    "csv": false,
+    "displayed_interval_ns": {
+      "n": 0
+    },
+    "displayed_interval_real_to_synth_ns": {
+      "n": 0
+    },
+    "displayed_interval_synth_to_real_ns": {
+      "n": 0
+    },
+    "fallbacks": {},
+    "fps_vote": "setFrameRate(120)=0",
+    "frames": {
+      "dup_without_history": 0,
+      "real": 4799,
+      "real_only": 0,
+      "synth": 4773
+    },
+    "half_period_ns": 0,
+    "layer_cpu_us": {
+      "max": 85238,
+      "min": 15,
+      "n": 4799,
+      "p50": 87,
+      "p95": 122,
+      "p99": 150
+    },
+    "mode": "bm",
+    "on": true,
+    "pacing": "google_display_timing",
+    "pacing_fallback_reason": "",
+    "period_ns": 0,
+    "present_call_interval_ns": {
+      "max": 452132604,
+      "min": 2620885,
+      "n": 4793,
+      "p50": 16635833,
+      "p95": 19313645,
+      "p99": 23716302
+    },
+    "present_margin_ns": {
+      "n": 0
+    },
+    "real_present_to_display_ns": {
+      "n": 0
+    },
+    "sc": {
+      "buffers_allocated": 8,
+      "grid": 0,
+      "grid_cb": 0,
+      "grid_period_ns": 0,
+      "kick_ns": 0,
+      "kicks": 0,
+      "margin_ns": 3000000,
+      "pacer": 0,
+      "pacer_late": 0,
+      "reason": "",
+      "requested": true,
+      "shown": 9572,
+      "vsync_cb": 0,
+      "vsync_sent": 0,
+      "window": true,
+      "winvote": -1,
+      "winvote_calls": 0,
+      "winvote_rc": 0,
+      "xform": 0
+    },
+    "sc_backlog_skips": 24,
+    "sc_real_sched_delay_ns": {
+      "max": 118270416,
+      "min": 33233008,
+      "n": 4799,
+      "p50": 33538494,
+      "p95": 37331921,
+      "p99": 59247410
+    },
+    "swapchain": {
+      "fmt": 37,
+      "game_period_ns_ema": 16580311,
+      "h": 1216,
+      "history_image": true,
+      "images": 6,
+      "min_image_count_req": 4,
+      "min_image_count_used": 6,
+      "patched": true,
+      "phase_known": false,
+      "present_mode_orig": 2,
+      "present_mode_used": 2,
+      "refresh_ns": 16643845,
+      "timing_ok": true,
+      "usage": 159,
+      "w": 2688
+    },
+    "swapchain_fallback_reason": "",
+    "timing": {
+      "early": 0,
+      "late": 0,
+      "pairs": {
+        "real_real": 0,
+        "real_synth": 0,
+        "synth_real": 0,
+        "synth_synth": 0
+      },
+      "samples": 0
+    }
+  },
+  "knob": "gray_interp+gray_selfsr",
+  "layer_loaded": true,
+  "pkg": "com.miHoYo.Yuanshen",
+  "readonly_stats": {
+    "frames": 4800,
+    "render_pass_begins": 145547,
+    "render_passes_created": 137
+  },
+  "selfsr": {
+    "algo": "cr",
+    "cpu_us_p50": 121,
+    "cpu_us_p95": 146,
+    "direct_frames": 4628,
+    "fallbacks": {},
+    "game_extent": [
+      2141,
+      969
+    ],
+    "gpu_samples": 1024,
+    "gpu_us_p50": 1058,
+    "gpu_us_p95": 1106,
+    "passthrough": 0,
+    "reason": "",
+    "same_size": 171,
+    "sharp": 1.0,
+    "swap_extent": [
+      2688,
+      1216
+    ],
+    "upscaled": 4628,
+    "want": [
+      2688,
+      1216
+    ]
+  },
+  "unavailable_reason": null,
+  "unlimit": {
+    "cfg_hex": "",
+    "cfg_str": "",
+    "cleared": 4283,
+    "last_seen": 30,
+    "reason": "",
+    "symbol": true
+  },
+  "upop_artifact": {
+    "artifact_id": "legacy-fixed-upop",
+    "counts": {
+      "disabled": 0,
+      "disabled_reason": null,
+      "dispatch_recorded": 0,
+      "pipeline_created": 0,
+      "queue_submitted": 0,
+      "substituted": 0
+    },
+    "deployable": false,
+    "disabled_state": false,
+    "evaluation_eligible": false,
+    "gpu_completion_proven": false,
+    "ineligible_reason": "missing_source_layout_target_compute_contract",
+    "ownership_scope": "recording_generation_per_dispatch",
+    "queue_submission_api": "vkQueueSubmit",
+    "requested": false,
+    "source_sha256": "",
+    "spirv_sha256": ""
+  }
+}

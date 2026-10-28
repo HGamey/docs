@@ -1,0 +1,26 @@
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: FATAL EXCEPTION: main
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: PID: 11041
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.res.Resources android.content.Context.getResources()' on a null object reference
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.servertransaction.ClientTransactionListenerController.onContextConfigurationPreChanged(ClientTransactionListenerController.java:197)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.ConfigurationController.handleConfigurationChanged(ConfigurationController.java:174)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:5517)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:237)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:148)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:118)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:89)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:3574)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:124)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:263)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:360)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:10873)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:648)
+10-27 01:33:18.692 11041 11041 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1012)
+10-27 01:33:18.692  6703  8787 W AWARENESS_AppLifeCycleAbility: publishBlackMap to 1
+10-27 01:33:18.692  6703  8787 W AWARENESS_AppLifeCycleAbility: publishBlackMap to 1
+10-27 01:33:18.692  6703  8787 E AWARENESS_AppGeneralCollectAbility: contained in black list : com.hihonor.android.launcher
+10-27 01:33:18.692  6703  8787 I AWARENESS_UFS: 6001
+10-27 01:33:18.692  6703  8787 D AWARENESS_AppGeneralCollectAbility: lastPid:10051 change to pid:11041
+10-27 01:33:18.692  6703  8787 D AWARENESS_AppGeneralCollectAbility: publish result: true
+10-27 01:33:18.692  6703  8787 D AWARENESS_AppGeneralCollectAbility: saveAppDataToDb app enter
+10-27 01:33:18.692  6703  8787 I AWARENESS_RecentAppAbility: call:com.android.shell to:com.hihonor.calculator Mode:-1 uid :0

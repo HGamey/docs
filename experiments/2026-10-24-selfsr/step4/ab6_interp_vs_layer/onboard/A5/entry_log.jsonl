@@ -1,0 +1,7 @@
+{"act":{"do":"wait","why":"纯色画面 (黑屏过场)"},"fg":"com.miHoYo.Yuanshen","n":0,"ocr":[],"screen":"loading","shot":"00_loading.jpg","t_s":5.7,"zoom_items":0}
+{"act":{"do":"wait","why":"纯色画面 (黑屏过场)"},"fg":"com.miHoYo.Yuanshen","n":1,"ocr":[],"screen":"loading","shot":"01_loading.jpg","t_s":11.0,"zoom_items":0}
+{"act":{"do":"probe"},"fg":"com.miHoYo.Yuanshen","n":2,"ocr":["12+","CNRELAndroid7.1.0_R48652077_S48511369_D48533839"],"probe":{"idle":0.3665,"ingame":false,"ret":0.9944,"swing":0.9968,"swipe":[1075,486,1882,486,1000]},"screen":"unknown","shot":"02_unknown.jpg","t_s":16.8,"zoom_items":0}
+{"act":{"do":"probe"},"fg":"com.miHoYo.Yuanshen","n":3,"ocr":["f","佩戴耳机游玩体验更佳","UID: 28997/6292"],"probe":{"idle":0.0033,"ingame":false,"ret":0.9903,"swing":0.9899,"swipe":[1075,486,1882,486,1000]},"screen":"unknown","shot":"03_unknown.jpg","t_s":26.5,"zoom_items":0}
+{"act":{"do":"probe"},"fg":"com.miHoYo.Yuanshen","n":4,"ocr":["星之归还，已开启","I53 ms","芭芭拉","前往奔狼领","2703m","凯亚","北斗","Lv.80","15240 /17390","UID: 239976292"],"probe":{"idle":0.1033,"ingame":false,"ret":0.5475,"swing":0.7046,"swipe":[1075,486,1882,486,1000]},"screen":"unknown","shot":"04_unknown.jpg","t_s":35.5,"zoom_items":0}
+{"at":[0.5,0.5],"fallback":"点屏幕中央一次 (无字的「点击继续」画面)","n":4}
+{"act":{"do":"probe"},"fg":"com.miHoYo.Yuanshen","n":5,"ocr":["星之归还•已开启","前往奔狼领","2703m","Lv.80","15240 /17390","C","45 ms","芭芭拉","凯亚","北斗","UID:239976292"],"probe":{"idle":0.0074,"ingame":true,"ret":0.2313,"swing":0.7259,"swipe":[1075,486,1882,486,1000]},"screen":"unknown","shot":"05_unknown.jpg","t_s":183.6,"zoom_items":0}

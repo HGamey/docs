@@ -1,0 +1,157 @@
+{
+  "needs_human_shot": null,
+  "probe": {
+    "confirm": {
+      "idle": 0.0103,
+      "ingame": true,
+      "ret": 0.5144,
+      "swing": 0.8511,
+      "swipe": [
+        1075,
+        486,
+        1882,
+        486,
+        1000
+      ]
+    },
+    "first": {
+      "idle": 0.4018,
+      "ingame": true,
+      "ret": 0.3888,
+      "swing": 0.8487,
+      "swipe": [
+        1075,
+        486,
+        1882,
+        486,
+        1000
+      ]
+    }
+  },
+  "reason": null,
+  "screen_wh": [
+    2688,
+    1216
+  ],
+  "seconds": 59.6,
+  "status": "INGAME",
+  "steps": [
+    {
+      "act": {
+        "do": "wait",
+        "why": "纯色画面 (黑屏过场)"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 0,
+      "ocr": [],
+      "screen": "loading",
+      "shot": "00_loading.jpg",
+      "t_s": 5.6,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 1,
+      "ocr": [],
+      "probe": {
+        "idle": 0.51,
+        "ingame": false,
+        "ret": 0.9666,
+        "swing": 0.4857,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "01_unknown.jpg",
+      "t_s": 11.0,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "wait",
+        "why": "纯色画面 (黑屏过场)"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 2,
+      "ocr": [],
+      "screen": "loading",
+      "shot": "02_loading.jpg",
+      "t_s": 20.1,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 3,
+      "ocr": [
+        "UID: 28997/6292"
+      ],
+      "probe": {
+        "idle": 0.9869,
+        "ingame": false,
+        "ret": 0.7299,
+        "swing": 0.8872,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "03_unknown.jpg",
+      "t_s": 25.3,
+      "zoom_items": 0
+    },
+    {
+      "act": {
+        "do": "probe"
+      },
+      "fg": "com.miHoYo.Yuanshen",
+      "n": 4,
+      "ocr": [
+        "②",
+        "星之归还•已开启",
+        "41 ms",
+        "芭芭拉",
+        "前往奔狼领",
+        "2703m",
+        "凯亚",
+        "北斗",
+        "Lv.80",
+        "15240 /17390",
+        "UID:239976292"
+      ],
+      "probe": {
+        "idle": 0.4018,
+        "ingame": true,
+        "ret": 0.3888,
+        "swing": 0.8487,
+        "swipe": [
+          1075,
+          486,
+          1882,
+          486,
+          1000
+        ]
+      },
+      "screen": "unknown",
+      "shot": "04_unknown.jpg",
+      "t_s": 34.7,
+      "zoom_items": 0
+    }
+  ],
+  "taps": 0,
+  "vlm_calls": 0
+}
