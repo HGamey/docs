@@ -279,3 +279,26 @@ SF 认「游戏图层」看的是图层名。把子图层起成 `SurfaceView[<�
 - `refresh_probe.sh` 读错了两个来源：控制器结果其实在 `settings global`，不在 `system`；范围要从 SF 读，`dumpsys display` 的 DisplayModeDirector 一直显示 0–240。
 
 子图层臂的"看到的帧率"是窗口结束后 6 秒用 `--latency` 量的，代表窗口末尾的状态，不是整个窗口的平均。
+
+#### 证据入口与第 7 组复现收尾（2026-10-29 补）
+
+- 探测与看门狗代码集中在 HGamey/experiments PR [#2](https://github.com/HGamey/experiments/pull/2)。正式重跑固定的提交是 `31dcbc7876d3dfce63b9c68b72bae05086cfcc64`。
+- 机制证据：任务 `0f93d527296a` 的 `hold120_20261028-111539/traces/P1_hold.tsv` 记录无干预向上穿越；任务 `c954fcb2ae96` 的 `hold120_20261028-115822/traces/P1_hold.tsv`、`P2_hold.tsv` 分别记录掉后重设和 warm-set 对照。汇总见各任务的 `hold_summary.json`。
+- 正式结果：任务 `1744980d63a3` 的 `selfsr_20261028-124028/7_sr_interp/{arms.jsonl,report.json,report.md}`；6 对 ABBA 全部有效，无作废臂。
+
+| 第 7 组指标（6 对均值） | 原生 | 自研超分 + 插帧 | 精确符号翻转 p |
+|---|---:|---:|---:|
+| 实际看到的画面帧率 | 29.81 | 97.47 | 0.0625 |
+| 游戏渲染帧率 | 29.49 | 51.12 | 0.0625 |
+| 游戏渲染 p95 帧时（ms） | 36.81 | 40.79 | 1.0（不显著） |
+| HUD 区锐度 | 346.53 | 871.90 | 0.03125 |
+
+两个异常臂不从图和统计中隐去：B1 的 89.47 是掉落恰好进入窗口后 6 秒采样段造成的测量位置假象；B3 的 25.88 伴随游戏本体冷启动卡顿（游戏渲染 11.7 fps），不是插帧本身的稳态帧率。稳态解读仍须结合逐臂数据，不能只看 97.47 的均值。
+
+在同一台已登录原神的 RedMagic 上复现（会改设备状态，收尾核查见 `HANDOVER.md` 第 6 节）：
+
+```sh
+pf-node --experiment 31dcbc7876d3dfce63b9c68b72bae05086cfcc64 \
+  --research selfsr-genshin-ab-20261028 --device-access write --detach \
+  experiment selfsr/repro.sh 91253241019A 6 SETS=7 WINDOW=60 HOLD_KEEP=1
+```
