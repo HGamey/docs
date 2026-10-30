@@ -8,13 +8,13 @@
 
 | 机器 | 作用 | 跑什么 |
 |---|---|---|
-| **mbp1**（macmini3，Mac mini M4） | 生产节点 | 节点服务（网页看板、研究、任务队列、设备层），Cloudflare 隧道。三台手机都插在这台上 |
-| **rhodes1**（Linux） | 测试节点、agent 运行地 | 两个测试节点实例和展示页；所有 agent；team-loop 定时唤醒 agent；meiso-board 给人发留言和待办；到 mbp1 的 SSH 隧道 |
-| **研究工作站**（Mac） | selfsr 研究 | 实验、报告、对外报告页；不跑节点服务 |
+| **生产节点** | 跑正式任务 | 节点服务（网页看板、研究、任务队列、设备层），Cloudflare 隧道。三台手机都插在这台上 |
+| **测试与 agent 主机** | 测试、运行 agent | 两个测试节点实例和展示页；所有 agent；team-loop 定时唤醒 agent；meiso-board 给人发留言和待办；到生产节点的 SSH 隧道 |
+| **研究工作站** | selfsr 研究 | 实验、报告、对外报告页；不跑节点服务 |
 
 ## 手机
 
-都用 USB 直连 mbp1。
+都用 USB 直连生产节点。
 
 | 手机 | 系统 | 连接 | root |
 |---|---|---|---|
@@ -24,7 +24,7 @@
 
 ## Agent
 
-都在 rhodes1 上运行。
+都在测试与 agent 主机上运行。
 
 | agent | 职责 |
 |---|---|
@@ -52,13 +52,13 @@
 
 - **人**：打开 `https://mbp1.liyao.space/dash/`，口令向负责人要。
 - **agent**：设 `PF_NODE_URL` 和自己的 token 文件，每轮从 `pf-node checkin` 开始。
-- **部署**：main 的最新提交过了 CI 后，先部署 rhodes1，验收后在 mbp1 上运行 `python3 deploy.py mbp1 --ref <提交>`。回滚就是部署上一个提交。
+- **部署**：main 的最新提交过了 CI 后，先部署测试节点，验收后在生产节点上运行 `python3 deploy.py <节点> --ref <提交>`（节点配置在 `deploy/`）。回滚就是部署上一个提交。
 
 ## 出问题时
 
 | 现象 | 处理 |
 |---|---|
-| 网页打不开 | 在 mbp1 上看节点服务是否在跑；服务挂了会自动重启 |
+| 网页打不开 | 在生产节点上看节点服务是否在跑；服务挂了会自动重启 |
 | 任务卡住 | `pf-node --admin reset <任务ID> --note <说明>` |
 | 手机离线 | 重插 USB，用 `adb devices` / `hdc list targets` 确认 |
 | 部署后出错 | 部署上一个提交 |
