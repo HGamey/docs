@@ -33,6 +33,7 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 |---|---|
 | [STATUS.md](STATUS.md) | 项目总览；与当前合同、待办和逐批验证一起阅读 |
 | `plans/2026-10-22-agent-platform/` | 外部 Agent 远程真机优化平台：已确认目的、项目地图、多机/分发/队列/结果计划、网页与CLI/API共同验收及完整待办 |
+| [手机 Vulkan 数采手册](plans/2026-10-22-agent-platform/VULKAN-DATA-COLLECTION.md) | RenderDoc 与 frame-audit 采集、原生回放、数据交付及已有18对数据的范围 |
 | `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
 | `plans/2026-10-11-implementation-progress.md` | 本轮 draft PR、集成验证范围、剩余端到端接口与真机门槛 |
 | [experiments/2026-10-24-selfsr/HARNESS_GUIDE.md](experiments/2026-10-24-selfsr/HARNESS_GUIDE.md) | 自研超分 + 插帧的测量 harness：挂层方式、A/B 编排、每个指标的来源、统计、还原与踩过的坑 |
