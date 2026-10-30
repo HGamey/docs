@@ -32,7 +32,7 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 | 路径 | 内容 |
 |---|---|
 | [STATUS.md](STATUS.md) | 项目总览；与当前合同、待办和逐批验证一起阅读 |
-| [DEPLOYMENT.md](DEPLOYMENT.md) | **部署现状**：手机插在哪、每台机器跑什么、云和外部服务、哪些 agent 在哪里跑、出问题怎么处理 |
+| [DEPLOYMENT.md](DEPLOYMENT.md) | 部署：机器、手机、agent、云服务 |
 | `plans/2026-10-22-agent-platform/` | 外部 Agent 远程真机优化平台：已确认目的、项目地图、多机/分发/队列/结果计划、网页与CLI/API共同验收及完整待办 |
 | [手机 Vulkan 数采手册](plans/2026-10-22-agent-platform/VULKAN-DATA-COLLECTION.md) | RenderDoc 与 frame-audit 采集、原生回放、数据交付及已有18对数据的范围 |
 | `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
