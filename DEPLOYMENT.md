@@ -1,16 +1,11 @@
 # HGamey 部署现状
 
-更新于 2026-10-29。本文回答四个问题：手机插在哪；每台电脑跑什么；云上和外部服务各做什么；哪些 agent 在哪里跑、做什么。
+本文回答四个问题：手机插在哪；每台电脑跑什么；云上和外部服务各做什么；哪些 agent 在哪里跑、做什么。
 
 - 通用的安装步骤（新建一个节点要准备什么、`deploy.py` 怎么用）见 [HGamey/hgamey 的 README「部署」一节](https://github.com/HGamey/hgamey#部署)。本文只写我们现在这套具体部署。
-- 平台每天的变化、决策和事故见 [plans/2026-10-28-recovery.md](plans/2026-10-28-recovery.md)。本文与它冲突时，以它和机器上的实际状态为准。
 - 图：[07 系统架构](diagrams/07-architecture.png)（逻辑结构）、[08 部署拓扑](diagrams/08-deployment.png)（机器、手机、服务、agent）。
 
 ![部署拓扑](diagrams/08-deployment.png)
-
-信息来源：
-- **macmini3（生产节点）**：2026-10-29 19:00 PDT 登录只读核对过（launchd、进程、USB、`deploy-receipts/`、`/node`、`/fleet`、`/agents`）。
-- **rhodes1**：我没有登录过。这部分来自 `deploy/rhodes1.json` 和恢复记录，细节以同事机器上的实际状态为准。
 
 ## 1. 总览
 
@@ -20,7 +15,7 @@
 | **rhodes1**（同事的 Linux 工作机） | 测试节点 + agent 运行地 + 调度 | 没有 | 两个测试节点实例、展示页、team-loop 定时唤醒、所有 agent 会话、到 mbp1 的 SSH 隧道 | 同事（anantheparty） |
 | BH3GEI 的 MacBook | 研究与文档 | 没有 | 手动做 selfsr 研究、写文档、发布对外报告页；不跑节点服务 | BH3GEI |
 
-> 名字 `mbp1` 是历史原因：节点 2026-10-27 从 MacBook 迁到了 macmini3，隧道名和域名沿用 `mbp1`。部署配置 `deploy/mbp1.json` 指的就是 macmini3。
+> `mbp1` 就是 macmini3（隧道名和域名沿用了旧名字），部署配置是 `deploy/mbp1.json`。
 
 ## 2. 手机
 
@@ -34,7 +29,7 @@
 
 - 设备登记是 phonefarm 的稳定设备 ID 加连接别名（`pf-node devices`、`devices-set`、`devices-resolve`）。锁按设备 ID 加，不按串号加。
 - 每台手机有自己的锁 lane。全场锁持有时，所有 lane 都被挡住。
-- 首页手机格的数据来自节点的设备采样：手机空闲时每 30 s、忙时每 60 s 采一次，读电量、温度、风扇、前台应用和截图。已知小问题：HUAWEI 忙时读不到电量和温度。
+- 首页手机格显示每台手机的电量、温度、前台应用和截图。
 
 **手机掉线怎么查**（在 macmini3 上）：
 
@@ -80,26 +75,21 @@ adb devices -l                                        # 红魔、荣耀
 | `deploy-state/`、`.deploy/` | 部署状态、构建目录、锁、备份 | 不要手工删 |
 | `.state/` | `node.token`（管理 token）、各服务日志 | **不碰** |
 | `tools/ndk/`、`tools/ohos-sdk/` | NDK r28c、OpenHarmony SDK（hdc） | 不碰 |
-| `backups/` | 锁迁移前的快照（S4、S5/S6、layout2）。只用来查证，**不要拷回去**，否则会复活已经死掉的锁 | 不碰 |
-| `cd/` | 已停用的旧 phonefarm 自动部署（`DEPLOY_PAUSED`，plist 已移到 `cd/retired/`） | 可以清理 |
 
 `~/.config/hgamey/` 里放网页口令：`dash.pass`（查看）、`steer.pass`（写操作），以及 `remote.operators.json`。
 
 ### 3.3 部署
 
-1. **顺序**：main 上的最新提交 CI 两项都绿 → 先部署 rhodes1 并验收 → 立即部署 mbp1，用同一个提交。部署不等手机空闲；被打断的任务会在任务状态里写明原因。
+1. **顺序**：main 上的最新提交 CI 两项都绿 → 先部署 rhodes1 并验收 → 立即部署 mbp1，用同一个提交。部署不用等手机空闲。
 2. **命令**，在 macmini3 上执行：
    ```sh
    cd ~/hgamey/src && python3 deploy.py mbp1 --ref <提交>
    python3 deploy.py mbp1 --status
    ```
    - 只上 main 的最新提交，先用 `git merge-base --is-ancestor` 确认它比正在跑的版本新，提交号不要手输。
-   - 部署要 1–3 分钟（主要是 cargo 编译）。看到 `.partial` 目录说明还在构建，不是失败。判定失败前，先看 deploy.py 进程还在不在，再看 `--status`。
+   - 部署要 1–3 分钟（主要是 cargo 编译）。
 3. **核对**：回执 `deploy-receipts/<时间>.json` 的 `status: succeeded`，并且 `after` 里 service、phonefarm、game_opt_loop 三个都是同一个提交；首页能看到三台手机。
 4. **回滚**：部署上一个提交。
-5. **改了启动参数、配置项或 API 的提交**，提交信息里要写「运维影响」。部署前核对节点上的启动配置。2026-10-29 rhodes1 的 hub 就因为启动配置里还传着已删掉的参数，反复崩溃。
-
-截至本文，mbp1 跑的是 `b6bef3c`（2026-10-29 17:42 部署）。main 上之后的提交只改了前端和 README。
 
 ### 3.4 远程登录
 
@@ -127,7 +117,8 @@ macmini3 上还跑着别的项目的 LaunchDaemon / LaunchAgent：
 | `hgamey-mbp1-tunnel` | systemd 用户服务，SSH 隧道 `127.0.0.1:18765 → mbp1:8765`。agent 走这条，因为公网经 Cloudflare 偶尔 502 或超时；人和网页截图仍走 `https://mbp1.liyao.space` |
 | 部署检出 `/HGamey-dev/HGamey/deploy-src/hgamey` | rhodes1 的 `deploy.py` 从这里运行 |
 | agent 用的 CLI `/HGamey-dev/HGamey/agent-cli/hgamey` | 固定在 mbp1 正在跑的那个提交，保证 agent 的 `pf-node` 和生产节点版本一致 |
-| agent 会话 | 下一节表里的 agent 都在这台机器上运行（HAPI / DSH 会话）。各自的笔记目录里有 BRIEF.md、report.md、progress.md |
+| meiso-board（kamico.closure.moe） | 给用户的留言和待办卡，由首席发；用户点卡会叫醒首席 |
+| agent | 下一节表里的 agent 都在这台机器上运行 |
 
 ## 5. Agent
 
@@ -139,36 +130,27 @@ macmini3 上还跑着别的项目的 LaunchDaemon / LaunchAgent：
 |---|---|---|---|
 | `claude-lead` | Claude（首席开发者） | 定基线和节奏，做宏观验收和生产运维变更（例如锁迁移、维护窗口）；每 4 小时回顾一次，更新恢复记录；唯一给用户发看板消息的身份 | — |
 | `glm-ops` | GLM 5.3 | 部署（只上 main 最新提交）、直接重置卡住的队列、每 2 小时写一份摘要、扮演人做端到端验收 | 不直接用 |
-| `glm-researcher` | GLM 5.3（DSH 会话） | 外部研究员：原神超分 / 插帧（第 7、9 组，60 Hz 掉帧的原因），在华为上复现别人的交付 | 红魔、华为 |
-| `kimi-researcher` | Kimi k3.1-pro（DSH 会话） | 外部研究员：验证一个没见过平台的 agent 只靠 CLI 能否上手；在红魔上复现 glm 的交付 | 荣耀、红魔 |
+| `glm-researcher` | GLM 5.3 | 外部研究员：原神超分 / 插帧（第 7、9 组，60 Hz 掉帧的原因），在华为上复现别人的交付 | 红魔、华为 |
+| `kimi-researcher` | Kimi k3.1-pro | 外部研究员：验证一个没见过平台的 agent 只靠 CLI 能否上手；在红魔上复现 glm 的交付 | 荣耀、红魔 |
 
 ### 5.2 开发 agent
 
 开发 agent 不在平台上注册，直接改代码推 main。
 
-| 名字 | 模型 / 会话 | 职责 | 现状（10-29） |
+| 名字 | 模型 / 会话 | 职责 | 现状 |
 |---|---|---|---|
-| HGamey-Claude-Sub | Claude（HAPI 会话） | 前端美观（`dash_static/`、页面渲染），用户直接指导；做了指挥中心和展示页 | 进行中 |
-| HGamey-Codex-Sub | GPT-6-Astra（HAPI 会话） | 复杂后端：锁简化 S1–S6、任务生命周期 J1–J4、远程准入 | 空闲 |
+| HGamey-Claude-Sub | Claude | 前端：网页看板、指挥中心、展示页 | 进行中 |
+| HGamey-Codex-Sub | GPT-6-Astra | 后端：设备锁、任务生命周期、远程控制 | 空闲 |
 | kimi-web | Kimi | 前端功能批次（第 1–16 批） | 空闲 |
-| kimi-simplify | Kimi（DSH，定期） | 定期成批审查 Codex 的提交；早先删过约 1800 行防御代码 | 等下次给范围 |
-| kimi-hgamey | Kimi | 已停用 | — |
+| kimi-simplify | Kimi | 定期审查代码提交 | 按需 |
 
-### 5.3 运行规则
-
-- **模型调用**：GLM 和 Kimi 都走大模型中转 api-relay（`relay/zhipu/glm-5.3`、`relay/kimi/k3.1-pro`）。GLM 被限流（429）时，首席会把 GLM 会话临时换成 Kimi，会话号不变。
-- **GLM 会话不在对话里直接看图片。** 看了以后每一轮都会被接口 400 拒绝，只能换新会话。
-- **会话上下文超过约 300k、手上又没活时，换新会话。** 新会话只读 BRIEF.md，从 `pf-node checkin` 接上原来的工作。
-- **消息规则**：只在需要对方决定、需要对方动手、或者一整块工作做完要验收时才发消息。不发确认、单个提交、例行部署和摘要，这些写进各自的 report.md / progress.md。
-
-## 6. 云与外部服务
+## 6. 云服务
 
 | 服务 | 做什么 |
 |---|---|
-| Cloudflare | 隧道 `mbp1` → `https://mbp1.liyao.space`（只有 `/dash/` 和 API 这一个入口）。公网偶有 502，节点本身没问题时先怀疑这一段 |
+| Cloudflare | 隧道 `mbp1` → `https://mbp1.liyao.space`（只有 `/dash/` 和 API 这一个入口） |
 | GitHub · HGamey 组织 | `hgamey`：代码，CI 两项（`tests`、`code-only`），直接推 main。`experiments`：实验脚本，任务按提交号运行。`docs`：报告、计划、图、本文。旧仓库 harness-ops、phonefarm、game_opt_loop、refbench 已归档只读 |
-| 大模型中转 api-relay | 给所有 GLM / Kimi agent 提供模型。GOL 自己用的密钥需要用户重新填（GOL 现为可选，不影响主流程） |
-| meiso-board（kamico.closure.moe） | 给用户的留言和待办卡。身份 `HGamey-lead`，只由首席发；每天最多 5 条留言、同时最多 3 张卡；用户点卡会叫醒首席的会话 |
+| 大模型中转 api-relay | 给所有 GLM / Kimi agent 提供模型 |
 | Vercel | selfsr 对外报告页 `hgamey-selfsr-report.vercel.app`，从 docs 的 `experiments/2026-10-24-selfsr/site/` 手动 `vercel deploy`，没有自动部署 |
 
 ## 7. 怎么访问
@@ -193,7 +175,6 @@ macmini3 上还跑着别的项目的 LaunchDaemon / LaunchAgent：
 | 手机显示离线 | `adb devices -l` / `hdc list targets -v` | 重插 USB。别名不用改 |
 | 实验改过的设备设置没还原（刷新率、充电、debug.knobs.*） | 实验仓库对应目录的恢复表（例如 [selfsr/HANDOVER.md 第 6 节](https://github.com/HGamey/experiments/blob/main/selfsr/HANDOVER.md)） | 用 adb 手动写回。充电被停：`echo 1 > /sys/class/qcom-battery/charging_enabled`（root） |
 | 部署后服务起不来 | `deploy-receipts/` 的最新日志、`node_service.log` | 部署上一个提交回滚；查这次提交有没有删启动参数 |
-| agent 很久没动静 | 看它最后几轮是怎么结束的（429 限流、400 图片） | 限流就临时换模型；被图片卡住就换新会话 |
 
 **不要做**：
 - 手工 rsync 覆盖安装目录；
