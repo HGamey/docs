@@ -12,8 +12,8 @@
 | 机器 | 角色 | 有手机吗 | 跑什么 | 谁管 |
 |---|---|---|---|---|
 | **macmini3**（对外名 `mbp1`） | **生产节点** | 有，3 台，全部 USB 直连 | 节点服务（含 phonefarm）、Cloudflare 隧道、adb / hdc 服务 | 首席开发者统筹；glm-ops 负责部署和重置 |
-| **rhodes1**（同事的 Linux 工作机） | 测试节点 + agent 运行地 + 调度 | 没有 | 两个测试节点实例、展示页、team-loop 定时唤醒、所有 agent 会话、到 mbp1 的 SSH 隧道 | 同事（anantheparty） |
-| BH3GEI 的 MacBook | 研究与文档 | 没有 | 手动做 selfsr 研究、写文档、发布对外报告页；不跑节点服务 | BH3GEI |
+| **rhodes1**（Linux） | 测试节点 + agent 运行地 + 调度 | 没有 | 两个测试节点实例、展示页、team-loop 定时唤醒、所有 agent 会话、到 mbp1 的 SSH 隧道 | 平台开发 |
+| 研究工作站（Mac） | 研究与文档 | 没有 | selfsr 研究、写文档、发布对外报告页；不跑节点服务 | selfsr 研究 |
 
 > `mbp1` 就是 macmini3（隧道名和域名沿用了旧名字），部署配置是 `deploy/mbp1.json`。
 
@@ -42,9 +42,9 @@ adb devices -l                                        # 红魔、荣耀
 
 ## 3. 生产节点：macmini3（mbp1）
 
-**硬件与系统**：Mac mini M4（Mac16,10），16 GB 内存，macOS 26.5，系统盘 228 GB（约 75 GB 可用）。局域网地址 `192.168.3.91`，用户 `mac`。
+**硬件与系统**：Mac mini M4（Mac16,10），16 GB 内存，macOS 26.5，系统盘 228 GB（约 75 GB 可用）。局域网地址 `192.168.3.91`。
 
-### 3.1 常驻服务（LaunchDaemon，`UserName=mac`，KeepAlive）
+### 3.1 常驻服务（LaunchDaemon，KeepAlive）
 
 | 服务 | 做什么 | 配置与日志 |
 |---|---|---|
@@ -63,7 +63,7 @@ adb devices -l                                        # 红魔、荣耀
 - adb server：`adb -L tcp:5037`，用的是 homebrew 的 adb；
 - hdc server：`~/hgamey/tools/ohos-sdk/toolchains/hdc`，监听 `127.0.0.1:8710`。
 
-### 3.2 目录（`/Users/mac/hgamey`）
+### 3.2 目录（`~/hgamey`）
 
 | 路径 | 内容 | 部署时 |
 |---|---|---|
@@ -93,7 +93,7 @@ adb devices -l                                        # 红魔、荣耀
 
 ### 3.4 远程登录
 
-- 局域网：`ssh mac@192.168.3.91`。
+- 局域网：`ssh <账号>@192.168.3.91`。
 - 外网：经公司 frp 转发 SSH / VNC，`frpc` 在 macmini3 上常驻。地址、端口和口令见内部记录，不写进公开仓库。
 
 ### 3.5 同机的其他服务（与 HGamey 无关，不要动）
@@ -107,17 +107,17 @@ macmini3 上还跑着别的项目的 LaunchDaemon / LaunchAgent：
 
 ## 4. rhodes1：测试节点与 agent 运行地
 
-同事的 Linux 工作机（用户 `kamico`），没有插手机。
+Linux 机器，没有插手机。
 
 | 组件 | 做什么 |
 |---|---|
-| `hgamey-hub.service`（:8765）、`hgamey-node-b.service`（:8766） | systemd **用户**服务，两个测试节点实例。安装根目录 `~/node`，第二个实例的数据在 `/data2/kamico/hgamey-node/`，配置 `deploy/rhodes1.json`。本地启动配置是 `~/node/launch-config.json` |
+| `hgamey-hub.service`（:8765）、`hgamey-node-b.service`（:8766） | systemd **用户**服务，两个测试节点实例。安装根目录 `~/node`，第二个实例的数据目录见 `deploy/rhodes1.json`，配置 `deploy/rhodes1.json`。本地启动配置是 `~/node/launch-config.json` |
 | 展示页 `/dash/showcase`、`/dash/showcase/command` | 部署在 rhodes1 上，读的是 mbp1 的只读导出（导出不进仓库） |
 | team-loop | 本机 cron 每 5 分钟跑一次，脚本在 `/HGamey-dev/HGamey/team-loop/`。agent 会话空闲、并且离上次唤醒满 30 分钟，就叫醒它做下一轮。开发 agent 在自己的笔记目录写 `loop.json`（working / waiting / done）；目录下建 `STOP` 文件，所有唤醒都暂停 |
 | `hgamey-mbp1-tunnel` | systemd 用户服务，SSH 隧道 `127.0.0.1:18765 → mbp1:8765`。agent 走这条，因为公网经 Cloudflare 偶尔 502 或超时；人和网页截图仍走 `https://mbp1.liyao.space` |
 | 部署检出 `/HGamey-dev/HGamey/deploy-src/hgamey` | rhodes1 的 `deploy.py` 从这里运行 |
 | agent 用的 CLI `/HGamey-dev/HGamey/agent-cli/hgamey` | 固定在 mbp1 正在跑的那个提交，保证 agent 的 `pf-node` 和生产节点版本一致 |
-| meiso-board（kamico.closure.moe） | 给用户的留言和待办卡，由首席发；用户点卡会叫醒首席 |
+| meiso-board | 给用户的留言和待办卡，由首席发；用户点卡会叫醒首席 |
 | agent | 下一节表里的 agent 都在这台机器上运行 |
 
 ## 5. Agent
