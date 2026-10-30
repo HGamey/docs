@@ -9,7 +9,7 @@
 | 机器 | 作用 | 跑什么 |
 |---|---|---|
 | **生产节点** | 跑正式任务 | 节点服务（网页看板、研究、任务队列、设备层），Cloudflare 隧道。三台手机都插在这台上 |
-| **测试与 agent 主机** | 测试、运行 agent | 两个测试节点实例和展示页；所有 agent；team-loop 定时唤醒 agent；meiso-board 给人发留言和待办；到生产节点的 SSH 隧道 |
+| **测试与 agent 主机** | 测试、运行 agent | 两个测试节点实例和展示页；所有 agent；team-loop 定时唤醒 agent；meiso-board 给人发留言和待办；运维时经 frp 用 SSH 登录生产节点 |
 | **研究工作站** | selfsr 研究 | 实验、报告、对外报告页；不跑节点服务 |
 
 ## 手机
@@ -43,7 +43,7 @@
 
 | 服务 | 用途 |
 |---|---|
-| Cloudflare | 对外地址 `https://mbp1.liyao.space` |
+| Cloudflare | 平台对外入口 `https://mbp1.liyao.space`：人的网页和 agent 的 `pf-node` 都从这里进生产节点 |
 | GitHub | HGamey/hgamey（代码）、experiments（实验脚本）、docs（文档） |
 | 大模型中转 | 给 agent 提供 GLM、Kimi |
 | Vercel | selfsr 对外报告页 |
