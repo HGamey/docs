@@ -149,8 +149,8 @@ def index_page():
 <p class="lead">本页汇集本次汇报的全部材料。建议先阅读在线幻灯片：前三页依次说明背景、术语与核心观点，无需其他资料即可读懂。</p>
 
 <div class="cards">
-  <a class="card main" href="deck/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
-    <div class="d">12 页，含背景、术语、闭环、部署拓扑与数据方法。← → 翻页，O 键总览，T 键切换亮色 / 暗色。</div></a>
+  <a class="card main" href="slides/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
+    <div class="d">12 页，含背景、术语、闭环、部署拓扑与数据方法。← → 翻页。另有<span style="white-space:nowrap">三维交互版</span>（见下方）。</div></a>
   <a class="card" href="files/{PPTX_OUT}" download><div class="k">下载</div><div class="t">演示文稿（PPTX）</div>
     <div class="d">与在线幻灯片内容一致，文字均可编辑。</div></a>
   <a class="card" href="docs/guide/index.html"><div class="k">文档</div><div class="t">部署与使用指导书</div>
@@ -158,6 +158,8 @@ def index_page():
   <a class="card" href="docs/DATASET-COLLECTION.html"><div class="k">文档</div><div class="t">高低清数据集采集方案</div>
     <div class="d">原理、软硬件需求、操作流程、质量检查与数据划分。</div></a>
 </div>
+
+<p class="small" style="margin-top:14px">三维交互版幻灯片：<a href="deck/">deck/</a>（图表可拖动旋转；需较新的 Chrome / Edge 与较好的硬件，部分浏览器可能卡顿）。</p>
 
 <h2>主要结论</h2>
 <ul class="facts">
@@ -178,6 +180,55 @@ def index_page():
     open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page("移动游戏超分辨率与插帧：阶段结果", body, ""))
 
 
+VIEWER = """<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>幻灯片 · Harness 驱动的移动游戏图形优化</title>
+<style>
+html,body{margin:0;height:100%;background:#1E1E1E;color:#ECEBE7;font:14px/1.5 "PingFang SC","Microsoft YaHei",system-ui,sans-serif}
+.stage{position:fixed;inset:0 0 52px 0;display:flex;align-items:center;justify-content:center}
+.stage img{max-width:100%;max-height:100%;display:none;box-shadow:0 2px 16px rgba(0,0,0,.4)}
+.stage img.on{display:block}
+.bar{position:fixed;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;justify-content:center;gap:12px;background:#151515}
+.bar button,.bar a{background:#2C2C2C;color:#ECEBE7;border:0;border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer;text-decoration:none}
+.bar button:hover,.bar a:hover{background:#3A3A3A}
+#pos{min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
+@media (max-width:760px){body{overflow:auto}.stage{position:static;display:block;padding:12px 12px 64px}
+ .stage img{display:block;margin:0 auto 12px;width:100%}.bar{position:fixed}#prev,#next,#pos{display:none}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">__IMGS__</div>
+<div class="bar"><a href="../">返回首页</a><button id="prev" aria-label="上一页">‹ 上一页</button><span id="pos"></span><button id="next" aria-label="下一页">下一页 ›</button><a href="../files/__PPTX__" download>下载 PPTX</a></div>
+<script>
+(function(){var im=[].slice.call(document.querySelectorAll('.stage img')),c=0,pos=document.getElementById('pos');
+function show(i){c=Math.max(0,Math.min(im.length-1,i));im.forEach(function(x,k){x.classList.toggle('on',k===c)});pos.textContent=(c+1)+' / '+im.length;try{history.replaceState(null,'','#'+(c+1))}catch(e){}}
+try{var h=parseInt(location.hash.slice(1),10);if(h>0)c=h-1}catch(e){}
+document.getElementById('prev').onclick=function(){show(c-1)};document.getElementById('next').onclick=function(){show(c+1)};
+addEventListener('keydown',function(e){if(['ArrowRight','PageDown',' '].indexOf(e.key)>=0){e.preventDefault();show(c+1)}if(['ArrowLeft','PageUp'].indexOf(e.key)>=0){e.preventDefault();show(c-1)}if(e.key==='Home')show(0);if(e.key==='End')show(im.length-1)});
+document.getElementById('stage').addEventListener('click',function(e){if(innerWidth<=760)return;show(c+(e.clientX>innerWidth/3?1:-1))});
+var x0=null;addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',function(e){if(x0===null||innerWidth<=760)return;var d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>50)show(c+(d<0?1:-1))});
+show(c)})();
+</script>
+</body>
+</html>
+"""
+
+
+def slides_viewer():
+    """轻量图片版幻灯片：slides-img/*.jpg（由 PPTX 渲染）逐页显示，任何浏览器均可流畅翻页。"""
+    src = os.path.join(HERE, "slides-img")
+    imgs = sorted(f for f in os.listdir(src) if f.endswith(".jpg"))
+    os.makedirs(os.path.join(OUT, "slides"))
+    for f in imgs:
+        shutil.copy(os.path.join(src, f), os.path.join(OUT, "slides", f))
+    tags = "".join(f'<img src="{f}" alt="第 {i + 1} 页" decoding="async">' for i, f in enumerate(imgs))
+    open(os.path.join(OUT, "slides", "index.html"), "w", encoding="utf-8").write(VIEWER.replace("__IMGS__", tags).replace("__PPTX__", PPTX_OUT))
+
+
 def main():
     deck_dist = os.path.join(DECK, "dist")
     if not os.path.exists(os.path.join(deck_dist, "index.html")):
@@ -190,6 +241,7 @@ def main():
     open(os.path.join(OUT, "site.css"), "w").write(CSS)
     for src in PAGES:
         render_doc(src)
+    slides_viewer()
     index_page()
     for f in ("middleware.js", "vercel.json"):
         shutil.copy(os.path.join(DECK, "deploy", f), OUT)
