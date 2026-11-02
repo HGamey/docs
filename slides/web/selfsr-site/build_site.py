@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
-"""build_site.py — 把超分辨率与插帧这次的全部材料组装成一个静态网站 dist/，部署到 Vercel 项目 selfsr-deck：
+"""build_site.py — 把超分辨率与插帧这次的全部材料组装成「单一页面」网站 dist/，部署到 Vercel 项目 selfsr-deck：
 
-  /                 汇总页（主要结论 + 各项材料入口）
-  /loop/            研究闭环实录（loop/：平台原始记录导出的时间线，由 loop/export_timeline.py 生成）
-  /deck/            在线幻灯片（../selfsr-deck/dist，Makepad WASM）
-  /files/*.pptx     PPTX 下载（slides/ 下的同名文件）
-  /docs/...         部署与使用指导书、高低清数据集采集方案（由 docs 仓库的 Markdown 渲染为网页）
+  /               唯一页面：摘要 → 研究闭环实录（loop/index.html 的原始记录时间线）→ 部署拓扑 → 训练数据 →
+                  闭环产出 → 演示材料（三维幻灯片按需加载、PPTX 下载）→ 附录（部署与使用指导书、数据集采集方案，可折叠）
+  /deck/          三维幻灯片本体（../selfsr-deck/dist，Makepad WASM），由页面内 iframe 按需加载
+  /files/*.pptx   PPTX 下载
+  /version.json   构建号；页面每分钟检查一次，与自身构建号不同即自动刷新（强制所有已打开的页面更新）
+  旧地址（/loop/、/slides/、/docs/...）保留为跳转页，指向页面内对应章节。
 
-文档之间的链接改写为站内页面；指向仓库其他文件的链接改写为 GitHub 地址。整站沿用 selfsr-deck 的密码中间件
-与 COOP/COEP 头（幻灯片的 WASM 多线程需要），因此页面不引用任何外部资源。
+整站沿用 selfsr-deck 的密码中间件与 COOP/COEP 头，因此页面不引用任何外部资源。
 
     python3 -I build_site.py        # 先在 ../selfsr-deck 运行 build.sh 生成其 dist/；需要 python-markdown
 """
 import html
+import json
 import os
 import posixpath
 import re
 import shutil
 import sys
+import time
 
 import markdown
 
@@ -28,88 +30,81 @@ OUT = os.path.join(HERE, "dist")
 GH = "https://github.com/HGamey/docs/blob/main/"
 PPTX = "2026-11-02-超分与插帧阶段结果.pptx"
 PPTX_OUT = "selfsr-results-2026-11-02.pptx"
+TITLE = "Harness 驱动的移动游戏图形优化：自优化闭环与训练数据"
+PILOT = os.path.abspath(os.path.join(DOCS, "../dataset-pilot/v0/SUMMARY.md"))   # 试点数据小结（不在仓库内）
 
-# 站内文档：仓库路径 → (站内路径, 页面标题)
-GUIDE = [("guide/README.md", "总览"), ("guide/01-device-layer.md", "M1 设备层"), ("guide/02-node-service.md", "M2 节点服务与网页"),
-         ("guide/03-execution-node.md", "M3 执行节点"), ("guide/04-agent.md", "M4 Agent 接入"),
-         ("guide/05-public-access.md", "M5 公网入口"), ("guide/06-selfsr.md", "M6 自研超分辨率与插帧"),
-         ("guide/07-demo-setup.md", "演示环境搭建")]
-DATASET = ("plans/2026-10-22-agent-platform/DATASET-COLLECTION.md", "高低清数据集采集方案")
-PAGES = {src: ("docs/" + src.replace("plans/2026-10-22-agent-platform/", "").replace(".md", ".html").replace("README.html", "index.html"), title)
-         for src, title in GUIDE + [DATASET]}
+# 附录文档：仓库路径 → (页内锚点, 标题)
+APPENDIX = [("guide/README.md", "guide", "部署与使用指导书：总览"), ("guide/01-device-layer.md", "guide-m1", "M1 设备层"),
+            ("guide/02-node-service.md", "guide-m2", "M2 节点服务与网页"), ("guide/03-execution-node.md", "guide-m3", "M3 执行节点"),
+            ("guide/04-agent.md", "guide-m4", "M4 Agent 接入"), ("guide/05-public-access.md", "guide-m5", "M5 公网入口"),
+            ("guide/06-selfsr.md", "guide-m6", "M6 自研超分辨率与插帧"), ("guide/07-demo-setup.md", "guide-demo", "演示环境搭建"),
+            ("plans/2026-10-22-agent-platform/DATASET-COLLECTION.md", "dataset-plan", "高低清数据集采集方案")]
+ANCHOR = {src: a for src, a, _ in APPENDIX}
+# 旧地址 → 页内锚点（跳转页）
+REDIRECTS = {"loop/index.html": "loop", "slides/index.html": "materials", "docs/guide/index.html": "guide",
+             "docs/DATASET-COLLECTION.html": "dataset-plan",
+             **{f"docs/guide/{os.path.basename(s)[:-3]}.html": a for s, a, _ in APPENDIX if s.startswith("guide/0")}}
 
-CSS = """
-:root { --bg:#F8F8F6; --paper:#FFFFFF; --ink:#202020; --ink2:#383A3C; --muted:#85827D; --line:#E2E0DA; --line2:#C4C4C2;
-  --teal:#2E7D74; --teal-t:#E3F0EE; --navy:#33435D; --amber:#A8752A; --amber-t:#F7EEDD; --code:#F3F1EC;
-  --font:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",system-ui,sans-serif;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace; color-scheme:light; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg:#17181A; --paper:#1F2023; --ink:#ECEBE7; --ink2:#C9C7C2; --muted:#9A978F; --line:#303236; --line2:#45474C;
-  --teal:#6FC2B6; --teal-t:#1D3532; --navy:#9FB2D3; --amber:#E0B26A; --amber-t:#3A2F1C; --code:#26282C; color-scheme:dark; } }
-* { box-sizing:border-box; }
-html { -webkit-text-size-adjust:100%; }
-body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.7 var(--font); }
-a { color:var(--teal); text-decoration:none; } a:hover { text-decoration:underline; }
-.wrap { max-width:1040px; margin:0 auto; padding:40px 24px 64px; }
-header.top { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
-  border-bottom:1px solid var(--line2); padding-bottom:14px; margin-bottom:28px; font-size:14px; color:var(--muted); }
-header.top b { color:var(--ink); font-size:15px; }
-h1 { font-size:30px; line-height:1.35; margin:0 0 10px; }
-.lead { color:var(--ink2); margin:0 0 28px; }
-h2 { font-size:21px; margin:40px 0 14px; }
-h3 { font-size:17px; margin:28px 0 10px; }
-.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:16px; }
-.card { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:20px 22px; display:block; color:inherit; }
-a.card:hover { border-color:var(--teal); text-decoration:none; }
-.card .k { font-size:13px; color:var(--muted); margin-bottom:6px; }
-.card .t { font-size:18px; font-weight:700; color:var(--ink); margin-bottom:6px; }
-.card .d { font-size:14px; color:var(--ink2); line-height:1.6; }
-.card.main { border-color:var(--teal); background:var(--teal-t); }
-.facts { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:8px 22px; }
+CSS_EXTRA = """
+nav.toc { position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--line); margin:0 -24px 8px; padding:10px 24px;
+  display:flex; gap:6px 16px; flex-wrap:wrap; font-size:14px; }
+nav.toc a { color:var(--ink2); } nav.toc a:hover { color:var(--teal); }
+.facts { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:6px 22px; margin:18px 0 0; }
 .facts li { margin:10px 0; }
-.num { font-weight:700; font-variant-numeric:tabular-nums; }
-.tag { display:inline-block; font-size:12px; padding:1px 8px; border-radius:4px; background:var(--teal-t); color:var(--teal); margin-left:6px; vertical-align:2px; }
-.tag.pend { background:var(--amber-t); color:var(--amber); }
-.small { font-size:13px; color:var(--muted); }
-ul.links { padding-left:20px; } ul.links li { margin:6px 0; }
-/* 文档页 */
-.doc { display:grid; grid-template-columns:220px 1fr; gap:36px; }
-nav.side { font-size:14px; position:sticky; top:20px; align-self:start; }
-nav.side a { display:block; padding:5px 10px; border-radius:6px; color:var(--ink2); }
-nav.side a.on { background:var(--teal-t); color:var(--teal); font-weight:700; }
-nav.side .grp { font-size:12px; color:var(--muted); margin:16px 10px 6px; }
-article { background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:28px 34px; min-width:0; }
-article h1 { font-size:26px; }
-article table { border-collapse:collapse; width:100%; font-size:14px; margin:14px 0; display:block; overflow-x:auto; }
-article th, article td { border-bottom:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
-article th { color:var(--muted); font-weight:700; border-bottom:1.5px solid var(--line2); white-space:nowrap; }
-article code { font-family:var(--mono); font-size:.9em; background:var(--code); padding:1px 5px; border-radius:4px; }
-article pre { background:var(--code); border-radius:8px; padding:14px 16px; overflow-x:auto; font-size:13.5px; line-height:1.55; }
-article pre code { background:none; padding:0; }
-article blockquote { margin:14px 0; padding:4px 16px; border-left:3px solid var(--line2); color:var(--ink2); }
-@media (max-width:760px) { .wrap { padding:24px 16px 48px; } h1 { font-size:24px; }
-  .doc { grid-template-columns:1fr; gap:16px; } nav.side { position:static; } article { padding:20px 18px; } }
+.sec { scroll-margin-top:56px; }
+h2.part { font-size:23px; margin:56px 0 6px; padding-top:18px; border-top:1px solid var(--line2); }
+.topo { display:grid; gap:6px; margin-top:14px; }
+.topo .link { text-align:center; color:var(--muted); font-size:13px; }
+.topo .tier { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
+.topo .nd { border:1.5px solid var(--navy); background:var(--paper); border-radius:8px; padding:9px 12px; }
+.topo .nd b { display:block; font-size:14.5px; color:var(--navy); }
+.topo .nd span { font-size:13px; color:var(--ink2); }
+.topo .nd.teal { border-color:var(--teal); background:var(--teal-t); } .topo .nd.teal b { color:var(--teal); }
+.topo .nd.amber { border-color:var(--amber); background:var(--amber-t); } .topo .nd.amber b { color:var(--amber); }
+.topo .nd.beige { border-color:var(--line2); background:#F0EEEA; } .topo .nd.beige b { color:#6F675C; }
+.steps { counter-reset:s; display:grid; gap:8px; margin-top:12px; }
+.steps div { background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:9px 14px 9px 44px; position:relative; font-size:14px; }
+.steps div::before { counter-increment:s; content:counter(s); position:absolute; left:12px; top:9px; width:22px; height:22px; border-radius:50%;
+  background:var(--navy); color:#fff; font-size:12px; text-align:center; line-height:22px; }
+.steps b { margin-right:6px; }
+.deckbox { position:relative; width:100%; aspect-ratio:16/9; background:#EDEBE6; border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-top:12px; }
+.deckbox iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.deckbox .start { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; }
+.btn { display:inline-block; background:var(--teal); color:#fff; border:0; border-radius:8px; padding:10px 18px; font:inherit; font-size:15px; cursor:pointer; }
+.btn.ghost { background:var(--paper); color:var(--teal); border:1px solid var(--teal); }
+.btn:hover { text-decoration:none; filter:brightness(1.05); }
+details.doc { background:var(--paper); border:1px solid var(--line); border-radius:10px; margin:10px 0; }
+details.doc > summary { cursor:pointer; padding:12px 18px; font-weight:700; }
+details.doc > div { padding:0 22px 16px; border-top:1px solid var(--line); }
+details.doc table { border-collapse:collapse; width:100%; font-size:13.5px; display:block; overflow-x:auto; margin:10px 0; }
+details.doc th, details.doc td { border-bottom:1px solid var(--line); padding:6px 8px; text-align:left; vertical-align:top; }
+details.doc pre { background:var(--code); border-radius:8px; padding:12px 14px; overflow-x:auto; font-size:13px; line-height:1.5; }
+details.doc code { background:var(--code); padding:1px 4px; border-radius:4px; } details.doc pre code { background:none; padding:0; }
+details.doc h1 { font-size:20px; } details.doc h2 { font-size:17px; margin:22px 0 6px; }
+.pilot img { max-width:100%; border-radius:8px; border:1px solid var(--line); }
+.bar { position:static !important; }
+@media (max-width:760px) { nav.toc { margin:0 -16px 8px; padding:8px 16px; } }
 """
 
-
-def page(title, body, rel):
-    return f"""<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{html.escape(title)}</title>
-<link rel="stylesheet" href="{rel}site.css">
-</head>
-<body><div class="wrap">
-<header class="top"><b><a href="{rel}" style="color:inherit">移动游戏超分辨率与插帧：阶段结果</a></b><span>HGamey · 2026-11-02</span></header>
-{body}
-</div></body></html>
-"""
+REFRESH_JS = """<script>
+// 构建号不同即刷新：每分钟及回到页面时检查 /version.json（不走缓存），网站更新后所有已打开的页面自动重新加载
+(function () { var B = '__BUILD__';
+  function chk() { fetch('/version.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (v) { if (v && v.build && v.build !== B) location.reload(); }).catch(function () {}); }
+  setInterval(chk, 60000); document.addEventListener('visibilitychange', function () { if (!document.hidden) chk(); });
+})();
+function loadDeck() { var b = document.getElementById('deckbox');
+  b.innerHTML = '<iframe src="deck/?theme=light&v=__BUILD__" title="三维幻灯片" allow="fullscreen"></iframe>'; }
+</script>"""
 
 
-def rewrite_links(md_text, src):
-    """Markdown 链接：站内文档改为站内页面，其他仓库内相对路径改为 GitHub 地址。"""
+def md(text):
+    return markdown.markdown(text, extensions=["tables", "fenced_code", "sane_lists"])
+
+
+def md_doc(src):
+    """附录文档：站内文档链接改为页内锚点，其余仓库相对路径改为 GitHub 地址。"""
+    text = open(os.path.join(DOCS, src), encoding="utf-8").read()
     base = posixpath.dirname(src)
 
     def fix(m):
@@ -117,141 +112,165 @@ def rewrite_links(md_text, src):
         if re.match(r"^[a-z]+://|^#|^mailto:", target):
             return m.group(0)
         path, _, frag = target.partition("#")
-        repo_path = posixpath.normpath(posixpath.join(base, path))
-        if repo_path in PAGES:
-            here = posixpath.dirname(PAGES[src][0])
-            url = posixpath.relpath(PAGES[repo_path][0], here) + (("#" + frag) if frag else "")
-        else:
-            url = GH + repo_path + (("#" + frag) if frag else "")
+        rp = posixpath.normpath(posixpath.join(base, path))
+        url = "#" + ANCHOR[rp] if rp in ANCHOR else GH + rp + (("#" + frag) if frag else "")
         return f"[{label}]({url})"
-    return re.sub(r"(?<!!)\[([^\]]+)\]\(([^)\s]+)\)", fix, md_text)
+    return md(re.sub(r"(?<!!)\[([^\]]+)\]\(([^)\s]+)\)", fix, text))
 
 
-def render_doc(src):
-    out_path, title = PAGES[src]
-    md_text = open(os.path.join(DOCS, src), encoding="utf-8").read()
-    body_html = markdown.markdown(rewrite_links(md_text, src), extensions=["tables", "fenced_code", "sane_lists"])
-    here = posixpath.dirname(out_path)
-    rel = posixpath.relpath(".", here) + "/"
-    side = ['<div class="grp">部署与使用指导书</div>']
-    for s, t in GUIDE:
-        side.append(f'<a href="{posixpath.relpath(PAGES[s][0], here)}"{" class=on" if s == src else ""}>{html.escape(t)}</a>')
-    side.append('<div class="grp">数据集</div>')
-    side.append(f'<a href="{posixpath.relpath(PAGES[DATASET[0]][0], here)}"{" class=on" if src == DATASET[0] else ""}>{DATASET[1]}</a>')
-    body = f'<div class="doc"><nav class="side">{"".join(side)}</nav><article>{body_html}</article></div>'
-    dst = os.path.join(OUT, out_path)
-    os.makedirs(os.path.dirname(dst), exist_ok=True)
-    open(dst, "w", encoding="utf-8").write(page(title, body, rel))
+def pilot_section():
+    """试点数据：有小结时嵌入小结与其引用的图片（复制到 dist/pilot/），否则写明进行中。"""
+    if not os.path.exists(PILOT):
+        return '<p class="sub">首批试点数据正在采集，完成后更新于此（采集数量、场景分布、质量检查剔除率、数据划分与基线画质）。</p>'
+    text = open(PILOT, encoding="utf-8").read()
+    pdir = os.path.dirname(PILOT)
+    os.makedirs(os.path.join(OUT, "pilot"), exist_ok=True)
+
+    def img(m):
+        alt, path = m.group(1), m.group(2)
+        srcp = os.path.normpath(os.path.join(pdir, path))
+        if os.path.exists(srcp):
+            shutil.copy(srcp, os.path.join(OUT, "pilot", os.path.basename(srcp)))
+            return f"![{alt}](pilot/{os.path.basename(srcp)})"
+        return ""
+    text = re.sub(r"!\[([^\]]*)\]\(([^)\s]+)\)", img, text)
+    text = re.sub(r"^# .*\n", "", text, count=1)     # 页面上已有小节标题
+    return f'<div class="pilot">{md(text)}</div>'
 
 
-def index_page():
-    body = f"""
-<h1>Harness 驱动的移动游戏图形优化：自优化闭环与训练数据</h1>
-<p class="lead">本页汇集本次汇报的全部材料。建议先阅读在线幻灯片：前三页依次说明背景、术语与核心观点，无需其他资料即可读懂。</p>
+def sections_head():
+    return f"""<header class="top"><b>{html.escape(TITLE)}</b><span>HGamey · 2026-11-02</span></header>
+<nav class="toc" aria-label="目录"><a href="#summary">摘要</a><a href="#loop">一、研究闭环实录</a><a href="#topology">二、部署拓扑</a>
+<a href="#dataset">三、训练数据</a><a href="#results">四、闭环产出</a><a href="#materials">五、演示材料</a><a href="#appendix">附录</a></nav>
 
-<div class="cards">
-  <a class="card main" href="loop/"><div class="k">原始记录</div><div class="t">研究闭环实录</div>
-    <div class="d">一条真实研究链的平台记录：agent 每一步做了什么、人工在哪里介入、结论如何被确认或推翻。</div></a>
-  <a class="card" href="deck/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
-    <div class="d">12 页，含背景、术语、闭环、部署拓扑与数据方法；三维图表可拖动旋转。← → 翻页，O 键总览。</div></a>
-  <a class="card" href="files/{PPTX_OUT}" download><div class="k">下载</div><div class="t">演示文稿（PPTX）</div>
-    <div class="d">与在线幻灯片内容一致，文字均可编辑。</div></a>
-  <a class="card" href="docs/guide/index.html"><div class="k">文档</div><div class="t">部署与使用指导书</div>
-    <div class="d">按最小功能模块编写，含演示环境（两台 PC 与一台 root 手机）的搭建步骤。</div></a>
-  <a class="card" href="docs/DATASET-COLLECTION.html"><div class="k">文档</div><div class="t">高低清数据集采集方案</div>
-    <div class="d">原理、软硬件需求、操作流程、质量检查与数据划分。</div></a>
+<h1 id="summary" class="sec">{html.escape(TITLE)}</h1>
+<p class="lead">本页汇集本阶段的全部材料。重点有两项：一是由人与 AI agent 共同运转、在真实手机上自动完成「提出假设—实验—判定—交付—复现」的研究闭环；二是面向学习型超分辨率的训练数据与数据生成方法。超分辨率与插帧的性能提升是该闭环的产出之一。</p>
+<ul class="facts">
+  <li><b>研究闭环。</b>以原神超分辨率与插帧研究链为例：4.7 天内 AI agent 留言 126 条、交付 31 次、运行真机任务 81 次；12 个研究方向中 2 个被否决、3 个改判；人工干预 24 次，自指导写入到 agent 回应的中位时间为 23 分钟。第一部分为平台原始记录。</li>
+  <li><b>训练数据。</b>明确了五类高低清配对数据的采集方法及其真机验证状态，并将采集纳入同一平台，使数据可随研究持续产生、可追溯。见第三部分。</li>
+  <li><b>闭环产出。</b>上屏帧率由 29.8 fps 提升至 117.8 fps，每帧 GPU 忙碌时间降低 51%，整机功耗增加约 166%；相同低分辨率输入下，自研超分辨率的 PSNR（37.9 dB）高于 FSR1（36.6 dB）与 GSR（31.7 dB）。见第四部分。</li>
+</ul>
+
+<h2 id="loop" class="part sec">一、研究闭环实录</h2>
+"""
+
+
+def sections_tail():
+    appendix = "\n".join(f'<details class="doc" id="{a}"><summary>{html.escape(t)}</summary><div>{md_doc(s)}</div></details>'
+                         for s, a, t in APPENDIX)
+    return f"""
+<h2 id="topology" class="part sec">二、部署拓扑</h2>
+<p class="sub">中心节点集中保存研究、任务与结果；手机经 USB 连接节点；新增的执行电脑主动连接中心，无需入站端口。各模块可独立交付，部署步骤见附录。</p>
+<div class="topo">
+  <div class="tier"><div class="nd teal"><b>人员</b><span>浏览器：新建任务、查看过程、留言指导、盲评</span></div>
+    <div class="nd teal"><b>外部 AI agent</b><span>研究、开发、运维等多个 agent；命令行 pf-node，各持独立身份，定时唤醒</span></div></div>
+  <div class="link">↓ HTTPS（网页 / pf-node 命令行）</div>
+  <div class="tier"><div class="nd beige"><b>公网入口（可选）</b><span>Cloudflare 隧道；仅在内网使用时可直连节点</span></div></div>
+  <div class="link">↓</div>
+  <div class="tier"><div class="nd"><b>中心节点：节点服务</b><span>任务队列与调度、研究库、网页看板、HTTP API</span></div>
+    <div class="nd"><b>中心节点：设备层</b><span>设备锁、采集与评测、灰档 Vulkan 层</span></div>
+    <div class="nd beige"><b>执行节点（可选）</b><span>其他电脑及其手机；出站长轮询主动连接中心</span></div></div>
+  <div class="link">↓ USB（adb / hdc）</div>
+  <div class="tier"><div class="nd amber"><b>Android 手机（root）</b><span>超分辨率、插帧与 A/B 测量</span></div>
+    <div class="nd amber"><b>Android 手机</b><span>刷新率、温度等测量</span></div>
+    <div class="nd amber"><b>HarmonyOS 手机</b><span>帧率与温度测量</span></div></div>
+  <div class="link">↑ 按提交部署平台代码　　↑ 按提交号取实验代码</div>
+  <div class="tier"><div class="nd beige"><b>代码仓库</b><span>平台代码 hgamey、实验脚本 experiments、文档与报告 docs</span></div></div>
 </div>
 
-<p class="small" style="margin-top:14px">如浏览器无法流畅运行三维版，可使用<a href="slides/">图片版幻灯片</a>（内容相同，任何浏览器均可打开）。</p>
+<h2 id="dataset" class="part sec">三、训练数据</h2>
+<p class="sub">学习型超分辨率需要同一游戏状态下的低清与高清配对。模拟配对成本低、覆盖广；真实配对包含真实低分辨率渲染的特征，用于微调与评测。详细方案见附录「高低清数据集采集方案」。</p>
+<div class="tblwrap"><table class="tbl">
+<tr><th>方法</th><th>原理</th><th>用途</th><th>真机验证状态</th></tr>
+<tr><td>原生帧模拟降采样</td><td>采集原生高清帧，离线缩小生成低清；标注为模拟配对并注明缩放核</td><td>预训练、快速迭代</td><td>管线已在使用</td></tr>
+<tr><td>同帧双分辨率回放</td><td>以 RenderDoc 捕获同一帧，分别按两种分辨率回放，得到严格对齐的真实配对</td><td>微调、真实测试集</td><td>一款游戏 18 对已完成</td></tr>
+<tr><td>游戏模式真实低清</td><td>系统游戏模式降分辨率后截图；两次冷启动画面不同，不能作为配对</td><td>域差检查</td><td>截图路径已跑通</td></tr>
+<tr><td>层内帧导出</td><td>在送显处无损逐帧读回游戏原始输出，替代经系统放大的截图</td><td>更高质量的采帧</td><td>代码已有，尚未上机</td></tr>
+<tr><td>白盒负载同帧双分辨率</td><td>参考负载在同一帧内渲染两种分辨率</td><td>管线自检</td><td>仅通过宿主测试</td></tr>
+</table></div>
+<h3>生成流程：采集纳入同一闭环</h3>
+<div class="steps">
+  <div><b>采帧</b>agent 提交真机采集任务：自动进入游戏场景，保留有效画面，剔除菜单、加载页与冻结帧</div>
+  <div><b>生成配对</b>模拟配对：高清缩小并记录缩放核；真实配对：同帧双分辨率回放</div>
+  <div><b>质量检查</b>完整性校验、对齐偏移不超过 0.25 像素、逐块重建 PSNR 下限 28 dB；剔除超过 5% 整批不发布</div>
+  <div><b>划分</b>按场景片段划分训练、验证与测试集，同一片段不跨集</div>
+  <div><b>入库与基线锁定</b>清单记录来源、设备、游戏版本与任务号；每个版本固定双线性与双三次基线</div>
+</div>
+<h3>首批试点</h3>
+{pilot_section()}
 
-<h2>主要结论</h2>
-<ul class="facts">
-  <li><b>自优化研究闭环。</b>人提出目标与评判标准，AI agent 在真实手机上自主完成「提出假设—实验—统计判定—交付—独立复现」。截至目前共 <span class="num">15</span> 项研究任务（14 项已交付）、<span class="num">17</span> 个研究方向（14 个成立、2 个否决、1 个暂缓）、<span class="num">169</span> 次真机任务。<span class="tag">实测</span></li>
-  <li><b>训练数据与数据生成方法。</b>为学习型超分辨率明确了五类高低清配对数据的采集方法及其真机验证状态，并将采集纳入同一平台，使数据可随研究持续产生、可追溯。<span class="tag">离线</span></li>
-  <li><b>闭环产出。</b>超分辨率与插帧使上屏帧率由 <span class="num">29.8</span> fps 提升至 <span class="num">117.8</span> fps，每帧 GPU 忙碌时间降低 <span class="num">51%</span>，整机功耗增加约 <span class="num">166%</span>；相同低分辨率输入下，自研超分辨率的 PSNR（37.9 dB）高于 FSR1（36.6 dB）与 GSR（31.7 dB）。<span class="tag">实测</span></li>
-</ul>
-<p class="small">实测数据为原神默认设置下的真机配对测量；离线数据为对同一帧截图的计算。术语解释、详细口径与置信区间见幻灯片。</p>
+<h2 id="results" class="part sec">四、闭环产出：超分辨率与插帧</h2>
+<p class="sub">实测为原神默认设置下的真机配对测量（新旧方案交替运行、每次重启游戏）；离线为对同一帧截图的计算。</p>
+<div class="stats">
+  <div class="stat"><div class="k">上屏帧率</div><div class="v">117.8<small>fps</small></div><div class="d">原生 29.8 fps；6 对，p = 0.031</div></div>
+  <div class="stat"><div class="k">每帧 GPU 忙碌</div><div class="v">−51.1<small>%</small></div><div class="d">95% 置信区间 [−57.1%, −46.2%]</div></div>
+  <div class="stat"><div class="k">整机功耗</div><div class="v">+166<small>%</small></div><div class="d">2.94 W 增至 7.82 W；每上屏帧能耗下降约 30%</div></div>
+  <div class="stat"><div class="k">人工盲评</div><div class="v">第 2<small>名</small></div><div class="d">自研超分辨率仅次于原生（图片）</div></div>
+</div>
+<div class="tblwrap" style="margin-top:14px"><table class="tbl">
+<tr><th>方法（0.56 倍渲染）</th><th>每帧 GPU</th><th>整机功耗</th><th>PSNR（离线）</th></tr>
+<tr><td>双线性（系统放大）</td><td>−40.6%</td><td>−14.8%</td><td>37.0 dB</td></tr>
+<tr><td><b>自研超分辨率</b></td><td>−29.1%</td><td>−7.2%</td><td><b>37.9 dB</b></td></tr>
+<tr><td>高通 GSR（SGSR1 移植）</td><td>−27.4%</td><td>−10.7%</td><td>31.7 dB</td></tr>
+<tr><td>AMD FSR1（层内移植）</td><td>−12.9%</td><td>−4.3%</td><td>36.6 dB</td></tr>
+</table></div>
+<p class="sub">GPU 各 6 对；功耗各 3 对（最小可能 p 值 0.25，仅供量级参考）。FSR1 为 fp32 逐式移植，未采用官方 fp16 优化。</p>
 
-<h2>代码与数据来源</h2>
-<p class="small">以下链接供需要复现或修改的人员使用，阅读汇报内容无需打开。</p>
-<ul class="links small">
-  <li>FSR1 离线对比与层内移植：<a href="https://github.com/HGamey/experiments/pull/13">HGamey/experiments #13</a>、<a href="https://github.com/HGamey/experiments/pull/14">#14</a></li>
-  <li>幻灯片与演示文稿源码：<a href="https://github.com/HGamey/docs/tree/main/slides/web/selfsr-deck">slides/web/selfsr-deck</a>、<a href="https://github.com/HGamey/docs/tree/main/slides/src/selfsr-pptx">slides/src/selfsr-pptx</a></li>
-  <li>实验报告：<a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr">experiments/2026-10-24-selfsr</a></li>
-</ul>
-"""
-    open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page("移动游戏超分辨率与插帧：阶段结果", body, ""))
+<h2 id="materials" class="part sec">五、演示材料</h2>
+<p class="sub">三维幻灯片（12 页，含背景与术语说明）按需加载，图表可拖动旋转，← → 翻页，O 键总览。演示文稿与之内容一致，文字均可编辑。</p>
+<div class="deckbox" id="deckbox"><div class="start"><button class="btn" onclick="loadDeck()">加载三维幻灯片</button>
+  <span class="sub" style="margin:0">约 11 MB，首次加载需数秒</span></div></div>
+<p style="margin-top:12px"><a class="btn ghost" href="deck/" target="_blank" rel="noopener">全屏打开幻灯片</a>　<a class="btn ghost" href="files/{PPTX_OUT}" download>下载演示文稿（PPTX）</a></p>
 
-
-VIEWER = """<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>幻灯片 · Harness 驱动的移动游戏图形优化</title>
-<style>
-html,body{margin:0;height:100%;background:#1E1E1E;color:#ECEBE7;font:14px/1.5 "PingFang SC","Microsoft YaHei",system-ui,sans-serif}
-.stage{position:fixed;inset:0 0 52px 0;display:flex;align-items:center;justify-content:center}
-.stage img{max-width:100%;max-height:100%;display:none;box-shadow:0 2px 16px rgba(0,0,0,.4)}
-.stage img.on{display:block}
-.bar{position:fixed;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;justify-content:center;gap:12px;background:#151515}
-.bar button,.bar a{background:#2C2C2C;color:#ECEBE7;border:0;border-radius:6px;padding:7px 14px;font:inherit;cursor:pointer;text-decoration:none}
-.bar button:hover,.bar a:hover{background:#3A3A3A}
-#pos{min-width:64px;text-align:center;font-variant-numeric:tabular-nums}
-@media (max-width:760px){body{overflow:auto}.stage{position:static;display:block;padding:12px 12px 64px}
- .stage img{display:block;margin:0 auto 12px;width:100%}.bar{position:fixed}#prev,#next,#pos{display:none}}
-</style>
-</head>
-<body>
-<div class="stage" id="stage">__IMGS__</div>
-<div class="bar"><a href="../">返回首页</a><button id="prev" aria-label="上一页">‹ 上一页</button><span id="pos"></span><button id="next" aria-label="下一页">下一页 ›</button><a href="../files/__PPTX__" download>下载 PPTX</a></div>
-<script>
-(function(){var im=[].slice.call(document.querySelectorAll('.stage img')),c=0,pos=document.getElementById('pos');
-function show(i){c=Math.max(0,Math.min(im.length-1,i));im.forEach(function(x,k){x.classList.toggle('on',k===c)});pos.textContent=(c+1)+' / '+im.length;try{history.replaceState(null,'','#'+(c+1))}catch(e){}}
-try{var h=parseInt(location.hash.slice(1),10);if(h>0)c=h-1}catch(e){}
-document.getElementById('prev').onclick=function(){show(c-1)};document.getElementById('next').onclick=function(){show(c+1)};
-addEventListener('keydown',function(e){if(['ArrowRight','PageDown',' '].indexOf(e.key)>=0){e.preventDefault();show(c+1)}if(['ArrowLeft','PageUp'].indexOf(e.key)>=0){e.preventDefault();show(c-1)}if(e.key==='Home')show(0);if(e.key==='End')show(im.length-1)});
-document.getElementById('stage').addEventListener('click',function(e){if(innerWidth<=760)return;show(c+(e.clientX>innerWidth/3?1:-1))});
-var x0=null;addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
-addEventListener('touchend',function(e){if(x0===null||innerWidth<=760)return;var d=e.changedTouches[0].clientX-x0;x0=null;if(Math.abs(d)>50)show(c+(d<0?1:-1))});
-show(c)})();
-</script>
-</body>
-</html>
+<h2 id="appendix" class="part sec">附录</h2>
+<p class="sub">点击标题展开。代码与原始数据：<a href="https://github.com/HGamey/experiments/pull/13">experiments #13</a>、<a href="https://github.com/HGamey/experiments/pull/14">#14</a>；<a href="https://github.com/HGamey/docs/tree/main/experiments/2026-10-24-selfsr">实验报告</a>；时间线数据 <a href="timeline.json">timeline.json</a>。</p>
+{appendix}
 """
 
 
-def slides_viewer():
-    """轻量图片版幻灯片：slides-img/*.jpg（由 PPTX 渲染）逐页显示，任何浏览器均可流畅翻页。"""
-    src = os.path.join(HERE, "slides-img")
-    imgs = sorted(f for f in os.listdir(src) if f.endswith(".jpg"))
-    os.makedirs(os.path.join(OUT, "slides"))
-    for f in imgs:
-        shutil.copy(os.path.join(src, f), os.path.join(OUT, "slides", f))
-    tags = "".join(f'<img src="{f}" alt="第 {i + 1} 页" decoding="async">' for i, f in enumerate(imgs))
-    open(os.path.join(OUT, "slides", "index.html"), "w", encoding="utf-8").write(VIEWER.replace("__IMGS__", tags).replace("__PPTX__", PPTX_OUT))
+def single_page(build):
+    src = open(os.path.join(HERE, "loop", "index.html"), encoding="utf-8").read()
+    src = re.sub(r"<title>.*?</title>", f"<title>{html.escape(TITLE)}</title>", src, count=1, flags=re.S)
+    src = src.replace("</style>", CSS_EXTRA + "</style>", 1)
+    # 闭环实录原有的页眉与 h1 换成：页眉 + 目录 + 摘要 + 第一部分标题
+    head_re = re.compile(r'<header class="top">.*?</header>\s*<h1>[^<]*</h1>', re.S)
+    assert head_re.search(src), "loop/index.html 结构变了（找不到页眉与 h1）"
+    src = head_re.sub(lambda m: sections_head(), src, count=1)
+    assert "<footer>" in src
+    src = src.replace("<footer>", sections_tail() + "\n<footer>", 1)
+    src = src.replace("</body>", REFRESH_JS.replace("__BUILD__", build) + "\n</body>", 1)
+    open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(src)
+
+
+def redirects():
+    for path, anchor in REDIRECTS.items():
+        dst = os.path.join(OUT, path)
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        up = "../" * path.count("/")
+        open(dst, "w", encoding="utf-8").write(
+            f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={up}#{anchor}">'
+            f'<a href="{up}#{anchor}">已合并至主页面</a>')
 
 
 def main():
     deck_dist = os.path.join(DECK, "dist")
     if not os.path.exists(os.path.join(deck_dist, "index.html")):
         sys.exit("缺少 ../selfsr-deck/dist：先在 selfsr-deck 运行 build.sh")
+    build = time.strftime("%Y%m%d%H%M%S")
     shutil.rmtree(OUT, ignore_errors=True)
     shutil.copytree(deck_dist, os.path.join(OUT, "deck"),
                     ignore=shutil.ignore_patterns(".vercel", "middleware.js", "vercel.json", "package.json"))
     os.makedirs(os.path.join(OUT, "files"))
     shutil.copy(os.path.join(DOCS, "slides", PPTX), os.path.join(OUT, "files", PPTX_OUT))
-    open(os.path.join(OUT, "site.css"), "w").write(CSS)
-    for src in PAGES:
-        render_doc(src)
-    slides_viewer()
-    shutil.copytree(os.path.join(HERE, "loop"), os.path.join(OUT, "loop"), ignore=shutil.ignore_patterns("*.py", "__pycache__"))
-    index_page()
+    shutil.copy(os.path.join(HERE, "loop", "timeline.json"), OUT)
+    single_page(build)
+    redirects()
+    json.dump({"build": build}, open(os.path.join(OUT, "version.json"), "w"))
     for f in ("middleware.js", "vercel.json"):
         shutil.copy(os.path.join(DECK, "deploy", f), OUT)
     open(os.path.join(OUT, "package.json"), "w").write('{\n  "name": "selfsr-deck",\n  "private": true\n}\n')
     n = sum(len(fs) for _, _, fs in os.walk(OUT))
-    print(f"dist/ 就绪：{n} 个文件")
+    print(f"dist/ 就绪：{n} 个文件，构建号 {build}")
 
 
 if __name__ == "__main__":
