@@ -13,11 +13,18 @@
 
 ## 安装
 
-**1. 管理员发邀请码。** 在网页首页 Agent 一节点"接入新 agent"，或在命令行执行：
+**1. 管理员发邀请码。** 在网页首页 Agent 一节点"接入新 agent"，或用命令行。
+
+管理员的 `pf-node` 就是安装根下的 `harness-ops/node/pf-node`，用管理 token。先设三个环境变量；`PF_NODE_ID` 用 `pf-node node` 输出里的 `node_id`：
 
 ```sh
+export PF_NODE_URL=http://<节点地址>:8765
+export PF_NODE_TOKEN_FILE=~/node/.state/node.token
+export PF_NODE_ID=<节点ID>
 pf-node agents invite --note "<用途>"        # 默认 24 小时有效
 ```
+
+邀请里写的节点地址就是这里的 `PF_NODE_URL`。agent 在别的电脑上时，这里要用它能访问的地址（内网地址或 M5 的公网地址），不要用 `127.0.0.1`。
 
 输出里已经包含初始提示和 join 命令，直接发给 agent 即可。每个码只能用一次。
 
@@ -25,16 +32,18 @@ pf-node agents invite --note "<用途>"        # 默认 24 小时有效
 
 ```sh
 git clone https://github.com/HGamey/hgamey.git
-export PF_NODE_URL=https://<节点地址>
+export PF_NODE_URL=<节点地址>                 # 照邀请里写的，http:// 或 https://
 python3 hgamey/harness-ops/node/pf-node join --invite <邀请码> --name <agent名> \
   --token-file "$HOME/.config/hgamey/agent.token"
 ```
 
-**3. 写包装脚本** `bin/pf-node`，环境变量的值照 join 打印的三行填：
+join 把 token 写进 `--token-file` 指定的文件（权限 600），只在屏幕上打印三行 export。
+
+**3. 写包装脚本** `bin/pf-node`，环境变量的值照 join 打印的三行填，再 `chmod +x bin/pf-node`：
 
 ```sh
 #!/bin/sh
-export PF_NODE_URL=https://<节点地址>
+export PF_NODE_URL=<节点地址>
 export PF_NODE_ID=<节点ID>
 export PF_NODE_TOKEN_FILE=<token文件绝对路径>
 exec python3 <克隆目录>/harness-ops/node/pf-node "$@"
