@@ -2,7 +2,7 @@
 
 ![部署拓扑](diagrams/08-deployment.png)
 
-系统结构见 [07 系统架构](diagrams/07-architecture.png)；新建节点的通用步骤见 [HGamey/hgamey 的 README](https://github.com/HGamey/hgamey#部署)。
+按模块的部署与使用指导书见 [guide/](guide/README.md)。系统结构见 [07 系统架构](diagrams/07-architecture.png)；新建节点的通用步骤见 [HGamey/hgamey 的 README](https://github.com/HGamey/hgamey#部署)。
 
 ## 机器
 
