@@ -1,5 +1,5 @@
 [package]
-name = "sr-zhao-deck"
+name = "selfsr-deck"
 version = "0.1.0"
 edition = "2021"
 publish = false

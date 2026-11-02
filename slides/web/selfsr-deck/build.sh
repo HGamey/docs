@@ -6,11 +6,11 @@
 # 部署：cd dist && vercel deploy --prod   （项目需设置环境变量 SITE_PASSWORD）
 set -euo pipefail
 cd "$(dirname "$0")"
-cargo makepad wasm build -p sr-zhao-deck --release
-OUT=target/makepad-wasm-app/release/sr-zhao-deck
+cargo makepad wasm build -p selfsr-deck --release
+OUT=target/makepad-wasm-app/release/selfsr-deck
 rm -rf dist && mkdir -p dist
 cp -R "$OUT"/. dist/
-sed -i '' -e 's#<title>sr-zhao-deck</title>#<title>超分与插帧阶段结果</title>#' -e "s#<html>#<html lang='zh-CN'>#" dist/index.html
+sed -i '' -e 's#<title>selfsr-deck</title>#<title>超分与插帧阶段结果</title>#' -e "s#<html>#<html lang='zh-CN'>#" dist/index.html
 # 系统是暗色时补上 ?theme=dark（WASM 从 URL 读初始主题；页面里按 T 或底栏按钮切换）
 python3 -I - dist/index.html <<'PY'
 import sys
@@ -25,7 +25,7 @@ grep -qE 'initial:( )?256, ?maximum:( )?16384' dist/makepad_wasm_bridge/wasm_bri
 # 中文字体只保留用到的字（18 MB → 约 1 MB）
 "${FONTTOOLS_PY:-python3}" -I scripts/subset_fonts.py dist
 cp deploy/middleware.js deploy/vercel.json dist/
-printf '{\n  "name": "sr-zhao-deck",\n  "private": true\n}\n' > dist/package.json
+printf '{\n  "name": "selfsr-deck",\n  "private": true\n}\n' > dist/package.json
 echo "dist/ 就绪：$(du -sh dist | cut -f1)"
 if [ "${1:-}" = "serve" ]; then
   python3 -I scripts/serve.py dist 8123

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""layout.py — 由 content.json（与网页版 sr-zhao-deck 的 content/deck.json 同一份内容）生成：
+"""layout.py — 由 content.json（与网页版 selfsr-deck 的 content/deck.json 内容相同）生成：
   1) art/<页>.json：无字底图的图形（卡片、线、点、方块背景、三维柱），交给 art.html（three.js）渲染；
   2) deck.json：octos pptx 技能 native_deck.py 的页面数据（原生可编辑文字，坐标与底图同一版面）。
 

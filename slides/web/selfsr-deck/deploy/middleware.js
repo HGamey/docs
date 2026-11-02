@@ -2,11 +2,11 @@
 // 密码取环境变量 SITE_PASSWORD；登录成功后写入 HttpOnly cookie（密码的 SHA-256 摘要），有效 30 天。
 export const config = { matcher: '/:path*' };
 
-const COOKIE = 'sr_zhao_auth';
+const COOKIE = 'selfsr_auth';
 const LOGIN_PATH = '/__login';
 
 async function digest(text) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`sr-zhao-deck:${text}`));
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`selfsr-deck:${text}`));
   return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
