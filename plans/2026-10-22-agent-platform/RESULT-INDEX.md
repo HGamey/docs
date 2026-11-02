@@ -17,7 +17,8 @@ NodeRead已有全量任务分页；缺口是旧看板只从最近200任务猜目
 | schema, result_id, title | schema固定；title非空、至多240字符 |
 | job_id | 本节点已有12位job ID或null；旧源自报job ID只能放external_reference，不关联当前同名job |
 | labels | game_id、game_version、device、research_id、direction_id；字符串或null，缺省null |
-| origin | producer、producer_version字符串或null；evidence_origin为device/synthetic/unknown；observed_at有限时间戳或null。均为登记者声明 |
+| origin | producer、producer_version字符串或null；evidence_origin为device/synthetic/unknown；observed_at为有限非负数字Unix时间戳（秒）或null，不接受ISO 8601字符串。均为登记者声明 |
+| dataset | 可选对象或null。name、version、capture_method、location为字符串或null；pairing必填，为simulated/real/unpaired/mixed；frames、scenes、size_bytes为非负安全整数或null；splits为`{train,val,test}`或null，各项为非负安全整数或null。模拟低清必须标simulated，空字段在数据集页签显示「—」 |
 | outcome | gain/no_gain/regression/failed/not_run/unknown，是报告结论，不能由exit0或kept推成gain |
 | source_outcome | 原报告状态文字或null，保留原语义 |
 | sources | 至多64个命名来源，见下；原件清单与指标不混为一体 |
