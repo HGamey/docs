@@ -5,7 +5,7 @@
   data/leaderboard.json   模型排行榜（_tmp/models/leaderboard.json，去掉本机绝对路径）
   data/effects.json       真机判定结果：每个指标的效应、95% 区间、p、对数（跳过 dry/模拟设备 运行）
   <私有目录>/crops.json + crops/*.png   画面对比：原生 | 候选 | 差值×8 的裁剪块，附裁剪块 PSNR 与原生自噪声参考
-                          游戏画面裁剪不进公开的 docs 仓：写到私有 internal 仓 decks/sr-zhao-deck/private/
+                          游戏画面裁剪不进公开的 docs 仓：写到私有 internal 仓 decks/selfsr-deck/private/
                           （或环境变量 HGAMEY_DECK_PRIVATE 指定的目录），构建时由 build.rs 从那里嵌入。
   data/manifest.json      数据来源、生成时间、源文件 sha256
 
@@ -21,7 +21,7 @@ except ImportError:  # pragma: no cover
 HERE = os.path.dirname(os.path.abspath(__file__))
 DECK = os.path.dirname(HERE)
 OUT = os.path.join(DECK, "data")
-PRIV = os.environ.get("HGAMEY_DECK_PRIVATE") or os.path.abspath(os.path.join(DECK, "../../../../internal/decks/sr-zhao-deck/private"))
+PRIV = os.environ.get("HGAMEY_DECK_PRIVATE") or os.path.abspath(os.path.join(DECK, "../../../../internal/decks/selfsr-deck/private"))
 
 CROP_W, CROP_H = 192, 96          # 原图上的裁剪尺寸（像素）
 DIFF_GAIN = 8                     # 差值放大倍数

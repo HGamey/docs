@@ -7,7 +7,7 @@ dist = sys.argv[1]
 here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 chars = set(chr(c) for c in range(0x20, 0x7f))
 chars |= set("，。、：；？！「」『』（）《》〈〉【】—…·×±≈≤≥→←↑↓％‰°−–’‘“”·")
-priv = os.environ.get("HGAMEY_DECK_PRIVATE") or os.path.join(here, "../../../../internal/decks/sr-zhao-deck/private")
+priv = os.environ.get("HGAMEY_DECK_PRIVATE") or os.path.join(here, "../../../../internal/decks/selfsr-deck/private")
 for pat in [os.path.join(here, "content/*.json"), os.path.join(here, "data/*.json"), os.path.join(here, "src/*.rs"), os.path.join(priv, "*.json")]:
     for p in glob.glob(pat):
         chars |= set(open(p, encoding="utf-8").read())

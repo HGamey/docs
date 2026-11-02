@@ -1,5 +1,5 @@
 // 把 data/ 下由 refresh-data.sh 生成的 JSON 嵌进程序；游戏画面裁剪（crops.json + crops/*.png）
-// 不放公开仓，从私有目录读：环境变量 HGAMEY_DECK_PRIVATE，默认 hgamey/internal/decks/sr-zhao-deck/private。
+// 不放公开仓，从私有目录读：环境变量 HGAMEY_DECK_PRIVATE，默认 hgamey/internal/decks/selfsr-deck/private。
 // 任何一处不存在时用空数据，照样能编译（结果浏览的「画面对比」页显示为空）。
 use std::{env, fs, path::Path};
 
@@ -8,7 +8,7 @@ fn main() {
     let data = Path::new(&dir).join("data");
     let out = Path::new(&env::var("OUT_DIR").unwrap()).join("data_gen.rs");
     println!("cargo:rerun-if-env-changed=HGAMEY_DECK_PRIVATE");
-    let private = env::var("HGAMEY_DECK_PRIVATE").map(std::path::PathBuf::from).unwrap_or_else(|_| Path::new(&dir).join("../../../../internal/decks/sr-zhao-deck/private"));
+    let private = env::var("HGAMEY_DECK_PRIVATE").map(std::path::PathBuf::from).unwrap_or_else(|_| Path::new(&dir).join("../../../../internal/decks/selfsr-deck/private"));
     println!("cargo:rerun-if-changed={}", private.display());
     if !private.join("crops.json").exists() {
         println!("cargo:warning=私有数据目录 {} 没有 crops.json：画面对比为空", private.display());
