@@ -43,3 +43,16 @@ for name in ["LXGWWenKaiRegular.ttf", "LXGWWenKaiBold.ttf"]:
     font.save(f + ".sub"); os.replace(f + ".sub", f)
     print(name, os.path.getsize(f) // 1024, "KB")
 print("字符数", len(chars))
+
+# 降负载：彩色 emoji（约 10 MB）与数学字体（约 1 MB）同样只保留用到的字符。两者都在主题字体回退链里，
+# 页面加载时会整体下载；本幻灯片几乎不用这些字形，裁剪后各只剩几 KB，回退顺序不变。
+for name in ["NotoColorEmoji.ttf", "NewCMMath-Regular.otf"]:
+    f = os.path.join(dist, "makepad_widgets/resources", name)
+    if not os.path.exists(f):
+        continue
+    font = TTFont(f)
+    opts = subset.Options(); opts.layout_features = ["*"]; opts.hinting = False; opts.notdef_outline = True
+    opts.drop_tables = []
+    sub = subset.Subsetter(opts); sub.populate(text=text); sub.subset(font)
+    font.save(f + ".sub"); os.replace(f + ".sub", f)
+    print(name, os.path.getsize(f) // 1024, "KB")

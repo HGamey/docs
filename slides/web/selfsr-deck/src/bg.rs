@@ -76,8 +76,17 @@ pub struct DeckBg {
     walk_dist: f32,
     #[rust]
     walker_y: f32,
+    /// 只在启动与翻页后的一小段时间里逐帧动画，其余时间静止不占 GPU（降负载）
+    #[rust]
+    anim_until: f64,
+    #[rust]
+    kick: bool,
+    #[rust]
+    last_real: Option<f64>,
 }
 
+/// 启动或翻页后逐帧动画的时长（秒），之后背景静止
+const ANIM_SECS: f64 = 1.8;
 const NX: i32 = 11;
 const NZ: i32 = 8;
 
@@ -168,6 +177,8 @@ fn path(u: f32) -> (f32, f32) {
 impl DeckBg {
     pub fn set_goal(&mut self, cx: &mut Cx, goal: usize) {
         self.goal = goal as f64;
+        self.kick = true;   // 翻页：重新动画一段时间
+        self.next_frame = cx.new_next_frame();
         self.area.redraw(cx);
     }
 
@@ -326,16 +337,28 @@ impl Widget for DeckBg {
     fn handle_event(&mut self, cx: &mut Cx, event: &Event, _scope: &mut Scope) {
         if let Event::NextFrame(ne) = event {
             if ne.set.contains(&self.next_frame) {
-                self.time = ne.time;
+                if self.kick {
+                    self.kick = false;
+                    self.anim_until = ne.time + ANIM_SECS;
+                }
+                // 场景时间只在动画期间前进，停下再开始时人物不会跳位
+                let dt = self.last_real.map(|t| (ne.time - t).clamp(0.0, 0.1)).unwrap_or(0.0);
+                self.time += dt;
                 self.slide = self.slide * 0.9 + self.goal * 0.1;
                 if (self.slide - self.goal).abs() < 0.0005 {
                     self.slide = self.goal;
                 }
                 self.area.redraw(cx);
-                self.next_frame = cx.new_next_frame();
+                if ne.time < self.anim_until || self.slide != self.goal {
+                    self.last_real = Some(ne.time);
+                    self.next_frame = cx.new_next_frame();
+                } else {
+                    self.last_real = None;   // 静止：不再请求下一帧
+                }
             }
         }
         if matches!(event, Event::Startup) {
+            self.kick = true;
             self.next_frame = cx.new_next_frame();
         }
     }

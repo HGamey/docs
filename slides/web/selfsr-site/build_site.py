@@ -149,8 +149,8 @@ def index_page():
 <p class="lead">本页汇集本次汇报的全部材料。建议先阅读在线幻灯片：前三页依次说明背景、术语与核心观点，无需其他资料即可读懂。</p>
 
 <div class="cards">
-  <a class="card main" href="slides/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
-    <div class="d">12 页，含背景、术语、闭环、部署拓扑与数据方法。← → 翻页。另有<span style="white-space:nowrap">三维交互版</span>（见下方）。</div></a>
+  <a class="card main" href="deck/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
+    <div class="d">12 页，含背景、术语、闭环、部署拓扑与数据方法；三维图表可拖动旋转。← → 翻页，O 键总览。</div></a>
   <a class="card" href="files/{PPTX_OUT}" download><div class="k">下载</div><div class="t">演示文稿（PPTX）</div>
     <div class="d">与在线幻灯片内容一致，文字均可编辑。</div></a>
   <a class="card" href="docs/guide/index.html"><div class="k">文档</div><div class="t">部署与使用指导书</div>
@@ -159,7 +159,7 @@ def index_page():
     <div class="d">原理、软硬件需求、操作流程、质量检查与数据划分。</div></a>
 </div>
 
-<p class="small" style="margin-top:14px">三维交互版幻灯片：<a href="deck/">deck/</a>（图表可拖动旋转；需较新的 Chrome / Edge 与较好的硬件，部分浏览器可能卡顿）。</p>
+<p class="small" style="margin-top:14px">如浏览器无法流畅运行三维版，可使用<a href="slides/">图片版幻灯片</a>（内容相同，任何浏览器均可打开）。</p>
 
 <h2>主要结论</h2>
 <ul class="facts">
