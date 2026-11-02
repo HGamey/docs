@@ -66,9 +66,25 @@ HarmonyOS 的 Vulkan 加载器支持隐式层，清单文件位于 `/system/etc/
 
 因此，自研超分辨率与插帧层在 HarmonyOS 上可沿用同一机制：放入清单与层库，并以 `enable_environment` 或 `disable_environment` 控制作用范围。写入 `/system` 需要 root 且分区可写；层本身还需针对 HarmonyOS 的图形栈重新编译与适配。以上尚未实测。
 
+## 零售版设备的实测结果
+
+另对一台经 USB 连接的零售版（不可调试）HarmonyOS 6.1 设备做了实测，结果如下：
+
+| 项目 | 结果 |
+|---|---|
+| `hdc shell id` | `uid=2000(shell)`，非 root |
+| `param get const.debuggable` 等系统参数 | 读取失败（错误码 1002） |
+| `hdc smode` | 被拒绝：`[Fail]Cannot set root run mode in undebuggable version.`，设备状态不变 |
+| GPU、温度、电池等 sysfs 节点 | Permission denied |
+| `hidumper -s RenderService`、`-s BatteryService` | 仅输出标题，无数据 |
+| `SP_daemon` | 程序存在，非交互方式调用无输出 |
+| Vulkan 隐式层目录 | Permission denied |
+
+结论：零售版设备无法取得 root，平台在其上只能执行安装、启动、截图等基本操作，上文表格中的测量项与 Vulkan 层注入均无法使用。上述能力须使用调试版系统（`const.debuggable=1`）的设备。
+
 ## 待验证事项
 
-1. 经 USB 连接时 `hdc smode` 的实际行为，以及恢复后 hdc shell 的权限。
+1. 调试版设备经 USB 连接时 `hdc smode` 的实际行为，以及恢复后 hdc shell 的权限（零售版设备的结果见上节）。
 2. 隐式层在游戏进程中的加载情况与作用范围控制。
 3. `Total_power` 的单位与刷新周期，以及与电池放电功率的对应关系。
 4. 平台在 HarmonyOS root 设备上的设备锁、任务结束后的状态恢复，以及需要 root 的测量项（内核 trace 等）的接入。
