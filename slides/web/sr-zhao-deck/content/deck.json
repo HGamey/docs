@@ -381,8 +381,8 @@
    "chapter": "真机",
    "layout": "split",
    "title": "真机：同样按 0.56× 渲染，四种放大方法的 GPU 与功耗",
-   "subtitle": "游戏默认限 30 帧，四种放大下帧率不变，差别在 GPU 与功耗。自研超分与 GSR 的 GPU 节省相当；双线性最省但画质最差",
-   "foot": "来源：任务 673fdb6b4bb8（双线性、自研超分、超分 + 插帧）、5a16d958e032（GSR），各 6 对；功耗 992d08f623eb、68479be85a17，各 3 对。百分比相对同轮原生臂均值。",
+   "subtitle": "游戏默认限 30 帧，四种放大下帧率不变，差别在 GPU 与功耗。自研超分与 GSR 的 GPU 节省相当（约 −28%），FSR1 移植只省 −12.9%；双线性最省但画质最差",
+   "foot": "来源：任务 673fdb6b4bb8（双线性、自研超分、超分 + 插帧）、5a16d958e032（GSR）、9f57338e1331（FSR1），各 6 对；功耗 992d08f623eb、68479be85a17，各 3 对。百分比相对同轮原生臂均值。",
    "left": [
     {
      "t": "forest",
@@ -414,6 +414,13 @@
        "verdict": "p = 0.031，n = 6 对"
       },
       {
+       "label": "低分 + AMD FSR1（EASU + RCAS 层内移植）",
+       "est": -12.9,
+       "lo": -18.1,
+       "hi": -7.3,
+       "verdict": "p = 0.031，n = 6 对"
+      },
+      {
        "label": "超分 + 插帧（推荐配置）",
        "est": -51.1,
        "lo": -57.1,
@@ -425,9 +432,13 @@
     {
      "t": "pending",
      "pending": true,
-     "title": "低分 + AMD FSR1（层内 EASU + RCAS）",
-     "what": "每帧 GPU 忙碌与整机功耗，口径同上（6 对性能 + 3 对功耗）。",
-     "job": "9f57338e1331、4adebb2a9f09（experiments #14，进行中）"
+     "title": "低分 + AMD FSR1 的整机功耗",
+     "what": "停充后整机功耗，3 对，口径同右图。",
+     "job": "4adebb2a9f09（进行中）"
+    },
+    {
+     "t": "note",
+     "text": "FSR1 为按 ffx_fsr1.h 逐式移植的 fp32 计算着色器（12 次取样 + 方向估计），未用官方的 fp16 打包路径，GPU 开销可能高于官方实现。"
     }
    ],
    "right": [
@@ -615,7 +626,7 @@
    "chapter": "后续计划",
    "layout": "split",
    "title": "后续计划：先建高低清配对数据，再做学习型超分",
-   "subtitle": "数据集采集方案已完成，首批试点正在采集；FSR1 真机对比在测",
+   "subtitle": "数据集采集方案已完成，首批试点正在采集；FSR1 真机 GPU 已测，功耗在测",
    "foot": "来源：docs/plans/2026-10-22-agent-platform/DATASET-COLLECTION.md；docs/guide/；10-30 会议待办。",
    "left": [
     {
@@ -633,7 +644,7 @@
       },
       {
        "title": "3 FSR1 真机对比",
-       "text": "层内 EASU + RCAS，GPU 与功耗，口径同 GSR",
+       "text": "层内 EASU + RCAS：GPU 已测（−12.9%，6 对）；功耗在测",
        "state": "wip"
       },
       {

@@ -1,0 +1,3 @@
+build/
+art/*.png
+__pycache__/
