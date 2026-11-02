@@ -293,9 +293,32 @@ def blk_chart3d(p, b, x, y, w):
     return y - y0 + 10
 
 
+def blk_topo(p, b, x, y, w):
+    """分层拓扑：每层一行方框，层间写连接方式。"""
+    y0 = y
+    for t in b["items"]:
+        if t.get("link"):
+            p.text(t["link"], "small", [x, y, w, 26], format={"align": "center"})
+            y += 30
+        n = len(t["nodes"])
+        gap = 14
+        bw = (w - gap * (n - 1)) / n
+        bh = max(40 + n_lines(nd["text"], 18, bw - 24) * line_h("flowx") for nd in t["nodes"]) + 12
+        for i, nd in enumerate(t["nodes"]):
+            fill, ink = TINT.get(nd.get("c", ""), TINT[""]) if nd.get("c") in TINT else (PAPER, NAVY)
+            if nd.get("c") in ("", None, "navy"):
+                fill, ink = PAPER, NAVY
+            bx = x + i * (bw + gap)
+            p.rect(bx, y, bw, bh, fill, ink, r=8, sw=1.6)
+            p.text(nd["title"], "flowt", [bx + 12, y + 8, bw - 24, 30], format={"color": ink})
+            p.para(nd["text"], "flowx", bx + 12, y + 40, bw - 24)
+        y += bh + 6
+    return y - y0 + 10
+
+
 BLOCKS = {"h": blk_h, "p": blk_p, "note": blk_note, "ul": blk_list, "ol": lambda p, b, x, y, w: blk_list(p, b, x, y, w, True),
           "kpis": blk_kpis, "table": blk_table, "flow": blk_flow, "heat": blk_heat, "forest": blk_forest,
-          "pending": blk_pending, "chart3d": blk_chart3d}
+          "pending": blk_pending, "chart3d": blk_chart3d, "topo": blk_topo}
 
 
 def column(p, blocks, x, y, w, h):

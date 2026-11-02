@@ -233,6 +233,7 @@ fn block(b: &Block) -> String {
         "kpis" => kpis(b),
         "table" => table(b),
         "flow" => flow(b),
+        "topo" => topo(b),
         "pending" => pending(b),
         "bars" => {
             if b.pending {
@@ -357,6 +358,54 @@ fn flow(b: &Block) -> String {
             label(st_txt, fg, FS_SMALL - 0.5, false),
             label(&st.text, INK2, FS_SMALL + 0.5, true)
         );
+    }
+    s += "}";
+    s
+}
+
+/// 分层拓扑图：items = [{"link": 与上一层之间的连接说明, "nodes": [{"title", "text", "c": teal|navy|amber|rose|beige}]}]。
+/// 每层一行方框，层与层之间写连接方式（协议、方向）；不画任意走向的连线。
+#[derive(Deserialize, Default)]
+struct TopoNode {
+    #[serde(default)]
+    title: String,
+    #[serde(default)]
+    text: String,
+    #[serde(default)]
+    c: String,
+}
+#[derive(Deserialize, Default)]
+struct TopoTier {
+    #[serde(default)]
+    link: String,
+    #[serde(default)]
+    nodes: Vec<TopoNode>,
+}
+
+fn topo(b: &Block) -> String {
+    let tiers: Vec<TopoTier> = serde_json::from_value(b.items.clone()).unwrap_or_default();
+    let mut s = String::from("View{width: Fill height: Fit flow: Down spacing: 4 ");
+    for t in &tiers {
+        if !t.link.is_empty() {
+            s += &format!("View{{width: Fill height: Fit align: Align{{x: 0.5}} {}}}", label(&t.link, MUTED, FS_SMALL, false));
+        }
+        s += "View{width: Fill height: Fit flow: Right spacing: 8 ";
+        for n in &t.nodes {
+            let (fg, bg) = match n.c.as_str() {
+                "teal" => (TEAL, TEAL_T),
+                "amber" => (AMBER, AMBER_T),
+                "rose" => (ROSE, "#xF5E5E3"),
+                "beige" => (BEIGE, BEIGE_T),
+                _ => (NAVY, PAPER),
+            };
+            let _ = write!(
+                s,
+                "RoundedView{{width: Fill height: Fit flow: Down spacing: 3 new_batch: true padding: Inset{{left: 10 right: 10 top: 7 bottom: 7}} draw_bg.color: {bg} draw_bg.border_size: 1.2 draw_bg.border_color: {fg} draw_bg.border_radius: 4.0 {} {}}}",
+                bold(&n.title, fg, FS_BODY, true),
+                label(&n.text, INK2, FS_SMALL, true)
+            );
+        }
+        s += "}";
     }
     s += "}";
     s
