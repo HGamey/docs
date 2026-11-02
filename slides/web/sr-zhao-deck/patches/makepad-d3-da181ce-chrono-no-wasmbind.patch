@@ -1,0 +1,13 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index af36a88..a7c0260 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -17,7 +17,7 @@ categories = ["visualization", "gui", "graphics"]
+ # cargo sees two packages named makepad-widgets and refuses the git source.
+ # Integration design: docs/SPLASH_INTEGRATION_DESIGN.md
+ makepad-widgets = { path = "../makepad/widgets", version = "2.0.0" }
+-chrono = { version = "0.4", features = ["serde"] }
++chrono = { version = "0.4", default-features = false, features = ["serde", "clock", "std"] }  # no wasmbind: makepad wasm has no wasm-bindgen glue
+ serde = { version = "1.0", features = ["derive"] }
+ serde_json = "1.0"
+ thiserror = "1.0"

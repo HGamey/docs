@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>sr-zhao art renderer</title>
+<style>html,body{margin:0;background:#F8F8F6}canvas{display:block}</style>
+</head>
+<body>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+// 无字底图渲染器（three.js）：页面数据由 layout.py 生成（坐标为 1920×1080 版面像素，原点左上），
+// 这里只画图形——卡片、线、点、方块背景、三维柱——不画任何文字。三维柱的柱顶 / 柱底投影位置回传给
+// layout.py，用来摆放原生文字标签。输出 3840×2160 PNG（2 倍）。
+import * as THREE from 'three';
+
+const W = 1920, H = 1080, S = 2;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(W * S, H * S);
+renderer.autoClear = false;
+renderer.sortObjects = false;   // 按加入顺序画（阴影在卡片下面）；平面图形不做深度测试
+document.body.appendChild(renderer.domElement);
+
+const col = c => new THREE.Color('#' + c);
+const flat = (c, a = 1) => new THREE.MeshBasicMaterial({ color: col(c), transparent: a < 1, opacity: a, side: THREE.DoubleSide, depthTest: false });
+
+function roundRect(x, y, w, h, r) {
+  const s = new THREE.Shape();
+  r = Math.min(r, w / 2, h / 2);
+  s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+  s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+  s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+  return s;
+}
+
+function addRect(scene, p) {
+  if (p.stroke) {
+    const o = new THREE.Mesh(new THREE.ShapeGeometry(roundRect(p.x - p.sw, p.y - p.sw, p.w + 2 * p.sw, p.h + 2 * p.sw, (p.r || 0) + p.sw), 12), flat(p.stroke, p.a ?? 1));
+    scene.add(o);
+  }
+  if (p.shadow) {
+    const sh = new THREE.Mesh(new THREE.ShapeGeometry(roundRect(p.x + 2, p.y + 4, p.w, p.h, p.r || 0), 12), flat('000000', 0.05));
+    scene.add(sh); scene.children.unshift(scene.children.pop());
+  }
+  scene.add(new THREE.Mesh(new THREE.ShapeGeometry(roundRect(p.x, p.y, p.w, p.h, p.r || 0), 12), flat(p.fill, p.a ?? 1)));
+}
+
+function addLine(scene, p) {
+  const dx = p.x2 - p.x1, dy = p.y2 - p.y1, len = Math.hypot(dx, dy);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(len, p.w || 1), flat(p.color, p.a ?? 1));
+  m.position.set((p.x1 + p.x2) / 2, (p.y1 + p.y2) / 2, 0);
+  m.rotation.z = Math.atan2(dy, dx);
+  scene.add(m);
+  if (p.arrow) {
+    const s = new THREE.Shape(); const a = 9;
+    s.moveTo(0, 0); s.lineTo(-a * 1.4, -a * 0.7); s.lineTo(-a * 1.4, a * 0.7); s.lineTo(0, 0);
+    const t = new THREE.Mesh(new THREE.ShapeGeometry(s), flat(p.color, p.a ?? 1));
+    t.position.set(p.x2, p.y2, 0); t.rotation.z = Math.atan2(dy, dx); scene.add(t);
+  }
+}
+
+function addDot(scene, p) {
+  const m = new THREE.Mesh(new THREE.CircleGeometry(p.r, 40), flat(p.color, p.a ?? 1));
+  m.position.set(p.x, p.y, 0); scene.add(m);
+}
+
+// 伪随机（固定种子，底图可复现）
+function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+
+// 背景方块场：与 hgamey-deck 的三维背景同一种画法的简化版（正交、固定视角），纯装饰
+function voxels(p) {
+  const scene = new THREE.Scene();
+  const r = rng(p.seed || 7);
+  const pal = ['E2E0DA', 'D9DDE3', 'E3F0EE', 'F0EEEA', 'DDE3EC', 'EADBD8'];
+  const n = 18;
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+    if (r() < 0.35) continue;
+    const h = 0.15 + r() * (r() < 0.12 ? 1.6 : 0.5);
+    const g = new THREE.BoxGeometry(0.92, h, 0.92);
+    const c = col(pal[Math.floor(r() * pal.length)]);
+    const mats = [0.86, 0.86, 1.0, 0.7, 0.93, 0.93].map(k => new THREE.MeshBasicMaterial({ color: c.clone().multiplyScalar(k) }));
+    const b = new THREE.Mesh(g, mats);
+    b.position.set(i - n / 2, h / 2, j - n / 2);
+    scene.add(b);
+  }
+  const cam = new THREE.OrthographicCamera(-9, 9, 5.2, -5.2, -100, 100);
+  cam.position.set(10, 9, 10); cam.lookAt(0, 0, 0);
+  return { scene, cam };
+}
+
+// 三维柱：返回每根柱顶 / 柱底中心在版面上的位置
+function bars3d(p) {
+  const scene = new THREE.Scene();
+  const n = p.values.length, gap = 1.6;
+  const span = (p.ymax - p.ymin), hmax = 3.2;
+  const tops = [], bases = [];
+  const group = new THREE.Group();
+  for (let i = 0; i < n; i++) {
+    const v = Math.max(p.values[i] - p.ymin, 0.02 * span);
+    const h = v / span * hmax;
+    const c = col(p.colors[i]);
+    const mats = [0.82, 0.82, 1.12, 0.6, 0.95, 0.95].map(k => new THREE.MeshBasicMaterial({ color: c.clone().multiplyScalar(k) }));
+    const b = new THREE.Mesh(new THREE.BoxGeometry(1, h, 1), mats);
+    b.position.set((i - (n - 1) / 2) * gap, h / 2, 0);
+    group.add(b);
+    tops.push(new THREE.Vector3(b.position.x, h, 0.5));
+    bases.push(new THREE.Vector3(b.position.x, 0, 0.5));
+  }
+  // 底板
+  const floor = new THREE.Mesh(new THREE.BoxGeometry(n * gap + 0.6, 0.06, 1.8), new THREE.MeshBasicMaterial({ color: col('E2E0DA') }));
+  floor.position.set(0, -0.03, 0); group.add(floor);
+  scene.add(group);
+  const half = (n * gap) / 2 + 0.6;
+  const aspect = p.w / p.h;
+  const cam = new THREE.OrthographicCamera(-half, half, half / aspect, -half / aspect, -100, 100);
+  cam.position.set(Math.sin(p.yaw) * 10, 10 * Math.tan(p.pitch), Math.cos(p.yaw) * 10);
+  cam.lookAt(0, hmax * 0.42, 0);
+  cam.updateMatrixWorld(); cam.updateProjectionMatrix();
+  const proj = v => { const q = v.clone().project(cam); return [p.x + (q.x + 1) / 2 * p.w, p.y + (1 - q.y) / 2 * p.h]; };
+  return { scene, cam, tops: tops.map(proj), bases: bases.map(proj) };
+}
+
+window.renderSlide = function (spec) {
+  renderer.setClearColor(col(spec.bg || 'F8F8F6'), 1);
+  renderer.setScissorTest(false);
+  renderer.clear();
+  const anchors = {};
+  // 1 方块背景（限定在给定区域）
+  if (spec.voxels) {
+    const v = voxels(spec.voxels), r = spec.voxels.rect;
+    renderer.setViewport(r[0] * S, (H - r[1] - r[3]) * S, r[2] * S, r[3] * S);
+    renderer.setScissor(r[0] * S, (H - r[1] - r[3]) * S, r[2] * S, r[3] * S);
+    renderer.setScissorTest(true);
+    v.cam.left = -9 * r[2] / 600; v.cam.right = 9 * r[2] / 600; v.cam.top = 9 * r[3] / 600; v.cam.bottom = -9 * r[3] / 600;
+    v.cam.updateProjectionMatrix();
+    renderer.render(v.scene, v.cam);
+    renderer.setScissorTest(false);
+  }
+  // 2 平面图形
+  const flatScene = new THREE.Scene();
+  for (const p of spec.shapes || []) {
+    if (p.k === 'rect') addRect(flatScene, p);
+    else if (p.k === 'line') addLine(flatScene, p);
+    else if (p.k === 'dot') addDot(flatScene, p);
+  }
+  const cam2 = new THREE.OrthographicCamera(0, W, 0, H, -10, 10);
+  renderer.setViewport(0, 0, W * S, H * S);
+  renderer.render(flatScene, cam2);
+  // 3 三维柱
+  for (const b of spec.bars3d || []) {
+    const r = bars3d(b);
+    renderer.setViewport(b.x * S, (H - b.y - b.h) * S, b.w * S, b.h * S);
+    renderer.clearDepth();
+    renderer.render(r.scene, r.cam);
+    anchors[b.id] = { tops: r.tops, bases: r.bases };
+  }
+  renderer.setViewport(0, 0, W * S, H * S);
+  return { png: renderer.domElement.toDataURL('image/png'), anchors };
+};
+window.artReady = true;
+</script>
+</body>
+</html>

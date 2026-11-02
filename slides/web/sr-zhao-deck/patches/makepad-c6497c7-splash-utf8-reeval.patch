@@ -1,0 +1,19 @@
+diff --git a/platform/script/src/vm.rs b/platform/script/src/vm.rs
+index 5628070..b81350a 100644
+--- a/platform/script/src/vm.rs
++++ b/platform/script/src/vm.rs
+@@ -1466,9 +1466,13 @@ pub fn eval_with_append_source(
+             let prev_len = body.source_len;
+             // Check if the content has diverged (not just appended to).
+             // Compare the new code's prefix against what the tokenizer already has.
++            // 按字节比较：prev_len 是旧内容的字节长度，落在新内容的多字节字符中间时
++            // 用 &str 切片会 panic（中文内容整页替换时必现）。
+             let content_changed = prev_len > 0
+                 && (code.len() < prev_len
+-                    || code[..prev_len] != body.tokenizer.original[..prev_len]);
++                    || body.tokenizer.original.len() < prev_len
++                    || !code.is_char_boundary(prev_len)
++                    || code.as_bytes()[..prev_len] != body.tokenizer.original.as_bytes()[..prev_len]);
+ 
+             if content_changed {
+                 // Content changed entirely — reset and re-tokenize from scratch
