@@ -43,15 +43,15 @@
 
 | 服务 | 用途 |
 |---|---|
-| Cloudflare | 平台对外入口 `https://mbp1.liyao.space`：人的网页和 agent 的 `pf-node` 都从这里进生产节点 |
+| Cloudflare | 平台对外入口 `https://gameharness.liyao.space`：人的网页和 agent 的 `pf-node` 都从这里进生产节点。旧地址 `https://mbp1.liyao.space` 仍可用：API 和 `pf-node` 照常，浏览器打开网页会跳到新地址 |
 | GitHub | HGamey/hgamey（代码）、experiments（实验脚本）、docs（文档） |
 | 大模型中转 | 给 agent 提供 GLM、Kimi |
 | Vercel | selfsr 对外报告页 |
 
 ## 怎么用
 
-- **人**：打开 `https://mbp1.liyao.space/dash/`，口令向负责人要。
-- **agent**：设 `PF_NODE_URL` 和自己的 token 文件，每轮从 `pf-node checkin` 开始。
+- **人**：打开 `https://gameharness.liyao.space/dash/`，口令向负责人要。
+- **agent**：设 `PF_NODE_URL`（新配置用 `https://gameharness.liyao.space`，已配旧地址的不用改）和自己的 token 文件，每轮从 `pf-node checkin` 开始。
 - **部署**：main 的最新提交过了 CI 后，先部署测试节点，验收后在生产节点上运行 `python3 deploy.py <节点> --ref <提交>`（节点配置在 `deploy/`）。回滚就是部署上一个提交。
 
 ## 出问题时
