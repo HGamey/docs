@@ -2,6 +2,7 @@
 """build_site.py — 把超分辨率与插帧这次的全部材料组装成一个静态网站 dist/，部署到 Vercel 项目 selfsr-deck：
 
   /                 汇总页（主要结论 + 各项材料入口）
+  /loop/            研究闭环实录（loop/：平台原始记录导出的时间线，由 loop/export_timeline.py 生成）
   /deck/            在线幻灯片（../selfsr-deck/dist，Makepad WASM）
   /files/*.pptx     PPTX 下载（slides/ 下的同名文件）
   /docs/...         部署与使用指导书、高低清数据集采集方案（由 docs 仓库的 Markdown 渲染为网页）
@@ -149,7 +150,9 @@ def index_page():
 <p class="lead">本页汇集本次汇报的全部材料。建议先阅读在线幻灯片：前三页依次说明背景、术语与核心观点，无需其他资料即可读懂。</p>
 
 <div class="cards">
-  <a class="card main" href="deck/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
+  <a class="card main" href="loop/"><div class="k">原始记录</div><div class="t">研究闭环实录</div>
+    <div class="d">一条真实研究链的平台记录：agent 每一步做了什么、人工在哪里介入、结论如何被确认或推翻。</div></a>
+  <a class="card" href="deck/"><div class="k">在线浏览</div><div class="t">幻灯片</div>
     <div class="d">12 页，含背景、术语、闭环、部署拓扑与数据方法；三维图表可拖动旋转。← → 翻页，O 键总览。</div></a>
   <a class="card" href="files/{PPTX_OUT}" download><div class="k">下载</div><div class="t">演示文稿（PPTX）</div>
     <div class="d">与在线幻灯片内容一致，文字均可编辑。</div></a>
@@ -242,6 +245,7 @@ def main():
     for src in PAGES:
         render_doc(src)
     slides_viewer()
+    shutil.copytree(os.path.join(HERE, "loop"), os.path.join(OUT, "loop"), ignore=shutil.ignore_patterns("*.py", "__pycache__"))
     index_page()
     for f in ("middleware.js", "vercel.json"):
         shutil.copy(os.path.join(DECK, "deploy", f), OUT)
