@@ -36,6 +36,7 @@ HGamey 的代码仓库（game_opt_loop、phonefarm、refbench、harness-ops）�
 | [guide/](guide/README.md) | 部署与使用指导书：按最小功能模块（设备层、节点服务、执行节点、agent、公网入口、自研超分）分块，含两台 PC 加一台 root 手机的 Demo 搭建手册 |
 | `plans/2026-10-22-agent-platform/` | 外部 Agent 远程真机优化平台：已确认目的、项目地图、多机/分发/队列/结果计划、网页与CLI/API共同验收及完整待办 |
 | [手机 Vulkan 数采手册](plans/2026-10-22-agent-platform/VULKAN-DATA-COLLECTION.md) | RenderDoc 与 frame-audit 采集、原生回放、数据交付及已有18对数据的范围 |
+| [高低清数据集采集方案](plans/2026-10-22-agent-platform/DATASET-COLLECTION.md) | 超分训练用的低清/高清配对：各采集方法的原理与真机验证状态、软硬件需求、操作流程、场景覆盖、QA、划分、验收与风险 |
 | `plans/2026-10-11-system-handoff.md` | 会议需求、系统交接审计、跨仓迭代顺序与验收对应表 |
 | `plans/2026-10-11-implementation-progress.md` | 本轮 draft PR、集成验证范围、剩余端到端接口与真机门槛 |
 | [experiments/2026-10-24-selfsr/HARNESS_GUIDE.md](experiments/2026-10-24-selfsr/HARNESS_GUIDE.md) | 自研超分 + 插帧的测量 harness：挂层方式、A/B 编排、每个指标的来源、统计、还原与踩过的坑 |
