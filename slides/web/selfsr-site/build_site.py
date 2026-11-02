@@ -38,6 +38,7 @@ APPENDIX = [("guide/README.md", "guide", "部署与使用指导书：总览"), (
             ("guide/02-node-service.md", "guide-m2", "M2 节点服务与网页"), ("guide/03-execution-node.md", "guide-m3", "M3 执行节点"),
             ("guide/04-agent.md", "guide-m4", "M4 Agent 接入"), ("guide/05-public-access.md", "guide-m5", "M5 公网入口"),
             ("guide/06-selfsr.md", "guide-m6", "M6 自研超分辨率与插帧"), ("guide/07-demo-setup.md", "guide-demo", "演示环境搭建"),
+            ("guide/08-harmonyos-root.md", "guide-harmonyos", "HarmonyOS 设备的 root 与可采集能力"),
             ("plans/2026-10-22-agent-platform/DATASET-COLLECTION.md", "dataset-plan", "高低清数据集采集方案")]
 ANCHOR = {src: a for src, a, _ in APPENDIX}
 # 旧地址 → 页内锚点（跳转页）
