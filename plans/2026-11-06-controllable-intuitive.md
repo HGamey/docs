@@ -39,7 +39,7 @@
 
 **分工调整（11-06 17:45Z）**：用户的 Codex 额度紧张，Codex-Sub 做完 K2 就停，没有必要不再派活。剩下标着 Codex-Sub 的后端部分（K3、K4、K5 子节点、Z5、Z6）改由 Kimi 做（等中转恢复，直连周额度 11-09 重置），在那之前用 GLM 先做能做的；Claude-Sub 继续做网页。
 
-每个 PR 合入前由 lead 看 diff、CI 和截图（11-06 起不再等 glm-filler 审：GLM 额度紧，这一轮的 PR 实际都是 lead 审的）；上线后由 glm-researcher 按普通用户的方式试用，记下别扭的地方。
+每个 PR 合入前由 lead 看 diff、CI 和截图（11-06 起不再等 glm-filler 审：GLM 额度紧，这一轮的 PR 实际都是 lead 审的）。glm-filler 照旧在合入后按批复查 main，第 26 批 55abdd3..e818e7b 覆盖 K1、K2、页面，没有发现问题；上线后由 glm-researcher 按普通用户的方式试用，记下别扭的地方。
 
 ## 进展
 
