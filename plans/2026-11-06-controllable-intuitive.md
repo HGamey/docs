@@ -39,7 +39,7 @@
 
 **分工调整（11-06 17:45Z）**：用户的 Codex 额度紧张，Codex-Sub 做完 K2 就停，没有必要不再派活。剩下标着 Codex-Sub 的后端部分（K3、K4、K5 子节点、Z5、Z6）改由 Kimi 做（等中转恢复，直连周额度 11-09 重置），在那之前用 GLM 先做能做的；Claude-Sub 继续做网页。
 
-每个 PR 合入前由 glm-filler 审；上线后由 glm-researcher 按普通用户的方式试用，记下别扭的地方。
+每个 PR 合入前由 lead 看 diff、CI 和截图（11-06 起不再等 glm-filler 审：GLM 额度紧，这一轮的 PR 实际都是 lead 审的）；上线后由 glm-researcher 按普通用户的方式试用，记下别扭的地方。
 
 ## 进展
 
@@ -48,4 +48,4 @@
 - **Z2 #5、#8，Z3 #9 已合入**，K1 网页 #11 已合入。
 - **11-06 18:38Z K2 真机验收通过**：中心 18:35Z 部署了 e818e7bf，office-ubuntu 的更新器 3 分钟内自己拉取、构建、切换到同一版本，服务、phonefarm、game_opt_loop 三个组件都核对过。中心读到 office 的状态是 status=updated、behind=0。中途没有任何人工操作。kamico-mac 还没装更新器（旧版本，updates 为空）。K2 网页 #13 已合入。
 - **Z4 改由 Claude-Sub 做**（Kimi 不可用），需要的小后端改动放在同一个 PR 里。任务页精简 #12 已合入。
-
+- **11-06 18:50Z Z1 合入（#15，kimi-web 用 GLM 做的）**：按播放（按钮、空格、K）的那一刻进入跟随；自由移动和播放中拖动照样解除跟随。改动是 command.js 一行，加了三种情况的回归测试。第一波 K1、Z2、Z1 全部完成。
