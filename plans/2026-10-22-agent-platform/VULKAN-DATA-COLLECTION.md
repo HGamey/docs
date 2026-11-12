@@ -1,287 +1,219 @@
-# 手机 Vulkan 指令与渲染数据采集手册
+# 手机 Vulkan 数据采集教程
 
-更新日期：2026-10-30。面向 HGamey 的采集执行者、外部 Agent 和数据使用者。
+本教程教你在 HGamey 平台上采集手机游戏的 Vulkan 渲染数据。有两种采法：
 
-目标是采集**可分析的 Vulkan 调用、渲染状态与资源**，用于定位渲染开销、离线回放和生成同状态图像数据。推荐先采一个可回放帧，确认场景和输出正确，再扩展为短序列；需要排查多余渲染操作时，先用较轻量的 frame-audit。
+| 采法 | 得到什么 | 用来做什么 |
+|---|---|---|
+| **frame-audit**（先用这个） | `fa_*.json`：每帧的 pass、draw、dispatch、附件、读写、清屏摘要；可选 GPU 时间戳 | 找可疑的多余渲染操作（白存、白读、白清、白画），定优化方向 |
+| **RenderDoc 抓帧** | `.rdc`：一帧完整的 API 调用、资源内容、管线和 Shader 状态 | 回放这一帧，导出中间缓冲，做同帧替换实验和高低清训练对 |
 
-本手册依据 2026-10-11～13 的真机采集记录，以及 2026-10-26 已交付的 phonefarm/harness 接口整理。本次仅整理文档，未重新采集或检查手机上的原始文件。示例命令需要部署节点实际支持对应入口。
+截图和录屏只有画面，没有 Vulkan 调用。这两种采法不能同时挂在同一个游戏上，要分开采。
 
-## 1 先选择采什么
+## 准备
 
-“Vulkan 指令”在本项目指应用与 Vulkan API 之间的调用及其相关状态，不是 Adreno 等 GPU 的硬件机器指令。SPIR-V 也是着色器中间表示，不能直接当作硬件 ISA。
+1. 配好 `pf-node`：设置 `PF_NODE_URL`、`PF_NODE_ID`、`PF_NODE_TOKEN_FILE`。检查能连上：
 
-| 路线 | 核心输出 | 可以做什么 | 使用边界 |
-|---|---|---|---|
-| RenderDoc 抓帧 | `.rdc`，捕获帧相关的 API 调用、资源内容、管线与 Shader 状态 | 在兼容设备回放，检查 draw/dispatch、资源依赖，导出中间缓冲，研究同帧替换 | 文件较大，抓帧会干扰运行；不能据抓帧速度报告游戏 FPS |
-| phonefarm frame-audit | `fa_*.json`，pass/draw 计数、附件、引用、拷贝与清屏等摘要；可选时间戳 | 筛选疑似无效 STORE/LOAD、重复清屏、可疑 pass 等优化方向 | 不是完整 API trace，不包含重建任意图像所需的所有资源，不能替代 RDC |
-| PNG、录屏、普通 `phonefarm capture` | 屏幕像素与观察记录 | 确认场景、视角、交互和人工评价 | 没有 Vulkan 调用流；截图成功不代表抓帧成功 |
+   ```sh
+   pf-node checkin
+   ```
 
-**需要“收集指令并能回放”时选择 RenderDoc；需要“先找值得优化的渲染操作”时选择 frame-audit。两条路线分别采，不同时向同一游戏叠加两个采集层。**
+2. 选手机：
 
-## 2 之前实际采到了什么
+   ```sh
+   pf-node phones
+   ```
 
-### 终末地 RenderDoc 数据
+   要找的手机必须满足：
+   - 在线（`online=true`）、空闲、有 root。注入层要 root。
+   - 在**中心**上。目前只有中心编好了注入层（`libVkLayer_refknobs.so`）。
 
-| 项目 | 已有结果 |
-|---|---|
-| 平台 | 已 root 的一加 Android，Adreno 750；当时游戏包为 `com.hypergryph.endfield`，版本 1.5.3 / code 50 |
-| 原始捕获 | 三段移动轨迹，每段六帧，共 18 个 RDC；三段都在同一区域，不是三个独立地图 |
-| 捕获编号 | scene01：10185～10190；scene02：18411～18416；scene03：6203～6208 |
-| 同帧配对 | 18 对 LOW 1782×810 / HIGH 2376×1080；HIGH 在原设备 GPU 用同一捕获的几何重新栅格化，不是缩放 LOW 图片 |
-| 原生输出 | 场景 HDR、depth、aux 和相关相机/常量缓冲；主通路的空间配对已完成，包含有效掩码 |
-| 数据适用范围 | 带掩码的场景 HDR 空间先导数据；不是包含透明物、完整后处理和 UI 的最终画面真值，也不是已认证的完整动态光流标签 |
-| 数据划分 | scene01/02 用于训练，scene03 整条轨迹留出；相邻帧、裁块和重复回放不能算作独立场景 |
+   记下它的 `ref`，比如 `d944a2c6…/REDMAGIC`。
 
-原始 RDC 合计 **11,167,684,391 字节，约 11.17 GB**。2026-10-13 最后确认存于手机：
+3. 确认游戏已经装好，并且能进到你要采的场景：
+   - 不能停在菜单、加载页或黑屏。
+   - 角色不能被挡住，要能动起来。
 
-```text
-/storage/emulated/0/Android/media/com.hypergryph.endfield/files/RenderDoc/
-```
+4. 在任务页认领或创建一个研究任务，记下研究 ID。采集作业都带上它，任务页才能显示。
 
-当时没有把这 18 个 RDC 下载到 Mac，也没有收入训练 ZIP。因此“训练包已保存/已迁移”不等于“原始 Vulkan 捕获已备份或已进入 phonefarm 后台”。再次使用前应由当前手机 owner 核对原件是否仍在。
+## 采法一：frame-audit
 
-可独立读取的先导训练包仍在本机，2026-10-30 仅核对文件存在及大小为 **451,537,667 字节**，未重新解压：
-
-```text
-phonefarm/tasks/endfield_temporal_sr_20261013/
-  standalone-dataset-001/build-attempt-002/endfield-sr-pilot-v1.zip
-```
-
-包内含 18 对数据与加载工具，**不含原始 RDC**。原记录中的 SHA256 为：
-
-```text
-9ba1472ebedaa1743c8cf905434ba431696ca292231cb2bf645900edf204e3cd
-```
-
-该摘要沿用已有存储索引，本次没有重复计算。
-
-### 轻量 Vulkan 摘要
-
-已有原神 frame-audit 原件。一个历史样本记录每帧 33 个 pass，并包含 draw、dispatch、附件和时间戳可用性信息。它证明这条摘要采集路径实际运行过；不表示其它游戏、Vulkan 扩展或当前部署均已验证。该样本有一帧 `passes_timed=0`，所以分析时不能把打印出的 `0.0 ms` 当作真实零耗时。
-
-依据：文末资料索引中的最终结果、18 对方法附录、存储索引，以及 `knobs/evidence/10_frameaudit/` 原件。
-
-## 3 采集前准备
-
-首次采集只需要把以下信息明确下来，不必重做整套环境审计。
-
-| 准备项 | 要记录或确认的内容 |
-|---|---|
-| 目标 | 游戏包名、版本、场景、画质设置、窗口/渲染分辨率；区分 Vulkan 和 GLES 路径 |
-| 手机 | 节点 ID、设备绑定、当前连接 serial、系统/GPU/驱动、root 或应用调试能力、当前 boot |
-| 工具 | 实际 phonefarm/harness 版本，RenderDoc APK/layer/SDK 的版本与构建标识；历史成功组合为 RenderDoc 1.46 |
-| 所有权 | 采集任务持有效 phonefarm lease，手机只由一个 owner 控制；分析 Agent 可以并行处理已落盘文件 |
-| 场景准备 | 有可进入的场景或存档；先确认确实移动/渲染，避免菜单、加载页、黑屏或角色被障碍挡住 |
-| 输出 | 新的采集批次目录、期望帧数、超时、文件总量预算、保存位置及恢复范围 |
-
-节点入口可先进行只读查询。URL、node ID 和凭据文件由运行环境提供，不把凭据写进采集清单：
+### 1. 提交采集
 
 ```sh
-pf-node node
-pf-node devices
-pf-node queue
-pf-node leases
-```
-
-`devices` 是登记信息，不等于设备已在线；必须结合实际设备观察。进入采集后，手机操作统一沿持有 lease 的任务执行。
-
-**平台边界：**普通 RenderDoc Android 工作流要求应用可调试。之前终末地是非 debuggable 商业包，使用的是已授权 root 设备上的专用 layer 生命周期适配。不能据此认为任意非 root 手机都可抓取；nova16 鸿蒙无 root 的条件也没有被该实验验证。
-
-## 4 RenderDoc 单帧采集流程
-
-### 4.1 有可调试构建时
-
-1. 在 RenderDoc 中选择 Android Remote Context，确认 adb 可访问目标设备。
-2. 安装/启动匹配版本的设备侧 RenderDoc 组件，选择目标包并启动。
-3. 进入固定场景，确认目标使用 Vulkan，再触发一帧捕获。
-4. 等待实际 NewCapture 记录，保存 RDC 的真实路径、frame number 和文件大小。
-5. 先在兼容设备打开并回放该帧，确认场景、关键 pass 和原生纹理输出，再扩采。
-
-这部分遵循项目留存的 RenderDoc Android 上游说明。不要通过修改 APK 后仍把它记录成未修改的原版构建。
-
-### 4.2 之前 root 终末地的实际路径
-
-历史实现分为“手机侧 layer 生命周期”和“SDK 控制端”。步骤可以复用，旧脚本中的设备和安装路径不能直接复用。
-
-1. **保存原状态。** 保存本次涉及的 Vulkan/RenderDoc 属性、GPU debug settings、目标安装路径、已有 layer 文件和端口映射。记录本轮创建的文件。
-2. **停止目标并放置 layer。** 当时将匹配 ABI 的 RenderDoc layer 放入目标应用实际 native library 目录，沿原安装目录的权限和 SELinux 上下文处理。应用升级后该目录会变化。
-3. **短暂启用并启动。** 当时的启用值为 `debug.vulkan.layers=VK_LAYER_RENDERDOC_Capture`、`debug.rdoc.IGNORE_LAYERS=0`。这两个值只是历史成功配置，不能在不检查其它 owner/layer 的情况下直接全局覆盖。
-4. **确认连接的是本次游戏进程。** 检查新 PID 与启动时间、进程确实加载了目标 layer，并找到属于该进程的 `renderdoc_<实例号>` socket。不能把 socket 后缀假设成 PID。
-5. **建立受管转发。** adb forward 连接该 socket；历史 Linux 控制端经受管 SSH 转发接入。保存本任务的映射，结束时仅移除这些映射。
-6. **核 API 并触发。** SDK TargetControl 确认 PID、目标 API 为 Vulkan、连接可用，再执行一次 `TriggerCapture(N)`；不要靠反复点击来补齐一个结果未知的请求。
-7. **接收并封存。** 为每个 NewCapture 保存 capture ID、frame number、API、时间、路径和 byte size。文件写完后记录实际 size/SHA256，再做 SDK 打开检查。
-8. **结束与恢复。** 释放输入、关闭控制连接、停止本任务启动的目标、恢复原属性和本任务安装范围，保存收尾结果。采集完成与恢复完成分别记录。
-
-当时连接建立后便恢复了短暂全局属性，最终仍执行完整清理。恢复应回到本次记录的原值，不能把旧实验“原值为空”推广到新手机。
-
-已有代码入口位于研究工作区：
-
-```text
-phonefarm/tasks/oneplus_live_20261012/livephase/
-  endfield-renderdoc-layer-c5de-002/capture-runner.py
-
-phonefarm/tasks/endfield_temporal_sr_20261013/
-  capture-pilot-001/driver.v7.py
-  motion_and_replacement/continuous-control-client-002/
-    continuous_control.v3.cpp
-    continuous-control-supervisor.v3.py
-```
-
-这些是**绑定旧设备、boot、包和私有目录的实验实现**，不是可以换一个包名立即执行的通用 CLI。接续采集时只复用其流程，在当前 owner 下填写新目标；不要直接运行历史 `manifest.armed*.json`。
-
-SDK 控制端的既有调用形式如下，仅在当前连接和 manifest 已准备好后，由受管 runner 调用：
-
-```sh
-continuous_control_v3.linux-x86_64 connect-probe \
-  --manifest /owned/current-target.json
-
-continuous_control_v3.linux-x86_64 trigger-metadata \
-  --manifest /owned/current-target.json --capture-count 6 --execute
-```
-
-该历史客户端限定终末地、localhost 连接和最多六帧。`current-target.json` 的字段为 `schema`、`host`、`package`、`port`、`expected_pid`、`capture_count`；schema 为 `hgamey/endfield_capture_control_manifest@1`。端口和 PID 必须来自本次连接，外层 supervisor/lease 仍不可省略。
-
-## 5 从单帧扩展到短序列
-
-先完成一个单帧的打开、回放和资源导出，再采一组六帧。建议依次覆盖静止细节、相机旋转、角色平移、遮挡变化，最后扩展地图、材质和光照。
-
-- 一次触发 `N` 帧，记录实际收到的每个捕获，不用旧帧填补缺失。
-- 保存输入轨迹、采集顺序、触发/接收时间以及场景前后截图。
-- 移动输入被接收不代表角色或相机真的移动。之前曾遇到角色被围栏挡住，需换轨迹后才得到有效移动。
-- 连续 frame number 只说明捕获编号连续。抓帧会阻塞游戏，秒级时间戳也不足以证明稳定的 30/60 FPS 时间间隔。
-- 场景切换、丢帧、失败和部分捕获保留在原批次中，训练资格另行标注。
-
-时序训练还需要确认 previous/current 相机状态、jitter、历史缓冲、曝光、运动矢量方向/单位和遮挡有效区。仅有连续 RDC 或一张“像光流”的纹理，不足以提供这些标签。
-
-## 6 phonefarm 轻量 frame-audit 采集
-
-使用这条路线时，采集器记录的是**已有 hook 覆盖到的渲染步骤与资源引用**。目标是发现优化候选，后续仍需验证候选的实际性能和画质。
-
-下面是通过既有 Node CLI 提交一次有限采集的示例。假定已在环境中配置 `PF_NODE_URL`、`PF_NODE_ID` 和 `PF_NODE_TOKEN_FILE`，并准备好匹配目标平台的 layer；占位符需替换。
-
-```sh
-pf-node --request-id vk-audit-scene01-001 --detach \
+pf-node --research <研究ID> --device <手机ref> --request-id fa-<场景>-001 --detach \
   phonefarm frame-audit capture \
-  --serial SERIAL --pkg com.example.game \
-  --captures 1 --gap 20 --settle 15 --out @out --json
+    --serial @serial --pkg <游戏包名> \
+    --captures 1 --gap 20 --settle 60 \
+    --out @out --json
 ```
 
-命令会启动目标并按入口的场景准备策略执行；`settle` 只是等待，不保证任意游戏已经进入目标场景。先采用已完成游戏准备的可复现场景，确有需要时使用该入口已有的 `--tap`/`--extras` 参数。一轮 capture 可能包含多个记录帧，数量以输出 JSON 的 `frames` 为准。
+| 参数 | 作用 |
+|---|---|
+| `--captures N` | 采几轮，每轮之间隔 `--gap` 秒 |
+| `--settle 秒` | 启动游戏后等多久再采。只是等待，不会自动进场景；原神默认 15 秒，其他游戏默认 60 秒 |
+| `--tap "x,y;x,y"` | 等待时依次点击这些坐标，用来点过开场 |
+| `--extras "…"` | 启动时带的 intent 参数，适用于能直接进场景的测试包 |
+| `--ts` | 额外记录每个 pass 的 GPU 时间戳 |
 
-需要 GPU pass 时间戳时，在单独批次添加 `--ts`。保留是否启用时间戳的标记，不把两种采集条件混在同一性能基线。
+命令返回作业 ID。
 
-提交后使用返回的 job ID：
+时间戳批次单独采：不要把加了 `--ts` 和没加的结果放在一起比。
+
+### 2. 等结果，取回文件
 
 ```sh
-pf-node status JOB_ID
-pf-node log JOB_ID
-pf-node artifacts JOB_ID
-pf-node out JOB_ID
+pf-node status <作业ID>
+pf-node wait <作业ID>
+pf-node out <作业ID>        # 下载到 ./pf-node-out/<作业ID>/
 ```
 
-请求返回不确定时，用 `pf-node request vk-audit-scene01-001` 找回原任务，不换 ID 重投。这个有限入口使用自身会话与 lease；不要把其它命令支持的 `--device-binding` 参数直接套上来。
+如果网络断了、不确定有没有提交成功，用 `pf-node request fa-<场景>-001` 找回原作业，不要换一个 request-id 重新提交。
 
-结果在实际 session 子目录中，主要包括采集 JSON、截图、会话和恢复记录。对保存的 JSON 进行离线分析：
+你会得到：
+- `fa_*.json`：每帧的渲染步骤
+- 采集前后的截图
+- 会话和收尾记录
+
+### 3. 分析
 
 ```sh
-phonefarm frame-audit analyze /path/to/fa_1.json \
-  --md /path/to/analysis.md --json /path/to/analysis.json
+phonefarm frame-audit analyze pf-node-out/<作业ID>/…/fa_1.json \
+  --md analysis.md --json analysis.json
 ```
 
-解释结果时看三点：
+你会得到：`analysis.md`，里面是步骤总览和可疑操作清单。
 
-1. **覆盖范围：**记录 `diag` 中的 `cb_unseen`、`ev_overflow`、`ts_skipped` 等；存在漏记或溢出时限定结论，不当成完整帧。
-2. **时间资格：**核对 `ts_enabled`、`ts_available` 与每帧 `passes_timed`。缺时间戳就是未知，不填零；各 pass 时间相加也不自动等于端到端帧时间。
-3. **模型与实测：**LOAD/STORE 字节是基于尺寸、格式和采样数的带宽模型，未包含实际压缩等因素；描述符绑定也不等于 Shader 一定采样。疑似无效操作需要后续改动实验确认。
+### 4. 读结果时检查三件事
 
-已有长期灰层 session 也支持 `frameaudit`/`frameaudit-ts` 模式及受管动作，详见 [灰层抓帧会话](GRAY-CAPTURE-SESSION.md) 和当前 `pf-node` 帮助。不要绕过会话直接改全局属性触发采集。
+1. **记全了没有。** 看 `diag` 里的 `cb_unseen`、`ev_overflow`、`ts_skipped`。不为 0，说明这一帧没记全，结论只适用于记到的部分。
+2. **时间可不可信。** 看 `ts_enabled`、`ts_available` 和每帧的 `passes_timed`。`passes_timed=0` 时显示的 `0.0 ms` 表示没测到，不是零耗时。各 pass 的时间加起来也不等于整帧时间。
+3. **是模型还是实测。** LOAD/STORE 的字节数是按尺寸和格式算出来的带宽估计，没算硬件压缩。描述符绑定了，也不代表 Shader 真的读了。可疑操作要再做一次改动实验才能确认。
 
-## 7 需要高低清训练对时再做的工作
+需要在一个会话里反复采时，用灰层会话的 `frameaudit` 或 `frameaudit-ts` 模式，见 [灰层抓帧会话](GRAY-CAPTURE-SESSION.md)：
 
-如果只交付 Vulkan 指令捕获，到“RDC 可打开并回放”即可结束。生成训练数据是下一阶段，不应把它设成每次抓帧的前置条件。
+```sh
+pf-node --research <研究ID> --device <手机ref> --detach \
+  phonefarm gray-layer session --serial @serial --package <游戏包名> \
+    --mode frameaudit --out @out --max-seconds 900 --power-policy battery
+```
 
-同帧 LOW/HIGH 的关键步骤是：
+## 采法二：RenderDoc 抓帧
 
-1. 从**当前 RDC**发现目标 scene pass、attachments、viewport/scissor、Shader 和实际绑定常量，不沿用旧资源 ID、event ID 或内存偏移。
-2. 导出母捕获的原生 scene color、depth 和 aux，保存格式、尺寸、event、mip/slice/sample 与原始字节。
-3. 修改真实渲染尺寸及相关 framebuffer、内存分配和有证据支持的分辨率常量；处理实际 InitialContents 与后续 coherent/flush 写入。
-4. 做同尺寸 LOW 控制回放，确认所选初始化策略没有改变基准输出，再在原 GPU 导出 HIGH。所有派生 RDC 另存，母捕获保持原样。
-5. 固定像素中心映射与方向，用几何/深度构建有效掩码，检查同状态配对；不靠平移搜索、曝光拟合或挑裁块掩盖错配。
+**先采一帧，确认能回放，再采短序列。**
 
-终末地已验证的格式细节只适用于对应捕获：HDR 为 R11G11B10；depth SDK 返回 `5N` 字节，前 `4N` 为打包 D24S8，尾部 `N` 字节语义未认证，应保留。固定预览变换 `(HDR/(1+HDR))**(1/2.2)` 不是游戏 tone mapping。
+### A. 游戏有可调试版本
 
-aux、相机和曝光语义未证明时按原名保存，不能直接改名为“光流真值”“无抖动相机”或“线性 HDR 标签”。600→1080 等新分辨率训练也应使用真实低清渲染与同状态高清参考，不能把已有 810p 图片 resize 后当作真实 600p 输入。
+1. 在电脑上打开 RenderDoc，选 Android Remote Context，确认 adb 能看到手机。
+2. 让 RenderDoc 在手机上装好配套组件，选中游戏包名并启动。
+3. 进入要采的场景，确认游戏走的是 Vulkan，然后触发一帧捕获。
+4. 等 RenderDoc 收到新捕获，记下 `.rdc` 路径、帧号和文件大小。
+5. 在同一台手机上打开这个 `.rdc` 并回放，确认画面对、关键 pass 在、纹理能导出。
 
-## 8 每批交付内容
+### B. 商业包（不可调试），只限 root 手机
 
-下面是建议的交付布局，不要求迁移或改写历史目录，也不是 Node 自动扫描协议：
+以下操作都放在一个持有这台手机的作业里做（`pf-node --device <手机ref> …`），不要绕开平台直接操作手机。
+
+1. **记下现状。** 记录要改的系统属性（`debug.vulkan.layers` 等）、GPU 调试设置、游戏安装目录里已有的层文件、已有的 adb forward。收尾时按这份记录恢复。
+2. **放层。** 停掉游戏，把 ABI 匹配的 RenderDoc 层（`libVkLayer_GLES_RenderDoc.so`）放进游戏自己的 native library 目录，权限和 SELinux 标签照原目录设置。游戏更新后这个目录会变，要重新放。
+3. **打开层，启动游戏。** 设置 `debug.vulkan.layers=VK_LAYER_RENDERDOC_Capture` 和 `debug.rdoc.IGNORE_LAYERS=0`，然后启动游戏。设置前确认没有别的作业也在用这些属性。
+4. **确认连上的是这次的游戏进程。** 核对新进程的 PID 和启动时间，确认它加载了 RenderDoc 层，再找到它对应的 `renderdoc_<编号>` socket。编号不等于 PID。
+5. **建立转发。** 用 `adb forward` 把这个 socket 转到本机端口，记下这条映射。
+6. **触发捕获。** 用 RenderDoc 的 TargetControl 连上，确认 PID 正确、API 是 Vulkan，然后触发一次 `TriggerCapture(N)`。结果不确定时，先查有没有收到，不要重复触发。
+7. **收文件。** 每收到一个捕获，记下捕获 ID、帧号、API、时间、路径、大小和 SHA256，再用 RenderDoc 打开检查一遍。
+8. **收尾。** 断开连接，停掉这次启动的游戏，删掉这次放的层文件和 adb forward，把属性恢复成第 1 步记下的值。"采集完成"和"恢复完成"分开记录。
+
+### 从一帧扩展到短序列
+
+- 按这个顺序扩：静止细节 → 镜头旋转 → 角色平移 → 遮挡变化 → 换地图、材质、光照。
+- 一次触发 N 帧，实际收到几帧就记几帧，缺的不要拿别的帧补。
+- 保存输入轨迹、触发和接收时间，以及每段前后的截图。
+- 输入发出去了，不代表角色真的动了，要看截图确认。
+- 抓帧会卡住游戏，所以帧号连续不代表帧间隔是正常的 1/30 或 1/60 秒。
+
+### 容量和回放资源
+
+- 每个 `.rdc` 大约 600 MB，6 帧一组大约 3.7 GB。导出和回放还要额外的空间。
+- 在手机上回放一帧，大约需要 6.4 GB 虚拟地址空间、1.2 GB 常驻内存。4 GiB 地址上限不够用。
+- 尽量在手机或大容量 Linux 机器上处理，只把需要的缓冲和清单传回来。
+
+## 进阶：生成同帧高低清训练对
+
+只交付 `.rdc` 的话，到"能回放"就完成了。需要训练数据时再做这一步：
+
+1. 从这一份 `.rdc` 里找出目标场景 pass、附件、viewport/scissor、Shader 和实际绑定的常量。不要沿用别的捕获里的资源 ID 或 event ID。
+2. 导出原生的场景颜色、depth 和 aux，记下格式、尺寸、event、mip/slice/sample。
+3. 改渲染尺寸，以及对应的 framebuffer、内存分配和分辨率常量。要连带处理后面写入的 coherent/flush 数据，否则还会读到旧值。
+4. 先用原尺寸回放一次，确认输出和原来一样，再在原手机上导出高清版。派生的 `.rdc` 另存，不改原件。
+5. 用几何和深度生成有效掩码，固定像素中心映射，逐对检查高低清是否对齐。
+
+低清输入要真实渲染出来，不能把高清图缩小当低清。aux 缓冲的含义没有确认前，按原名保存，不要叫它"光流"。
+
+## 交付
+
+### 目录
 
 ```text
-collection/<batch-id>/
-  manifest.json                 # 身份、版本、场景、文件索引、各阶段状态
-  capture/                      # RDC 或 fa JSON 原件；远置时保留明确引用
-  metadata/                     # SDK inventory、actions、资源/Shader/绑定信息
-  preview/                      # 场景前后截图、回放预览
-  raw/                          # 可选：原生颜色、depth、aux、常量缓冲
-  derived/                      # 可选：派生RDC、高低清数据、mask；不覆盖原件
-  logs/                         # 触发/接收、失败、退出与恢复记录
+collection/<批次ID>/
+  manifest.json      # 身份、版本、场景、文件清单、各步状态
+  capture/           # .rdc 或 fa_*.json 原件；放不下就写明取回位置
+  metadata/          # RenderDoc 导出的资源、Shader、绑定信息
+  preview/           # 场景截图、回放预览
+  raw/               # 可选：原生颜色、depth、aux、常量缓冲
+  derived/           # 可选：派生 .rdc、高低清对、掩码
+  logs/              # 触发、接收、失败和收尾记录
 ```
 
-清单至少包含以下信息；未知字段保留 `null` 或明确状态，不填猜测值：
+### manifest.json 至少要有
 
-| 类别 | 必需信息 |
+| 类别 | 内容 |
 |---|---|
-| 来源 | batch/scene/sequence ID，node ID、job ID、request ID，游戏包与版本，设备/boot/进程身份 |
-| 环境 | GPU/驱动、操作系统、实际图形 API、采集工具版本、画质/分辨率与场景说明 |
-| 触发 | 期望/实际帧数，触发次数、顺序、时间，输入轨迹（有则提供） |
-| 原件 | 每个文件的路径或可取回 URI、bytes、SHA256；RDC 的 capture ID、frame number 和 API |
-| 回放与导出 | SDK 打开结果、实际回放设备、event/resource、格式/尺寸/mip/slice/sample，输出文件索引 |
-| 状态 | 捕获完成、容器可读、原生回放完成、配对通过、时序标签资格、恢复完成分别记录 |
+| 来源 | 批次、场景、序列 ID；node ID、作业 ID、request ID；游戏包名和版本；手机 |
+| 环境 | GPU、驱动、系统、图形 API、采集工具版本、画质和分辨率 |
+| 触发 | 期望帧数、实际帧数、触发顺序和时间、输入轨迹 |
+| 原件 | 每个文件的路径、大小、SHA256；`.rdc` 的捕获 ID、帧号、API |
+| 回放与导出 | 能否打开、在哪台手机回放、导出了哪些 event 和资源 |
+| 状态 | 捕获完成、能打开、回放完成、配对通过、收尾完成，各记一项 |
 
-原件生成完和跨机传输时确认 size/hash，复用已有索引；无需为每个展示层重新计算全量摘要。公开共享操作手册和脱敏预览；原始 RDC、进程原始转储与账户相关内容按项目数据权限保存。
+不知道的字段填 `null`，不要猜。
 
-**phonefarm 中的可发现性需要显式登记。** 文件在手机、Mac 或某个 job 输出目录里，不会自动成为 results 记录。新采集把清单和报告写入 job `@out`，通过现有结果登记关联研究/方向与原件引用；大 RDC 可留在设备宿主的大容量目录，记录取回方式。不要把数百 MB 的 RDC 塞进只面向小工件的 `--inputs` 清单，旧原件也不因登记而重复上传。
+### 在平台上登记
 
-## 9 最小验收与常见问题
+1. 把 `manifest.json` 和报告写进作业的 `@out`。
+2. 交付研究任务：
 
-一轮采集只做与交付目标相关的检查：
+   ```sh
+   pf-node research deliver <研究ID> --summary report.md --artifact job:<作业ID>
+   ```
 
-- **指令摘要交付：**JSON 可读、目标与场景明确、实际有帧和步骤、覆盖诊断已记录。
-- **RDC 交付：**实际文件完整、SDK 可打开并报告 Vulkan/正确帧，至少完成代表帧的原设备回放；逐帧是否回放在清单中逐项记录。
-- **图像交付：**指定 event 的原生尺寸/格式/字节数正确，预览能确认目标场景；截图不替代原生纹理数据。
-- **配对/时序交付：**分别执行对应检查，不因“RDC 已生成”自动标为训练合格。
-- **收尾：**输入已释放、本任务的 layer/属性/映射已按范围恢复；未确认的恢复保留阻断，不清旧 lease 掩盖问题。
+3. 很大的 `.rdc` 留在手机或大容量机器上，在 manifest 里写清怎么取回。不要用 `--inputs` 上传。
 
-| 现象 | 处理方式 |
+## 验收清单
+
+- **frame-audit：** JSON 能读；游戏和场景写清楚；确实有帧、有步骤；`diag` 已记录。
+- **RenderDoc：** 文件完整；能打开，显示 Vulkan 和正确的帧；至少一帧在原手机上回放成功。
+- **图像：** 导出的纹理尺寸、格式、字节数对；预览能看出是目标场景。截图不能代替原生纹理。
+- **训练对：** 单独检查对齐和掩码。生成了 `.rdc` 不等于训练数据合格。
+- **收尾：** 层、属性、端口转发都已恢复。恢复没确认就保持阻断，不要清锁了事。
+
+## 常见问题
+
+| 现象 | 怎么办 |
 |---|---|
-| 手机可见，但抓不到游戏 | 核实际 Vulkan 路径、目标进程和 layer 加载；普通 debuggable 路线与 root 专用路线不能混用 |
-| 有截图，没有 RDC | 还没有完成 API 捕获；检查 TargetControl 的实际 NewCapture 记录 |
-| 连续帧里没有运动 | 核相机/角色实际变化，排除障碍、菜单和输入映射问题 |
-| CPU 能读 RDC，GPU 回放失败 | 容器可读与 GPU 兼容是两阶段；优先原设备 native replay，保留失败，不靠换桌面 GPU 宣称成功 |
-| native replay 内存不足 | 依据实际地址空间/RSS调整预算。历史一帧成功回放 VmSize 约6.38 GB、采样RSS约1.24 GB；4 GiB虚拟地址上限不足，不能把它误判成需要同等物理内存 |
-| HIGH 仍读到旧分辨率常量 | 检查后续 coherent/flush 写入是否覆盖 InitialContents；以实际绑定缓冲的 GPU 回读为准 |
-| frame-audit 时间显示为0 | 先核时间戳是否可用；缺测值不当零耗时 |
-| 收尾失败或状态未知 | 保存原 job/session 与收据，沿原上下文恢复；不重放整段采集、不直接清锁 |
+| 手机在线，但抓不到游戏 | 确认游戏走的是 Vulkan、连的是这次的进程、层已加载；可调试版本的做法和 root 的做法不能混用 |
+| 有截图，没有 `.rdc` | 捕获没有完成；查 TargetControl 有没有收到新捕获 |
+| 连续几帧画面没变化 | 看镜头和角色是否真的动了；排除菜单、障碍物和按键映射问题 |
+| 电脑能打开 `.rdc`，手机回放失败 | 能打开和能回放是两回事；在原手机上用 native replay，失败就如实记录 |
+| 回放内存不够 | 按"容量和回放资源"一节准备地址空间 |
+| 高清版还读到旧分辨率常量 | 检查后面的 coherent/flush 写入是否覆盖了初始内容；以 GPU 回读的实际值为准 |
+| frame-audit 时间是 0 | 先看时间戳是否可用；没测到不能当零耗时 |
+| frame-audit 报找不到层 | 这台手机所在的节点没有编注入层；换中心上的手机 |
+| 收尾失败或状态不明 | 保留原作业和会话记录，用 `pf-node session-recovery` / `session-recover` 恢复；不要重跑整段采集，也不要直接清锁 |
 
-容量按实际样本估算：历史 18 个 RDC 平均约 620 MB/帧，一组六帧约 3.7 GB，派生捕获和回放暂存还会增加空间。先单帧、后短序列；优先在手机或大容量 Linux 宿主处理，仅回传必要缓冲和索引，避免 Mac 重复全量下载/解压。
+性能要另外测：抓帧、读回纹理、写文件、替换 Shader 回放所花的时间，都不能当作游戏帧时间、FPS 或功耗。
 
-采集运行与性能测量分开。RenderDoc 抓取、纹理读回、文件写入与 Shader 替换回放的墙钟耗时，都不能直接作为游戏帧时间、实时 FPS、功耗或每帧能耗收益。
+## 参考
 
-## 10 资料与现有实现入口
-
-研究文件路径以 `phonefarm/` 为根。Mac 研究树在 `/Users/kamico/work/GOSIM/HGamey/phonefarm`；2026-10-26 同步的 rhodes1 副本在 `/data2/kamico/HGamey-dev-20261025/HGamey/phonefarm`。本次没有重新检查远端副本或手机原件。
-
-| 内容 | 文件 |
-|---|---|
-| 18帧原件身份与逐文件状态 | `tasks/endfield_temporal_sr_20261013/source-files-003/source-manifest.json` |
-| 最终结果与适用范围 | `tasks/endfield_temporal_sr_20261013/dataset-bundle-001/FINAL-RESULTS.md` |
-| ZIP与原始RDC的存储区分 | `tasks/endfield_temporal_sr_20261013/standalone-dataset-001/STORAGE-INDEX-20261014.json` |
-| 同帧高低清方法 | `tasks/endfield_temporal_sr_20261013/methodology/METHOD.md`；`methodology/appendices/ACTUAL_18_NATIVE_PAIR_AND_PIXEL_MASKED_PILOT.md` |
-| Android原设备回放与内存经验 | `tasks/endfield_temporal_sr_20261013/methodology/appendices/ANDROID_LOCAL_ROUTE.md` |
-| 虚拟手柄注册与历史故障 | `tasks/endfield_temporal_sr_20261013/methodology/appendices/HID_BOOTSTRAP.md` |
-| RenderDoc Android上游说明的本地存档 | `tasks/media_algorithm_research_20261012/blackbox-capture-audit-001/source/docs/how/how_android_capture.rst` |
-| frame-audit实际原件 | `tasks/developer_transition_20261022/phonefarm-main/knobs/evidence/10_frameaudit/{capture_meta.json,fa_1.json,analysis.md}` |
-
-公开代码入口：[frame-audit 实现](https://github.com/HGamey/phonefarm/blob/7aa39c5a5ebc401430c828b0c8d1d08d57e77e85/src/frameaudit.rs)、[pf-node CLI](https://github.com/HGamey/harness-ops/blob/be8279c270739c7280afbe8e4b6af267c9bbfeb5/node/pf-node)。平台相关合同：[灰层抓帧会话](GRAY-CAPTURE-SESSION.md)、[结果索引](RESULT-INDEX.md)。
-
-本手册新增的是可复用操作说明；平台开发 TODO、旧研究负结果和原始恢复义务保持原记录，长期自动开发仍按此前要求暂停。
+- [灰层抓帧会话](GRAY-CAPTURE-SESSION.md)
+- [结果索引](RESULT-INDEX.md)
+- 命令帮助：`pf-node --help`、`pf-node phonefarm gray-layer --help`
+- 代码：[frame-audit 实现](https://github.com/HGamey/phonefarm/blob/7aa39c5a5ebc401430c828b0c8d1d08d57e77e85/src/frameaudit.rs)
